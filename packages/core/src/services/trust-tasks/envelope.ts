@@ -83,8 +83,8 @@ export function buildTrustTask(typeUri: string, options: TrustTaskBuildOptions):
 /**
  * Build a `#response` to a request. Echoes the `threadId`, swaps `issuer`/`recipient`,
  * and swaps the `#request` fragment for `#response` (§4.4.1). Correlation is the
- * `threadId`; a response with no `threadId` on its request is still conforming but the
- * exchange is then uncorrelated.
+ * `threadId`; a request with no `threadId` is answered on a thread named by the request's
+ * own `id` (§4.9), so a reply is always correlated.
  */
 export function buildResponse(
   request: TrustTaskDocument,
@@ -95,7 +95,7 @@ export function buildResponse(
   return {
     id: randomUUID(),
     type: `${baseType}#response`,
-    ...(request.threadId ? { threadId: request.threadId } : {}),
+    threadId: request.threadId ? request.threadId : request.id,
     ...(request.parentThreadId ? { parentThreadId: request.parentThreadId } : {}),
     issuer: options.issuer ?? request.recipient,
     recipient: options.recipient ?? request.issuer,
@@ -117,6 +117,11 @@ export interface TrustTaskError {
  * payload is `{code, message, …}` (see `policy/evaluate`'s `errorCodes`, and the
  * framework's `malformedRequest` / `expired` / `proofInvalid` codes) — not as a
  * separate error type, so this emits a task `#response` with an error payload.
+ *
+ * @deprecated Emits a `#response` of the request's own type. The framework's error document is the
+ * `trust-task-error` type; use `buildErrorDocument` from `boundary/errors.ts`, which also bounds
+ * `details`, fixes the messages to a vocabulary and fills `inResponseTo`. Kept so existing
+ * callers and tests keep their shape.
  */
 export function buildError(
   request: TrustTaskDocument | undefined,

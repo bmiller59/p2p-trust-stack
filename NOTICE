@@ -58,6 +58,10 @@ packages; the SPDX identifiers are listed below:
   over IP dtgwg-trust-tasks-tf repository), copied for tests only under
   packages/core/test/services/trust-tasks/boundary/fixtures/ with a recorded
   provenance file; not part of the published package — Apache-2.0
+- DTGWG trust conformance suite vectors (ERR, LIF and RSP groups of the
+  dtgwg-trust-conformance folder), copied for tests only under
+  packages/core/test/services/trust-tasks/boundary/vectors/ with a recorded
+  provenance file; not part of the published package — Apache-2.0
 
 Apache-2.0 components:
   Licensed under the Apache License, Version 2.0 (the "License");
