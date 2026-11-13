@@ -1,0 +1,1259 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "PRF",
+  "family": "framework",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "PRF-001",
+      "title": "eddsa-jcs-2022-baseline: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-baseline.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-baseline.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-baseline.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-002",
+      "title": "ecdsa-jcs-2019-ts-p256: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/ecdsa-jcs-2019-ts-p256.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:ecdsa-jcs-2019"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/ecdsa-jcs-2019-ts-p256.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/ecdsa-jcs-2019-ts-p256.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-003",
+      "title": "ecdsa-jcs-2019-ts-p384: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/ecdsa-jcs-2019-ts-p384.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:ecdsa-jcs-2019"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/ecdsa-jcs-2019-ts-p384.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/ecdsa-jcs-2019-ts-p384.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-004",
+      "title": "ecdsa-jcs-2019-go-p256: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/ecdsa-jcs-2019-go-p256.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:ecdsa-jcs-2019"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/ecdsa-jcs-2019-go-p256.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/ecdsa-jcs-2019-go-p256.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-005",
+      "title": "ecdsa-jcs-2019-go-p384: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/ecdsa-jcs-2019-go-p384.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:ecdsa-jcs-2019"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/ecdsa-jcs-2019-go-p384.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/ecdsa-jcs-2019-go-p384.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-006",
+      "title": "eddsa-jcs-2022-context: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-context.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-context.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-context.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-007",
+      "title": "eddsa-jcs-2022-context-proof-omits: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-context-proof-omits.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-context-proof-omits.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-context-proof-omits.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-008",
+      "title": "eddsa-jcs-2022-context-string: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-context-string.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-context-string.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-context-string.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-009",
+      "title": "eddsa-jcs-2022-context-extended: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-context-extended.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-context-extended.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-context-extended.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-010",
+      "title": "eddsa-jcs-2022-context-mismatch: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-context-mismatch.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-context-mismatch.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-context-mismatch.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-011",
+      "title": "eddsa-jcs-2022-context-proof-only: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-context-proof-only.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-context-proof-only.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-context-proof-only.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-012",
+      "title": "eddsa-jcs-2022-timestamp-spellings: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-timestamp-spellings.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-timestamp-spellings.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-timestamp-spellings.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-013",
+      "title": "eddsa-jcs-2022-timestamp-spellings-normalized: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-timestamp-spellings-normalized.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-timestamp-spellings-normalized.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-timestamp-spellings-normalized.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-014",
+      "title": "eddsa-jcs-2022-process-attestation-response: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-process-attestation-response.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-process-attestation-response.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-process-attestation-response.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-015",
+      "title": "eddsa-jcs-2022-process-attestation-response-tampered: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-process-attestation-response-tampered.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-process-attestation-response-tampered.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-process-attestation-response-tampered.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-016",
+      "title": "eddsa-jcs-2022-purpose-key-agreement: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-purpose-key-agreement.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-purpose-key-agreement.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-purpose-key-agreement.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-017",
+      "title": "eddsa-jcs-2022-purpose-unrecognised: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-purpose-unrecognised.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-purpose-unrecognised.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-purpose-unrecognised.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-018",
+      "title": "eddsa-jcs-2022-expired: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-expired.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-expired.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-expired.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-019",
+      "title": "eddsa-jcs-2022-expires-future: must be valid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-expires-future.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-expires-future.json"
+      },
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-expires-future.json",
+            "expect": "valid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-020",
+      "title": "eddsa-jcs-2022-expires-february-30: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-expires-february-30.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-expires-february-30.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-expires-february-30.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-021",
+      "title": "eddsa-jcs-2022-expires-hour-24: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-expires-hour-24.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-expires-hour-24.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-expires-hour-24.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-022",
+      "title": "eddsa-jcs-2022-expires-leap-second: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-expires-leap-second.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-expires-leap-second.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-expires-leap-second.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-023",
+      "title": "eddsa-jcs-2022-expires-offset-24-hours: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-expires-offset-24-hours.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-expires-offset-24-hours.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-expires-offset-24-hours.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-024",
+      "title": "eddsa-jcs-2022-expires-offset-minute-60: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-expires-offset-minute-60.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-expires-offset-minute-60.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-expires-offset-minute-60.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-025",
+      "title": "eddsa-jcs-2022-expires-offset-99-hours: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-expires-offset-99-hours.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-expires-offset-99-hours.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-expires-offset-99-hours.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-026",
+      "title": "eddsa-jcs-2022-created-february-30: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-created-february-30.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-created-february-30.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-created-february-30.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-027",
+      "title": "eddsa-jcs-2022-created-hour-24: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-created-hour-24.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-created-hour-24.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-created-hour-24.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-028",
+      "title": "eddsa-jcs-2022-created-month-13: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-created-month-13.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-created-month-13.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-created-month-13.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-029",
+      "title": "eddsa-jcs-2022-created-leap-second: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-created-leap-second.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-created-leap-second.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-created-leap-second.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-030",
+      "title": "eddsa-jcs-2022-created-offset-24-hours: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-created-offset-24-hours.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-created-offset-24-hours.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-created-offset-24-hours.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-031",
+      "title": "eddsa-jcs-2022-small-order-key: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-small-order-key.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-small-order-key.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-small-order-key.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-032",
+      "title": "eddsa-jcs-2022-non-canonical-key: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-non-canonical-key.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-non-canonical-key.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-non-canonical-key.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-033",
+      "title": "eddsa-jcs-2022-mixed-order-r: must be invalid",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 4.7.1",
+        "framework 4.7.3",
+        "fixtures/proof/eddsa-jcs-2022-mixed-order-r.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "optional:proofVerify",
+        "cryptosuite:eddsa-jcs-2022"
+      ],
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/proof (see vectors/imported/PROVENANCE.json)",
+        "fixture": "proof/eddsa-jcs-2022-mixed-order-r.json"
+      },
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "verifyProof": {
+            "file": "proof/eddsa-jcs-2022-mixed-order-r.json",
+            "expect": "invalid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRF-101",
+      "title": "payload tampered after signing",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 7.2 item 7"
+      ],
+      "clarify": null,
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "mutate": [
+              {
+                "op": "set",
+                "path": "/payload/subject",
+                "value": "did:web:mallory.example",
+                "afterSign": true
+              }
+            ]
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofInvalid",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "PRF-102",
+      "title": "proofPurpose keyAgreement never authorises a signature",
+      "tier": 1,
+      "spec": [
+        "framework 4.7.3"
+      ],
+      "clarify": null,
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "sign": {
+              "as": "A",
+              "purpose": "keyAgreement"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofInvalid",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "PRF-103",
+      "title": "tier 2: proofPurpose is pinned to authentication",
+      "tier": 2,
+      "spec": [
+        "profile:attested (purpose pin)",
+        "framework 4.7.3"
+      ],
+      "clarify": null,
+      "mutants": [
+        "anyProofPurpose"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "sign": {
+              "as": "A",
+              "purpose": "assertionMethod"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofInvalid",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "PRF-104",
+      "title": "unknown cryptosuite is refused, never processed as unsigned",
+      "tier": 1,
+      "spec": [
+        "framework 4.7.1"
+      ],
+      "clarify": null,
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "mutate": [
+              {
+                "op": "set",
+                "path": "/proof/cryptosuite",
+                "value": "unknown-suite-2099",
+                "afterSign": true
+              }
+            ]
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofInvalid",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "PRF-105",
+      "title": "verification method controlled by a party other than issuer",
+      "tier": 1,
+      "spec": [
+        "framework 4.7",
+        "framework 7.2 item 7"
+      ],
+      "clarify": null,
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "sign": {
+              "as": "X",
+              "allowIssuerMismatch": true
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofInvalid",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "PRF-106",
+      "title": "proof without a recipient on a non-bearer task",
+      "tier": 1,
+      "spec": [
+        "framework 4.8.2",
+        "framework 7.2 item 8"
+      ],
+      "clarify": null,
+      "mutants": [
+        "ignoreAudienceBinding"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "recipient": {
+                "$omit": true
+              }
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "PRF-107",
+      "title": "tier 2: a request without proof is refused",
+      "tier": 2,
+      "spec": [
+        "profile:attested (proof on every request)",
+        "framework 7.2 item 7"
+      ],
+      "clarify": null,
+      "mutants": [
+        "proofOptional",
+        "proofRequiredAsInvalid"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "sign": null
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofRequired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "PRF-108",
+      "title": "tier 1: an unsigned request to a task that does not require proof is accepted",
+      "tier": 1,
+      "spec": [
+        "framework 7.3 (proof only where the task requires it)"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "sign": null
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    }
+  ]
+}

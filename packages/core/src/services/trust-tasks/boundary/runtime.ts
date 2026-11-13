@@ -40,6 +40,7 @@ export type {
   PayloadPolicy,
   PayloadValidator,
   ProofPolicy,
+  ProofVerifier,
   RejectReason,
   ReplayGuard,
   ReplayVerdict,

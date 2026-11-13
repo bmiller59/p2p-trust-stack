@@ -54,21 +54,39 @@ export class LocalRotationLogSource implements RotationLogSource {
 export class HttpRotationLogSource implements RotationLogSource {
   private readonly endpoint: string;
   private readonly fetchFn: typeof fetch;
+  private readonly timeoutMs: number;
+  private readonly maxBytes: number;
 
-  constructor(options: { endpoint: string; fetchFn?: typeof fetch }) {
+  /**
+   * `timeoutMs` (default 5000) bounds one fetch and `maxBytes` (default 1 MiB) the response body:
+   * the log is attacker-influenced input when the endpoint is not ours. Callers on the document
+   * boundary also wrap this in `BoundedRotationLogSource` (cache, rate limit).
+   */
+  constructor(options: { endpoint: string; fetchFn?: typeof fetch; timeoutMs?: number; maxBytes?: number }) {
     this.endpoint = options.endpoint.replace(/\/$/, '');
     this.fetchFn = options.fetchFn ?? ((input, init) => fetch(input, init));
+    this.timeoutMs = options.timeoutMs ?? 5000;
+    this.maxBytes = options.maxBytes ?? 1_048_576;
   }
 
   async getLog(did: string, src?: string): Promise<RotationLogEntry[]> {
     const url = this.logUrl(did, src);
-    const response = await this.fetchFn(url, { headers: { Accept: 'application/json' } });
+    const response = await this.fetchFn(url, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(this.timeoutMs) });
     if (!response.ok) {
       if (response.status === 404) return [];
       throw new Error(`HttpRotationLogSource: GET ${url} failed (${response.status})`);
     }
 
-    const body = (await response.json()) as RotationLogResponse;
+    const declared = Number(response.headers?.get?.('content-length'));
+    if (Number.isFinite(declared) && declared > this.maxBytes) throw new Error(`HttpRotationLogSource: response of ${declared} bytes exceeds the ${this.maxBytes} byte limit`);
+    let body: RotationLogResponse;
+    if (typeof response.text === 'function') {
+      const text = await response.text();
+      if (Buffer.byteLength(text, 'utf8') > this.maxBytes) throw new Error(`HttpRotationLogSource: response exceeds the ${this.maxBytes} byte limit`);
+      body = JSON.parse(text) as RotationLogResponse;
+    } else {
+      body = (await response.json()) as RotationLogResponse;
+    }
     return normalizeRotationLog(body);
   }
 
