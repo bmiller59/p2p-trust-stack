@@ -51,6 +51,13 @@ export type {
 } from "@openvtc/trust-tasks/runtime";
 export { SPEC as VRC_PROPOSE_SPEC } from "@openvtc/trust-tasks/vrc/relationships/propose/0.1/payload";
 export { SPEC as VRC_ISSUE_SPEC } from "@openvtc/trust-tasks/vrc/relationships/issue/0.1/payload";
+export { TYPE_URI as NEXT_STEP_TYPE_URI, PAYLOAD_SCHEMA as NEXT_STEP_PAYLOAD_SCHEMA } from "@openvtc/trust-tasks/trust-task-next-step/0.1/payload";
+export {
+  TYPE_URI as DISCOVERY_TYPE_URI,
+  RESPONSE_TYPE_URI as DISCOVERY_RESPONSE_TYPE_URI,
+  PAYLOAD_SCHEMA as DISCOVERY_PAYLOAD_SCHEMA,
+} from "@openvtc/trust-tasks/trust-task-discovery/0.4/payload";
+export { TYPE_URI as CONTROL_TYPE_URI } from "@openvtc/trust-tasks/trust-task-control/0.1/payload";
 
 import type { TrustTaskDocument } from "@openvtc/trust-tasks/runtime";
 
