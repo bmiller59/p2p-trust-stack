@@ -11,3 +11,5 @@ export { LISTENER_PATH, resolveListenerConfig, startBoundaryListener } from './l
 export type { BoundaryListener, BoundaryListenerConfig } from './listener.js';
 export { startAgentBoundary } from './agent-boundary.js';
 export type { AgentBoundary, AgentBoundaryDeps } from './agent-boundary.js';
+export { createWitnessShareHandler } from './witness-share.js';
+export type { WitnessShareDeps, WitnessShareTransactions } from './witness-share.js';

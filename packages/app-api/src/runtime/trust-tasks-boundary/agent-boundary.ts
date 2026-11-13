@@ -17,12 +17,14 @@ import { TrustTaskRecorder } from '@p2p-trust-stack/core/services/trust-tasks/bo
 import type { TransactionManager } from '@p2p-trust-stack/core/tx/manager.js';
 import { logger } from '@p2p-trust-stack/core/util/logger.js';
 import type { VrcReceiveParticipant } from '../tx/vrc-receive-participant.js';
+import type { WitnessShareParticipant } from '../tx/witness-share-participant.js';
 import { startBoundaryListener } from './listener.js';
 import type { BoundaryListener, BoundaryListenerConfig } from './listener.js';
 import { settleAcceptedClaims } from './settle.js';
 import { HOLD_EVERYTHING, VrcProposeService } from './vrc-propose.js';
 import type { ProposeConsentPolicy } from './vrc-propose.js';
 import { createVrcIssueHandler } from './vrc-issue.js';
+import { createWitnessShareHandler } from './witness-share.js';
 
 export interface AgentBoundaryDeps {
   ds: DataSource;
@@ -32,6 +34,8 @@ export interface AgentBoundaryDeps {
   passphrase: string;
   txManager: TransactionManager;
   receive: VrcReceiveParticipant;
+  /** The witness share participant (`store_witness_share`). */
+  witnessShare: WitnessShareParticipant;
   verifier: DidProofVerifier;
   config: BoundaryListenerConfig;
   /** Called when a proposal starts waiting for the human. */
@@ -63,6 +67,7 @@ export async function startAgentBoundary(deps: AgentBoundaryDeps): Promise<Agent
     ...(deps.onHeld === undefined ? {} : { onHeld: (row) => deps.onHeld!(row.exchangeId) }),
   });
   deps.receive.setInnerProofVerifier(deps.verifier);
+  deps.witnessShare.setVerifier(deps.verifier);
   const recorder = new TrustTaskRecorder(deps.ds, { node: 'agent', onError: (err) => logger.error('[trust-tasks] recording a document failed:', (err as Error)?.message) });
   const pipeline = new Pipeline({
     handlers: [
@@ -71,6 +76,13 @@ export async function startAgentBoundary(deps: AgentBoundaryDeps): Promise<Agent
         db: deps.ds,
         txManager: deps.txManager,
         participant: deps.receive,
+        verifier: deps.verifier,
+        attachTx: (id, txId) => guard.attachTx(id, txId),
+      }),
+      createWitnessShareHandler({
+        db: deps.ds,
+        txManager: deps.txManager,
+        participant: deps.witnessShare,
         verifier: deps.verifier,
         attachTx: (id, txId) => guard.attachTx(id, txId),
       }),

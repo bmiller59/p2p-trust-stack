@@ -15,6 +15,8 @@ import { createEd25519BoundarySigner, setBoundarySigner, signDocument } from '@p
 import { didKeyFromEd25519 } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/resolver.js';
 import * as exchangeDids from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
 import { LISTENER_PATH, resolveListenerConfig, startBoundaryListener } from '../../src/runtime/trust-tasks-boundary/listener.ts';
+import * as witnessShares from '@p2p-trust-stack/core/db/repositories/witness-shares-repo.js';
+import { A, R, WS, bundle, clock, shareDoc, sign, text, uid, useClock } from './witness-bundle.ts';
 import { startAgentBoundary } from '../../src/runtime/trust-tasks-boundary/agent-boundary.ts';
 
 const PROPOSE = 'https://trusttasks.org/spec/vrc/relationships/propose/0.1';
@@ -96,6 +98,7 @@ describe('startAgentBoundary wiring', () => {
       passphrase: 'test-passphrase-not-a-default',
       txManager: adapter.txManager,
       receive: adapter.receive,
+      witnessShare: adapter.witnessShare,
       verifier: adapter.verifier,
       config: { host: '127.0.0.1', port: 0, tier: 2, proposePolicy: 'hold' },
     });
@@ -122,12 +125,44 @@ describe('startAgentBoundary wiring', () => {
     assert.equal(again.status, 200);
   });
 
+  it('serves the witness share over loopback: stored, receipted, and signed by the connection DID (conformance P7)', async () => {
+    const adapter = await new VrcBoundaryAdapter({ attested: true, seed: 0x63, witness: true }).init();
+    cleanup.push(() => adapter.dispose());
+    setBoundarySigner(adapter.signer);
+    useClock(nowIso());
+    const boundary = await startAgentBoundary({
+      ds: adapter.db,
+      did: adapter.signer.did,
+      passphrase: 'test-passphrase-not-a-default',
+      txManager: adapter.txManager,
+      receive: adapter.receive,
+      witnessShare: adapter.witnessShare,
+      verifier: adapter.verifier,
+      config: { host: '127.0.0.1', port: 0, tier: 2, proposePolicy: 'hold' },
+    });
+    cleanup.push(() => boundary.stop());
+    const thread = uid(1);
+    const propose = sign(A, { id: thread, threadId: thread, type: PROPOSE, issuer: A.did, recipient: adapter.signer.did, issuedAt: clock.iso, payload: { relationshipDid: R.did } });
+    await post(boundary.listener.port, text(propose));
+    await boundary.propose.decide(thread, 'accept');
+    const resubmit = sign(A, { id: uid(2), threadId: thread, type: PROPOSE, issuer: A.did, recipient: adapter.signer.did, issuedAt: clock.iso, payload: { relationshipDid: R.did } });
+    const accepted = (await (await post(boundary.listener.port, text(resubmit))).json()) as { payload: { relationshipDid: string } };
+    const res = await post(boundary.listener.port, text(shareDoc(adapter, uid(3), thread, bundle(accepted.payload.relationshipDid))));
+    assert.equal(res.status, 200);
+    const receipt = (await res.json()) as { type: string; issuer: string; payload: { vwcDigestMultibase: string } };
+    assert.equal(receipt.type, `${WS}#response`);
+    assert.equal(receipt.issuer, adapter.signer.did);
+    assert.equal((await adapter.verifier.verify(receipt, { nowMs: Date.now() })).valid, true, 'the receipt is signed');
+    assert.equal((await witnessShares.findByExchange(adapter.db, thread))!.id, receipt.payload.vwcDigestMultibase);
+    useClock('2026-11-12T10:00:00Z');
+  });
+
   it('refuses to start without a boundary signer for the connection DID (replies could not be signed)', async () => {
     const adapter = await new VrcBoundaryAdapter({ attested: true, seed: 0x62 }).init();
     cleanup.push(() => adapter.dispose());
     setBoundarySigner(undefined);
     await assert.rejects(
-      () => startAgentBoundary({ ds: adapter.db, did: adapter.signer.did, passphrase: 'x', txManager: adapter.txManager, receive: adapter.receive, verifier: adapter.verifier, config: { host: '127.0.0.1', port: 0, tier: 2, proposePolicy: 'hold' } }),
+      () => startAgentBoundary({ ds: adapter.db, did: adapter.signer.did, passphrase: 'x', txManager: adapter.txManager, receive: adapter.receive, witnessShare: adapter.witnessShare, verifier: adapter.verifier, config: { host: '127.0.0.1', port: 0, tier: 2, proposePolicy: 'hold' } }),
       /no boundary signer/,
     );
   });

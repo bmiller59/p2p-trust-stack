@@ -31,7 +31,7 @@ import { VRC_ISSUE_SPEC, canonicalJson } from '@p2p-trust-stack/core/services/tr
 import type { TrustTaskDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/runtime.js';
 import { getAbortReason } from '@p2p-trust-stack/core/tx/ceremony-guard.js';
 import type { Operation, Participant, TransactionResult } from '@p2p-trust-stack/core/tx/types.js';
-import { ISSUE_ALREADY_ISSUED, ISSUE_NOT_ACCEPTED, ISSUE_RESPONSE_TYPE, ISSUE_TYPE, actorOf } from './shared.js';
+import { ISSUE_ALREADY_ISSUED, ISSUE_NOT_ACCEPTED, ISSUE_RESPONSE_TYPE, ISSUE_TYPE, RECEIVING_STATES, actorOf } from './shared.js';
 
 /** The part of the transaction manager the handler uses. */
 export interface IssueTransactions {
@@ -48,9 +48,6 @@ export interface VrcIssueDeps {
   /** Records the transaction id against the duplicate-record claim so a crash can be settled (accepted-store `attachTx`). */
   attachTx?: (documentId: string, txId: string) => Promise<void>;
 }
-
-/** States of an exchange in which the counterparty's credential may be received. */
-const RECEIVING = new Set(['accepted', 'received', 'issued-by-me']);
 
 const hex = (bytes: Uint8Array): string => Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
 
@@ -75,7 +72,7 @@ async function handleIssue(deps: VrcIssueDeps, doc: TrustTaskDocument<unknown>, 
   if (
     exchange === null ||
     exchange.remoteConnectionDid !== actor ||
-    !RECEIVING.has(exchange.state) ||
+    !RECEIVING_STATES.has(exchange.state) ||
     exchange.remoteRelationshipDid === null ||
     exchange.localIdentityUuid === null ||
     exchange.remoteIdentityUuid === null

@@ -83,6 +83,7 @@ import type { PersistedCeremonyEvent } from './tx/ceremony-event-receive-partici
 import { UtilityServerUnavailableError } from '../errors.js';
 import { VrcCeremonyParticipant } from './tx/vrc-ceremony-participant.js';
 import { VrcReceiveParticipant } from './tx/vrc-receive-participant.js';
+import { WitnessShareParticipant } from './tx/witness-share-participant.js';
 import { PersonhoodAckReceiveParticipant } from './tx/personhood-ack-participant.js';
 import {
   awaitCeremonyTerminal,
@@ -354,6 +355,7 @@ export abstract class BaseAgent implements AgentHandle {
   private _vrcCeremonyParticipant?: VrcCeremonyParticipant;
   /** VRC receive participant (inbound store_remote_vrc operations). */
   private _vrcReceiveParticipant?: VrcReceiveParticipant;
+  private _witnessShareParticipant?: WitnessShareParticipant;
   private _trustTasksListenerOptions?: TrustTaskListenerOptions;
   private _trustTasksBoundary?: AgentBoundary;
   /** Receives the peer's personhood ack via the coordinator (ack_delivery leg). */
@@ -1033,6 +1035,10 @@ export abstract class BaseAgent implements AgentHandle {
         this._txBootstrap.coordinator.registerParticipant(this._vrcReceiveParticipant);
         logger.info('[Agent] VRC receive participant registered');
 
+        // Stores a witnessed credential and its evidence (suite-local witness-share task).
+        this._witnessShareParticipant = new WitnessShareParticipant(`peer:${this.identity.did}`, this.ds, this._txBootstrap.txDataSource);
+        this._txBootstrap.coordinator.registerParticipant(this._witnessShareParticipant);
+
         // Receiving half of the ceremony's ack_delivery leg. Registered under the
         // same `peer:{vid}` pid as the other local participants; the coordinator
         // routes by `handlesOperation`.
@@ -1120,7 +1126,7 @@ export abstract class BaseAgent implements AgentHandle {
     }
     if (config === null) return;
     this.ensureBoundarySigner();
-    if (!this._txBootstrap || !this._vrcReceiveParticipant || !this.db) {
+    if (!this._txBootstrap || !this._vrcReceiveParticipant || !this._witnessShareParticipant || !this.db) {
       logger.error('[Agent] Trust Task listener not started: the transaction coordinator or the VRC participant is not ready');
       return;
     }
@@ -1131,6 +1137,7 @@ export abstract class BaseAgent implements AgentHandle {
         passphrase: this.passphrase,
         txManager: this._txBootstrap.manager,
         receive: this._vrcReceiveParticipant,
+        witnessShare: this._witnessShareParticipant,
         verifier: this.getBoundaryProofVerifier(),
         config,
       });

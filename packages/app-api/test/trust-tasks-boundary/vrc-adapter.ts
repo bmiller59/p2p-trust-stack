@@ -32,11 +32,24 @@ import { ERROR_SPEC_VERSION, FRAMEWORK_VERSION } from '@p2p-trust-stack/core/ser
 import { VrcProposeService } from '../../src/runtime/trust-tasks-boundary/vrc-propose.ts';
 import { createVrcIssueHandler } from '../../src/runtime/trust-tasks-boundary/vrc-issue.ts';
 import { VrcReceiveParticipant } from '../../src/runtime/tx/vrc-receive-participant.ts';
+import { WitnessShareParticipant } from '../../src/runtime/tx/witness-share-participant.ts';
+import { createWitnessShareHandler } from '../../src/runtime/trust-tasks-boundary/witness-share.ts';
 import { VtcStore } from '@p2p-trust-stack/core/vtc/store.js';
 import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-resolver.js';
 import { CompensationExecutor, DataSourceLogSink, TransactionCoordinator, TransactionLog, TransactionManager, TX_SCHEMA_SQL, applyTxSchemaAdditions } from '@p2p-trust-stack/core/tx/index.js';
 import type { ProposeConsentPolicy, ProposeDecision } from '../../src/runtime/trust-tasks-boundary/vrc-propose.ts';
-import { ISSUE_TYPE, PROPOSE_TYPE } from '../../src/runtime/trust-tasks-boundary/shared.ts';
+import { ISSUE_TYPE, PROPOSE_TYPE, WITNESS_SHARE_TYPE } from '../../src/runtime/trust-tasks-boundary/shared.ts';
+
+export interface VrcAdapterOptions {
+  attested?: boolean;
+  /** Serve `vrc/relationships/issue` (default true). */
+  issue?: boolean;
+  /** Also serve the suite-local `vrc/relationships/witness-share` task (conformance P7). */
+  witness?: boolean;
+  name?: string;
+  tmpRoot?: string;
+  seed?: number;
+}
 
 export const PASSPHRASE = 'test-passphrase-not-a-default';
 
@@ -57,6 +70,7 @@ export class VrcBoundaryAdapter {
   txManager!: TransactionManager;
   txDb!: SqliteDataSource;
   receive!: VrcReceiveParticipant;
+  witnessShare!: WitnessShareParticipant;
   verifier!: DidProofVerifier;
   private dbPath!: string;
 
@@ -109,6 +123,15 @@ export class VrcBoundaryAdapter {
     const noResolver = {} as IdentityResolver;
     this.receive = new VrcReceiveParticipant(`peer:${did}`, this.db, this.txDb, new VtcStore(this.db.getRawDb(), noResolver), noResolver);
     this.receive.setInnerProofVerifier(this.verifier, () => this.now());
+    this.witnessShare = new WitnessShareParticipant(`peer:${did}`, this.db, this.txDb);
+    this.witnessShare.setVerifier(this.verifier, () => this.now());
+    const witness = this.options.witness === true ? [createWitnessShareHandler({
+      db: this.db,
+      txManager: this.txManager,
+      participant: this.witnessShare,
+      verifier: this.verifier,
+      attachTx: (id, txId) => this.guard.attachTx(id, txId),
+    })] : [];
     const extra = this.options.issue === false ? [] : [createVrcIssueHandler({
       db: this.db,
       txManager: this.txManager,
@@ -117,7 +140,7 @@ export class VrcBoundaryAdapter {
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     })];
     this.pipeline = new Pipeline({
-      handlers: [this.propose.handler(), ...extra],
+      handlers: [this.propose.handler(), ...extra, ...witness],
       servedVids: [did],
       guard: this.guard,
       now: () => this.now(),
@@ -152,7 +175,7 @@ export class VrcBoundaryAdapter {
       version: '0.0.0-p6',
       tierMax: (this.attested ? 2 : 1) as 1 | 2,
       bindings: ['in-process'],
-      supportedTypes: [PROPOSE_TYPE, ISSUE_TYPE],
+      supportedTypes: [PROPOSE_TYPE, ISSUE_TYPE, ...(this.options.witness === true ? [WITNESS_SHARE_TYPE] : [])],
       carriers: [{ typeUri: ISSUE_TYPE, class: 'consequential' as const, validPayload: {} }],
       cryptosuites: ['eddsa-jcs-2022'],
       optional: ['trigger.consent', 'clock', 'restart', 'proofVerify', ...(this.attested ? ['attested'] : [])],
@@ -212,6 +235,9 @@ export class VrcBoundaryAdapter {
   async storedCount(): Promise<number> {
     return this.count("SELECT COUNT(*) AS n FROM credentials WHERE vc_type = 'vrc'");
   }
+  async witnessCount(): Promise<number> {
+    return this.count('SELECT COUNT(*) AS n FROM witnessed_credentials');
+  }
   private async handledCount(): Promise<number> {
     const accepted = await this.count("SELECT COUNT(*) AS n FROM vrc_exchange_relationship_dids WHERE role = 'acceptor' AND state IN ('accepted','received','issued-by-me')");
     return accepted + (await this.storedCount());
@@ -246,6 +272,7 @@ export class VrcBoundaryAdapter {
       handled: await this.handledCount(),
       exchanges: await this.db.all('SELECT exchange_id, state FROM vrc_exchange_relationship_dids ORDER BY exchange_id'),
       credentials: await this.storedCount(),
+      witnessed: await this.witnessCount(),
     });
   }
 
