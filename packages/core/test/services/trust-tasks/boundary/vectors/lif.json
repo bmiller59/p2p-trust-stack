@@ -1,0 +1,128 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "LIF",
+  "family": "framework",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "LIF-001",
+      "title": "a responded document stays responded; an inbound error does not change it",
+      "tier": 1,
+      "spec": [
+        "framework 4.12 (responded is terminal)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "errorFlipsState",
+        "answerInboundErrors"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "error.inbound"
+          },
+          "expect": {
+            "disposition": "silence",
+            "state": {
+              "handled": 1,
+              "documentState": {
+                "$id(req)": "responded"
+              }
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "LIF-002",
+      "title": "a document refused before acceptance writes no record: a corrected resend under the same id is accepted",
+      "tier": 1,
+      "spec": [
+        "framework 4.12 (the record is written at accepted)",
+        "framework 7.2 item 11"
+      ],
+      "clarify": null,
+      "mutants": [
+        "burnIdOnRefusal"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "payload": {
+                "subject": 5
+              }
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        },
+        {
+          "at": "+1s",
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "LIF-003",
+      "title": "task control not supported: unsupportedType, nothing cancelled",
+      "tier": 1,
+      "spec": [
+        "framework 11.8 (support is optional)"
+      ],
+      "clarify": null,
+      "skipIfOptional": [
+        "control"
+      ],
+      "mutants": [
+        "controlAccepted"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "control.cancel"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "unsupportedType",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    }
+  ]
+}

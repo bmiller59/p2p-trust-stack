@@ -8,6 +8,8 @@
  */
 export {
   CONSEQUENTIAL_FRESHNESS,
+  STANDARD_CODES,
+  TRUST_TASK_ERROR_TYPE_URI,
   DEFAULT_FRESHNESS,
   InMemoryReplayGuard,
   StaticTransport,
@@ -16,9 +18,13 @@ export {
   consequentialChecks,
   consumeInbound,
   documentDigest,
+  isStandardCode,
+  issuedAtNow,
+  normalizeCode,
   notConsequentialChecks,
   recordExpiry,
   rejectWith,
+  rejectWithRecipient,
   toErrorPayload,
   validateBasic,
   validateFreshness,
@@ -31,8 +37,10 @@ export type {
   FreshnessPolicy,
   PayloadPolicy,
   ProofPolicy,
+  RejectReason,
   ReplayGuard,
   SpecPolicy,
+  StandardCode,
   TransportHandler,
   TrustTaskDocument,
 } from "@openvtc/trust-tasks/runtime";

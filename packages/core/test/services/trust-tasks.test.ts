@@ -103,6 +103,12 @@ test('buildResponse echoes threadId and swaps issuer/recipient with #response', 
   assert.notEqual(res.id, req.id);
 });
 
+test('buildResponse continues the request\'s thread, or names the thread by the request id (RSP-002, framework 4.9)', () => {
+  const noThread = buildTrustTask(POLICY_EVALUATE_TYPE, { id: 'req-7', issuer: 'did:example:alice', recipient: 'did:example:bob', payload: {} });
+  assert.equal(buildResponse(noThread, {}).threadId, 'req-7');
+  assert.equal(buildResponse({ ...noThread, threadId: 't-7' }, {}).threadId, 't-7');
+});
+
 test('buildError emits a #response carrying {code, message}; bare falls back to OUR type', () => {
   const req = buildTrustTask(POLICY_EVALUATE_TYPE, { threadId: 't', payload: {} });
   const err = buildError(req, { code: 'policy/evaluate:candidateRegoInvalid', message: 'bad' });

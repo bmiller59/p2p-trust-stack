@@ -1,0 +1,111 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "ERR",
+  "family": "framework",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "ERR-001",
+      "title": "error shape, threading, inResponseTo and bounded details",
+      "tier": 1,
+      "spec": [
+        "framework 8.2",
+        "framework 8.2.2",
+        "framework 8.4"
+      ],
+      "clarify": null,
+      "mutants": [
+        "errorWithoutRetryable",
+        "wrongReplyThread",
+        "reuseRequestIdInReply",
+        "oversizedDetails",
+        "expiredAsMalformed"
+      ],
+      "steps": [
+        {
+          "at": "+0s",
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "expiresAt": "$now-10s",
+              "issuedAt": "$now-20s"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "retryable": false,
+            "noSideEffect": true,
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "$carrier",
+              "/payload/inResponseTo/id": "$id(req)"
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "ERR-002",
+      "title": "an inbound error is never answered",
+      "tier": 1,
+      "spec": [
+        "framework 8 (no error loops)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "answerInboundErrors"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "error.inbound"
+          },
+          "expect": {
+            "disposition": "silence",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "ERR-003",
+      "title": "tier 2: errors are signed by the IUT",
+      "tier": 2,
+      "spec": [
+        "profile:attested (proof on every error)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "unsignedReplies"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "payload": {
+                "subject": 5
+              }
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    }
+  ]
+}

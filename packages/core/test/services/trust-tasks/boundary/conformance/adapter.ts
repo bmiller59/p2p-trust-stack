@@ -18,11 +18,12 @@ import {
   UnauthenticatedTransport,
   consequentialChecks,
   consumeInbound,
-  rejectWith,
   selectMyVid,
-  toErrorPayload,
 } from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
 import type { ReplayGuard, SpecPolicy, TrustTaskDocument } from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
+import { TaskError, buildErrorDocument, isInboundError } from "../../../../../src/services/trust-tasks/boundary/errors.ts";
+import { transition } from "../../../../../src/services/trust-tasks/boundary/lifecycle.ts";
+import type { LifecycleState } from "../../../../../src/services/trust-tasks/boundary/lifecycle.ts";
 import { ERROR_SPEC_VERSION, FRAMEWORK_VERSION } from "../../../../../src/services/trust-tasks/boundary/pins.ts";
 import type {
   Adapter,
@@ -36,7 +37,24 @@ import type {
   SendResult,
 } from "./contract.ts";
 
-const ERROR_TYPE_MARKER = "/trust-task-error/";
+/**
+ * A deliberately small JSON Schema reader for the test carrier: `type`, `required`, `properties` with a
+ * primitive `type`. Enough to give the adapter a real item-2 payload check; the generated policies use
+ * the library's own schemas and a full validator in later phases.
+ */
+const tinyValidator = {
+  validate(schema: unknown, payload: unknown): { ok: boolean; errors?: string[] } {
+    const sc = schema as { required?: string[]; properties?: Record<string, { type?: string }> };
+    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) return { ok: false, errors: ["payload must be an object"] };
+    const p = payload as Record<string, unknown>;
+    const errors: string[] = [];
+    for (const k of sc.required ?? []) if (!(k in p)) errors.push(`missing ${k}`);
+    for (const [k, def] of Object.entries(sc.properties ?? {})) {
+      if (k in p && def.type !== undefined && typeof p[k] !== def.type) errors.push(`${k} must be ${def.type}`);
+    }
+    return { ok: errors.length === 0, errors };
+  },
+};
 
 export interface BoundaryHandler {
   spec: SpecPolicy;
@@ -67,7 +85,7 @@ export class BoundaryAdapter implements Adapter {
   private guard: ReplayGuard = new InMemoryReplayGuard();
   private handled = 0;
   private counter = 0;
-  private readonly states = new Map<string, string>();
+  private readonly states = new Map<string, LifecycleState>();
   private readonly snapshots = new Map<string, string>();
 
   constructor(options: BoundaryAdapterOptions) {
@@ -176,34 +194,49 @@ export class BoundaryAdapter implements Adapter {
     }
 
     const type = typeof doc.type === "string" ? doc.type : "";
-    // An inbound error is never answered (no error loops).
-    if (type.includes(ERROR_TYPE_MARKER)) return out([]);
+    // An inbound error is never answered (no error loops) and changes the state of nothing.
+    if (isInboundError(doc)) return out([]);
 
     const handler = this.handlers.get(type.split("#")[0]!);
     if (handler === undefined) {
       if (typeof doc.id !== "string" || type === "") return out([]);
-      const e = rejectWith(doc, this.newId(), toErrorPayload({ code: "unsupportedType", message: "type is not served", retryable: false }), clock);
-      return out([e]);
+      return out([buildErrorDocument(doc, new TaskError({ code: "unsupportedType" }), { newId: () => this.newId(), now: clock })]);
     }
 
     const transport = params.from.kind === "none" ? new UnauthenticatedTransport() : new StaticTransport({ issuer: params.from.vid });
-    const outcome = await consumeInbound({
-      transport,
-      spec: handler.spec,
-      proofPolicy: { kind: "rejectIfPresent" },
-      payloadPolicy: { kind: "acceptUnvalidated" },
-      checks: consequentialChecks(this.guard),
-      doc,
-      myVid: selectMyVid(doc, this.served, this.served[0]!),
-      now: this.now(),
-      newErrorId: () => this.newId(),
-      clock,
-      handler: async (accepted) => {
-        this.handled++;
-        this.states.set(accepted.id, "responded");
-        return (await handler.handle(accepted as TrustTaskDocument<unknown>)) as TrustTaskDocument<unknown> | void;
-      },
-    });
+    let outcome: Awaited<ReturnType<typeof consumeInbound>>;
+    try {
+      outcome = await consumeInbound({
+        transport,
+        spec: handler.spec,
+        proofPolicy: { kind: "rejectIfPresent" },
+        payloadPolicy: { kind: "validate", validate: tinyValidator },
+        checks: consequentialChecks(this.guard),
+        doc,
+        myVid: selectMyVid(doc, this.served, this.served[0]!),
+        now: this.now(),
+        newErrorId: () => this.newId(),
+        clock,
+        handler: async (accepted) => {
+          this.handled++;
+          let state: LifecycleState = transition("validated", "accepted");
+          this.states.set(accepted.id, state);
+          state = transition(state, "executing");
+          this.states.set(accepted.id, state);
+          try {
+            const response = (await handler.handle(accepted as TrustTaskDocument<unknown>)) as TrustTaskDocument<unknown> | void;
+            this.states.set(accepted.id, transition(state, "responded"));
+            return response;
+          } catch (err) {
+            this.states.set(accepted.id, transition(state, "errored"));
+            throw err;
+          }
+        },
+      });
+    } catch (err) {
+      // Catch-all: whatever a handler throws reaches the wire as a typed error, opaque unless it is a TaskError.
+      return out([buildErrorDocument(doc, err, { newId: () => this.newId(), now: clock })]);
+    }
 
     switch (outcome.kind) {
       case "handled":

@@ -1,0 +1,105 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "RSP",
+  "family": "framework",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "RSP-001",
+      "title": "success response: type, thread, parties, fresh id",
+      "tier": 1,
+      "spec": [
+        "framework 4.4.1",
+        "framework 4.9"
+      ],
+      "clarify": null,
+      "mutants": [
+        "reuseRequestIdInReply",
+        "wrongReplyThread",
+        "swapRecipientInReply"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "RSP-002",
+      "title": "response continues the request's thread",
+      "tier": 1,
+      "spec": [
+        "framework 4.9"
+      ],
+      "clarify": null,
+      "mutants": [
+        "wrongReplyThread"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "threadId": "$id(thread)"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "pointer": {
+              "/threadId": "$id(thread)"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "RSP-004",
+      "title": "tier 2: the response is signed by the IUT with purpose authentication, whole-second timestamps",
+      "tier": 2,
+      "spec": [
+        "profile:attested (proof on every response)",
+        "framework 7.3"
+      ],
+      "clarify": null,
+      "mutants": [
+        "unsignedReplies",
+        "wholeMillisecondTimestamps"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    }
+  ]
+}
