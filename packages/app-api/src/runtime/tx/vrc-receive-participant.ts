@@ -29,6 +29,7 @@ import { VrcCeremonyStore } from '@p2p-trust-stack/core/tx/vrc-ceremony-store.js
 import { logger } from '@p2p-trust-stack/core/util/logger.js';
 import * as exchangeDids from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
 import { checkIncomingVrc, findExchangeVrc } from '@p2p-trust-stack/core/relationship/exchange-vrc.js';
+import type { InnerProofVerifier } from '@p2p-trust-stack/core/relationship/exchange-vrc.js';
 import { recordAbortReason } from '@p2p-trust-stack/core/tx/ceremony-guard.js';
 import { TaskError } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
 import { sha256 } from '@p2p-trust-stack/core/crypto/primitives.js';
@@ -61,6 +62,7 @@ export class VrcReceiveParticipant implements Participant {
   private readonly txDb: DataSource;
   private readonly vtcStore: VtcStore;
   private readonly ceremonyStore: VrcCeremonyStore;
+  private innerProof: { verifier: InnerProofVerifier; now: () => number } | undefined;
 
   constructor(
     pid: string,
@@ -75,6 +77,15 @@ export class VrcReceiveParticipant implements Participant {
     this.vtcStore = vtcStore;
     // The ceremony saga lives in the same tx-coordinator db as participant state.
     this.ceremonyStore = new VrcCeremonyStore(txDb);
+  }
+
+  /**
+   * Boundary path: verify the inner proof with the boundary's verifier (so `did:key` as well as
+   * `did:peer:4` relationship DIDs verify) on the same clock the pipeline uses. Without it the
+   * offline `did:peer:4` check applies.
+   */
+  setInnerProofVerifier(verifier: InnerProofVerifier, now: () => number = Date.now): void {
+    this.innerProof = { verifier, now };
   }
 
   handlesOperation(op: Operation): boolean {
@@ -151,7 +162,11 @@ export class VrcReceiveParticipant implements Participant {
     if (exchange.localIdentityUuid === null || exchange.remoteIdentityUuid === null) {
       throw new TaskError({ reason: 'notAccepted', internalMessage: 'exchange identities are not mapped' });
     }
-    const check = await checkIncomingVrc(params.w3cVcJson, exchange);
+    const check = await checkIncomingVrc(
+      params.w3cVcJson,
+      exchange,
+      this.innerProof === undefined ? undefined : { verifier: this.innerProof.verifier, nowMs: this.innerProof.now() },
+    );
     if (!check.ok) {
       throw new TaskError({ reason: 'vcInvalid', internalMessage: `exchange VRC refused: ${check.reason}` });
     }

@@ -1,0 +1,1635 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "VRC-ISS",
+  "family": "vrc-issue",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "VRC-ISS-001",
+      "title": "a credential delivered inside an accepted exchange is stored and receipted with the digest of the stored credential",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:98-109 (issuing party items 1-3, receiving party items 1-3)",
+        "specs/vrc/relationships/issue/0.1/spec.md:83-89 (receipt names the stored artifact)",
+        "specs/vrc/relationships/issue/0.1/spec.md:49-52"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {}
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)",
+              "/threadId": "$id(req)"
+            },
+            "state": {
+              "handled": 2,
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-002",
+      "title": "the receipt digest is computed over the stored credential when the request carries none",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:83-89 (MUST compute the digest over the credential it stored)",
+        "specs/vrc/relationships/issue/0.1/spec.md:102 (vrcDigestMultibase SHOULD)",
+        "specs/vrc/relationships/issue/0.1/spec.md:109"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "copyDigest"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "digest": "none"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-003",
+      "title": "a request digest that does not match the credential is not copied into the receipt",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:86-89 (a copied digest attests nothing about what was stored)",
+        "specs/vrc/relationships/issue/0.1/spec.md:109"
+      ],
+      "clarify": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating.",
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "copyDigest"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "digest": "wrong"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-004",
+      "title": "an unsolicited delivery is refused notAccepted however well it verifies",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:115-122 (authorization is the accepted proposal)",
+        "specs/vrc/relationships/issue/0.1/spec.md:49-52",
+        "SPEC.md:1020 (7.2 item 10: validation is not authorization)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "acceptUnsolicited"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "subject": "$S",
+              "issuer": "$R"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/issue:notAccepted",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            },
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+              "/payload/inResponseTo/id": "$id(iss)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-005",
+      "title": "a delivery for a proposal that is still held is refused notAccepted",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:115-122",
+        "specs/vrc/relationships/propose/0.1/spec.md:97-101 (acceptance is not issuance; a held proposal is not accepted)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "acceptUnsolicited"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "hold"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "next-step",
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/expects/0/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/continuation": "resubmit",
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req)"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "subject": "$S"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/issue:notAccepted",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            },
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+              "/payload/inResponseTo/id": "$id(iss)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-006",
+      "title": "a delivery for a declined proposal is refused notAccepted",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:115-122",
+        "specs/vrc/relationships/propose/0.1/spec.md:87"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "acceptUnsolicited"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "decline"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/propose:declined"
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "subject": "$S"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/issue:notAccepted",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            },
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+              "/payload/inResponseTo/id": "$id(iss)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-007",
+      "title": "a credential whose issuer is not the relationship DID the proposal exchanged is refused",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:101 (issuing party item 2)",
+        "specs/vrc/relationships/issue/0.1/spec.md:108 (party bindings checked before storing)",
+        "specs/vrc/relationships/issue/0.1/spec.md:50-51"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noPartyBindingCheck"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "issuer": "$Q"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/issue:notAccepted",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            },
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+              "/payload/inResponseTo/id": "$id(iss)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-008",
+      "title": "a credential whose subject is not the receiving party's relationship DID is refused",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:101",
+        "specs/vrc/relationships/issue/0.1/spec.md:108",
+        "specs/vrc/relationships/issue/0.1/spec.md:50-51"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noPartyBindingCheck"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "subject": "$Q"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/issue:notAccepted",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            },
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+              "/payload/inResponseTo/id": "$id(iss)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-009",
+      "title": "a credential whose own proof does not verify is refused",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:108 (verifies the credential's own proof before storing or receipting)",
+        "specs/vrc/relationships/issue/0.1/spec.md:146-150 (two proofs, two jobs)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noVcProofCheck"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "corrupt": true
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/issue:notAccepted",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            },
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+              "/payload/inResponseTo/id": "$id(iss)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-010",
+      "title": "a credential proven by a key its issuer does not control is refused",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:108",
+        "SPEC.md:359-376 (4.7.3: a key controlled by the issuer)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noVcProofCheck"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "signer": "Q"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/issue:notAccepted",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            },
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+              "/payload/inResponseTo/id": "$id(iss)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-011",
+      "title": "a delivery without an envelope proof is refused proofRequired even when the credential verifies",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:23-31 (request proof REQUIRED)",
+        "specs/vrc/relationships/issue/0.1/spec.md:148-150 (never accept an unproofed envelope because the credential verifies)",
+        "SPEC.md:1017 (7.2 item 7)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "proofOptional",
+        "proofRequiredAsInvalid"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {},
+            "sign": null
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofRequired",
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-012",
+      "title": "a delivery without issuedAt is refused (issuedAt REQUIRED)",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:33-35 (issuedAtRequirement REQUIRED)",
+        "SPEC.md:1023 (7.2 item 13) and 7.3 item 17"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noFreshnessWindow",
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {},
+            "params": {
+              "issuedAt": {
+                "$omit": true
+              }
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-013",
+      "title": "an expired delivery is refused and nothing is stored",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/issue/0.1/spec.md:33-35 (a replayed issuance re-asserts a relationship)",
+        "SPEC.md:1014 (7.2 item 4)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noTimeChecks",
+        "expiredAsMalformed"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {},
+            "params": {
+              "issuedAt": "$now-20s",
+              "expiresAt": "$now-10s"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-014",
+      "title": "an identical resend is absorbed: the first receipt again, stored once, not executed twice",
+      "tier": 1,
+      "spec": [
+        "SPEC.md:1021 (7.2 item 11)",
+        "SPEC.md:1055 (disposition of a duplicate)",
+        "specs/vrc/relationships/issue/0.1/spec.md:36-38 (sideEffects mutating)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {}
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "same": "previous"
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-015",
+      "title": "the same id with a different credential is idConflict, nothing new is stored",
+      "tier": 1,
+      "spec": [
+        "SPEC.md:1021 (7.2 item 11)",
+        "SPEC.md:1033 (keying and comparison)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "name": "first"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(first)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "name": "second",
+              "nonce": "other"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-016",
+      "title": "the same id re-signed over identical content is idConflict",
+      "tier": 1,
+      "spec": [
+        "SPEC.md:1033 (a re-signed proof over identical content is a different document sharing an id)",
+        "SPEC.md:1021"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {}
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "same": "previous",
+            "sign": {
+              "created": "+5s"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-017",
+      "title": "tier 2: the receipt is signed by the IUT, purpose authentication, whole-second timestamps",
+      "tier": 2,
+      "spec": [
+        "profile:attested (proof on every response)",
+        "specs/vrc/relationships/issue/0.1/spec.md:23-31 (response proof OPTIONAL in the specification)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "unsignedReplies",
+        "wholeMillisecondTimestamps"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {}
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-018",
+      "title": "tier 2: an envelope whose issuer is the relationship DID is refused (issuer, signer and sender are the connection DID)",
+      "tier": 2,
+      "spec": [
+        "docs/04 section 10: envelope issuer and proof under the connection DID; the relationship DID only in the VRC inner proof (profile attested)",
+        "SPEC.md:394-423 (4.8.1 precedence of in-band identity)",
+        "SPEC.md:1016 (7.2 item 6)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "ignoreTransportIdentity"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {},
+            "params": {
+              "issuer": "$R"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "identityMismatch",
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-019",
+      "title": "tier 2: an envelope issued as the connection DID but proven by the relationship DID's key is refused",
+      "tier": 2,
+      "spec": [
+        "docs/04 section 10 (profile attested): issuer == proof signer == transport sender",
+        "SPEC.md:1017 (7.2 item 7)",
+        "specs/vrc/relationships/issue/0.1/spec.md:124-132 (the envelope proof attributes the delivery)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "acceptUnverifiedProof"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {},
+            "sign": {
+              "as": "R",
+              "allowIssuerMismatch": true
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofInvalid",
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-020",
+      "title": "a second delivery of the same credential under a new envelope id leaves one stored credential",
+      "tier": 1,
+      "spec": [
+        "SPEC.md:1062 (creating something SHOULD be refused when it exists) versus specs/vrc/relationships/issue/0.1/spec.md:83-89 (receipt names the stored artifact)",
+        "docs/04 section 11 (digest-idempotent store)",
+        "docs/07 O21"
+      ],
+      "clarify": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating.",
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "storeDuplicates"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {}
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "template": "issue.request",
+            "vrc": {},
+            "params": {
+              "id": "$id(iss2)",
+              "issuedAt": "$now+5s"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-021",
+      "title": "a second, different credential for one exchange is not stored",
+      "tier": 1,
+      "spec": [
+        "docs/06 section 2.2 (issue:alreadyIssued)",
+        "SPEC.md:1062 (creating something)",
+        "docs/07 O21"
+      ],
+      "clarify": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating.",
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noSecondVrcGuard"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "name": "first"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(first)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "name": "second",
+              "nonce": "other"
+            },
+            "params": {
+              "id": "$id(iss2)",
+              "issuedAt": "$now+5s"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": [
+              "vrc/relationships/issue:alreadyIssued",
+              "vrc/relationships/issue:notAccepted"
+            ],
+            "noSideEffect": true,
+            "state": {
+              "stored": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-022",
+      "title": "a second exchange between the same parties, with a fresh relationship DID, stores a second credential",
+      "tier": 1,
+      "spec": [
+        "docs/07 section 1 (relationship DID unique per VRC exchanged)",
+        "specs/vrc/relationships/propose/0.1/spec.md:64-66 (a propose id names the exchange)",
+        "docs/07 O21"
+      ],
+      "clarify": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating.",
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {}
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(vrc)"
+            },
+            "state": {
+              "stored": 1
+            }
+          }
+        },
+        {
+          "at": "+10s",
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "id": "$id(req2)",
+              "threadId": "$id(req2)",
+              "payload": {
+                "relationshipDid": "$S"
+              }
+            }
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "state": {
+              "handled": 3
+            }
+          }
+        },
+        {
+          "at": "+15s",
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "issuer": "$S",
+              "name": "second"
+            },
+            "params": {
+              "id": "$id(iss2)",
+              "threadId": "$id(req2)",
+              "issuedAt": "$now+15s"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/issue/0.1#response",
+            "pointer": {
+              "/payload/vrcDigestMultibase": "$digest(second)"
+            },
+            "state": {
+              "stored": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-ISS-023",
+      "title": "profile: the credential's inner proof is made with purpose assertionMethod",
+      "tier": 1,
+      "spec": [
+        "credential specification CRED/body.md:85-86 and :249-250 (examples sign with proofPurpose assertionMethod; the VRC example elides the proof, :359-361)",
+        "docs/06 section 3.10 (inference: inner proof key listed under assertionMethod)",
+        "docs/07 O17"
+      ],
+      "clarify": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating.",
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "anyVcPurpose"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "issue.request",
+            "vrc": {
+              "purpose": "authentication"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/issue:notAccepted",
+            "retryable": false,
+            "noSideEffect": true,
+            "state": {
+              "stored": 0
+            },
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/issue/0.1",
+              "/payload/inResponseTo/id": "$id(iss)"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

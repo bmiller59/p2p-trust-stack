@@ -36,20 +36,49 @@ export type VrcBindingRefusal = 'malformed' | 'scopeMissing' | 'issuerMismatch' 
 export type VrcBindingCheck = { ok: true } | { ok: false; reason: VrcBindingRefusal };
 
 /**
- * Bindings of an INCOMING credential to its exchange record: `issuerScope` present and valid, issuer
- * equals the counterparty relationship DID recorded for the exchange, subject equals ours.
+ * Pure binding check shared by every receive path (plan 2.2: one source of truth): `issuerScope`
+ * present and valid, issuer equals the counterparty relationship DID, subject equals ours.
  */
-export function checkIncomingBindings(vc: unknown, exchange: ExchangeDidRow): VrcBindingCheck {
-  if (vc === null || typeof vc !== 'object') return { ok: false, reason: 'malformed' };
+export function checkBindings(vc: unknown, expectedIssuer: string | null, expectedSubject: string): VrcBindingCheck {
+  if (vc === null || typeof vc !== 'object' || Array.isArray(vc)) return { ok: false, reason: 'malformed' };
   const doc = vc as Record<string, unknown>;
   const subject = doc.credentialSubject as { id?: unknown } | undefined;
-  if (typeof doc.issuer !== 'string' || subject === undefined || typeof subject !== 'object' || typeof subject.id !== 'string') {
+  if (typeof doc.issuer !== 'string' || subject === undefined || subject === null || typeof subject !== 'object' || typeof subject.id !== 'string') {
     return { ok: false, reason: 'malformed' };
   }
   if (typeof doc.issuerScope !== 'string' || !SCOPES.includes(doc.issuerScope)) return { ok: false, reason: 'scopeMissing' };
-  if (exchange.remoteRelationshipDid === null || doc.issuer !== exchange.remoteRelationshipDid) return { ok: false, reason: 'issuerMismatch' };
-  if (subject.id !== exchange.localRelationshipDid) return { ok: false, reason: 'subjectMismatch' };
+  if (expectedIssuer === null || doc.issuer !== expectedIssuer) return { ok: false, reason: 'issuerMismatch' };
+  if (subject.id !== expectedSubject) return { ok: false, reason: 'subjectMismatch' };
   return { ok: true };
+}
+
+/** Bindings of an INCOMING credential to its exchange record. */
+export function checkIncomingBindings(vc: unknown, exchange: ExchangeDidRow): VrcBindingCheck {
+  return checkBindings(vc, exchange.remoteRelationshipDid, exchange.localRelationshipDid);
+}
+
+/** What `checkVrc` needs from a proof verifier; the boundary's `DidProofVerifier` satisfies it. */
+export interface InnerProofVerifier {
+  verify(doc: unknown, context: { nowMs: number; purposes?: readonly string[] }): Promise<{ valid: boolean; failure?: string }>;
+}
+
+export interface CheckVrcOptions {
+  verifier: InnerProofVerifier;
+  nowMs: number;
+}
+
+/**
+ * The receive check of a conformant VRC (plan 2.2): the credential's issuer and subject are the
+ * relationship DIDs the exchange recorded (never taken from the sender's say-so), `issuerScope` is
+ * declared, and the inner proof verifies under `assertionMethod` with a key of the issuer. A
+ * `did:peer:4` or `did:key` issuer resolves offline. A resolution that cannot be completed throws
+ * (`unavailable`, not a verdict).
+ */
+export async function checkVrc(vc: unknown, expectedIssuer: string, expectedSubject: string, options: CheckVrcOptions): Promise<VrcBindingCheck> {
+  const bindings = checkBindings(vc, expectedIssuer, expectedSubject);
+  if (!bindings.ok) return bindings;
+  const verdict = await options.verifier.verify(vc, { nowMs: options.nowMs, purposes: ['assertionMethod'] });
+  return verdict.valid ? { ok: true } : { ok: false, reason: 'proofInvalid' };
 }
 
 /**
@@ -70,9 +99,16 @@ export async function verifyInnerProof(vc: DtgCredentialVc, resolver: DidResolve
   }
 }
 
-/** Bindings plus offline inner-proof verification. */
-export async function checkIncomingVrc(w3cVcJson: string, exchange: ExchangeDidRow): Promise<VrcBindingCheck> {
+/**
+ * Bindings plus inner-proof verification. Without a verifier the offline `did:peer:4` check is used;
+ * a process that also accepts other methods (the boundary: `did:key`) passes its proof verifier.
+ */
+export async function checkIncomingVrc(w3cVcJson: string, exchange: ExchangeDidRow, options?: CheckVrcOptions): Promise<VrcBindingCheck> {
   const vc = parse(w3cVcJson);
+  if (options !== undefined) {
+    if (exchange.remoteRelationshipDid === null) return { ok: false, reason: 'issuerMismatch' };
+    return checkVrc(vc, exchange.remoteRelationshipDid, exchange.localRelationshipDid, options);
+  }
   const bindings = checkIncomingBindings(vc, exchange);
   if (!bindings.ok) return bindings;
   return (await verifyInnerProof(vc as unknown as DtgCredentialVc)) ? { ok: true } : { ok: false, reason: 'proofInvalid' };

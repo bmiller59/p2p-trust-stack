@@ -1,0 +1,1077 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "VRC-PRO",
+  "family": "vrc-propose",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "VRC-PRO-001",
+      "title": "an accepted proposal is answered with a #response: accept true and the counterparty's own relationshipDid",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:82-85 (counterparty items 1-2)",
+        "specs/vrc/relationships/propose/0.1/spec.md:76-79 (proposer items 1-2)",
+        "SPEC.md:1009-1015 (7.2 pipeline)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "pointer": {
+              "/payload/accept": true
+            },
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-002",
+      "title": "the acceptance names the counterparty's own relationship DID, not the proposer's",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:85 (returns a #response with its own relationshipDid)",
+        "specs/vrc/relationships/propose/0.1/payload.schema.json (Response.relationshipDid: the DID the counterparty will use)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "echoProposerDid"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "notEqual": {
+              "/payload/relationshipDid": [
+                "$R",
+                "$A",
+                "$iut"
+              ]
+            },
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-003",
+      "title": "a decline is a trust-task-error vrc/relationships/propose:declined, not a response",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:87 (counterparty item 4)",
+        "specs/vrc/relationships/propose/0.1/spec.md:38-41 (errorCodes)",
+        "specs/vrc/relationships/propose/0.1/payload.schema.json (Response.accept const true)",
+        "SPEC.md:1350-1356 (8.5 extended codes)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "declineAsResponse",
+        "declineWrongCode"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "decline"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/propose:declined",
+            "retryable": false,
+            "noSideEffect": true,
+            "pointer": {
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req)",
+              "/threadId": "$id(req)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-004",
+      "title": "a proposal naming no relationshipDid is refused",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/payload.invalid-examples.json example 1",
+        "SPEC.md:1012 (7.2 item 2)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noPayloadValidation"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "payload": {
+                "witnessed": true
+              }
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-005",
+      "title": "a relationshipDid that is not a DID is refused",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/payload.invalid-examples.json example 2",
+        "specs/vrc/relationships/propose/0.1/payload.schema.json (pattern ^did:)",
+        "SPEC.md:1012 (7.2 item 2)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noPayloadValidation"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "payload": {
+                "relationshipDid": "alice-relationship-1"
+              }
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-006",
+      "title": "an unknown payload member is refused (the payload is closed)",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/payload.invalid-examples.json example 3",
+        "specs/vrc/relationships/propose/0.1/payload.schema.json (additionalProperties false)",
+        "SPEC.md:1012 (7.2 item 2)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "openPayload"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "payload": {
+                "relationshipDid": "did:key:z6MkRelationshipProposer",
+                "nickname": "Alice from the workshop"
+              }
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-007",
+      "title": "witnessed is a request: an acceptance that does not agree does not claim a witnessed exchange",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:86 (silence accepts an unwitnessed exchange)",
+        "specs/vrc/relationships/propose/0.1/spec.md:103-108 (witnessing is agreed, not assumed)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "mirrorWitnessed"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "payload": {
+                "relationshipDid": "$R",
+                "witnessed": true
+              }
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "notEqual": {
+              "/payload/witnessed": [
+                true
+              ]
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-008",
+      "title": "while the human decides the proposal is answered with a next-step that names a resubmission, never an error, a terminal reply or silence",
+      "tier": 1,
+      "spec": [
+        "SPEC.md:1414 (8.6: a hold is a next step, never an error)",
+        "SPEC.md:1416-1418 (expects names the originating Type URI with continuation resubmit where the consumer offers no status task)",
+        "SPEC.md:682 (4.12 accepted row)",
+        "specs/vrc/relationships/propose/0.1/spec.md:97-101 (acceptance is not issuance)",
+        "specs/trust-task-next-step/0.1/payload.schema.json"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "holdAnswersError",
+        "holdAutoAccepts",
+        "silentHold",
+        "holdEmptyExpects",
+        "holdExpectsOtherType",
+        "holdContinuationProceed",
+        "holdNoInResponseTo",
+        "holdNextStepOpenPayload"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "hold"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "next-step",
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/expects/0/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/continuation": "resubmit",
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req)"
+            },
+            "state": {
+              "documentState": {
+                "$id(req)": "accepted"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-009",
+      "title": "a held proposal the human then accepts is answered with the acceptance on the proposal's thread",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:82-85",
+        "SPEC.md:450-462 (4.9 threadId)",
+        "SPEC.md:672-690 (4.12 lifecycle)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "holdAutoAccepts"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "hold"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "next-step",
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/expects/0/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/continuation": "resubmit",
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req)"
+            }
+          }
+        },
+        {
+          "trigger": {
+            "action": "consent",
+            "args": {
+              "exchangeId": "$id(req)",
+              "decision": "accept"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/accept": true
+            },
+            "state": {
+              "handled": 1,
+              "documentState": {
+                "$id(req)": "responded"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-010",
+      "title": "a held proposal the human then declines is answered with the decline",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:87",
+        "SPEC.md:1414-1420 (a declined hold is refused as a refusal)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "declineWrongCode",
+        "declineAsResponse"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "hold"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "next-step",
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/expects/0/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/continuation": "resubmit",
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req)"
+            }
+          }
+        },
+        {
+          "trigger": {
+            "action": "consent",
+            "args": {
+              "exchangeId": "$id(req)",
+              "decision": "decline"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "vrc/relationships/propose:declined",
+            "retryable": false,
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)"
+            },
+            "state": {
+              "documentState": {
+                "$id(req)": "errored"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-011",
+      "title": "tier 1: an unsigned proposal is accepted (propose declares proof OPTIONAL)",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:23-31 (proofRequirement request OPTIONAL)",
+        "SPEC.md:1017 (7.2 item 7: proofRequired only where the specification requires proof)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request",
+            "sign": null
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-012",
+      "title": "tier 2: an unsigned proposal is refused proofRequired",
+      "tier": 2,
+      "spec": [
+        "profile:attested (proof on every request)",
+        "specs/vrc/relationships/propose/0.1/spec.md:23-31 (OPTIONAL in the specification; strengthened by the profile)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "proofOptional",
+        "proofRequiredAsInvalid"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request",
+            "sign": null
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "proofRequired",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-013",
+      "title": "tier 2: the acceptance is signed by the IUT, purpose authentication, whole-second timestamps",
+      "tier": 2,
+      "spec": [
+        "profile:attested (proof on every response)",
+        "specs/vrc/relationships/propose/0.1/spec.md:23-31 (response proof OPTIONAL in the specification)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "unsignedReplies",
+        "wholeMillisecondTimestamps"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-014",
+      "title": "the proposal goes through the framework pipeline: wrong recipient",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:84 (counterparty item 1: SPEC.md 7.2 pipeline)",
+        "SPEC.md:1015 (7.2 item 5)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noRecipientCheck"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "recipient": "$X"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "wrongRecipient",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-015",
+      "title": "the proposal goes through the framework pipeline: transport sender differs from issuer",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:84",
+        "SPEC.md:1016 (7.2 item 6)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "ignoreTransportIdentity"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request",
+            "from": {
+              "spoof": "X"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "identityMismatch",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-016",
+      "title": "profile: a relationshipDid equal to the proposer's connection identifier is refused",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:79 (\"not a long-term identifier\": inequality with the connection DID is a checkable inference, not specification text)",
+        "docs/06 section 2.2 and 3.10",
+        "docs/07 O17, O26"
+      ],
+      "clarify": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating.",
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "acceptConnectionDid"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "payload": {
+                "relationshipDid": "$A"
+              }
+            }
+          },
+          "expect": {
+            "disposition": "any-refusal",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-017",
+      "title": "profile: a relationshipDid already used in an earlier exchange is refused (unique per VRC)",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:79 (minted for this relationship)",
+        "docs/06 section 3.10 (per-VRC uniqueness)",
+        "docs/07 O17, O21, O26"
+      ],
+      "clarify": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating.",
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noRelationshipDidReuseCheck"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "at": "+10s",
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "id": "$id(req2)",
+              "threadId": "$id(req2)"
+            }
+          },
+          "expect": {
+            "disposition": "any-refusal",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-018",
+      "title": "a relationshipDid already recorded for another counterparty is refused",
+      "tier": 1,
+      "spec": [
+        "specs/vrc/relationships/propose/0.1/spec.md:79",
+        "specs credential: a pairwise identifier MUST NOT be used with more than one counterparty (CRED/body.md:381)",
+        "docs/07 O26"
+      ],
+      "clarify": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating.",
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noRelationshipDidReuseCheck"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "accept"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "capture": {
+            "ibr": "/payload/relationshipDid"
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "at": "+10s",
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "issuer": "$X",
+              "id": "$id(req2)",
+              "threadId": "$id(req2)"
+            },
+            "from": "X"
+          },
+          "expect": {
+            "disposition": "any-refusal",
+            "noSideEffect": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-019",
+      "title": "tier 2: the next-step answering a hold is signed by the IUT, purpose authentication, whole-second timestamps",
+      "tier": 2,
+      "spec": [
+        "SPEC.md:1414-1418 (8.6 a hold is a next step)",
+        "specs/trust-task-next-step/0.1/spec.md (proof RECOMMENDED; the attested profile requires it on every reply)",
+        "profile:attested (proof on every response)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "silentHold",
+        "unsignedReplies",
+        "wholeMillisecondTimestamps"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "hold"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "next-step",
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/expects/0/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/continuation": "resubmit",
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-020",
+      "title": "a resubmission (fresh id, same thread) while the human still decides is answered with a further next-step",
+      "tier": 1,
+      "spec": [
+        "SPEC.md:1418 (the consumer answers a resubmission in the same thread with a further next step while the act is awaited)",
+        "specs/trust-task-next-step/0.1/spec.md (consumer rule 5: resubmission is a new document with a fresh id and the same threadId)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noResubmitThread",
+        "silentHold"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "hold"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "next-step",
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/expects/0/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/continuation": "resubmit",
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req)"
+            }
+          }
+        },
+        {
+          "at": "+10s",
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "id": "$id(req2)",
+              "threadId": "$id(req)"
+            }
+          },
+          "expect": {
+            "disposition": "next-step",
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/expects/0/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/continuation": "resubmit",
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req2)"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "VRC-PRO-021",
+      "title": "a resubmission after the human accepted is answered with the acceptance on the proposal's thread, without a second execution",
+      "tier": 1,
+      "spec": [
+        "SPEC.md:1418 (the consumer answers a resubmission in the same thread with the outcome once it is known)",
+        "specs/vrc/relationships/propose/0.1/spec.md:85 (acceptance with its own relationshipDid)"
+      ],
+      "clarify": null,
+      "requires": [
+        "carrier:consequential",
+        "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+        "optional:trigger.consent"
+      ],
+      "mutants": [
+        "noResubmitThread"
+      ],
+      "steps": [
+        {
+          "trigger": {
+            "action": "policy",
+            "args": {
+              "propose": "hold"
+            }
+          }
+        },
+        {
+          "send": {
+            "template": "propose.request"
+          },
+          "expect": {
+            "disposition": "next-step",
+            "noSideEffect": true,
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/expects/0/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/continuation": "resubmit",
+              "/payload/inResponseTo/typeUri": "https://trusttasks.org/spec/vrc/relationships/propose/0.1",
+              "/payload/inResponseTo/id": "$id(req)"
+            }
+          }
+        },
+        {
+          "trigger": {
+            "action": "consent",
+            "args": {
+              "exchangeId": "$id(req)",
+              "decision": "accept"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "at": "+10s",
+          "send": {
+            "template": "propose.request",
+            "params": {
+              "id": "$id(req2)",
+              "threadId": "$id(req)"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "type": "https://trusttasks.org/spec/vrc/relationships/propose/0.1#response",
+            "pointer": {
+              "/threadId": "$id(req)",
+              "/payload/accept": true
+            },
+            "match": {
+              "/payload/relationshipDid": "^did:"
+            },
+            "state": {
+              "handled": 1,
+              "documentState": {
+                "$id(req)": "responded"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

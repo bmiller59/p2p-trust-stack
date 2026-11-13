@@ -15,7 +15,7 @@
 import type { DataSource } from '../db/data-source.js';
 import { DidManager } from '../services/did-manager.js';
 import * as exchangeDids from '../db/repositories/vrc-exchange-dids-repo.js';
-import type { ExchangeDidRow, ExchangeRole } from '../db/repositories/vrc-exchange-dids-repo.js';
+import type { ExchangeDidRow, ExchangeRole, ExchangeState } from '../db/repositories/vrc-exchange-dids-repo.js';
 
 /** Un-accepted exchanges (state `proposed`) allowed per counterparty connection DID. */
 export const MAX_PENDING_PER_COUNTERPARTY = 5;
@@ -43,6 +43,8 @@ export interface MintExchangeDidInput {
   remoteRelationshipDid?: string;
   /** The agent's key passphrase. No default exists. */
   passphrase: string;
+  /** Initial state. Default: `accepted` for an acceptor, `proposed` for a proposer; the boundary uses `held` for a pending human decision. */
+  state?: ExchangeState;
   now?: number;
 }
 
@@ -70,7 +72,7 @@ export async function mintExchangeRelationshipDid(db: DataSource, input: MintExc
     input.localConnectionDid,
     input.remoteConnectionDid,
   );
-  if (mine.filter((r) => r.state === 'proposed').length >= MAX_PENDING_PER_COUNTERPARTY) {
+  if (mine.filter((r) => r.state === 'proposed' || r.state === 'held').length >= MAX_PENDING_PER_COUNTERPARTY) {
     throw new ExchangeDidLimitError('too many pending exchanges with this counterparty');
   }
   if (mine.filter((r) => now - Number(r.created_at) < MINT_WINDOW_MS).length >= MAX_MINTS_PER_WINDOW) {
@@ -89,7 +91,7 @@ export async function mintExchangeRelationshipDid(db: DataSource, input: MintExc
       localIdentityUuid: input.localIdentityUuid,
       remoteIdentityUuid: input.remoteIdentityUuid,
       role: input.role,
-      state: input.role === 'acceptor' ? 'accepted' : 'proposed',
+      state: input.state ?? (input.role === 'acceptor' ? 'accepted' : 'proposed'),
       now,
     });
   } catch (err) {
@@ -171,6 +173,18 @@ export async function endExchange(db: DataSource, exchangeId: string, now: numbe
   if (exchange === null) return false;
   await new DidManager(db).deleteRelationshipSecret(exchange.localRelationshipDid);
   if (exchange.state !== 'ended') await exchangeDids.setState(db, exchangeId, 'ended', now);
+  return true;
+}
+
+/**
+ * The human declined a held proposal: the unused local relationship DID loses its secret key (nothing
+ * was ever sent under it), the row stays as `declined` so the counterparty's DID cannot be reused.
+ */
+export async function declineExchange(db: DataSource, exchangeId: string, now: number = Date.now()): Promise<boolean> {
+  const exchange = await exchangeDids.findByExchangeId(db, exchangeId);
+  if (exchange === null || exchange.state !== 'held') return false;
+  await new DidManager(db).deleteRelationshipSecret(exchange.localRelationshipDid);
+  await exchangeDids.setState(db, exchangeId, 'declined', now);
   return true;
 }
 

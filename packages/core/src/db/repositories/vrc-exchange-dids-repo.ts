@@ -16,7 +16,11 @@
 import type { DataSource } from '../data-source.js';
 
 export type ExchangeRole = 'proposer' | 'acceptor';
-export type ExchangeState = 'proposed' | 'accepted' | 'issued-by-me' | 'received' | 'ended';
+/**
+ * `held` and `declined` (conformance P6) are acceptor-side states for a boundary `propose` whose human
+ * decision is pending or negative; the column is free text, so no migration is involved.
+ */
+export type ExchangeState = 'proposed' | 'held' | 'declined' | 'accepted' | 'issued-by-me' | 'received' | 'ended';
 
 export interface ExchangeDidRow {
   exchangeId: string;
@@ -174,4 +178,15 @@ export async function setRemoteRelationshipDid(db: DataSource, exchangeId: strin
 
 export async function setState(db: DataSource, exchangeId: string, state: ExchangeState, now: number = Date.now()): Promise<void> {
   await db.run('UPDATE vrc_exchange_relationship_dids SET state = ?, updated_at = ? WHERE exchange_id = ?', state, now, exchangeId);
+}
+
+/** Record the counterparty's root identity once it is known (an accepted exchange); never replaces a different one. */
+export async function setRemoteIdentityUuid(db: DataSource, exchangeId: string, identityUuid: string, now: number = Date.now()): Promise<void> {
+  await db.run(
+    'UPDATE vrc_exchange_relationship_dids SET remote_identity_uuid = ?, updated_at = ? WHERE exchange_id = ? AND (remote_identity_uuid IS NULL OR remote_identity_uuid = ?)',
+    identityUuid,
+    now,
+    exchangeId,
+    identityUuid,
+  );
 }
