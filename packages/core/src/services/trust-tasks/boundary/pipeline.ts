@@ -97,6 +97,11 @@ export interface PipelineOptions {
    * one, `getBoundarySigner`). A reply is signed only when its `issuer` is the signer's identifier.
    */
   signer?: BoundarySigner | (() => BoundarySigner | undefined);
+  /**
+   * Called once per processed document with the final result (the verbatim raw body, the verified
+   * signer, `refusedBeforeProof`). A carrier passes a `TrustTaskRecorder`; it must not throw.
+   */
+  record?: (result: PipelineResult) => Promise<void>;
 }
 
 export interface PipelineInput {
@@ -183,6 +188,18 @@ export class Pipeline {
   }
 
   async process(input: PipelineInput): Promise<PipelineResult> {
+    const result = this.finalize(await this.run(input));
+    if (this.options.record !== undefined) {
+      try {
+        await this.options.record(result);
+      } catch (err) {
+        this.options.onUnexpected?.(err);
+      }
+    }
+    return result;
+  }
+
+  private async run(input: PipelineInput): Promise<PipelineResult> {
     const size = typeof input.raw === 'string' ? Buffer.byteLength(input.raw, 'utf8') : input.raw.byteLength;
     if (size > this.maxBytes) return this.refuse('oversize', undefined);
     let raw: string;
@@ -194,7 +211,7 @@ export class Pipeline {
         return this.refuse('undecodable', undefined);
       }
     }
-    return this.finalize(await this.processText(raw, input.sender));
+    return this.processText(raw, input.sender);
   }
 
   private get tier(): 1 | 2 {
@@ -270,6 +287,12 @@ export class Pipeline {
       return refused(err);
     }
     if (served) asVid = recipient;
+
+    // The attested profile never executes work it cannot answer with a signed reply: decide before consuming.
+    if (this.tier === 2 && (asVid === undefined || this.currentSigner()?.did !== asVid)) {
+      this.options.onUnexpected?.(new Error('a Tier 2 reply cannot be signed for the answering identifier'));
+      return { kind: 'refused', status: 503, minimal: { code: 'unavailable', message: 'The service cannot sign a reply.', retryable: true }, code: 'unavailable', raw, received, refusedBeforeProof: true };
+    }
 
     // A request never carries a response variant or an explicit request variant on its type.
     if (typeof doc.type === 'string' && typeof doc.id === 'string' && FRAGMENT.test(doc.type)) {
