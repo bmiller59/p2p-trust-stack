@@ -72,7 +72,7 @@ import type { TransactionManager } from '@p2p-trust-stack/core/tx/manager.js';
 
 import { AgentDatabase } from './agent-database.js';
 import { AgentRegistry, defaultRegistry } from './agent-registry.js';
-import type { AgentConfig, AgentMeta, AgentSummary, IncomingMessage, ConnectionEvent } from './types.js';
+import type { AgentConfig, TrustTaskListenerOptions, AgentMeta, AgentSummary, IncomingMessage, ConnectionEvent } from './types.js';
 
 import { bootstrapAgentTxCoordinator } from './tx/bootstrap.js';
 import type { AgentTxBootstrapResult } from './tx/bootstrap.js';
@@ -115,6 +115,8 @@ import { SqliteKeyStore } from '@p2p-trust-stack/core/keystore/sqlite-keystore.j
 import { cesrEncode, CESR_CODES } from '@p2p-trust-stack/core/crypto/cesr.js';
 import { asCesrVid } from '@p2p-trust-stack/core/vtc/codec.js';
 import { endExchangesForConnections } from '@p2p-trust-stack/core/relationship/exchange-dids.js';
+import { resolveListenerConfig, startAgentBoundary } from './trust-tasks-boundary/index.js';
+import type { AgentBoundary, BoundaryListenerConfig } from './trust-tasks-boundary/index.js';
 import { SqliteDataSource } from '@p2p-trust-stack/core/db/sqlite-data-source.js';
 import { CredentialFactoryImpl } from '@p2p-trust-stack/core/services/credential-factory/credential-factory-impl.js';
 
@@ -352,6 +354,8 @@ export abstract class BaseAgent implements AgentHandle {
   private _vrcCeremonyParticipant?: VrcCeremonyParticipant;
   /** VRC receive participant (inbound store_remote_vrc operations). */
   private _vrcReceiveParticipant?: VrcReceiveParticipant;
+  private _trustTasksListenerOptions?: TrustTaskListenerOptions;
+  private _trustTasksBoundary?: AgentBoundary;
   /** Receives the peer's personhood ack via the coordinator (ack_delivery leg). */
   private _personhoodAckParticipant?: PersonhoodAckReceiveParticipant;
   private _credentialFactory?: CredentialFactoryImpl;
@@ -388,6 +392,7 @@ export abstract class BaseAgent implements AgentHandle {
     this.passphrase = config.passphrase;
     this.port = config.port ?? 0;
     this.registry = registry;
+    this._trustTasksListenerOptions = config.trustTasksListener;
     this.bootstrapEnv = config.bootstrapEnv;
     // Record WHERE this agent registers, for AgentMeta. An explicit
     // `bootstrapEnv` (the startup screen's boxes) is the real target, so derive
@@ -1094,6 +1099,59 @@ export abstract class BaseAgent implements AgentHandle {
 
     // Start polling for relationship changes (every 200ms).
     this.startRelationshipPolling();
+
+    // The Trust Task listener (conformance P6c): opt-in, off by default, its own port, never the UI's.
+    await this.startTrustTasksListener();
+  }
+
+  /**
+   * Start the Trust Task listener when (and only when) it is switched on. Off by default: nothing
+   * binds a port or serves a document unless `TRUST_TASKS_LISTENER=1` (or the `trustTasksListener`
+   * config option) is set AND a port is configured. A failure to start is logged and leaves the
+   * agent running without the listener; it never takes the agent down.
+   */
+  private async startTrustTasksListener(): Promise<void> {
+    let config: BoundaryListenerConfig | null;
+    try {
+      config = resolveListenerConfig(process.env, this._trustTasksListenerOptions ?? {}, this._trustTasksListenerOptions?.forbiddenPorts ?? []);
+    } catch (err) {
+      logger.error(`[Agent] Trust Task listener not started: ${(err as Error)?.message}`);
+      return;
+    }
+    if (config === null) return;
+    this.ensureBoundarySigner();
+    if (!this._txBootstrap || !this._vrcReceiveParticipant || !this.db) {
+      logger.error('[Agent] Trust Task listener not started: the transaction coordinator or the VRC participant is not ready');
+      return;
+    }
+    try {
+      this._trustTasksBoundary = await startAgentBoundary({
+        ds: this.ds,
+        did: this.identity.did,
+        passphrase: this.passphrase,
+        txManager: this._txBootstrap.manager,
+        receive: this._vrcReceiveParticipant,
+        verifier: this.getBoundaryProofVerifier(),
+        config,
+      });
+    } catch (err) {
+      logger.error(`[Agent] Trust Task listener not started: ${(err as Error)?.message}`);
+    }
+  }
+
+  /** Relationship proposals the Trust Task listener is holding for the human (empty while the listener is off). */
+  async listHeldVrcProposals(): Promise<Array<{ exchangeId: string; peer: string; relationshipDid: string | null; receivedAt: number }>> {
+    const held = (await this._trustTasksBoundary?.propose.listHeld()) ?? [];
+    return held.map((r) => ({ exchangeId: r.exchangeId, peer: r.remoteConnectionDid, relationshipDid: r.remoteRelationshipDid, receivedAt: r.createdAt }));
+  }
+
+  /**
+   * The human's decision on a held proposal. The proposer learns it by resubmitting (the carrier has
+   * no push channel); throws when nothing is held under that id.
+   */
+  async decideVrcProposal(exchangeId: string, decision: 'accept' | 'decline'): Promise<void> {
+    if (!this._trustTasksBoundary) throw new Error('The Trust Task listener is not running.');
+    await this._trustTasksBoundary.propose.decide(exchangeId, decision);
   }
 
   /** Start periodic ceremony driver ticks (retries incomplete VRC ceremonies). */
@@ -1844,6 +1902,12 @@ export abstract class BaseAgent implements AgentHandle {
     // Stop the CRE exchange ticker (Phase 5 driver).
     this.exchangeEngine?.stopTicker();
     this.exchangeEngine = undefined;
+
+    // Close the Trust Task listener first, so no document arrives while the coordinator goes down.
+    if (this._trustTasksBoundary) {
+      await this._trustTasksBoundary.stop().catch(() => undefined);
+      this._trustTasksBoundary = undefined;
+    }
 
     // Shut down the transaction coordinator (janitor timer + tx-coordinator.db).
     // Without this, switching VTAs (POST /api/activate stops the old agent then
@@ -4407,6 +4471,25 @@ export abstract class BaseAgent implements AgentHandle {
   private _peerTransport: TspParticipantTransport | null = null;
 
   /**
+   * Trust Task boundary signer (conformance P4), installed beside the operation-proof signer: this
+   * agent's connection identifier signs its document replies as `#key-1` (the identity key; the keys
+   * are read at every signature because a did:scid:vh identity key rotates). Installed only when
+   * `#key-1` of the published document is the key we hold. Idempotent; also called before the Trust
+   * Task listener starts, because the peer transport that used to install it is built lazily.
+   */
+  private ensureBoundarySigner(): void {
+    if (this.identity?.signingKeyPair && this.identity.did) {
+      const self = this;
+      const installed = installBoundarySigner({
+        did: this.identity.did,
+        didDocument: this.identity.didDocument,
+        keys: () => self.identity.signingKeyPair,
+      });
+      if (!installed.installed) logger.warn(`[agent] Trust Task boundary signer NOT installed: ${installed.reason}`);
+    }
+  }
+
+  /**
    * Return a participant transport that reaches a PEER AGENT directly (over
    * the relationship manager), not the utility server. Used for the
    * agent→agent VRC reflection leg (`store_remote_vrc`) and kept alive for the
@@ -4442,19 +4525,7 @@ export abstract class BaseAgent implements AgentHandle {
       });
     }
 
-    // Trust Task boundary signer (conformance P4), installed beside the operation-proof signer: this
-    // agent's connection identifier signs its document replies as `#key-1` (the identity key; the keys
-    // are read at every signature because a did:scid:vh identity key rotates). Installed only when
-    // `#key-1` of the published document is the key we hold.
-    if (this.identity?.signingKeyPair && this.identity.did) {
-      const self = this;
-      const installed = installBoundarySigner({
-        did: this.identity.did,
-        didDocument: this.identity.didDocument,
-        keys: () => self.identity.signingKeyPair,
-      });
-      if (!installed.installed) logger.warn(`[agent] Trust Task boundary signer NOT installed: ${installed.reason}`);
-    }
+    this.ensureBoundarySigner();
 
     this._peerTransport = new TspParticipantTransport(requestFn, {
       isConnected: (pid) => {

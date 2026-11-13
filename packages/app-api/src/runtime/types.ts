@@ -20,6 +20,21 @@ import type { BootstrapClientEnv } from '@p2p-trust-stack/core/config/bootstrap-
 /**
  * Configuration for creating or unlocking an Agent.
  */
+/**
+ * Options for the opt-in Trust Task listener (conformance P6). Nothing starts unless `enabled` is
+ * true (or `TRUST_TASKS_LISTENER=1`) and a port is given; there is no default port.
+ */
+export interface TrustTaskListenerOptions {
+  enabled?: boolean;
+  port?: number;
+  host?: string;
+  /** 2 (default) is the attested profile. */
+  tier?: 1 | 2;
+  proposePolicy?: 'hold' | 'decline';
+  /** Ports the listener must never use (the UI port). */
+  forbiddenPorts?: number[];
+}
+
 export interface AgentConfig {
   name: string;
   passphrase: string;
@@ -48,6 +63,8 @@ export interface AgentConfig {
   net?: string;
   transport?: TspTransport;
   keystore?: KeyStore;
+  /** The opt-in Trust Task listener; absent means off unless the environment switches it on. */
+  trustTasksListener?: TrustTaskListenerOptions;
 }
 
 // ---------------------------------------------------------------------------
