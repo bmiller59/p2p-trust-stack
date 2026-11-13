@@ -343,6 +343,12 @@ export interface ErrorBuildOptions {
    * transport sender the in-band issuer is addressed.
    */
   recipient?: string;
+  /**
+   * Override the issuer. Default: the request's `recipient`. A listener that serves several
+   * identifiers sets this to the identifier it answers as, so an error for a document addressed to
+   * someone else (`wrongRecipient`) never carries the contested recipient as its issuer.
+   */
+  issuer?: string;
 }
 
 const str = (v: unknown): string | undefined => (typeof v === 'string' && v.length > 0 ? v : undefined);
@@ -380,7 +386,7 @@ export function buildErrorDocument(
   };
   const parent = str(request?.parentThreadId);
   if (parent !== undefined) doc.parentThreadId = parent;
-  const issuer = str(request?.recipient);
+  const issuer = str(options.issuer) ?? str(request?.recipient);
   if (issuer !== undefined) doc.issuer = issuer;
   const recipient = options.recipient ?? str(request?.issuer);
   if (recipient !== undefined) doc.recipient = recipient;

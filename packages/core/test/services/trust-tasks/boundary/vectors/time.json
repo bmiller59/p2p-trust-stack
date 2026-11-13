@@ -1,0 +1,961 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "TIME",
+  "family": "framework",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "TIME-001",
+      "title": "fresh document, no expiresAt",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "fresh document, no expiresAt"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-002",
+      "title": "one millisecond before issuedAt + maxAge + skew",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:05:59.999Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "one millisecond before issuedAt + maxAge + skew"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-003",
+      "title": "exactly at issuedAt + maxAge + skew: the window is half-open",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:06:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "exactly at issuedAt + maxAge + skew: the window is half-open"
+      },
+      "mutants": [
+        "noTimeChecks",
+        "windowOffByOne"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-004",
+      "title": "fractional issuedAt, one millisecond before the edge",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:06:00.249Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "fractional issuedAt, one millisecond before the edge"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00.250Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-005",
+      "title": "fractional issuedAt, exactly at the edge",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:06:00.250Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "fractional issuedAt, exactly at the edge"
+      },
+      "mutants": [
+        "noTimeChecks",
+        "windowOffByOne"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00.250Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-006",
+      "title": "issuedAt with an offset is the same instant",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:05:59Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "issuedAt with an offset is the same instant"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T17:30:00+05:30"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-007",
+      "title": "issuedAt exactly the skew tolerance ahead of now",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "issuedAt exactly the skew tolerance ahead of now"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:01:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-008",
+      "title": "issuedAt one millisecond beyond the skew tolerance",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "issuedAt one millisecond beyond the skew tolerance"
+      },
+      "mutants": [
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:01:00.001Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-009",
+      "title": "the issue's case: issuedAt ten minutes ago, expiresAt an hour ahead — expiresAt replaces the maximum age",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:10:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "the issue's case: issuedAt ten minutes ago, expiresAt an hour ahead — expiresAt replaces the maximum age"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2026-08-01T13:10:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-010",
+      "title": "the same age with no expiresAt is refused by the maximum age",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:10:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "the same age with no expiresAt is refused by the maximum age"
+      },
+      "mutants": [
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-011",
+      "title": "one millisecond before expiresAt",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T13:09:59.999Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "one millisecond before expiresAt"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2026-08-01T13:10:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-012",
+      "title": "exactly at expiresAt (item 4 is inclusive, with no skew)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T13:10:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "exactly at expiresAt (item 4 is inclusive, with no skew)"
+      },
+      "mutants": [
+        "noTimeChecks",
+        "windowOffByOne"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2026-08-01T13:10:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-013",
+      "title": "expiresAt equal to issuedAt states an empty interval",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T11:59:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "expiresAt equal to issuedAt states an empty interval"
+      },
+      "mutants": [
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2026-08-01T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-014",
+      "title": "expiresAt one millisecond after issuedAt",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "expiresAt one millisecond after issuedAt"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2026-08-01T12:00:00.001Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-015",
+      "title": "expiresAt exactly at the expiry horizon is honoured, not clamped",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-02T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "expiresAt exactly at the expiry horizon is honoured, not clamped"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2026-08-31T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-016",
+      "title": "expiresAt exactly at the horizon, now past it inside the skew: expired by item 4",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-31T12:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "expiresAt exactly at the horizon, now past it inside the skew: expired by item 4"
+      },
+      "mutants": [
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2026-08-31T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-017",
+      "title": "expiresAt one millisecond beyond the horizon is clamped to horizon + skew",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-02T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "expiresAt one millisecond beyond the horizon is clamped to horizon + skew"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2026-08-31T12:00:00.001Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-018",
+      "title": "expiresAt a year out: accepted inside the horizon, the record clamped",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-02T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "expiresAt a year out: accepted inside the horizon, the record clamped"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2027-08-01T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-019",
+      "title": "expiresAt beyond the horizon, one millisecond before horizon + skew",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-31T12:00:59.999Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "expiresAt beyond the horizon, one millisecond before horizon + skew"
+      },
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2027-08-01T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-020",
+      "title": "expiresAt beyond the horizon, exactly at horizon + skew",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-31T12:01:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "expiresAt beyond the horizon, exactly at horizon + skew"
+      },
+      "mutants": [
+        "noTimeChecks",
+        "windowOffByOne"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-08-01T12:00:00Z",
+              "expiresAt": "2027-08-01T12:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-021",
+      "title": "no issuedAt, consequential: refused for policy, though expiresAt bounds it",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "no issuedAt, consequential: refused for policy, though expiresAt bounds it"
+      },
+      "mutants": [
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": {
+                "$omit": true
+              },
+              "expiresAt": "2026-08-01T13:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-022",
+      "title": "neither timestamp, consequential",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-08-01T12:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "neither timestamp, consequential"
+      },
+      "mutants": [
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": {
+                "$omit": true
+              }
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-023",
+      "title": "a calendar-invalid issuedAt is malformed, not rolled over into the window",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-02-01T00:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "a calendar-invalid issuedAt is malformed, not rolled over into the window"
+      },
+      "mutants": [
+        "noTimeChecks",
+        "rollOverDates"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-01-31T24:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-024",
+      "title": "a calendar-invalid expiresAt is malformed, not rolled over",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "fixtures/consume/freshness.json"
+      ],
+      "clarify": null,
+      "clockStart": "2026-02-28T00:00:00Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/freshness.json",
+        "row": "a calendar-invalid expiresAt is malformed, not rolled over"
+      },
+      "mutants": [
+        "noTimeChecks",
+        "rollOverDates"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "2026-02-28T00:00:00Z",
+              "expiresAt": "2026-02-30T00:00:00Z"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-101",
+      "title": "issuedAt 8 minutes ago with no expiresAt: older than the 5 minute maximum age",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 items 4 and 13",
+        "decision: acceptance windows 5 min / 60 s / 30 d"
+      ],
+      "clarify": null,
+      "mutants": [
+        "wideWindow10min",
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "$now-8m"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "TIME-102",
+      "title": "issuedAt 5 minutes in the future is malformed, not expired",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 13",
+        "fixtures/consume/freshness.json (future issuedAt rows)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "futureIssuedAtAsExpired",
+        "noTimeChecks"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "issuedAt": "$now+5m"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "malformedRequest",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    }
+  ]
+}

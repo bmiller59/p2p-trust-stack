@@ -25,7 +25,9 @@ export {
   recordExpiry,
   rejectWith,
   rejectWithRecipient,
+  sameSpecification,
   toErrorPayload,
+  tryParseTypeUri,
   validateBasic,
   validateFreshness,
 } from "@openvtc/trust-tasks/runtime";
@@ -36,6 +38,7 @@ export type {
   ErrorResponse,
   FreshnessPolicy,
   PayloadPolicy,
+  PayloadValidator,
   ProofPolicy,
   RejectReason,
   ReplayGuard,

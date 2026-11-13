@@ -16,7 +16,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { canonicalJson } from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
-import type { Adapter } from "./contract.ts";
+import type { Adapter, SendParams } from "./contract.ts";
 
 export const VECTORS_DIR = join(import.meta.dirname, "..", "vectors");
 
@@ -26,7 +26,15 @@ const CONTROL_TYPE = "https://trusttasks.org/spec/trust-task-control/0.1";
 
 export interface VectorStep {
   at?: string;
-  send?: { template?: string; params?: Record<string, unknown>; [k: string]: unknown };
+  send?: {
+    template?: string;
+    params?: Record<string, unknown>;
+    /** `null` means unsigned; the in-process adapter never verifies a proof, so it is ignored. */
+    sign?: unknown;
+    from?: string | { spoof: string };
+    mutate?: { op: string; bytes?: number }[];
+    [k: string]: unknown;
+  };
   expect?: {
     disposition: string;
     code?: string | string[];
@@ -44,6 +52,8 @@ export interface Vector {
   title: string;
   tier: 1 | 2;
   clarify: string | null;
+  /** Per-vector clock start; overrides the file's. */
+  clockStart?: string;
   requires?: string[];
   skipIfOptional?: string[];
   steps: VectorStep[];
@@ -60,8 +70,8 @@ export function loadVectorFile(name: string): VectorFile {
   return JSON.parse(readFileSync(join(VECTORS_DIR, name), "utf8")) as VectorFile;
 }
 
-export function allVectors(): { file: VectorFile; vector: Vector }[] {
-  return ["err.json", "lif.json", "rsp.json"].flatMap((n) => {
+export function allVectors(names: readonly string[] = ["err.json", "lif.json", "rsp.json"]): { file: VectorFile; vector: Vector }[] {
+  return names.flatMap((n) => {
     const file = loadVectorFile(n);
     return file.vectors.map((vector) => ({ file, vector }));
   });
@@ -98,6 +108,8 @@ const isoMs = (ms: number): string => {
 export interface Env {
   iutVid: string;
   senderVid: string;
+  /** The suite's actor X: a second identity, used for `$X` and for spoofing. */
+  otherVid?: string;
   carrier: string;
   carrierPayload: Record<string, unknown>;
   clockStart: string;
@@ -108,6 +120,7 @@ function substitute(value: unknown, vectorId: string, env: Env, nowMs: number): 
     if (!value.startsWith("$")) return value;
     if (value === "$iut") return env.iutVid;
     if (value === "$A") return env.senderVid;
+    if (value === "$X") return env.otherVid ?? "did:web:x.example";
     if (value === "$carrier") return env.carrier;
     if (value === "$carrierResponse") return `${env.carrier}#response`;
     const id = /^\$id\(([^)]+)\)$/.exec(value);
@@ -149,7 +162,7 @@ function pointer(root: unknown, ptr: string): unknown {
 }
 
 /** The suite's generic Tier 1 reply checks (threading, addressing, error shape, bounded details, no leak). */
-export function validateReply(text: string, request: Record<string, unknown> | undefined, env: Env): string[] {
+export function validateReply(text: string, request: Record<string, unknown> | undefined, env: Env, sender: string = env.senderVid): string[] {
   const errs: string[] = [];
   const r = parse(text);
   if (r === undefined) return ["reply is not a JSON object"];
@@ -167,7 +180,7 @@ export function validateReply(text: string, request: Record<string, unknown> | u
   const code = isObject(r.payload) ? r.payload.code : undefined;
   if (request !== undefined) {
     if (isError && code === "identityMismatch") {
-      if (r.recipient !== env.senderVid) errs.push("identityMismatch reply is not addressed to the transport sender");
+      if (r.recipient !== sender) errs.push("identityMismatch reply is not addressed to the transport sender");
     } else if (typeof request.issuer === "string" && r.recipient !== request.issuer) errs.push("reply is not addressed to the request issuer");
     if (!isError && typeof request.type === "string" && type !== `${request.type.split("#")[0]}#response`) errs.push(`reply type ${type} is not the request's #response`);
   }
@@ -181,6 +194,11 @@ export function validateReply(text: string, request: Record<string, unknown> | u
       else {
         if (Object.keys(p.details).length > 16) errs.push("details has more than 16 members (8.2.2)");
         if (Buffer.byteLength(canonicalJson(p.details), "utf8") > 4096) errs.push("details exceeds 4096 bytes (8.2.2)");
+      }
+    }
+    if (code === "identityMismatch" && typeof p.message === "string") {
+      for (const leaked of [sender, request === undefined ? undefined : request.issuer]) {
+        if (typeof leaked === "string" && p.message.includes(leaked)) errs.push("identityMismatch message leaks an identity (8.2.1)");
       }
     }
     if (request !== undefined && isObject(p.inResponseTo)) {
@@ -199,7 +217,7 @@ export interface Outcome {
 export async function runVector(adapter: Adapter, file: VectorFile, vector: Vector, env: Env): Promise<Outcome> {
   const failures: string[] = [];
   await adapter.reset();
-  const start = Date.parse(file.clock.start);
+  const start = Date.parse(vector.clockStart ?? file.clock.start);
   let at = 0;
   for (const [i, step] of vector.steps.entries()) {
     const label = `step ${i + 1}`;
@@ -210,14 +228,27 @@ export async function runVector(adapter: Adapter, file: VectorFile, vector: Vect
       const send = step.send;
       if (send?.template === undefined) throw new Error("unsupported step: only template sends are implemented");
       const doc = substitute(template(send.template, env), vector.id, env, nowMs) as Record<string, unknown>;
-      for (const [k, v] of Object.entries(send.params ?? {})) doc[k] = substitute(v, vector.id, env, nowMs);
+      for (const [k, v] of Object.entries(send.params ?? {})) {
+        if (isObject(v) && v["$omit"] === true) delete doc[k];
+        else doc[k] = substitute(v, vector.id, env, nowMs);
+      }
+      let bytes = JSON.stringify(doc);
+      for (const m of send.mutate ?? []) {
+        if (m.op !== "truncate") throw new Error(`unsupported mutation ${m.op}`);
+        bytes = bytes.slice(0, Math.max(0, bytes.length - (m.bytes ?? 1)));
+      }
+      const from: SendParams["from"] =
+        send.from === undefined ? { kind: "actor", vid: env.senderVid }
+        : typeof send.from === "object" ? { kind: "spoof", vid: send.from.spoof === "X" ? (env.otherVid ?? "did:web:x.example") : send.from.spoof }
+        : send.from === "none" ? { kind: "none" }
+        : (() => { throw new Error(`unsupported sender ${send.from}`); })();
       const ex = step.expect;
       if (ex === undefined) throw new Error("unsupported step: no expect");
 
       const handledBefore = Number((await adapter.observe({ query: "handled" })).value);
-      const result = await adapter.send({ from: { kind: "actor", vid: env.senderVid }, bytes: JSON.stringify(doc) });
+      const result = await adapter.send({ from, bytes });
       const handledAfter = Number((await adapter.observe({ query: "handled" })).value);
-      for (const reply of result.replies) for (const e of validateReply(reply, doc, env)) failures.push(`${label}: ${e}`);
+      for (const reply of result.replies) for (const e of validateReply(reply, doc, env, from.kind === "none" ? undefined : from.vid)) failures.push(`${label}: ${e}`);
 
       const first = result.replies[0] === undefined ? undefined : parse(result.replies[0]);
       const typeOf = typeof first?.type === "string" ? first.type : "";
@@ -236,6 +267,12 @@ export async function runVector(adapter: Adapter, file: VectorFile, vector: Vect
             if (!codes.includes(String(payload.code))) failures.push(`${label}: expected code ${codes.join("|")}, got ${String(payload.code)}`);
             if (ex.retryable !== undefined && payload.retryable !== ex.retryable) failures.push(`${label}: expected retryable ${String(ex.retryable)}`);
           }
+          break;
+        }
+        case "any-refusal": {
+          // Refused or ignored, never executed: no response document, and (checked below) no side effect.
+          if (result.replies.length > 1) failures.push(`${label}: expected a refusal, got ${result.replies.length} replies`);
+          else if (result.replies.length === 1 && !typeOf.startsWith(ERROR_PREFIX)) failures.push(`${label}: expected a refusal, got ${typeOf}`);
           break;
         }
         case "silence":
