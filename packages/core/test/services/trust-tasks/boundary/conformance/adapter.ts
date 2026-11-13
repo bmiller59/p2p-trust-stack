@@ -12,16 +12,11 @@
  * answers every other type `unsupportedType`. Test code only; nothing here ships in the package.
  */
 import { createHash } from "node:crypto";
-import {
-  InMemoryReplayGuard,
-  StaticTransport,
-  UnauthenticatedTransport,
-  consequentialChecks,
-  consumeInbound,
-  selectMyVid,
-} from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
+import { Pipeline } from "../../../../../src/services/trust-tasks/boundary/pipeline.ts";
+import type { PipelineHandler } from "../../../../../src/services/trust-tasks/boundary/handlers.ts";
+import type { Strictness } from "../../../../../src/services/trust-tasks/boundary/pipeline.ts";
+import { InMemoryReplayGuard } from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
 import type { ReplayGuard, SpecPolicy, TrustTaskDocument } from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
-import { TaskError, buildErrorDocument, isInboundError } from "../../../../../src/services/trust-tasks/boundary/errors.ts";
 import { transition } from "../../../../../src/services/trust-tasks/boundary/lifecycle.ts";
 import type { LifecycleState } from "../../../../../src/services/trust-tasks/boundary/lifecycle.ts";
 import { ERROR_SPEC_VERSION, FRAMEWORK_VERSION } from "../../../../../src/services/trust-tasks/boundary/pins.ts";
@@ -37,25 +32,6 @@ import type {
   SendResult,
 } from "./contract.ts";
 
-/**
- * A deliberately small JSON Schema reader for the test carrier: `type`, `required`, `properties` with a
- * primitive `type`. Enough to give the adapter a real item-2 payload check; the generated policies use
- * the library's own schemas and a full validator in later phases.
- */
-const tinyValidator = {
-  validate(schema: unknown, payload: unknown): { ok: boolean; errors?: string[] } {
-    const sc = schema as { required?: string[]; properties?: Record<string, { type?: string }> };
-    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) return { ok: false, errors: ["payload must be an object"] };
-    const p = payload as Record<string, unknown>;
-    const errors: string[] = [];
-    for (const k of sc.required ?? []) if (!(k in p)) errors.push(`missing ${k}`);
-    for (const [k, def] of Object.entries(sc.properties ?? {})) {
-      if (k in p && def.type !== undefined && typeof p[k] !== def.type) errors.push(`${k} must be ${def.type}`);
-    }
-    return { ok: errors.length === 0, errors };
-  },
-};
-
 export interface BoundaryHandler {
   spec: SpecPolicy;
   /** Business handler; return the response document (or nothing for a fire-and-forget task). */
@@ -68,6 +44,7 @@ export interface BoundaryAdapterOptions {
   servedVids: readonly string[];
   handlers?: readonly BoundaryHandler[];
   name?: string;
+  strictness?: Strictness;
 }
 
 const uuid = (seed: string): string => {
@@ -75,12 +52,13 @@ const uuid = (seed: string): string => {
   return `urn:uuid:${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-8${h.slice(17, 20)}-${h.slice(20, 32)}`;
 };
 
-const isoSeconds = (ms: number): string => `${new Date(Math.floor(ms / 1000) * 1000).toISOString().slice(0, 19)}Z`;
 
 export class BoundaryAdapter implements Adapter {
   private readonly served: readonly string[];
   private readonly handlers: Map<string, BoundaryHandler>;
   private readonly name: string;
+  private readonly strictness: Strictness;
+  private pipeline: Pipeline;
   private nowMs: number | undefined;
   private guard: ReplayGuard = new InMemoryReplayGuard();
   private handled = 0;
@@ -93,6 +71,32 @@ export class BoundaryAdapter implements Adapter {
     this.served = options.servedVids;
     this.handlers = new Map((options.handlers ?? []).map((h) => [h.spec.typeUri, h]));
     this.name = options.name ?? "truststackers-boundary";
+    this.strictness = options.strictness ?? "strict";
+    this.pipeline = this.buildPipeline();
+  }
+
+  private buildPipeline(): Pipeline {
+    const handlers: PipelineHandler[] = [...this.handlers.values()].map((h) => ({
+      types: [h.spec.typeUri],
+      spec: h.spec,
+      consequential: h.carrier?.class !== "read",
+      handle: async (accepted) => {
+        this.handled++;
+        let state: LifecycleState = transition("validated", "accepted");
+        this.states.set(accepted.id, state);
+        state = transition(state, "executing");
+        this.states.set(accepted.id, state);
+        try {
+          const response = await h.handle(accepted);
+          this.states.set(accepted.id, transition(state, "responded"));
+          return response;
+        } catch (err) {
+          this.states.set(accepted.id, transition(state, "errored"));
+          throw err;
+        }
+      },
+    }));
+    return new Pipeline({ handlers, servedVids: this.served, guard: this.guard, now: () => this.now(), newId: () => this.newId(), strictness: this.strictness });
   }
 
   private now(): number {
@@ -141,6 +145,7 @@ export class BoundaryAdapter implements Adapter {
   }
   async reset(): Promise<void> {
     this.guard = new InMemoryReplayGuard();
+    this.pipeline = this.buildPipeline();
     this.handled = 0;
     this.counter = 0;
     this.states.clear();
@@ -177,77 +182,8 @@ export class BoundaryAdapter implements Adapter {
   }
 
   async send(params: SendParams): Promise<SendResult> {
-    const out = (replies: unknown[], kind: SendResult["transport"]["kind"] = "document"): SendResult => ({
-      replies: replies.map((r) => JSON.stringify(r)),
-      transport: { kind: replies.length === 0 ? "none" : kind },
-      quiescentAfterMs: 0,
-    });
-    const clock = (): string => isoSeconds(this.now());
-
-    let doc: TrustTaskDocument<unknown>;
-    try {
-      const parsed: unknown = JSON.parse(params.bytes);
-      if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) throw new Error("not an object");
-      doc = parsed as TrustTaskDocument<unknown>;
-    } catch {
-      return out([]);
-    }
-
-    const type = typeof doc.type === "string" ? doc.type : "";
-    // An inbound error is never answered (no error loops) and changes the state of nothing.
-    if (isInboundError(doc)) return out([]);
-
-    const handler = this.handlers.get(type.split("#")[0]!);
-    if (handler === undefined) {
-      if (typeof doc.id !== "string" || type === "") return out([]);
-      return out([buildErrorDocument(doc, new TaskError({ code: "unsupportedType" }), { newId: () => this.newId(), now: clock })]);
-    }
-
-    const transport = params.from.kind === "none" ? new UnauthenticatedTransport() : new StaticTransport({ issuer: params.from.vid });
-    let outcome: Awaited<ReturnType<typeof consumeInbound>>;
-    try {
-      outcome = await consumeInbound({
-        transport,
-        spec: handler.spec,
-        proofPolicy: { kind: "rejectIfPresent" },
-        payloadPolicy: { kind: "validate", validate: tinyValidator },
-        checks: consequentialChecks(this.guard),
-        doc,
-        myVid: selectMyVid(doc, this.served, this.served[0]!),
-        now: this.now(),
-        newErrorId: () => this.newId(),
-        clock,
-        handler: async (accepted) => {
-          this.handled++;
-          let state: LifecycleState = transition("validated", "accepted");
-          this.states.set(accepted.id, state);
-          state = transition(state, "executing");
-          this.states.set(accepted.id, state);
-          try {
-            const response = (await handler.handle(accepted as TrustTaskDocument<unknown>)) as TrustTaskDocument<unknown> | void;
-            this.states.set(accepted.id, transition(state, "responded"));
-            return response;
-          } catch (err) {
-            this.states.set(accepted.id, transition(state, "errored"));
-            throw err;
-          }
-        },
-      });
-    } catch (err) {
-      // Catch-all: whatever a handler throws reaches the wire as a typed error, opaque unless it is a TaskError.
-      return out([buildErrorDocument(doc, err, { newId: () => this.newId(), now: clock })]);
-    }
-
-    switch (outcome.kind) {
-      case "handled":
-        return out([outcome.response]);
-      case "accepted":
-      case "suppressed":
-        return out([]);
-      case "duplicate":
-        return out(outcome.priorResponse === undefined ? [] : [outcome.priorResponse]);
-      case "rejected":
-        return out([outcome.error]);
-    }
+    const result = await this.pipeline.process({ raw: params.bytes, sender: params.from.kind === "none" ? undefined : params.from.vid });
+    const replies = result.document === undefined ? [] : [JSON.stringify(result.document)];
+    return { replies, transport: { status: result.status, kind: replies.length === 0 ? "none" : "document" }, quiescentAfterMs: 0 };
   }
 }

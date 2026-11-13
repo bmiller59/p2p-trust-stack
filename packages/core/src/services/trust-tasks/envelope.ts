@@ -27,6 +27,7 @@
 
 import { randomUUID } from 'node:crypto';
 import { TRUST_TASK_ERROR_TYPE } from './type-uris.js';
+import { issuedAtNow } from './boundary/runtime.js';
 
 export interface TrustTaskDocument {
   /** Globally unique document id — UUIDv4 is RECOMMENDED (§4.3). */
@@ -89,17 +90,17 @@ export function buildTrustTask(typeUri: string, options: TrustTaskBuildOptions):
 export function buildResponse(
   request: TrustTaskDocument,
   payload: unknown,
-  options: { issuer?: string; recipient?: string } = {},
+  options: { issuer?: string; recipient?: string; newId?: () => string; now?: () => string } = {},
 ): TrustTaskDocument {
   const baseType = request.type.replace(/#(request|response)$/, '');
   return {
-    id: randomUUID(),
+    id: (options.newId ?? randomUUID)(),
     type: `${baseType}#response`,
     threadId: request.threadId ? request.threadId : request.id,
     ...(request.parentThreadId ? { parentThreadId: request.parentThreadId } : {}),
     issuer: options.issuer ?? request.recipient,
     recipient: options.recipient ?? request.issuer,
-    issuedAt: new Date().toISOString(),
+    issuedAt: (options.now ?? issuedAtNow)(),
     payload,
   };
 }

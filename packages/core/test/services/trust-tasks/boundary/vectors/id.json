@@ -1,0 +1,75 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "ID",
+  "family": "framework",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "ID-001",
+      "title": "wrong recipient",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 5"
+      ],
+      "clarify": null,
+      "mutants": [
+        "noRecipientCheck",
+        "replyIssuerFromRequest"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "params": {
+              "recipient": "$X"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "wrongRecipient",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "ID-002",
+      "title": "transport sender differs from issuer: identityMismatch to the sender, no leak, no echoed id",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 6",
+        "framework 8.1",
+        "framework 8.2",
+        "framework 8.2.1"
+      ],
+      "clarify": null,
+      "mutants": [
+        "ignoreTransportIdentity",
+        "leakIdentityInMessage"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request",
+            "from": {
+              "spoof": "X"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "identityMismatch",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    }
+  ]
+}
