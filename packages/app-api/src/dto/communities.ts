@@ -144,6 +144,9 @@ export interface CeremonyLogThreadDto {
 export interface CeremonyStatusDto {
   status?: string;
   errorReason?: string | null;
+  /** Standard error code and retryability of a failed ceremony (additive). */
+  errorCode?: string | null;
+  retryable?: boolean | null;
   /** Present only on failure; the route surfaces it as a 502 body. */
   error?: string;
   /** Distinct, verified co-signatures recorded so far (the server's `approvalCount`). */

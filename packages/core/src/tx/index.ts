@@ -55,6 +55,11 @@ export { TransactionLog } from './tx-log.js';
 
 // Ceremony store — Phase 3 governance ceremonies
 export { CeremonyStore } from './ceremony-store.js';
+export {
+  assertOpen, assertResettable, closeIfLapsed, isLapsed, describeFailure,
+  recordAbortReason, getAbortReason, clearAbortReasons, ABORT_REASON_CAP, EXPIRED_TEXT,
+} from './ceremony-guard.js';
+export type { AbortReason } from './ceremony-guard.js';
 export type {
   CeremonyProposal,
   CeremonyApproval,

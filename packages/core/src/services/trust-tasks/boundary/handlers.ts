@@ -14,6 +14,12 @@ export interface HandlerContext {
   readonly parties: { readonly issuer?: string; readonly recipient?: string };
   /** The transport-authenticated sender, when the carrier has one. */
   readonly sender: string | undefined;
+  /**
+   * The signer of a document whose proof the pipeline verified (undefined at Tier 1 without a proof,
+   * or when the proof was absent). Together with `sender` this is who a handler may treat as the
+   * ACTOR; an in-band `issuer` alone is never an actor (conformance AUTHZ-001).
+   */
+  readonly verifiedSigner?: string | undefined;
   /** The identifier the pipeline is answering as for this document. */
   readonly myVid: string | undefined;
   /** The pipeline's one clock, as epoch milliseconds and as a whole-second timestamp. */

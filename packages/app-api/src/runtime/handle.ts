@@ -219,6 +219,7 @@ export interface AgentHandle {
     connectivityTimeoutMs?: number;
   }): Promise<{
     status?: string; errorReason?: string | null; error?: string;
+    errorCode?: string | null; retryable?: boolean | null;
     /** Distinct, verified co-signatures recorded so far (server `approvalCount`). */
     approvalCount?: number;
     /** The declared founding admin uuid set (server `adminUuids`). */

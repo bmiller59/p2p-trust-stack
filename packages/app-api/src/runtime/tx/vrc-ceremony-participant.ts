@@ -22,6 +22,7 @@ import type {
 } from '@p2p-trust-stack/core/tx/types.js';
 import { mintPeerVrc } from '@p2p-trust-stack/core/relationship/vrc-mint.js';
 import { driveCeremony } from '@p2p-trust-stack/core/services/trust-tasks/driver.js';
+import { recordAbortReason } from '@p2p-trust-stack/core/tx/ceremony-guard.js';
 import { registerExecutor } from '@p2p-trust-stack/core/services/trust-tasks/catalog.js';
 import { CEREMONY_VRC_PERSONHOOD, RELATIONSHIP_VRC_TYPE } from '@p2p-trust-stack/core/services/trust-tasks/type-uris.js';
 import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-resolver.js';
@@ -157,6 +158,7 @@ export class VrcCeremonyParticipant implements Participant {
         }
       } catch (err) {
         logger.error(`[vrc-ceremony] prepare failed for ${txId.slice(0, 8)}, op ${op.op}:`, (err as Error)?.message);
+        recordAbortReason(txId, err);
         for (let i = undos.length - 1; i >= 0; i--) {
           await this.replayUndo(undos[i]);
         }

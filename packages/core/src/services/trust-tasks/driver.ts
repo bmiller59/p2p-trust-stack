@@ -25,6 +25,7 @@ import * as trustTasksRepo from '../../db/repositories/trust-tasks-repo.js';
 import { parseStepTemplate, parseCeremonyDefinition, resolveExecutor } from './catalog.js';
 import { resultToPolicyDecision } from './project.js';
 import type { PolicyResult } from '../policy-engine.js';
+import { describeFailure } from '../../tx/ceremony-guard.js';
 
 /** The policy-gate dependency: decide whether a step's action is allowed. */
 export interface CeremonyAuthorizer {
@@ -45,6 +46,8 @@ export interface DriveCeremonyResult {
   completed: boolean;
   /** The step `type` that denied (present when `completed === false`). */
   haltedAt?: string;
+  /** Why the halting gate refused (its explanation, else its reason), when it gave one. */
+  haltReason?: string;
   stepsRun: number;
   /** Step `type` → the effect step's result (for `$`-fed repeats + callers). */
   outputs: Record<string, unknown>;
@@ -70,7 +73,7 @@ export async function driveCeremony(
       stepsRun += nested.stepsRun;
       Object.assign(outputs, nested.outputs);
       if (!nested.completed) {
-        return { threadId, completed: false, haltedAt: nested.haltedAt, stepsRun, outputs };
+        return { threadId, completed: false, haltedAt: nested.haltedAt, haltReason: nested.haltReason, stepsRun, outputs };
       }
       continue;
     }
@@ -83,7 +86,7 @@ export async function driveCeremony(
       stepsRun += 1;
       if (outcome.result !== undefined) outputs[stepType] = outcome.result;
       if (!outcome.allowed) {
-        return { threadId, completed: false, haltedAt: stepType, stepsRun, outputs };
+        return { threadId, completed: false, haltedAt: stepType, haltReason: outcome.reason, stepsRun, outputs };
       }
     }
   }
@@ -129,6 +132,73 @@ function resolveIterations(
 interface StepOutcome {
   allowed: boolean;
   result?: unknown;
+  reason?: string;
+}
+
+/** Longest failure text stored on a row (the column is free text; keep the log readable). */
+const FAILURE_TEXT_MAX = 512;
+
+/**
+ * Record a `failed` response row for a step that threw, carrying the standard `error_code` (and
+ * `retryable` in the payload). Best effort: the original failure is what the caller must see, so a
+ * failure to write this row never replaces it. Exported for atomic callers, whose own transaction
+ * rolls the in-transaction row back with everything else: they call it again, on the outer
+ * connection, after the rollback (see `driveAtomically`).
+ */
+export async function recordStepFailure(
+  db: DataSource,
+  threadId: string,
+  stepType: string,
+  err: unknown,
+): Promise<void> {
+  try {
+    const f = describeFailure(err);
+    const text = ((err as Error)?.message ?? String(err)).slice(0, FAILURE_TEXT_MAX);
+    await trustTasksRepo.record(db, {
+      uuid: generateUuid(),
+      threadId,
+      type: stepType,
+      direction: 'response',
+      status: 'failed',
+      errorCode: f.code,
+      payload: { error: text, reason: text, errorCode: f.code, retryable: f.retryable },
+    });
+  } catch {
+    /* best effort */
+  }
+}
+
+/** An error thrown by a step carries which step it was, so an atomic caller can record the failure. */
+const FAILED_STEP = Symbol.for('p2pts.trustTasks.failedStep');
+function tagFailedStep(err: unknown, stepType: string): unknown {
+  if (err !== null && typeof err === 'object') {
+    try { (err as Record<symbol, unknown>)[FAILED_STEP] = stepType; } catch { /* frozen */ }
+  }
+  return err;
+}
+function failedStepOf(err: unknown): string | undefined {
+  const v = err !== null && typeof err === 'object' ? (err as Record<symbol, unknown>)[FAILED_STEP] : undefined;
+  return typeof v === 'string' ? v : undefined;
+}
+
+/**
+ * Run `work` (which drives a ceremony on the transaction handle it is given) inside ONE database
+ * transaction, so the gate, the effect and every log row commit or roll back together. When a step
+ * throws, leave a `failed` row behind anyway: the in-transaction rows go with the rollback, so the
+ * failure is written on the outer connection after it. `threadId` is the ceremony's thread.
+ */
+export async function driveAtomically<T>(
+  db: DataSource,
+  threadId: string,
+  work: (tx: DataSource) => Promise<T>,
+): Promise<T> {
+  try {
+    return await db.transaction(work);
+  } catch (err) {
+    const step = failedStepOf(err);
+    if (step !== undefined) await recordStepFailure(db, threadId, step, err);
+    throw err;
+  }
 }
 
 async function driveStep(
@@ -161,10 +231,10 @@ async function driveStep(
       threadId,
       type: stepType,
       direction: 'response',
-      payload: resultToPolicyDecision(decision),
+      payload: policyPayload(decision),
       status: decision.allowed ? 'allowed' : 'denied',
     });
-    return { allowed: decision.allowed };
+    return { allowed: decision.allowed, ...(decision.allowed ? {} : { reason: denyReason(decision) }) };
   }
 
   const executor = resolveExecutor(stepType);
@@ -179,7 +249,16 @@ async function driveStep(
     }
     throw new Error(`no executor registered for effect step '${stepType}'`);
   }
-  const result = await executor(context);
+  let result: unknown;
+  try {
+    result = await executor(context);
+  } catch (err) {
+    // A thrown executor leaves a `failed` row with its code on the connection the request row went
+    // through (so a non-transactional caller has no orphan request). A transactional caller's
+    // rollback removes it again: `driveAtomically` re-records it afterwards.
+    await recordStepFailure(db, threadId, stepType, err);
+    throw tagFailedStep(err, stepType);
+  }
   // An effect executor may signal the RECIPIENT of its response via a reserved
   // `recipientDid` field on its returned object; the driver surfaces it as the
   // structured `recipient_did` column (still present in the payload body too).
@@ -197,4 +276,27 @@ async function driveStep(
     status: 'completed',
   });
   return { allowed: true, result };
+}
+
+/** The refusal text of a denied decision: the policy explanation, else the engine's reason. */
+function denyReason(decision: PolicyResult): string | undefined {
+  const text = decision.decision?.explanation ?? decision.reason;
+  return text === undefined ? undefined : String(text).slice(0, FAILURE_TEXT_MAX);
+}
+
+/**
+ * The response payload of a policy step: the projected decision, plus `reason` when the gate
+ * refused (the field both log UIs read; `explanation` stays for the standard vocabulary). A
+ * refusal never loses its reason, including the fail-closed ones that carry no decision.
+ */
+function policyPayload(decision: PolicyResult): Record<string, unknown> {
+  const body: Record<string, unknown> = { ...resultToPolicyDecision(decision) };
+  if (!decision.allowed) {
+    const reason = denyReason(decision);
+    if (reason !== undefined) {
+      body.reason = reason;
+      if (body.explanation === undefined) body.explanation = reason;
+    }
+  }
+  return body;
 }

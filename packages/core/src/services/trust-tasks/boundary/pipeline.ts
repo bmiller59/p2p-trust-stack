@@ -364,7 +364,8 @@ export class Pipeline {
         newErrorId: this.newId,
         clock,
         handler: async (accepted, parties) => {
-          const ctx: HandlerContext = { parties, sender, myVid: asVid, now, clock, newId: this.newId };
+          const signer = bound?.verdict?.valid === true ? bound.verdict.signer : undefined;
+          const ctx: HandlerContext = { parties, sender, verifiedSigner: signer, myVid: asVid, now, clock, newId: this.newId };
           try {
             const response = await handler!.handle(accepted, ctx);
             return isObject(response) ? (this.sign(response as Record<string, unknown>) as unknown as typeof response) : response;

@@ -116,11 +116,30 @@ export class CeremonyStore {
     }
   }
 
+  /**
+   * Flip a lapsed `pending` proposal to `expired` and record why. Conditional on `pending`, so it
+   * never overwrites a terminal state.
+   */
+  async markExpired(proposalId: string): Promise<void> {
+    await this.ds.run(
+      `UPDATE ceremony_proposals SET status = 'expired', error_code = ?, retryable = 0, error_reason = COALESCE(error_reason, ?)
+       WHERE proposal_id = ? AND status = 'pending'`,
+      'taskFailed', 'The ceremony deadline has passed.', proposalId);
+  }
+
   /** Record the standard error code and retryability of a failed proposal (additive columns). */
   async recordFailure(proposalId: string, errorCode: string, retryable: boolean): Promise<void> {
     await this.ds.run(
       `UPDATE ceremony_proposals SET error_code = ?, retryable = ? WHERE proposal_id = ?`,
       errorCode, retryable ? 1 : 0, proposalId);
+  }
+
+  /** Mark a proposal `failed` with its reason text and standard code in one statement. */
+  async markFailed(proposalId: string, reason: string, errorCode: string, retryable: boolean): Promise<void> {
+    await this.ds.run(
+      `UPDATE ceremony_proposals SET status = 'failed', error_reason = ?, error_code = ?, retryable = ?
+       WHERE proposal_id = ?`,
+      reason, errorCode, retryable ? 1 : 0, proposalId);
   }
 
   async addAdminDid(proposalId: string, adminDid: string): Promise<void> {
@@ -160,8 +179,8 @@ export class CeremonyStore {
   async isCrystallizable(proposalId: string): Promise<boolean> {
     const prop = await this.getProposal(proposalId);
     if (!prop || prop.status !== 'pending') return false;
-    if (Date.now() > prop.expiresAt) {
-      await this.updateStatus(proposalId, 'expired');
+    if (Date.now() >= prop.expiresAt) {
+      await this.markExpired(proposalId);
       return false;
     }
     const count = await this.countApprovals(proposalId);
