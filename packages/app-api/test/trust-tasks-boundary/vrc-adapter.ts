@@ -23,7 +23,6 @@ import * as didDocumentsRepo from '@p2p-trust-stack/core/db/repositories/did-doc
 import * as exchangeDids from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
 import { AcceptedIdStore } from '@p2p-trust-stack/core/services/trust-tasks/boundary/accepted-store.js';
 import { Pipeline } from '@p2p-trust-stack/core/services/trust-tasks/boundary/pipeline.js';
-import type { PipelineHandler } from '@p2p-trust-stack/core/services/trust-tasks/boundary/handlers.js';
 import { DidProofVerifier } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/verify.js';
 import { createLocalKeyResolver } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/install.js';
 import { didKeyFromEd25519 } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/resolver.js';
@@ -31,29 +30,15 @@ import { createEd25519BoundarySigner, signDocument } from '@p2p-trust-stack/core
 import type { BoundarySigner } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/signer.js';
 import { ERROR_SPEC_VERSION, FRAMEWORK_VERSION } from '@p2p-trust-stack/core/services/trust-tasks/boundary/pins.js';
 import { VrcProposeService } from '../../src/runtime/trust-tasks-boundary/vrc-propose.ts';
+import { createVrcIssueHandler } from '../../src/runtime/trust-tasks-boundary/vrc-issue.ts';
+import { VrcReceiveParticipant } from '../../src/runtime/tx/vrc-receive-participant.ts';
+import { VtcStore } from '@p2p-trust-stack/core/vtc/store.js';
+import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-resolver.js';
+import { CompensationExecutor, DataSourceLogSink, TransactionCoordinator, TransactionLog, TransactionManager, TX_SCHEMA_SQL, applyTxSchemaAdditions } from '@p2p-trust-stack/core/tx/index.js';
 import type { ProposeConsentPolicy, ProposeDecision } from '../../src/runtime/trust-tasks-boundary/vrc-propose.ts';
 import { ISSUE_TYPE, PROPOSE_TYPE } from '../../src/runtime/trust-tasks-boundary/shared.ts';
 
 export const PASSPHRASE = 'test-passphrase-not-a-default';
-
-/** What a deployment-specific part (the issue handler needs a transaction manager) plugs in. */
-export interface AdapterWiring {
-  db: SqliteDataSource;
-  iutDid: string;
-  localIdentityUuid: string;
-  now: () => number;
-  newId: () => string;
-  guard: AcceptedIdStore;
-  verifier: DidProofVerifier;
-}
-
-export interface VrcAdapterOptions {
-  attested?: boolean;
-  name?: string;
-  /** Extra handlers (the issue handler, from 6b), built over the adapter's database. */
-  extraHandlers?: (w: AdapterWiring, propose: VrcProposeService) => Promise<PipelineHandler[]> | PipelineHandler[];
-  tmpRoot?: string;
-}
 
 export class VrcBoundaryAdapter {
   private root: string;
@@ -69,8 +54,10 @@ export class VrcBoundaryAdapter {
   guard!: AcceptedIdStore;
   pipeline!: Pipeline;
   propose!: VrcProposeService;
-  wiring!: AdapterWiring;
-  private verifier!: DidProofVerifier;
+  txManager!: TransactionManager;
+  txDb!: SqliteDataSource;
+  receive!: VrcReceiveParticipant;
+  verifier!: DidProofVerifier;
   private dbPath!: string;
 
   private readonly options: VrcAdapterOptions;
@@ -80,7 +67,7 @@ export class VrcBoundaryAdapter {
     this.attested = options.attested ?? false;
     this.name = options.name ?? 'truststackers-agent-vrc-boundary';
     this.root = mkdtempSync(join(options.tmpRoot ?? tmpdir(), 'p6-adapter-'));
-    const seed = new Uint8Array(32).fill(0x42);
+    const seed = new Uint8Array(32).fill(options.seed ?? 0x42);
     const did = didKeyFromEd25519(ed25519.getPublicKey(seed));
     this.signer = createEd25519BoundarySigner({ did, secretKey: seed, fragment: did.slice('did:key:'.length) });
   }
@@ -113,8 +100,22 @@ export class VrcBoundaryAdapter {
       now: () => this.now(),
       newId: () => this.newId(),
     });
-    this.wiring = { db: this.db, iutDid: did, localIdentityUuid: identity!.uuid, now: () => this.now(), newId: () => this.newId(), guard: this.guard, verifier: this.verifier };
-    const extra = (await this.options.extraHandlers?.(this.wiring, this.propose)) ?? [];
+    if (fresh || this.txDb === undefined) {
+      this.txDb = new SqliteDataSource(':memory:');
+      this.txDb.getRawDb().exec(TX_SCHEMA_SQL);
+      await applyTxSchemaAdditions(this.txDb);
+    }
+    this.txManager = new TransactionManager(new TransactionCoordinator(new TransactionLog(new DataSourceLogSink(this.txDb))), new CompensationExecutor());
+    const noResolver = {} as IdentityResolver;
+    this.receive = new VrcReceiveParticipant(`peer:${did}`, this.db, this.txDb, new VtcStore(this.db.getRawDb(), noResolver), noResolver);
+    this.receive.setInnerProofVerifier(this.verifier, () => this.now());
+    const extra = this.options.issue === false ? [] : [createVrcIssueHandler({
+      db: this.db,
+      txManager: this.txManager,
+      participant: this.receive,
+      verifier: this.verifier,
+      attachTx: (id, txId) => this.guard.attachTx(id, txId),
+    })];
     this.pipeline = new Pipeline({
       handlers: [this.propose.handler(), ...extra],
       servedVids: [did],
