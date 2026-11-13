@@ -1,0 +1,158 @@
+{
+  "source": "dtgwg-trust-tasks-tf, fixtures/consume and fixtures/proof (Trust over IP DTGWG Trust Tasks task force repository, https://github.com/trustoverip/dtgwg-trust-tasks-tf)",
+  "commit": "UNKNOWN",
+  "commitNote": "The upstream commit could not be obtained. The files were copied byte for byte from the dtgwg-trust-conformance suite (vectors/imported), which imported them from a task-force snapshot that carried no version-control metadata (that suite records commit null). Replace this value with the real commit once the files are re-copied from a checkout.",
+  "copiedFrom": "/srv/dev/code/seas/dtgwg-trust-conformance/vectors/imported (suite PROVENANCE.json importedOn 2026-11-13)",
+  "runtimePackage": "@openvtc/trust-tasks 0.29.0",
+  "licence": "Apache-2.0 (task-force repository code licence, per the suite README; the licence of the fixture files themselves was not separately verified). See NOTICE.",
+  "files": [
+    {
+      "path": "consume/freshness.json",
+      "sha256": "90b6612e046b6a0d1784510998cfd0cc4e21fb05cf64173960b0c62fe1a19ab0"
+    },
+    {
+      "path": "consume/item11-digest.json",
+      "sha256": "9e82ed55f5c38d28e645843c005c151b638f808197c4a948facd419c9e916643"
+    },
+    {
+      "path": "consume/timestamps.json",
+      "sha256": "96bc1e54068fc94f4e0c991bc216bb3c313b01600b4a39d6b90e36e9c99f6870"
+    },
+    {
+      "path": "proof/ecdsa-jcs-2019-go-p256.json",
+      "sha256": "df44f637c809a745884ef0efd6352bb1aa5aebaea378283a50791dff93e2c138"
+    },
+    {
+      "path": "proof/ecdsa-jcs-2019-go-p384.json",
+      "sha256": "98e4f5623d443bfcaee57430ca4f23167efbda310243c59371b8dea9673a6ec1"
+    },
+    {
+      "path": "proof/ecdsa-jcs-2019-ts-p256.json",
+      "sha256": "31e46a7094061fe6ccb88a48afc5d54b82ff5b2fbda782a22ea63b06dceec200"
+    },
+    {
+      "path": "proof/ecdsa-jcs-2019-ts-p384.json",
+      "sha256": "fea73ea1c1f29c5d30f9a0f470b76a3d17faa3bb19cf3e16896e59d28f8cd2cb"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-baseline.json",
+      "sha256": "584e7fe4387eb5b9675c8a7f6dcc288e01668956b9a11650ee451d8f93f93e1a"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-context-extended.json",
+      "sha256": "f5a4af14434d5e0f1444a8ead5c98acc9ff1c2a5b9156ab2f8ee86ce33868114"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-context-mismatch.json",
+      "sha256": "fa79343b754aa006bca01050791aca6afde13712ce633760a657abab549df378"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-context-proof-omits.json",
+      "sha256": "47fe40057148e0623659f64cefc85d071356c0c5e0892c1163af6966a88fe7d8"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-context-proof-only.json",
+      "sha256": "27042db619e2ea2bb22895437dfc5fe77154094edffa9e28a1cf0ff99a7cbbc7"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-context-string.json",
+      "sha256": "856db5b9ce01ab88492107846209631204af5060d61eea53cdcde149f2ec7cc1"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-context.json",
+      "sha256": "e95a40e23f372fa3f91e967cca8ad24d8476b199d8441ba43346115c31c68fee"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-created-february-30.json",
+      "sha256": "49f55115487d82c9475284609d4e29c38a1782d51dadf8331407a97a212b576d"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-created-hour-24.json",
+      "sha256": "321c0b347f9579360ff85fd65a6a1ff2db2ec794d127350dd80bda2fcaf59538"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-created-leap-second.json",
+      "sha256": "a1cc4c59aca74d855bbb075f5265285a6404b78f63975bdb999be9ec172f2120"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-created-month-13.json",
+      "sha256": "01133795aa56fad839c8eabb3db37132e4c7c9c516031a2234f473f7281342ef"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-created-offset-24-hours.json",
+      "sha256": "907ce53c70095d589ab41cc2b3866cffa0859da21e0c68be820abb665ed9fa67"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-expired.json",
+      "sha256": "aa2d70395aa9ba4386bfcd15ded926b30d6e8888468f271fd7479e89fd5a9279"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-expires-february-30.json",
+      "sha256": "8099a710a8bcb265d4da571db500de7f723de5570ce65782f80256925cd5a880"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-expires-future.json",
+      "sha256": "5ee945eccc2e4ed6191d04f9758677273e6a689d3f30d88c3482ec1472915513"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-expires-hour-24.json",
+      "sha256": "135a28b41fdb1ff09dadc2850a20ff15dc036c93bb57adefc2e9c98c3e80c36e"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-expires-leap-second.json",
+      "sha256": "a5bae0d33a052942b9397ac550e553f8e4a5bf3f4a41bd41f183a79a916888bb"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-expires-offset-24-hours.json",
+      "sha256": "1ca4b054947f48fba85349fd91bf5ccc6a4fc289e7eeff0bfaa1a8308638b3ea"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-expires-offset-99-hours.json",
+      "sha256": "6701f7f3862c5af106d3b320273770e9239c7e32070180f8e187ccd71da05565"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-expires-offset-minute-60.json",
+      "sha256": "120b3ff7e735379192e4e4a72a763b4cf970fefa74a69844f0c4c9989005fe38"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-mixed-order-r.json",
+      "sha256": "eeed30cdd0e85ffa12fc24fad76882269be41748e97098ff92e0492bb24296eb"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-non-canonical-key.json",
+      "sha256": "9e1407a1df21d0024843701cab0386b6a5256781a8d5a354df7bd50f70f3b335"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-process-attestation-response-tampered.json",
+      "sha256": "ca6d63708b20a311f589bceedafba098339da40b44864f9881d0a09d1144683e"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-process-attestation-response.json",
+      "sha256": "99c6f4fc58ffd251bbb6144bfc842eb76f98c2df215e1ad7d0888cd95fde9a03"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-purpose-key-agreement.json",
+      "sha256": "7127176754ae72c589a75a263712462faeddfc86df82a2d9db0a2e9fc1b00c75"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-purpose-unrecognised.json",
+      "sha256": "908ee41e14c61ba5f0f047185bee4f24754239ecfb5afabd7de014f23ae8c521"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-small-order-key.json",
+      "sha256": "bc1380ffc25beb810084c240c97a6eeebe7826b73448be3a67aa092439a2a649"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-timestamp-spellings-normalized.json",
+      "sha256": "826f1a9883da8d1d27fd2809d01e0ea70d4742755a5b68f8236a64bd050a85b0"
+    },
+    {
+      "path": "proof/eddsa-jcs-2022-timestamp-spellings.json",
+      "sha256": "79ea03dac77a490cac718d9a17114f035fd5e55dcc98f1a3f911d258f82ade56"
+    },
+    {
+      "path": "proof/manifest.json",
+      "sha256": "8d12bb99b6c66f8a47c401afc7719a7572af3634ba46fbb7a1087c7324f6338d"
+    }
+  ]
+}
