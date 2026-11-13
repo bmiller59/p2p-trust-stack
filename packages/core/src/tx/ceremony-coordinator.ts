@@ -13,6 +13,7 @@
 import { randomUUID } from 'node:crypto';
 import { sha256 } from '../crypto/primitives.js';
 import { CeremonyStore } from './ceremony-store.js';
+import { assertOpen, closeIfLapsed, isLapsed } from './ceremony-guard.js';
 import { GovernanceGuard } from '../services/governance-guard.js';
 import type { DataSource } from '../db/data-source.js';
 import type { TransactionManager } from './manager.js';
@@ -87,7 +88,19 @@ export class CeremonyCoordinator {
   ): Promise<{ recorded: boolean; crystallized: boolean; approvalCount: number }> {
     const proposal = await this.store.getProposal(proposalId);
     if (!proposal) throw new Error(`proposal ${proposalId} not found`);
-    if (proposal.status !== 'pending') throw new Error(`proposal is ${proposal.status}`);
+
+    // A repeated approval by the same approver is idempotent (also after the proposal committed):
+    // no second row, no error, the current count.
+    const prior = await this.store.getApprovals(proposalId);
+    const idempotentState = proposal.status === 'crystallized'
+      || (proposal.status === 'pending' && !isLapsed(proposal));
+    if (idempotentState && prior.some((a) => a.approverDid === approverDid)) {
+      return { recorded: false, crystallized: proposal.status === 'crystallized', approvalCount: prior.length };
+    }
+
+    // One clock and one rule for "still open" (deadline reached counts as lapsed); a late approval
+    // flips the stored status to `expired` before it is refused.
+    assertOpen(await closeIfLapsed(this.store, proposal));
 
     const recorded = await this.store.recordApproval(proposalId, approverDid, signature);
     const count = await this.store.countApprovals(proposalId);
@@ -108,7 +121,7 @@ export class CeremonyCoordinator {
   async addAdmin(proposalId: string, adminDid: string): Promise<void> {
     const proposal = await this.store.getProposal(proposalId);
     if (!proposal) throw new Error(`proposal ${proposalId} not found`);
-    if (proposal.status !== 'pending') throw new Error(`proposal is ${proposal.status}`);
+    assertOpen(await closeIfLapsed(this.store, proposal));
     await this.store.addAdminDid(proposalId, adminDid);
   }
 
@@ -119,6 +132,7 @@ export class CeremonyCoordinator {
   private async crystallize(proposalId: string): Promise<void> {
     const proposal = await this.store.getProposal(proposalId);
     if (!proposal) throw new Error(`proposal ${proposalId} not found`);
+    assertOpen(await closeIfLapsed(this.store, proposal));
     const approvals = await this.store.getApprovals(proposalId);
 
     // Full governance validation. `reason` now carries the `requireConsent` requirement
@@ -127,13 +141,13 @@ export class CeremonyCoordinator {
     // satisfy the quorum rather than only that it was refused.
     const result = await this.guard.validateCrystallization(proposal, approvals);
     if (!result.allowed) {
-      await this.store.updateStatus(proposalId, 'failed');
+      await this.store.markFailed(proposalId, `crystallization denied: ${result.reason}`, 'permissionDenied', false);
       throw new Error(`crystallization denied: ${result.reason}`);
     }
     const parentCheck = await this.guard.validateParentVtnPolicy(
       proposal.parentCommunityDid, proposal.kind);
     if (!parentCheck.allowed) {
-      await this.store.updateStatus(proposalId, 'failed');
+      await this.store.markFailed(proposalId, `parent VTN policy denied: ${parentCheck.reason}`, 'permissionDenied', false);
       throw new Error(`parent VTN policy denied: ${parentCheck.reason}`);
     }
 

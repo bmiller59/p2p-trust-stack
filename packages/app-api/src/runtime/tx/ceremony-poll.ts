@@ -36,7 +36,39 @@
 export interface CeremonyQueryResult {
   status?: string;
   errorReason?: string | null;
+  /** Standard Trust Task error code of a failure (server `errorCode`); read before `errorReason`. */
+  errorCode?: string | null;
+  /** Whether a resend may succeed after that failure; null/absent when the server records none. */
+  retryable?: boolean | null;
   error?: string;
+}
+
+/** Reader-facing text for a standard code, used when the server gave a code but no reason text. */
+const CODE_TEXT: Readonly<Record<string, string>> = {
+  permissionDenied: 'Not found or not permitted.',
+  taskFailed: 'The ceremony could not be completed.',
+  unavailable: 'The service is temporarily unavailable.',
+  idConflict: 'A ceremony with this id already exists with different content.',
+  internalError: 'The server could not complete the ceremony.',
+};
+
+/**
+ * The failure of a query result: the standard `errorCode` and `retryable` are read FIRST (they are
+ * the contract); `errorReason` is only the human text, and the code's own wording stands in when
+ * the server gave none. Results from a server that predates the code keep working (reason only).
+ */
+export function describeCeremonyFailure(
+  result: CeremonyQueryResult,
+  fallback: string,
+): { errorCode?: string; retryable?: boolean; message: string } {
+  const errorCode = typeof result.errorCode === 'string' && result.errorCode ? result.errorCode : undefined;
+  const retryable = typeof result.retryable === 'boolean' ? result.retryable : undefined;
+  const message = result.errorReason || (errorCode ? CODE_TEXT[errorCode] : undefined) || fallback;
+  return {
+    ...(errorCode === undefined ? {} : { errorCode }),
+    ...(retryable === undefined ? {} : { retryable }),
+    message,
+  };
 }
 
 export interface CeremonyPollOptions {
@@ -83,8 +115,8 @@ export function isHardQueryError(error: string | null | undefined): boolean {
 
 export type CeremonyStatusVerdict =
   | { kind: 'crystallized' }
-  | { kind: 'failed'; error: string }
-  | { kind: 'expired'; error: string }
+  | { kind: 'failed'; error: string; errorCode?: string; retryable?: boolean }
+  | { kind: 'expired'; error: string; errorCode?: string; retryable?: boolean }
   | { kind: 'hard_error'; error: string }
   | { kind: 'pending' }
   | { kind: 'transient'; error: string };
@@ -94,8 +126,14 @@ export function classifyCeremonyStatus(result: CeremonyQueryResult | null | unde
   if (!result) return { kind: 'transient', error: 'No ceremony data returned.' };
 
   if (result.status === 'crystallized') return { kind: 'crystallized' };
-  if (result.status === 'failed') return { kind: 'failed', error: result.errorReason || 'Ceremony failed.' };
-  if (result.status === 'expired') return { kind: 'expired', error: 'Ceremony expired.' };
+  if (result.status === 'failed') {
+    const f = describeCeremonyFailure(result, 'Ceremony failed.');
+    return { kind: 'failed', error: f.message, ...(f.errorCode ? { errorCode: f.errorCode } : {}), ...(f.retryable === undefined ? {} : { retryable: f.retryable }) };
+  }
+  if (result.status === 'expired') {
+    const f = describeCeremonyFailure(result, 'Ceremony expired.');
+    return { kind: 'expired', error: f.message, ...(f.errorCode ? { errorCode: f.errorCode } : {}), ...(f.retryable === undefined ? {} : { retryable: f.retryable }) };
+  }
   if (result.status === 'pending') return { kind: 'pending' };
 
   // No recognised status: either a definitive error or a transport failure.
@@ -106,8 +144,8 @@ export function classifyCeremonyStatus(result: CeremonyQueryResult | null | unde
 
 export type CeremonyPollOutcome =
   | { outcome: 'crystallized'; attempts: number }
-  | { outcome: 'failed'; error: string; attempts: number }
-  | { outcome: 'expired'; error: string; attempts: number }
+  | { outcome: 'failed'; error: string; attempts: number; errorCode?: string; retryable?: boolean }
+  | { outcome: 'expired'; error: string; attempts: number; errorCode?: string; retryable?: boolean }
   | {
       outcome: 'pending';
       error: string;
@@ -161,9 +199,17 @@ export async function awaitCeremonyTerminal(opts: CeremonyPollDriver): Promise<C
       case 'crystallized':
         return { outcome: 'crystallized', attempts };
       case 'failed':
-        return { outcome: 'failed', error: verdict.error, attempts };
+        return {
+          outcome: 'failed', error: verdict.error, attempts,
+          ...(verdict.errorCode ? { errorCode: verdict.errorCode } : {}),
+          ...(verdict.retryable === undefined ? {} : { retryable: verdict.retryable }),
+        };
       case 'expired':
-        return { outcome: 'expired', error: verdict.error, attempts };
+        return {
+          outcome: 'expired', error: verdict.error, attempts,
+          ...(verdict.errorCode ? { errorCode: verdict.errorCode } : {}),
+          ...(verdict.retryable === undefined ? {} : { retryable: verdict.retryable }),
+        };
       case 'hard_error':
         // A definitive answer — polling again cannot change it.
         return { outcome: 'failed', error: verdict.error, attempts };

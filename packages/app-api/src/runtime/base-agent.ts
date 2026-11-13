@@ -86,6 +86,7 @@ import { VrcReceiveParticipant } from './tx/vrc-receive-participant.js';
 import { PersonhoodAckReceiveParticipant } from './tx/personhood-ack-participant.js';
 import {
   awaitCeremonyTerminal,
+  describeCeremonyFailure,
   CEREMONY_POLL_DEFAULTS,
 } from './tx/ceremony-poll.js';
 import {
@@ -3080,7 +3081,7 @@ export abstract class BaseAgent implements AgentHandle {
         timeoutMs: CEREMONY_POLL_DEFAULTS.queryTimeoutMs,
         connectivityTimeoutMs: CEREMONY_POLL_DEFAULTS.connectivityTimeoutMs,
       });
-      return q.errorReason || q.error || fallback;
+      return describeCeremonyFailure(q, q.error || fallback).message;
     } catch {
       return fallback;
     }
@@ -3100,6 +3101,8 @@ export abstract class BaseAgent implements AgentHandle {
     connectivityTimeoutMs?: number;
   }): Promise<{
     status?: string; errorReason?: string | null; error?: string;
+    /** Standard error code and retryability of a failed ceremony (server `errorCode`/`retryable`). */
+    errorCode?: string | null; retryable?: boolean | null;
     /** Distinct, verified co-signatures recorded so far (server `approvalCount`). */
     approvalCount?: number;
     /** The declared founding admin uuid set (server `adminUuids`). */
@@ -3128,6 +3131,8 @@ export abstract class BaseAgent implements AgentHandle {
       const data = await remote.query('ceremony_query', { ceremonyId }) as {
         status?: string;
         errorReason?: string | null;
+        errorCode?: string | null;
+        retryable?: boolean | null;
         error?: string;
         approvalCount?: number;
         adminUuids?: string[];

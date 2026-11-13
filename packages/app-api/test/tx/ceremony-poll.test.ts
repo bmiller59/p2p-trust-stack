@@ -191,3 +191,37 @@ test('isHardQueryError: matches case-insensitively, ignores empty values', () =>
   assert.equal(isHardQueryError(''), false);
   assert.equal(isHardQueryError('connection refused'), false);
 });
+
+// ── Conformance P5: the standard error code is read first ────────────────────────────────
+
+test('P5: a failed ceremony is classified from errorCode/retryable first; errorReason is only the text', () => {
+  const v = classifyCeremonyStatus({ status: 'failed', errorCode: 'permissionDenied', retryable: false, errorReason: 'Crystallization denied: policy' });
+  assert.deepEqual(v, { kind: 'failed', error: 'Crystallization denied: policy', errorCode: 'permissionDenied', retryable: false });
+});
+
+test('P5: with a code but no reason text, the code supplies the wording', () => {
+  const v = classifyCeremonyStatus({ status: 'failed', errorCode: 'taskFailed', retryable: false, errorReason: null });
+  assert.equal(v.kind, 'failed');
+  assert.equal((v as { errorCode?: string }).errorCode, 'taskFailed');
+  assert.notEqual((v as { error: string }).error, 'Ceremony failed.');
+});
+
+test('P5: an expired ceremony reports the server code and text, not a fixed string', () => {
+  const v = classifyCeremonyStatus({ status: 'expired', errorCode: 'taskFailed', retryable: false, errorReason: 'The ceremony deadline has passed.' });
+  assert.deepEqual(v, { kind: 'expired', error: 'The ceremony deadline has passed.', errorCode: 'taskFailed', retryable: false });
+  // a server that predates the code keeps the old wording
+  assert.deepEqual(classifyCeremonyStatus({ status: 'expired' }), { kind: 'expired', error: 'Ceremony expired.' });
+});
+
+test('P5: old servers (reason only) still classify and carry no code', () => {
+  assert.deepEqual(classifyCeremonyStatus({ status: 'failed', errorReason: 'Name "x" is already taken.' }), { kind: 'failed', error: 'Name "x" is already taken.' });
+  assert.deepEqual(classifyCeremonyStatus({ status: 'failed' }), { kind: 'failed', error: 'Ceremony failed.' });
+});
+
+test('P5: the poll outcome carries errorCode and retryable through', async () => {
+  const out = await awaitCeremonyTerminal({
+    query: async () => ({ status: 'failed', errorCode: 'unavailable', retryable: true, errorReason: 'store down' }),
+    sleep: async () => {}, now: () => 0,
+  });
+  assert.deepEqual(out, { outcome: 'failed', error: 'store down', attempts: 1, errorCode: 'unavailable', retryable: true });
+});

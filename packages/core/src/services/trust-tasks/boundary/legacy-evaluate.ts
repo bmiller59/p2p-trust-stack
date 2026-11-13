@@ -10,8 +10,13 @@
  *
  * Served under the internal name (`task:p2pts:policy:evaluate:0.1`, kept for one release so existing
  * clients keep working) and under its valid wire form (`urn:p2pts:tasks:spec:policy:evaluate:0.1`,
- * urn-codec.ts). Unauthenticated callers keep today's behaviour here: the verified sender becoming
- * the policy actor (and `permissionDenied` without one) is the AUTHZ phase, not this one.
+ * urn-codec.ts).
+ *
+ * Actor (conformance P5, decision C5, AUTHZ-001): the policy actor is the VERIFIED sender, never the
+ * in-band `issuer` on its own. The sender is the transport-authenticated identity (the session
+ * cookie), else the signer of a verified proof. With neither, the caller is unauthenticated and the
+ * answer is `permissionDenied` (behaviour change from P2, which fell back to the in-band issuer or
+ * the community's own DID and so evaluated as the community itself).
  */
 import type { DataSource } from '../../../db/data-source.js';
 import * as identitiesRepo from '../../../db/repositories/identities-repo.js';
@@ -58,6 +63,12 @@ export function createLegacyEvaluateHandler(db: DataSource): PipelineHandler {
     },
     consequential: false,
     async handle(doc: TrustTaskDocument<unknown>, ctx) {
+      // The verified sender is the actor; no verified sender is not an actor at all. Checked first, so an
+      // unauthenticated caller cannot tell a hosted community from an unknown one.
+      const actor = ctx.sender ?? ctx.verifiedSigner;
+      if (typeof actor !== 'string' || actor.length === 0) {
+        throw new TaskError({ code: 'permissionDenied', retryable: false, internalMessage: 'evaluate requires an authenticated sender' });
+      }
       const identity = await identitiesRepo.findByRealDid(db, String(doc.recipient ?? ''));
       if (!identity || !identity.did) {
         throw new TaskError({ code: 'wrongRecipient', internalMessage: `community ${String(doc.recipient)} not found` });
@@ -76,7 +87,7 @@ export function createLegacyEvaluateHandler(db: DataSource): PipelineHandler {
       const query: PolicyQuery = {
         action: action as PolicyQuery['action'],
         communityDid: identity.did,
-        actorDid: typeof doc.issuer === 'string' && doc.issuer ? doc.issuer : identity.did,
+        actorDid: actor,
         params,
       };
       const facts = p.facts && typeof p.facts === 'object' ? (p.facts as Record<string, unknown>) : undefined;
