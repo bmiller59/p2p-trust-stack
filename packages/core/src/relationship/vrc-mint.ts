@@ -19,6 +19,9 @@ import type { DataSource } from '../db/data-source.js';
 import type { IdentityResolver } from '../services/identity-resolver.js';
 import type { RelationshipRecord, LocalIdentity } from './types.js';
 import { logger } from '../util/logger.js';
+import * as exchangeDids from '../db/repositories/vrc-exchange-dids-repo.js';
+import { loadExchangeSigner } from './exchange-dids.js';
+import { findExchangeVrc } from './exchange-vrc.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -98,7 +101,8 @@ export async function mintPeerVrc(params: {
      WHERE vc_type = 'vrc'
        AND (
          (issuer_identity_uuid = ? AND subject_identity_uuid = ? AND credential_digest = ?)
-         OR (issuer_identity_uuid = ? AND subject_identity_uuid = ? AND w3c_vc_json IS NOT NULL)
+         OR (issuer_identity_uuid = ? AND subject_identity_uuid = ? AND w3c_vc_json IS NOT NULL
+             AND w3c_vc_json NOT LIKE '%"issuerScope":"pairwise"%')
        )
      LIMIT 1`,
     local.identityUuid, remote.identityUuid, digestHex,
@@ -160,6 +164,69 @@ export async function mintPeerVrc(params: {
 
   logger.info(`[mintPeerVrc] Stored relationship handshake record for remote ${record.remoteDid.slice(0, 12)}... (credential_uuid=${credentialUuid})`);
   return { success: true, w3cVcJson: w3cJson ?? undefined, remoteDid: record.remoteDid };
+}
+
+// ---------------------------------------------------------------------------
+// mintExchangeVrc (per-VRC relationship DIDs, conformance P5c)
+// ---------------------------------------------------------------------------
+
+export type MintExchangeVrcResult =
+  | { success: true; alreadyIssued: boolean; credentialUuid: string; w3cVcJson: string }
+  | { success: false; reason: 'noExchange' | 'notAccepted' | 'ended' | 'noSigner' | 'identityUnmapped' | 'mintFailed' };
+
+/**
+ * Mint the VRC for one exchange. Issuer and subject are the exchange's two relationship DIDs (never
+ * the connection DIDs), the inner proof is signed by the relationship DID's own key (`#key-1`,
+ * `assertionMethod`), `issuerScope` is `pairwise`, and the claim carries no DID of either party.
+ * A resend within the exchange returns the stored credential (`alreadyIssued`); a second exchange
+ * between the same parties is a new row and therefore a new VRC. The credential rows reference the
+ * root identities from the mapping, so the graph keeps one node per peer.
+ */
+export async function mintExchangeVrc(params: {
+  dataSource: DataSource;
+  exchangeId: string;
+  passphrase: string;
+}): Promise<MintExchangeVrcResult> {
+  const { dataSource, exchangeId, passphrase } = params;
+  const exchange = await exchangeDids.findByExchangeId(dataSource, exchangeId);
+  if (exchange === null) return { success: false, reason: 'noExchange' };
+  if (exchange.state === 'ended') return { success: false, reason: 'ended' };
+
+  const existing = await findExchangeVrc(dataSource, exchange, 'issued');
+  if (existing !== null) {
+    return { success: true, alreadyIssued: true, credentialUuid: existing.uuid, w3cVcJson: existing.w3cVcJson };
+  }
+
+  if (exchange.remoteRelationshipDid === null) return { success: false, reason: 'notAccepted' };
+  if (exchange.localIdentityUuid === null || exchange.remoteIdentityUuid === null) return { success: false, reason: 'identityUnmapped' };
+  const signer = await loadExchangeSigner(dataSource, exchangeId, passphrase);
+  if (signer === null) return { success: false, reason: 'noSigner' };
+
+  try {
+    const { CredentialFactoryImpl } = await import('../services/credential-factory/credential-factory-impl.js');
+    const result = await new CredentialFactoryImpl(dataSource).mint({
+      kind: 'RelationshipCredential',
+      scenario: 'peer-verification',
+      issuerDid: exchange.localRelationshipDid,
+      subjectDid: exchange.remoteRelationshipDid,
+      issuerScope: 'pairwise',
+      claim: {
+        relationshipType: 'peer-relationship',
+        establishedAt: new Date().toISOString(),
+      },
+      signerSecretKey: signer.secretKey,
+      verificationMethod: signer.verificationMethod,
+      extension: {
+        issuerIdentityUuid: exchange.localIdentityUuid,
+        subjectIdentityUuid: exchange.remoteIdentityUuid,
+      },
+    });
+    if (exchange.state === 'accepted') await exchangeDids.setState(dataSource, exchangeId, 'issued-by-me');
+    return { success: true, alreadyIssued: false, credentialUuid: result.credentialUuid, w3cVcJson: result.w3cVcJson as string };
+  } catch (err) {
+    logger.warn('[mintExchangeVrc] mint failed:', (err as Error)?.message ?? err);
+    return { success: false, reason: 'mintFailed' };
+  }
 }
 
 // ---------------------------------------------------------------------------

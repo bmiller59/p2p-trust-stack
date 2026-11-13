@@ -695,6 +695,13 @@ export class VtcStore {
     issuerDid: string,
     subjectDid: string,
     issuerIdentity?: Record<string, unknown>,
+    /**
+     * Conformant (per-VRC relationship DID) credential: the root identities come from the exchange
+     * record, the remote-supplied `issuerIdentity` is ignored, and dedup is by digest only (the
+     * relationship DIDs are unique per exchange, so a second exchange between the same parties is a
+     * new credential, not a duplicate of the first).
+     */
+    exchange?: { issuerIdentityUuid: string; subjectIdentityUuid: string },
   ): void {
     // Compute digest from the W3C VC JSON for dedup
     const digestBytes = sha256(new TextEncoder().encode(w3cVcJson));
@@ -705,16 +712,20 @@ export class VtcStore {
     // `identities` row into its local table. storeRemoteIdentityCopy upserts
     // by the record's own UUID (the canonical selection key), preserves every
     // field, and forces custody='remote' (the receiver does not own the record).
-    const issuer = issuerIdentity
-      ? this.resolver.storeRemoteIdentityCopy(issuerIdentity as never)
+    const issuer = exchange
+      ? { identityUuid: exchange.issuerIdentityUuid }
+      : issuerIdentity
+        ? this.resolver.storeRemoteIdentityCopy(issuerIdentity as never)
+        : this.resolver.resolveRemoteIdentity({
+            did: issuerDid,
+            method: 'peer4',
+          });
+    const subject = exchange
+      ? { identityUuid: exchange.subjectIdentityUuid }
       : this.resolver.resolveRemoteIdentity({
-          did: issuerDid,
+          did: subjectDid,
           method: 'peer4',
         });
-    const subject = this.resolver.resolveRemoteIdentity({
-      did: subjectDid,
-      method: 'peer4',
-    });
 
     // Idempotency — first-wins dedup on TWO independent keys so the same
     // logical VRC can never be written twice by different paths:
@@ -727,15 +738,18 @@ export class VtcStore {
     // ended up with each of the two VRCs of a ceremony twice. The mirrored
     // copy is byte-identical to the minted envelope, so keeping the existing
     // row loses nothing.
-    const existing = this.db.prepare(
-      `SELECT uuid FROM credentials
-       WHERE vc_type = 'vrc'
-         AND (
-           credential_digest = ?
-           OR (issuer_identity_uuid = ? AND subject_identity_uuid = ? AND w3c_vc_json IS NOT NULL)
-         )
-       LIMIT 1`,
-    ).get(digestHex, issuer.identityUuid, subject.identityUuid) as { uuid: string } | undefined;
+    const existing = (exchange
+      ? this.db.prepare("SELECT uuid FROM credentials WHERE vc_type = 'vrc' AND credential_digest = ? LIMIT 1").get(digestHex)
+      : this.db.prepare(
+          `SELECT uuid FROM credentials
+           WHERE vc_type = 'vrc'
+             AND (
+               credential_digest = ?
+               OR (issuer_identity_uuid = ? AND subject_identity_uuid = ? AND w3c_vc_json IS NOT NULL
+                   AND w3c_vc_json NOT LIKE '%"issuerScope":"pairwise"%')
+             )
+           LIMIT 1`,
+        ).get(digestHex, issuer.identityUuid, subject.identityUuid)) as { uuid: string } | undefined;
     if (existing) {
       logger.info(
         `[VtcStore] Received peer VRC from ${issuerDid.slice(0, 12)}... already present (uuid=${existing.uuid}) — skipping`,

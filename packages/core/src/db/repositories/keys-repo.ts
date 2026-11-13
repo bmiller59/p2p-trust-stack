@@ -236,3 +236,16 @@ export async function findCurrentForDidDocument(
   `, didDocumentUuid, keyType);
   return row ? rowToKey(row) : null;
 }
+
+/**
+ * Delete the secret material of every key held for a DID document, keeping the public key rows.
+ * Used when a relationship ends (conformance P5c): nothing can be signed under that DID afterwards,
+ * while the public document stays so stored credentials still verify.
+ */
+export async function clearSecretsForDidDocument(db: DataSource, didDocumentUuid: string): Promise<void> {
+  await db.run(
+    `UPDATE keys SET encrypted_secret_key = NULL, salt = NULL, nonce = NULL, auth_tag = NULL
+      WHERE did_document_uuid = ?`,
+    didDocumentUuid,
+  );
+}

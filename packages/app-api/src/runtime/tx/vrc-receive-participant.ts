@@ -27,6 +27,11 @@ import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-r
 import type { VtcStore } from '@p2p-trust-stack/core/vtc/store.js';
 import { VrcCeremonyStore } from '@p2p-trust-stack/core/tx/vrc-ceremony-store.js';
 import { logger } from '@p2p-trust-stack/core/util/logger.js';
+import * as exchangeDids from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
+import { checkIncomingVrc, findExchangeVrc } from '@p2p-trust-stack/core/relationship/exchange-vrc.js';
+import { recordAbortReason } from '@p2p-trust-stack/core/tx/ceremony-guard.js';
+import { TaskError } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
+import { sha256 } from '@p2p-trust-stack/core/crypto/primitives.js';
 
 export interface StoreRemoteVrcParams {
   w3cVcJson: string;
@@ -41,22 +46,31 @@ export interface StoreRemoteVrcParams {
    * and stores the record with custody='remote'.
    */
   issuerIdentity?: Record<string, unknown>;
+  /**
+   * Boundary path only (conformance P5c): the `propose` document id of the exchange this credential
+   * belongs to. When set, issuer and subject must be the exchange's relationship DIDs, the inner
+   * proof must verify, the credential is stored against the exchange's root identities, and
+   * `issuerIdentity` and the internal ceremony session are NOT used.
+   */
+  exchangeId?: string;
 }
 
 export class VrcReceiveParticipant implements Participant {
   readonly pid: string;
+  private readonly appDb: DataSource;
   private readonly txDb: DataSource;
   private readonly vtcStore: VtcStore;
   private readonly ceremonyStore: VrcCeremonyStore;
 
   constructor(
     pid: string,
-    _appDb: DataSource,
+    appDb: DataSource,
     txDb: DataSource,
     vtcStore: VtcStore,
     _resolver: IdentityResolver,
   ) {
     this.pid = pid;
+    this.appDb = appDb;
     this.txDb = txDb;
     this.vtcStore = vtcStore;
     // The ceremony saga lives in the same tx-coordinator db as participant state.
@@ -73,6 +87,17 @@ export class VrcReceiveParticipant implements Participant {
 
       const params = op.params as unknown as StoreRemoteVrcParams;
       if (!params?.w3cVcJson) return 'no';
+
+      if (params.exchangeId !== undefined) {
+        try {
+          await this.storeExchangeVrc(params);
+        } catch (err) {
+          logger.error(`[vrc-receive] exchange VRC refused for tx ${txId}:`, (err as Error)?.message);
+          recordAbortReason(txId, err);
+          return 'no';
+        }
+        continue;
+      }
 
       try {
         // Store the remote peer's VRC in the local credentials table.
@@ -111,6 +136,41 @@ export class VrcReceiveParticipant implements Participant {
     );
 
     return 'yes';
+  }
+
+  /**
+   * Conformant path. Checks come from the exchange record, never from the sender's say-so, and run
+   * before anything is stored. A different credential from the same counterparty relationship DID in
+   * the same exchange is `alreadyIssued`; the same bytes again are an idempotent success.
+   */
+  private async storeExchangeVrc(params: StoreRemoteVrcParams): Promise<void> {
+    const exchange = await exchangeDids.findByExchangeId(this.appDb, params.exchangeId as string);
+    if (exchange === null || exchange.state === 'ended' || exchange.remoteRelationshipDid === null) {
+      throw new TaskError({ reason: 'notAccepted', internalMessage: 'no accepted exchange for this VRC' });
+    }
+    if (exchange.localIdentityUuid === null || exchange.remoteIdentityUuid === null) {
+      throw new TaskError({ reason: 'notAccepted', internalMessage: 'exchange identities are not mapped' });
+    }
+    const check = await checkIncomingVrc(params.w3cVcJson, exchange);
+    if (!check.ok) {
+      throw new TaskError({ reason: 'vcInvalid', internalMessage: `exchange VRC refused: ${check.reason}` });
+    }
+    const held = await findExchangeVrc(this.appDb, exchange, 'received');
+    const digest = Array.from(sha256(new TextEncoder().encode(params.w3cVcJson)))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+    if (held !== null && held.digest !== digest) {
+      throw new TaskError({
+        code: 'vrc/relationships/issue:alreadyIssued',
+        retryable: false,
+        internalMessage: 'the exchange already holds a different credential',
+      });
+    }
+    this.vtcStore.storeReceivedDtgVrc(params.w3cVcJson, params.issuerDid, params.subjectDid, undefined, {
+      issuerIdentityUuid: exchange.remoteIdentityUuid,
+      subjectIdentityUuid: exchange.localIdentityUuid,
+    });
+    if (exchange.state === 'accepted') await exchangeDids.setState(this.appDb, exchange.exchangeId, 'received');
   }
 
   async commit(txId: string): Promise<void> {

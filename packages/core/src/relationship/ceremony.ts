@@ -65,6 +65,7 @@ import {
   type VrcCeremonyStepResult,
 } from '../tx/vrc-ceremony-store.js';
 import { logger } from '../util/logger.js';
+import { labelVrc } from './exchange-vrc.js';
 
 // ── Ceremony / retry policy ───────────────────────────────────────────────
 /** Number of attempts per leg before the ceremony is marked failed. */
@@ -222,6 +223,11 @@ export interface CeremonyContext {
   onCeremonyFailed?: (remoteDid: string, step: string, error: string) => void;
   /** Called when an uncompleted personhood ceremony expires (connection cleared). */
   onCeremonyExpired?: (remoteDid: string) => void;
+  /**
+   * Called when the relationship with `remoteDid` ends (teardown). The agent ends the per-VRC
+   * relationship-DID exchanges with that peer: secret keys deleted, public documents kept (P5c).
+   */
+  onRelationshipEnded?: (remoteDid: string) => Promise<void>;
 
   // ── Transaction-coordinator enclosure ──────────────────────────────────
   /** Durable saga store (vrc_ceremonies) on the tx-coordinator db. */
@@ -742,6 +748,7 @@ export async function teardownCeremony(
 
   await ctx.ceremonyStore.deleteByPair(ctx.identity.did, remoteDid);
   ctx.store.deleteRecord(ctx.identity.did, remoteDid);
+  await ctx.onRelationshipEnded?.(remoteDid);
 
   logger.info(
     `[ceremony] torn down incomplete ceremony with ${remoteDid.slice(0, 24)}... ` +
@@ -963,12 +970,15 @@ async function buildIdentityPushPayload(
   const creds: Array<Record<string, unknown>> = [];
   const sigs: Array<Record<string, unknown>> = [];
   if (local && remote) {
-    const cred = ctx.db.prepare(
+    // Legacy (connection-DID) VRCs only: a conformant per-VRC credential must never travel with the
+    // connection identity record, which would hand the server the relationship-DID mapping (P5c).
+    const candidates = ctx.db.prepare(
       `SELECT * FROM credentials
        WHERE issuer_identity_uuid = ? AND subject_identity_uuid = ? AND vc_type = 'vrc'
          AND w3c_vc_json IS NOT NULL
-       ORDER BY created_at DESC LIMIT 1`,
-    ).get(local.identityUuid, remote.identityUuid) as Record<string, unknown> | undefined;
+       ORDER BY created_at DESC`,
+    ).all(local.identityUuid, remote.identityUuid) as Array<Record<string, unknown>>;
+    const cred = candidates.find((c) => labelVrc(c.w3c_vc_json as string) === 'legacy');
     if (cred) {
       creds.push({
         uuid: cred.uuid,

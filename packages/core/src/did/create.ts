@@ -245,3 +245,35 @@ export async function createDidPeer4(transport?: ServiceEndpoint): Promise<DidPe
     hybridKemKeyPair,
   };
 }
+
+// ---------------------------------------------------------------------------
+// Relationship DID (per-VRC, conformance P5c)
+// ---------------------------------------------------------------------------
+
+export interface RelationshipDidPeer4Result {
+  did: string;
+  document: DidDocument;
+  signingKeyPair: { secretKey: Uint8Array; publicKey: Uint8Array };
+}
+
+/**
+ * Create a `did:peer:4` for ONE VRC exchange (decision 35): a fresh Ed25519 key generated for this
+ * DID alone, one `#key-1` verification method listed under `authentication` and `assertionMethod`,
+ * no X25519 key (nothing is encrypted to it), no post-quantum keys, and NO service entry (a shared
+ * transport entry would correlate relationship DIDs). The key is never derived from any identity
+ * seed or other key material.
+ */
+export async function createRelationshipDidPeer4(): Promise<RelationshipDidPeer4Result> {
+  const signingKeyPair = generateEd25519KeyPair();
+  const document: DidDocument = {
+    '@context': ['https://www.w3.org/ns/did/v1', 'https://w3id.org/security/multikey/v1'],
+    verificationMethod: [
+      { id: '#key-1', type: 'Multikey', controller: '', publicKeyMultibase: encodeEd25519Multikey(signingKeyPair.publicKey) },
+    ],
+    assertionMethod: ['#key-1'],
+    authentication: ['#key-1'],
+    keyAgreement: [],
+  };
+  const { did } = await encodePeer4(document);
+  return { did, document, signingKeyPair };
+}

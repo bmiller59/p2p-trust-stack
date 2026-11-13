@@ -123,6 +123,9 @@ export interface CredentialMintRequest {
   assertPersonhood?: boolean;
 
   // ── Extensions ──────────────────────────────────────────────────────
+  /** Declared correlation scope of `issuerDid` (emitted in the credential, inside the signed bytes). */
+  issuerScope?: 'pairwise' | 'directed' | 'public';
+
   /** Arbitrary metadata for P2PTS-specific extensions. */
   extension?: Record<string, unknown>;
 }

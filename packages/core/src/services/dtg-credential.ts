@@ -97,6 +97,8 @@ export interface DtgCredentialVc {
   id?: string;
   type: string[];
   issuer: string;
+  /** Correlation scope the issuer declares for `issuer` (credential specification); inside the signed bytes. */
+  issuerScope?: 'pairwise' | 'directed' | 'public';
   validFrom: string;
   validUntil?: string;
   credentialSubject: Record<string, unknown>;
@@ -133,6 +135,8 @@ export interface DtgBuildParams {
    * post-sign mutation can no longer happen at all.
    */
   typeOverride?: string[];
+  /** Declared scope of the `issuer` identifier; emitted before signing so it is covered by the proof. */
+  issuerScope?: 'pairwise' | 'directed' | 'public';
 }
 
 
@@ -265,7 +269,7 @@ function deepFreeze<T>(value: T): T {
 export function buildDtgCredential(params: DtgBuildParams): DtgCredentialVc {
   const {
     id, subtype, issuerDid, subjectDid, claim,
-    validFrom, validUntil, verificationMethod, signerSecretKey, statement, typeOverride,
+    validFrom, validUntil, verificationMethod, signerSecretKey, statement, typeOverride, issuerScope,
   } = params;
 
   const createdAt = new Date();
@@ -315,6 +319,7 @@ export function buildDtgCredential(params: DtgBuildParams): DtgCredentialVc {
     id,
     type: typeArray,
     issuer: issuerDid,
+    ...(issuerScope ? { issuerScope } : {}),
     validFrom: new Date(validFrom * 1000).toISOString(),
     ...(validUntil ? { validUntil: new Date(validUntil * 1000).toISOString() } : {}),
     credentialSubject,

@@ -114,6 +114,7 @@ import { signEd25519, ed25519ToX25519 } from '@p2p-trust-stack/core/crypto/primi
 import { SqliteKeyStore } from '@p2p-trust-stack/core/keystore/sqlite-keystore.js';
 import { cesrEncode, CESR_CODES } from '@p2p-trust-stack/core/crypto/cesr.js';
 import { asCesrVid } from '@p2p-trust-stack/core/vtc/codec.js';
+import { endExchangesForConnections } from '@p2p-trust-stack/core/relationship/exchange-dids.js';
 import { SqliteDataSource } from '@p2p-trust-stack/core/db/sqlite-data-source.js';
 import { CredentialFactoryImpl } from '@p2p-trust-stack/core/services/credential-factory/credential-factory-impl.js';
 
@@ -2619,6 +2620,10 @@ export abstract class BaseAgent implements AgentHandle {
         for (const handler of this.ceremonyFailedHandlers) {
           handler(remoteDid, step, error);
         }
+      },
+      onRelationshipEnded: async (remoteDid) => {
+        // Per-VRC relationship DIDs (P5c): delete their secret keys, keep the public documents.
+        await endExchangesForConnections(this.ds, this.identity.did, remoteDid);
       },
       onCeremonyExpired: (remoteDid) => {
         logger.info(`[Agent] ⏱ Ceremony expired for ${remoteDid.slice(0, 24)}... — connection reset. Re-paste the OOBI to retry.`);

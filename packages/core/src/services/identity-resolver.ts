@@ -596,14 +596,16 @@ export class IdentityResolver {
    * @param dataSource   DataSource bridge to the agent's SQLite database
    * @param rootIdentityId  The caller's root identity id (the R-DID's owner)
    * @param relationshipId  The relationships.id this R-DID is scoped to
+   * @param passphrase  The agent's key passphrase (the secret key is stored encrypted under it)
    */
   async registerRdid(
     dataSource: import('../db/data-source.js').DataSource,
     rootIdentityUuid: string,
     relationshipUuid: string,
+    passphrase: string,
   ): Promise<ResolvedIdentity> {
     const { DidManager } = await import('./did-manager.js');
-    const result = await new DidManager(dataSource).createRelationshipDid(rootIdentityUuid, relationshipUuid);
+    const result = await new DidManager(dataSource).createRelationshipDid(rootIdentityUuid, relationshipUuid, passphrase);
     return {
       identityUuid: result.identityUuid,
       didDocumentUuid: result.didDocumentUuid,
