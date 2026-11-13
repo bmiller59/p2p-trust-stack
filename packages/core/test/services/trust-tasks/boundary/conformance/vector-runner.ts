@@ -26,13 +26,20 @@ const CONTROL_TYPE = "https://trusttasks.org/spec/trust-task-control/0.1";
 
 export interface VectorStep {
   at?: string;
+  /** Absolute instant for this step (DUP window-edge vectors). */
+  atAbsolute?: string;
   send?: {
     template?: string;
+    /** Verbatim bytes (the shared-fixture vectors) and the substitutions applied to them. */
+    raw?: string;
+    substitute?: Record<string, string>;
+    /** `previous`: resend the previous step's document. */
+    same?: string;
     params?: Record<string, unknown>;
     /** `null` means unsigned; the in-process adapter never verifies a proof, so it is ignored. */
     sign?: unknown;
     from?: string | { spoof: string };
-    mutate?: { op: string; bytes?: number }[];
+    mutate?: { op: string; bytes?: number; path?: string; value?: unknown }[];
     [k: string]: unknown;
   };
   expect?: {
@@ -219,26 +226,50 @@ export async function runVector(adapter: Adapter, file: VectorFile, vector: Vect
   await adapter.reset();
   const start = Date.parse(vector.clockStart ?? file.clock.start);
   let at = 0;
+  let previous: { doc: Record<string, unknown> | undefined; replies: string[] } | undefined;
   for (const [i, step] of vector.steps.entries()) {
     const label = `step ${i + 1}`;
     try {
       if (step.at !== undefined) at = offsetMs(step.at);
-      const nowMs = start + at;
+      const nowMs = step.atAbsolute !== undefined ? Date.parse(step.atAbsolute) : start + at;
       await adapter.setClock(new Date(nowMs).toISOString());
       const send = step.send;
-      if (send?.template === undefined) throw new Error("unsupported step: only template sends are implemented");
-      const doc = substitute(template(send.template, env), vector.id, env, nowMs) as Record<string, unknown>;
-      for (const [k, v] of Object.entries(send.params ?? {})) {
-        if (isObject(v) && v["$omit"] === true) delete doc[k];
-        else doc[k] = substitute(v, vector.id, env, nowMs);
-      }
-      let bytes = JSON.stringify(doc);
-      for (const m of send.mutate ?? []) {
-        if (m.op !== "truncate") throw new Error(`unsupported mutation ${m.op}`);
-        bytes = bytes.slice(0, Math.max(0, bytes.length - (m.bytes ?? 1)));
+      if (send === undefined) throw new Error("unsupported step: no send");
+      let doc: Record<string, unknown>;
+      let bytes: string;
+      if (send.raw !== undefined) {
+        bytes = send.raw;
+        for (const [from, to] of Object.entries(send.substitute ?? {})) bytes = bytes.split(from).join(substitute(to, vector.id, env, nowMs) as string);
+        doc = parse(bytes) ?? {};
+      } else if (send.same === "previous") {
+        if (previous?.doc === undefined) throw new Error("same: previous has no document");
+        if (isObject(send.sign) && send.sign.created !== undefined) throw new Error("unsupported step: a re-signed resend needs the signer (attestation phase)");
+        doc = structuredClone(previous.doc);
+        for (const m of send.mutate ?? []) {
+          if (m.op === "set") {
+            const segs = m.path!.split("/").slice(1);
+            let cur: Record<string, unknown> = doc;
+            for (const seg of segs.slice(0, -1)) cur = cur[seg] as Record<string, unknown>;
+            cur[segs[segs.length - 1]!] = substitute(m.value, vector.id, env, nowMs);
+          } else if (m.op !== "reorder") throw new Error(`unsupported mutation ${m.op}`);
+        }
+        const reorder = (send.mutate ?? []).some((m) => m.op === "reorder");
+        bytes = reorder ? JSON.stringify(Object.fromEntries(Object.entries(doc).reverse()), null, 2) : JSON.stringify(doc);
+      } else {
+        if (send.template === undefined) throw new Error("unsupported step: only template, raw and same sends are implemented");
+        doc = substitute(template(send.template, env), vector.id, env, nowMs) as Record<string, unknown>;
+        for (const [k, v] of Object.entries(send.params ?? {})) {
+          if (isObject(v) && v["$omit"] === true) delete doc[k];
+          else doc[k] = substitute(v, vector.id, env, nowMs);
+        }
+        bytes = JSON.stringify(doc);
+        for (const m of send.mutate ?? []) {
+          if (m.op !== "truncate") throw new Error(`unsupported mutation ${m.op}`);
+          bytes = bytes.slice(0, Math.max(0, bytes.length - (m.bytes ?? 1)));
+        }
       }
       const from: SendParams["from"] =
-        send.from === undefined ? { kind: "actor", vid: env.senderVid }
+        send.from === undefined ? (send.raw !== undefined ? { kind: "none" } : { kind: "actor", vid: env.senderVid })
         : typeof send.from === "object" ? { kind: "spoof", vid: send.from.spoof === "X" ? (env.otherVid ?? "did:web:x.example") : send.from.spoof }
         : send.from === "none" ? { kind: "none" }
         : (() => { throw new Error(`unsupported sender ${send.from}`); })();
@@ -248,6 +279,8 @@ export async function runVector(adapter: Adapter, file: VectorFile, vector: Vect
       const handledBefore = Number((await adapter.observe({ query: "handled" })).value);
       const result = await adapter.send({ from, bytes });
       const handledAfter = Number((await adapter.observe({ query: "handled" })).value);
+      const prevReplies = previous?.replies;
+      previous = { doc, replies: result.replies };
       for (const reply of result.replies) for (const e of validateReply(reply, doc, env, from.kind === "none" ? undefined : from.vid)) failures.push(`${label}: ${e}`);
 
       const first = result.replies[0] === undefined ? undefined : parse(result.replies[0]);
@@ -273,6 +306,16 @@ export async function runVector(adapter: Adapter, file: VectorFile, vector: Vect
           // Refused or ignored, never executed: no response document, and (checked below) no side effect.
           if (result.replies.length > 1) failures.push(`${label}: expected a refusal, got ${result.replies.length} replies`);
           else if (result.replies.length === 1 && !typeOf.startsWith(ERROR_PREFIX)) failures.push(`${label}: expected a refusal, got ${typeOf}`);
+          break;
+        }
+        case "duplicate": {
+          // Absorbed, never an error, never executed again; a reply, if any, is the prior reply (7.2 item 11).
+          if (result.replies.length > 1) failures.push(`${label}: duplicate produced several replies`);
+          if (result.replies.length === 1) {
+            if (typeOf.startsWith(ERROR_PREFIX)) failures.push(`${label}: a duplicate was reported as an error (${String((first!.payload as Record<string, unknown>).code)})`);
+            else if (prevReplies === undefined || !prevReplies.some((p) => canonicalJson(parse(p) as never) === canonicalJson(first as never))) failures.push(`${label}: duplicate reply is not the prior reply`);
+          }
+          if (handledAfter !== handledBefore) failures.push(`${label}: a duplicate was executed again`);
           break;
         }
         case "silence":

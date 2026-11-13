@@ -2,8 +2,8 @@
   "source": "dtgwg-trust-conformance (suite folder, vectors/framework), format tt-conformance-vectors/0.1",
   "commit": "UNKNOWN",
   "commitNote": "The suite folder at /srv/dev/code/seas/dtgwg-trust-conformance is not a git repository at the time of copying, so no revision exists to record. Files are byte copies; re-copy and record the revision once the suite is under version control.",
-  "copiedFrom": "/srv/dev/code/seas/dtgwg-trust-conformance/vectors/framework/{err,lif,rsp,env,time,id}.json",
-  "copiedOn": "2026-11-13 (err, lif, rsp in P1; env, time, id in P2)",
+  "copiedFrom": "/srv/dev/code/seas/dtgwg-trust-conformance/vectors/framework/{err,lif,rsp,env,time,id,dup}.json",
+  "copiedOn": "2026-11-13 (err, lif, rsp in P1; env, time, id in P2); dup in P3",
   "licence": "Apache-2.0 (the suite's code licence per its README; the vector files' licence was not separately verified)",
   "files": [
     {
@@ -29,6 +29,10 @@
     {
       "path": "id.json",
       "sha256": "459f04c8293c9b6dd4b0bf3c44431b41b5264b6056d4a441d13eef4cb2ded997"
+    },
+    {
+      "path": "dup.json",
+      "sha256": "392cfcd1569fe5a3dff9b4b39ba603cdace62a50a7f1f79a51bcf6a65e0a90ae"
     }
   ]
 }

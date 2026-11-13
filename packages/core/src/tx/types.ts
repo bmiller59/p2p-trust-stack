@@ -152,6 +152,13 @@ export interface LogEntry {
   payload?: unknown;
 }
 
+/**
+ * What the coordinator's durable log says about a transaction (`TransactionManager.getOutcome`):
+ * `committed` or `aborted` once the decision is logged, `inFlight` while it is started with no decision,
+ * `unknown` when the log holds nothing for the id. Distinct from the participant-side `Outcome`.
+ */
+export type CoordinatorOutcome = 'committed' | 'aborted' | 'inFlight' | 'unknown';
+
 export interface TransactionResult {
   txId: string;
   outcome: 'committed' | 'aborted';

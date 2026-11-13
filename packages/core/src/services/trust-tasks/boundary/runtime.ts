@@ -42,6 +42,7 @@ export type {
   ProofPolicy,
   RejectReason,
   ReplayGuard,
+  ReplayVerdict,
   SpecPolicy,
   StandardCode,
   TransportHandler,

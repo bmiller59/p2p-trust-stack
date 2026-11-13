@@ -1,0 +1,982 @@
+{
+  "format": "tt-conformance-vectors/0.1",
+  "group": "DUP",
+  "family": "framework",
+  "clock": {
+    "start": "2026-11-12T10:00:00Z"
+  },
+  "vectors": [
+    {
+      "id": "DUP-001",
+      "title": "byte-identical resend is absorbed and the prior response returned",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11 (Disposition of a duplicate)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "noReplayRecord",
+        "duplicateAsFailure"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "same": "previous"
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-002",
+      "title": "same id, re-signed proof: idConflict",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11 (Keying and comparison)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "same": "previous",
+            "sign": {
+              "as": "A",
+              "created": "+0s"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "retryable": false,
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-003",
+      "title": "same id, different payload: idConflict, not a duplicate and not taskFailed",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11 (Keying and comparison)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "same": "previous",
+            "mutate": [
+              {
+                "op": "set",
+                "path": "/payload/subject",
+                "value": "did:web:bob.example"
+              }
+            ],
+            "sign": {
+              "as": "A"
+            }
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-004",
+      "title": "same members in another order and whitespace are the same document",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11 (Keying and comparison: RFC 8785)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "at": "+5s",
+          "send": {
+            "same": "previous",
+            "mutate": [
+              {
+                "op": "reorder"
+              }
+            ]
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-005",
+      "title": "resend after the record window is refused expired and never re-executed",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 (Bounding the record)"
+      ],
+      "clarify": null,
+      "mutants": [
+        "noReplayRecord",
+        "noFreshnessWindow"
+      ],
+      "steps": [
+        {
+          "send": {
+            "template": "carrier.request"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "at": "+6m",
+          "send": {
+            "same": "previous"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-101",
+      "title": "byte-identical resend (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "byte-identical resend"
+      },
+      "mutants": [
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-102",
+      "title": "same members, different order and whitespace (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "same members, different order and whitespace"
+      },
+      "mutants": [
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\n  \"payload\": { \"subject\": \"did:web:alice.example\" },\n  \"issuedAt\": \"2026-11-01T00:00:00Z\",\n  \"recipient\": \"did:web:consumer.example\",\n  \"issuer\": \"did:web:producer.example\",\n  \"type\": \"https://trusttasks.org/spec/conformance/widget/0.1\",\n  \"id\": \"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\"\n}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-103",
+      "title": "extra payload member the consumer's type does not model (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "extra payload member the consumer's type does not model"
+      },
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\",\"note\":\"added\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-104",
+      "title": "extra top-level member (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "extra top-level member"
+      },
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"},\"trace\":\"abc\"}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-105",
+      "title": "issuedAt spelled with fractional seconds (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "issuedAt spelled with fractional seconds"
+      },
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00.000Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-106",
+      "title": "modelled payload member changed (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "modelled payload member changed"
+      },
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:bob.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-107",
+      "title": "integral number written with a fraction (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "integral number written with a fraction"
+      },
+      "mutants": [
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\",\"amount\":1}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\",\"amount\":1.0}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-108",
+      "title": "number written with an exponent (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "number written with an exponent"
+      },
+      "mutants": [
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\",\"amount\":100}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\",\"amount\":1e2}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-109",
+      "title": "different number (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "different number"
+      },
+      "mutants": [
+        "idOnlyDuplicateKey"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\",\"amount\":1}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\",\"amount\":1.5}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "idConflict",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-110",
+      "title": "byte-identical resend one millisecond before the window closes (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "byte-identical resend one millisecond before the window closes"
+      },
+      "mutants": [
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "atAbsolute": "2026-11-01T00:05:59.999Z",
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-111",
+      "title": "byte-identical resend at the instant the window closes (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "byte-identical resend at the instant the window closes"
+      },
+      "mutants": [
+        "windowOffByOne",
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "atAbsolute": "2026-11-01T00:06:00Z",
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000001\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-112",
+      "title": "distant expiresAt, resend one millisecond before the clamped window closes (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "distant expiresAt, resend one millisecond before the clamped window closes"
+      },
+      "mutants": [
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000002\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"expiresAt\":\"2027-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "atAbsolute": "2026-12-01T00:00:59.999Z",
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000002\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"expiresAt\":\"2027-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "duplicate",
+            "state": {
+              "handled": 1
+            }
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    },
+    {
+      "id": "DUP-113",
+      "title": "distant expiresAt, resend at the instant the clamped window closes (unsigned, as the shared fixture states it)",
+      "tier": 1,
+      "spec": [
+        "framework 7.2 item 11",
+        "fixtures/consume/item11-digest.json"
+      ],
+      "clarify": null,
+      "exactTier": true,
+      "skipIfOptional": [
+        "attested"
+      ],
+      "clockStart": "2026-11-01T00:00:30Z",
+      "origin": {
+        "source": "dtgwg-trust-tasks-tf fixtures/consume (see vectors/imported/PROVENANCE.json)",
+        "fixture": "consume/item11-digest.json",
+        "row": "distant expiresAt, resend at the instant the clamped window closes"
+      },
+      "mutants": [
+        "windowOffByOne",
+        "noReplayRecord"
+      ],
+      "steps": [
+        {
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000002\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"expiresAt\":\"2027-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "response",
+            "state": {
+              "handled": 1
+            }
+          }
+        },
+        {
+          "atAbsolute": "2026-12-01T00:01:00Z",
+          "send": {
+            "raw": "{\"id\":\"urn:uuid:5f0c2a4e-8d1b-4c3a-9e2f-000000000002\",\"type\":\"https://trusttasks.org/spec/conformance/widget/0.1\",\"issuer\":\"did:web:producer.example\",\"recipient\":\"did:web:consumer.example\",\"issuedAt\":\"2026-11-01T00:00:00Z\",\"expiresAt\":\"2027-11-01T00:00:00Z\",\"payload\":{\"subject\":\"did:web:alice.example\"}}",
+            "substitute": {
+              "did:web:consumer.example": "$iut"
+            },
+            "from": "none"
+          },
+          "expect": {
+            "disposition": "error",
+            "code": "expired",
+            "noSideEffect": true
+          }
+        }
+      ],
+      "requires": [
+        "carrier:consequential"
+      ]
+    }
+  ]
+}

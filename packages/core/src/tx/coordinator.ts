@@ -24,6 +24,7 @@
 import { randomUUID } from 'node:crypto';
 import { TransactionLog } from './tx-log.js';
 import type {
+  CoordinatorOutcome,
   Enlisted,
   Operation,
   Participant,
@@ -172,6 +173,17 @@ export class TransactionCoordinator {
     const result: TransactionResult = { txId, outcome: decision };
     this.results.set(txId, result);
     return result;
+  }
+
+  /**
+   * Read-only: the durable outcome of a transaction. A logged `committed` or `aborted` decision wins; a
+   * started transaction with no decision is `inFlight`; an id with no log entries is `unknown`.
+   */
+  async getOutcome(txId: string): Promise<CoordinatorOutcome> {
+    const entries = await this.log.read(txId);
+    if (entries.some((e) => e.event === 'committed')) return 'committed';
+    if (entries.some((e) => e.event === 'aborted')) return 'aborted';
+    return entries.length > 0 ? 'inFlight' : 'unknown';
   }
 
   /** Crash-safe re-drive of interrupted transactions. */

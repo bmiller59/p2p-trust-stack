@@ -129,8 +129,8 @@ const _governanceChangeAgrees: Record<GovernanceChangeProposal['status'], Lifecy
 void _governanceChangeAgrees;
 
 /**
- * The coordinator's view of a transaction (plan 3.5). Today only `committed` and `aborted` exist;
- * `inFlight` and `unknown` are the values the outcome accessor will add. `unknown` is never guessed
+ * The coordinator's view of a transaction (plan 3.5), the values of `TransactionManager.getOutcome`
+ * (type `CoordinatorOutcome`). `unknown` is never guessed
  * as `responded` or `errored`: it stays `accepted` and may be reported as `indeterminate`.
  */
 export const TX_OUTCOMES = ['committed', 'aborted', 'inFlight', 'unknown'] as const;

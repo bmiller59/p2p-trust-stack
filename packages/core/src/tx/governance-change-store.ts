@@ -25,6 +25,10 @@ export interface GovernanceChangeProposal {
   proposalHash: string;
   status: 'pending' | 'crystallized' | 'expired' | 'failed' | 'aborted';
   errorReason: string | null;
+  /** Standard Trust Task error code of a failure (conformance P3 column; null until P5 records it). */
+  errorCode?: string | null;
+  /** Whether a resend may succeed after that failure; null when no failure code is recorded. */
+  retryable?: boolean | null;
   expiresAt: number;
   createdAt: number;
   crystallizedAt: number | null;
@@ -63,6 +67,8 @@ interface RawProposal {
   proposal_hash: string;
   status: string;
   error_reason: string | null;
+  error_code?: string | null;
+  retryable?: number | null;
   expires_at: number;
   created_at: number;
   crystallized_at: number | null;
@@ -89,6 +95,8 @@ function mapProposal(row: RawProposal): GovernanceChangeProposal {
     proposalHash: row.proposal_hash,
     status: row.status as GovernanceChangeProposal['status'],
     errorReason: row.error_reason,
+    errorCode: row.error_code ?? null,
+    retryable: row.retryable === null || row.retryable === undefined ? null : Number(row.retryable) === 1,
     expiresAt: row.expires_at,
     createdAt: row.created_at,
     crystallizedAt: row.crystallized_at,
@@ -195,6 +203,13 @@ export class GovernanceChangeStore {
         `UPDATE governance_change_proposals SET status = ?, error_reason = ? WHERE proposal_id = ?`,
         status, errorReason ?? null, proposalId);
     }
+  }
+
+  /** Record the standard error code and retryability of a failed proposal (additive columns). */
+  async recordFailure(proposalId: string, errorCode: string, retryable: boolean): Promise<void> {
+    await this.ds.run(
+      `UPDATE governance_change_proposals SET error_code = ?, retryable = ? WHERE proposal_id = ?`,
+      errorCode, retryable ? 1 : 0, proposalId);
   }
 
   /** Record an approval; returns false when this approver already approved. */

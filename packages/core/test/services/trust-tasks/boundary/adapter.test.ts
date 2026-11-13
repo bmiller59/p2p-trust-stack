@@ -40,7 +40,7 @@ describe("adapter skeleton implements the suite adapter contract", () => {
   });
 
   it("methods not yet built say so rather than pretending", async () => {
-    await assert.rejects(adapter.restart(), /not implemented/);
+    await adapter.restart(); // implemented in P3: a new guard from the factory (the default in-memory one starts empty)
     await assert.rejects(adapter.trigger(), /not implemented/);
     await assert.rejects(adapter.verifyProof({ bytes: "{}" }), /not implemented/);
   });

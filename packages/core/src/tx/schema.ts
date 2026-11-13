@@ -317,6 +317,28 @@ export const TX_ADDITIVE_COLUMNS: readonly TxAdditiveColumn[] = [
     column: 'owner',
     ddl: 'ALTER TABLE tx_outbox ADD COLUMN owner TEXT',
   },
+  // Conformance P3: the standard error code of a failed proposal and whether a resend may succeed (plan
+  // 3.7). NULL on every existing row and until the participants record failures (P5).
+  {
+    table: 'ceremony_proposals',
+    column: 'error_code',
+    ddl: 'ALTER TABLE ceremony_proposals ADD COLUMN error_code TEXT',
+  },
+  {
+    table: 'ceremony_proposals',
+    column: 'retryable',
+    ddl: 'ALTER TABLE ceremony_proposals ADD COLUMN retryable INTEGER',
+  },
+  {
+    table: 'governance_change_proposals',
+    column: 'error_code',
+    ddl: 'ALTER TABLE governance_change_proposals ADD COLUMN error_code TEXT',
+  },
+  {
+    table: 'governance_change_proposals',
+    column: 'retryable',
+    ddl: 'ALTER TABLE governance_change_proposals ADD COLUMN retryable INTEGER',
+  },
 ];
 
 /**

@@ -16,7 +16,7 @@
 import { Transaction } from './transaction.js';
 import { TransactionCoordinator } from './coordinator.js';
 import { CompensationExecutor } from './compensation.js';
-import type { Participant, StatusEvent, TransactionResult } from './types.js';
+import type { CoordinatorOutcome, Participant, StatusEvent, TransactionResult } from './types.js';
 import { logger } from '../util/logger.js';
 
 export class TransactionManager {
@@ -82,6 +82,11 @@ export class TransactionManager {
   /** Unsubscribe from status events. */
   offStatus(listener: (event: StatusEvent) => void): void {
     this.coordinator.offStatus(listener);
+  }
+
+  /** Durable outcome of a transaction by id (additive accessor; nothing is changed or re-driven). */
+  getOutcome(txId: string): Promise<CoordinatorOutcome> {
+    return this.coordinator.getOutcome(txId);
   }
 
   /** Recover interrupted transactions (coordinator durable decision). */

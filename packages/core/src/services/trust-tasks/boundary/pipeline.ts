@@ -66,7 +66,10 @@ export interface PipelineOptions {
   isServed?: (recipient: string) => Promise<boolean> | boolean;
   /** The identifier errors are issued by when the document names none of ours. */
   defaultVid?: string;
-  /** Duplicate record for consequential handlers. Default: in memory (P3 replaces it). */
+  /**
+   * Duplicate record for consequential handlers. Default: in memory (lost on restart); a deployment
+   * passes the durable `AcceptedIdStore` (accepted-store.ts) over its data source.
+   */
   guard?: ReplayGuard;
   /** One clock, epoch milliseconds. Default `Date.now`. */
   now?: () => number;
@@ -250,6 +253,14 @@ export class Pipeline {
         this.options.onLenient?.({ check: 'recipient', type, detail: 'not a served identifier' });
         myVid = recipient;
       }
+    }
+
+    // Informational columns of the durable record (type and thread); a guard that has no use for them ignores this.
+    if (handler?.consequential === true && typeof doc.id === 'string') {
+      (this.guard as { describe?: (id: string, info: { type?: string; threadId?: string }) => void }).describe?.(doc.id, {
+        ...(typeof doc.type === 'string' ? { type: doc.type } : {}),
+        ...(typeof doc.threadId === 'string' ? { threadId: doc.threadId } : {}),
+      });
     }
 
     const transport = sender === undefined ? new UnauthenticatedTransport() : new StaticTransport({ issuer: sender });
