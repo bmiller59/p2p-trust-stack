@@ -141,7 +141,9 @@ import { NameService, type NameEntry } from '@p2p-trust-stack/core/did/name-serv
 import { buildNameUri } from '@p2p-trust-stack/core/did/name-uri.js';
 import { resolveNameFromLocalDb, type PeerTarget } from '@p2p-trust-stack/core/did/name-resolver.js';
 import { DidResolver } from '@p2p-trust-stack/core/did/did-resolver.js';
-import { LocalRotationLogSource } from '@p2p-trust-stack/core/did/rotation-log-source.js';
+import { HttpRotationLogSource, LocalRotationLogSource } from '@p2p-trust-stack/core/did/rotation-log-source.js';
+import { installBoundarySigner, createLocalKeyResolver } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/install.js';
+import { DidProofVerifier } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/verify.js';
 import { rotationEntryToJson, type RotationEntryJson } from '@p2p-trust-stack/core/did/rotation-entry-codec.js';
 import { registerMaterializer } from '@p2p-trust-stack/core/exchange/index.js';
 import { ExchangeEngine } from '@p2p-trust-stack/core/exchange/index.js';
@@ -4076,6 +4078,28 @@ export abstract class BaseAgent implements AgentHandle {
   }
 
   /**
+   * The Trust Task boundary's proof verifier for this agent (conformance P4). did:key and did:peer:4
+   * resolve offline; a peer's did:scid:vh resolves through this agent's own rotation-log store, so the
+   * peer must have been introduced first (its log held). A remote resolution endpoint is opt-in:
+   * `TRUST_TASKS_ROTATION_LOG_ENDPOINT` names a utility server base URL; it is consulted after the
+   * local store, with a timeout, an entry cap, a cache and a rate limit. A resolution that cannot be
+   * completed is answered `unavailable`, never `proofInvalid`.
+   */
+  getBoundaryProofVerifier(): DidProofVerifier {
+    if (!this.db) throw new Error('Agent.getBoundaryProofVerifier: agent not started. Call start() first.');
+    if (this._boundaryVerifier === undefined) {
+      const endpoint = process.env.TRUST_TASKS_ROTATION_LOG_ENDPOINT;
+      this._boundaryVerifier = new DidProofVerifier({
+        resolver: createLocalKeyResolver({
+          localSource: new LocalRotationLogSource(this.db.rotationLogStore),
+          ...(endpoint ? { remoteSource: new HttpRotationLogSource({ endpoint }) } : {}),
+        }),
+      });
+    }
+    return this._boundaryVerifier;
+  }
+
+  /**
    * Resolve a remote DID (returned by a coordinator name_resolve) to a DID
    * document suitable for endpoint extraction.
    *
@@ -4368,6 +4392,7 @@ export abstract class BaseAgent implements AgentHandle {
     );
   }
 
+  private _boundaryVerifier: DidProofVerifier | undefined;
   /** Cached, persistent peer transport — reused across the whole ceremony. */
   private _peerTransport: TspParticipantTransport | null = null;
 
@@ -4405,6 +4430,20 @@ export abstract class BaseAgent implements AgentHandle {
         actorVid: this.meta.vid,
         secretKey: this.identity.signingKeyPair.secretKey,
       });
+    }
+
+    // Trust Task boundary signer (conformance P4), installed beside the operation-proof signer: this
+    // agent's connection identifier signs its document replies as `#key-1` (the identity key; the keys
+    // are read at every signature because a did:scid:vh identity key rotates). Installed only when
+    // `#key-1` of the published document is the key we hold.
+    if (this.identity?.signingKeyPair && this.identity.did) {
+      const self = this;
+      const installed = installBoundarySigner({
+        did: this.identity.did,
+        didDocument: this.identity.didDocument,
+        keys: () => self.identity.signingKeyPair,
+      });
+      if (!installed.installed) logger.warn(`[agent] Trust Task boundary signer NOT installed: ${installed.reason}`);
     }
 
     this._peerTransport = new TspParticipantTransport(requestFn, {

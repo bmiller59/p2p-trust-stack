@@ -11,8 +11,12 @@
  * mapping of every refusal onto the typed error model (`errors.ts`, fixed wire messages), the
  * catch-all for unexpected failures, and the HTTPS binding's status for each outcome.
  *
- * Proof: until the DID-resolving verifier lands (phase P4) a document that carries a `proof` is
- * refused (`rejectIfPresent`). There is no switch for that: proof checks are never off.
+ * Proof: with no verifier configured a document that carries a `proof` is refused
+ * (`rejectIfPresent`); with one (`options.proof`, phase P4) the proof is verified over the received
+ * JSON by the DID-resolving verifier (`proof/verify.ts`). There is no switch that turns proof checks
+ * off. Tier 2 (the `attested` profile) requires a proof on every request, pins the proof purpose
+ * (`proof/purposes.ts`), and signs every reply, errors and holds included, with the boundary
+ * signer (`proof/signer.ts`); a Tier 2 reply that cannot be signed is never sent unsigned.
  *
  * Strictness: `lenient` exists for one release so existing clients of the legacy evaluate task can
  * move. It relaxes ONLY the freshness window and the recipient-membership check, ONLY for
@@ -29,6 +33,10 @@ import type { ErrorRequestRef, TrustTaskErrorDocument } from './errors.js';
 import { HandlerRegistry } from './handlers.js';
 import type { HandlerContext, PipelineHandler } from './handlers.js';
 import { simplePayloadValidator } from './payload-validator.js';
+import { allowedPurposes } from './proof/purposes.js';
+import { signDocument } from './proof/signer.js';
+import type { BoundarySigner } from './proof/signer.js';
+import type { DidProofVerifier } from './proof/verify.js';
 import { EXPIRY_HORIZON_MS, MAX_AGE_MS, SKEW_MS } from './pins.js';
 import {
   DEFAULT_FRESHNESS,
@@ -65,7 +73,7 @@ export interface PipelineOptions {
   /** Answers "is this recipient one of ours?" for sets that live in a database (hosted communities). */
   isServed?: (recipient: string) => Promise<boolean> | boolean;
   /** The identifier errors are issued by when the document names none of ours. */
-  defaultVid?: string;
+  defaultVid?: string | (() => string | undefined);
   /**
    * Duplicate record for consequential handlers. Default: in memory (lost on restart); a deployment
    * passes the durable `AcceptedIdStore` (accepted-store.ts) over its data source.
@@ -79,6 +87,16 @@ export interface PipelineOptions {
   /** Called with whatever a handler or the pipeline itself threw that was not a `TaskError`. */
   onUnexpected?: (err: unknown) => void;
   maxBodyBytes?: number;
+  /**
+   * The DID-resolving proof verifier. Without it a proof is refused (`rejectIfPresent`). `tier` 2
+   * is the `attested` profile: proof required on every request, purpose pinned, every reply signed.
+   */
+  proof?: { verifier: DidProofVerifier; tier?: 1 | 2 };
+  /**
+   * The identity replies are signed as (a signer, or a function returning the process's installed
+   * one, `getBoundarySigner`). A reply is signed only when its `issuer` is the signer's identifier.
+   */
+  signer?: BoundarySigner | (() => BoundarySigner | undefined);
 }
 
 export interface PipelineInput {
@@ -113,6 +131,8 @@ export interface PipelineResult {
   refusedBeforeProof: boolean;
   /** The identifier the pipeline answered as. */
   issuer?: string;
+  /** What the proof verifier established, when the document's proof verified (persisted with the document). */
+  verified?: { signer: string; purpose: string | undefined; verificationMethod: string | undefined; createdMs: number | undefined; keySource: string | undefined };
 }
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -158,7 +178,8 @@ export class Pipeline {
   }
 
   private defaultVid(): string | undefined {
-    return this.options.defaultVid ?? this.served[0];
+    const d = this.options.defaultVid;
+    return (typeof d === 'function' ? d() : d) ?? this.served[0];
   }
 
   async process(input: PipelineInput): Promise<PipelineResult> {
@@ -173,7 +194,33 @@ export class Pipeline {
         return this.refuse('undecodable', undefined);
       }
     }
-    return this.processText(raw, input.sender);
+    return this.finalize(await this.processText(raw, input.sender));
+  }
+
+  private get tier(): 1 | 2 {
+    return this.options.proof?.tier ?? 1;
+  }
+
+  private currentSigner(): BoundarySigner | undefined {
+    const s = this.options.signer;
+    return typeof s === 'function' ? s() : s;
+  }
+
+  /** Sign a reply the pipeline built, when it is issued as the signing identifier; otherwise leave it alone. */
+  private sign<T extends Record<string, unknown>>(doc: T): T {
+    const signer = this.currentSigner();
+    if (signer === undefined || doc.issuer !== signer.did) return doc;
+    return signDocument(doc, signer, { created: this.nowFn() }) as unknown as T;
+  }
+
+  /** Tier 2 never emits an unsigned Trust Task document: fail closed with a minimal unsigned body. */
+  private finalize(result: PipelineResult): PipelineResult {
+    if (this.tier !== 2 || result.document === undefined) return result;
+    const doc = result.document as Record<string, unknown>;
+    if (isObject(doc.proof)) return result;
+    this.options.onUnexpected?.(new Error('a Tier 2 reply could not be signed (no boundary signer for the answering identifier)'));
+    const { document: _drop, ...rest } = result;
+    return { ...rest, kind: 'refused', status: 503, minimal: { code: 'unavailable', message: 'The service cannot sign a reply.', retryable: true }, code: 'unavailable' };
   }
 
   private refuse(kind: 'oversize' | 'undecodable' | 'unparseable' | 'notObject' | 'unaddressable', raw: string | undefined, received?: Record<string, unknown>): PipelineResult {
@@ -210,7 +257,7 @@ export class Pipeline {
     let asVid: string | undefined = this.defaultVid();
     const ref = (): ErrorRequestRef => ({ id: doc.id, type: doc.type, threadId: doc.threadId, parentThreadId: doc.parentThreadId, issuer: doc.issuer, recipient: doc.recipient });
     const errorDoc = (error: unknown, over: { recipient?: string } = {}): TrustTaskErrorDocument =>
-      buildErrorDocument(ref(), error, { newId: this.newId, now: clock, ...(asVid === undefined ? {} : { issuer: asVid }), ...over });
+      this.sign(buildErrorDocument(ref(), error, { newId: this.newId, now: clock, ...(asVid === undefined ? {} : { issuer: asVid }), ...over }) as unknown as Record<string, unknown>) as unknown as TrustTaskErrorDocument;
     const refused = (error: unknown, over: { recipient?: string } = {}, beforeProof = true): PipelineResult => {
       const document = errorDoc(error, over);
       return { kind: 'error', status: httpStatusForCode(document.payload.code), document, code: document.payload.code, raw, received, refusedBeforeProof: beforeProof, ...(asVid === undefined ? {} : { issuer: asVid }) };
@@ -234,7 +281,11 @@ export class Pipeline {
     const exact = this.registry.find(type);
     const near = exact === undefined ? this.registry.sameSpecification(type) : undefined;
     const handler = exact ?? near?.handler;
-    const spec: SpecPolicy = exact !== undefined ? { ...exact.spec, typeUri: type } : near !== undefined ? { ...near.handler.spec, typeUri: near.handler.types[0]! } : UNSERVED_SPEC;
+    const baseSpec: SpecPolicy = exact !== undefined ? { ...exact.spec, typeUri: type } : near !== undefined ? { ...near.handler.spec, typeUri: near.handler.types[0]! } : UNSERVED_SPEC;
+    // The `attested` profile: a proof and a recipient on every request, whatever the specification says.
+    const spec: SpecPolicy = this.tier === 2 ? { ...baseSpec, isProofRequired: true, isRecipientRequired: true } : baseSpec;
+    const bound = this.options.proof?.verifier.forContext({ nowMs: now, purposes: allowedPurposes(type, this.tier), skewMs: SKEW_MS });
+    const proofPolicy = bound === undefined ? ({ kind: 'rejectIfPresent' } as const) : ({ kind: 'verify', verify: bound } as const);
 
     // Strictness applies to non-consequential handlers only.
     const lenient = this.strictness === 'lenient' && handler !== undefined && !handler.consequential;
@@ -263,6 +314,17 @@ export class Pipeline {
       });
     }
 
+    const verifiedInfo = (): PipelineResult['verified'] => {
+      const v = bound?.verdict;
+      return v?.valid === true && v.signer !== undefined
+        ? { signer: v.signer, purpose: v.purpose, verificationMethod: v.verificationMethod, createdMs: v.createdMs, keySource: v.keySource }
+        : undefined;
+    };
+    const withVerified = (r: PipelineResult): PipelineResult => {
+      const verified = verifiedInfo();
+      return verified === undefined ? r : { ...r, verified };
+    };
+
     const transport = sender === undefined ? new UnauthenticatedTransport() : new StaticTransport({ issuer: sender });
     let handlerError: ErrorResponse | undefined;
     let outcome: Awaited<ReturnType<typeof consumeInbound>>;
@@ -270,7 +332,7 @@ export class Pipeline {
       outcome = await consumeInbound({
         transport,
         spec,
-        proofPolicy: { kind: 'rejectIfPresent' },
+        proofPolicy,
         payloadPolicy: { kind: 'validate', validate: simplePayloadValidator },
         checks,
         doc,
@@ -281,7 +343,8 @@ export class Pipeline {
         handler: async (accepted, parties) => {
           const ctx: HandlerContext = { parties, sender, myVid: asVid, now, clock, newId: this.newId };
           try {
-            return await handler!.handle(accepted, ctx);
+            const response = await handler!.handle(accepted, ctx);
+            return isObject(response) ? (this.sign(response as Record<string, unknown>) as unknown as typeof response) : response;
           } catch (err) {
             // Caught here so the library settles the claim by the error's `retryable`, not by the throw.
             if (!(err instanceof TaskError)) this.options.onUnexpected?.(err);
@@ -292,25 +355,30 @@ export class Pipeline {
       });
     } catch (err) {
       this.options.onUnexpected?.(err);
-      return refused(err, {}, false);
+      return withVerified(refused(err, {}, bound?.verdict?.valid !== true));
     }
 
     switch (outcome.kind) {
       case 'handled':
-        return { kind: 'response', status: 200, document: outcome.response, raw, received, refusedBeforeProof: false, ...(asVid === undefined ? {} : { issuer: asVid }) };
+        return withVerified({ kind: 'response', status: 200, document: outcome.response, raw, received, refusedBeforeProof: false, ...(asVid === undefined ? {} : { issuer: asVid }) });
       case 'accepted':
-        return { kind: 'absorbed', status: 204, raw, received, refusedBeforeProof: false };
+        return withVerified({ kind: 'absorbed', status: 204, raw, received, refusedBeforeProof: false });
       case 'suppressed':
         return this.refuse('unaddressable', raw, received);
       case 'duplicate':
-        if (outcome.inFlight) return { kind: 'inFlight', status: 202, raw, received, refusedBeforeProof: false };
+        if (outcome.inFlight) return withVerified({ kind: 'inFlight', status: 202, raw, received, refusedBeforeProof: false });
         return outcome.priorResponse === undefined
-          ? { kind: 'duplicate', status: 204, raw, received, refusedBeforeProof: false }
-          : { kind: 'duplicate', status: 200, document: outcome.priorResponse, raw, received, refusedBeforeProof: false };
+          ? withVerified({ kind: 'duplicate', status: 204, raw, received, refusedBeforeProof: false })
+          : withVerified({ kind: 'duplicate', status: 200, document: outcome.priorResponse, raw, received, refusedBeforeProof: false });
       case 'rejected': {
         if (handlerError !== undefined && outcome.error === handlerError) {
           const code = handlerError.payload.code;
-          return { kind: 'error', status: httpStatusForCode(code), document: handlerError, code, raw, received, refusedBeforeProof: false, ...(asVid === undefined ? {} : { issuer: asVid }) };
+          return withVerified({ kind: 'error', status: httpStatusForCode(code), document: handlerError, code, raw, received, refusedBeforeProof: false, ...(asVid === undefined ? {} : { issuer: asVid }) });
+        }
+        // The runtime reports every verifier failure as proofInvalid; a resolution that could not be
+        // completed is answered as what it is (`unavailable`, retryable) and was never a verdict.
+        if (bound?.unavailable !== undefined && outcome.error.payload.code === 'proofInvalid') {
+          return refused(bound.unavailable, {}, true);
         }
         const lib = outcome.error;
         const p = lib.payload;
@@ -323,7 +391,7 @@ export class Pipeline {
           internalMessage: p.message,
         });
         const afterClaim = p.code === 'idConflict' || p.code === 'unavailable';
-        return refused(te, { ...(str(lib.recipient) === undefined ? {} : { recipient: str(lib.recipient)! }) }, !afterClaim);
+        return withVerified(refused(te, { ...(str(lib.recipient) === undefined ? {} : { recipient: str(lib.recipient)! }) }, !afterClaim && verifiedInfo() === undefined));
       }
     }
   }

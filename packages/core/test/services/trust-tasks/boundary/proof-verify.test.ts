@@ -154,7 +154,7 @@ describe("own did:peer:4 and did:scid:vh issuers", () => {
     assert.equal((await v.verify(claimed, { nowMs: NOW })).failure, "issuerMismatch");
     // a relative reference is resolved against the issuer
     const signerA = createEd25519BoundarySigner({ did: a.did, secretKey: a.signingKeyPair.secretKey });
-    const signed = signDocument(doc(a.did), signerA, { created }) as { proof: { verificationMethod: string } };
+    const signed = signDocument(doc(a.did), signerA, { created }) as unknown as { proof: { verificationMethod: string } };
     const relative = { ...signed, proof: { ...signed.proof, verificationMethod: "#key-1" } };
     // the written reference is covered by the signature, so changing it breaks the signature, not the controller rule
     assert.equal((await v.verify(relative, { nowMs: NOW })).failure, "signatureInvalid");
@@ -244,10 +244,14 @@ describe("resolution failure is unavailable, never proofInvalid; bounds", () => 
     const dk = createEd25519BoundarySigner({ did: didKeyFromEd25519(key.publicKey), secretKey: key.secretKey, fragment: didKeyFromEd25519(key.publicKey).slice(8) });
     const d = signDocument({ id: "urn:uuid:44444444-4444-4444-8444-444444444444", type: "x", issuer: dk.did, recipient: "r", payload: {} }, dk, { created: NOW });
     const v = verifier();
-    const ok = await v.forContext({ nowMs: NOW }).verify(d);
-    assert.equal(ok, true);
-    const verdict = v.verdictFor(d) as ProofVerdict;
+    const bound = v.forContext({ nowMs: NOW });
+    assert.equal(await bound.verify(d as never), true);
+    const verdict = bound.verdict as ProofVerdict;
     assert.equal(verdict.signer, dk.did); assert.equal(verdict.purpose, "authentication"); assert.equal(verdict.createdMs, NOW);
-    assert.ok(ResolutionUnavailable);
+    // a resolution that cannot complete is kept apart from a verdict (the runtime reports any failure as proofInvalid)
+    const down = new DidProofVerifier({ resolver: { async resolve() { throw new ResolutionUnavailable("down"); } } }).forContext({ nowMs: NOW });
+    assert.equal(await down.verify(signed(did) as never), false);
+    assert.equal(down.verdict, undefined);
+    assert.equal((down.unavailable as { code?: string } | undefined)?.code, "unavailable");
   });
 });
