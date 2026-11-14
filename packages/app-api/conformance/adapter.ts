@@ -101,6 +101,8 @@ export class TruststackersAdapter implements Adapter {
   private nowMs: number | undefined;
   private counter = 0;
   private policy: { propose: ProposeDecision; witnessed: boolean } = { propose: 'hold', witnessed: false };
+  /** `fault {claimStore: 'unreadable'}`: the duplicate-record table cannot be read or written (the rest of the database still can). */
+  private claimStoreUnreadable = false;
   private snapshots = new Map<string, string>();
   private pinned: PinnedDocuments | undefined;
   readonly attested: boolean;
@@ -179,7 +181,7 @@ export class TruststackersAdapter implements Adapter {
       });
       identity = await identitiesRepo.findByRealDid(this.db, did);
     }
-    this.guard = new AcceptedIdStore(this.db, { now: () => this.now() });
+    this.guard = new AcceptedIdStore(this.faultableDb(), { now: () => this.now() });
     this.pinned = new PinnedDocuments(createLocalKeyResolver({}));
     for (const row of await this.db.all<{ vid: string; document: string }>('SELECT vid, document FROM conformance_trusted')) {
       this.pinned.docs.set(row.vid, JSON.parse(row.document) as DidDocument);
@@ -313,7 +315,7 @@ export class TruststackersAdapter implements Adapter {
         ? [{ typeUri: WIDGET_TYPE, class: 'consequential' as const, validPayload: { subject: 'did:web:alice.example' } }]
         : mode === 'issue' ? [{ typeUri: ISSUE_TYPE, class: 'consequential' as const, validPayload: {} }] : [],
       cryptosuites: ['eddsa-jcs-2022'],
-      optional: ['trigger.consent', 'clock', 'restart', 'proofVerify', ...(this.attested ? ['attested'] : [])],
+      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'proofVerify', ...(this.attested ? ['attested'] : [])],
       pins: { framework: FRAMEWORK_VERSION, error: ERROR_SPEC_VERSION, binding: 'none' },
     };
   }
@@ -345,7 +347,30 @@ export class TruststackersAdapter implements Adapter {
     this.nowMs = this.now() + ms;
   }
 
+  /** The database as the duplicate-record store sees it: every call fails while the claim-store fault is on. */
+  private faultableDb(): SqliteDataSource {
+    const real = this.db;
+    return new Proxy(real, {
+      get: (target, prop) => {
+        const value = Reflect.get(target, prop, target) as unknown;
+        if (typeof value !== 'function') return value;
+        if (prop === 'all' || prop === 'get' || prop === 'run' || prop === 'transaction') {
+          return (...a: unknown[]) => {
+            if (this.claimStoreUnreadable) return Promise.reject(new Error('conformance fault: duplicate record unreadable'));
+            return (value as (...x: unknown[]) => unknown).apply(target, a);
+          };
+        }
+        return (value as (...x: unknown[]) => unknown).bind(target);
+      },
+    });
+  }
+
   async trigger(action: string, args: Record<string, unknown>): Promise<{ documents: string[] }> {
+    if (action === 'fault') {
+      if (args.claimStore !== 'unreadable' && args.claimStore !== 'ok') throw new Error('fault.claimStore must be unreadable or ok');
+      this.claimStoreUnreadable = args.claimStore === 'unreadable';
+      return { documents: [] };
+    }
     if (action === 'policy') {
       const p = args.propose;
       if (p !== 'accept' && p !== 'decline' && p !== 'hold') throw new Error('policy.propose must be accept, decline or hold');
@@ -371,6 +396,7 @@ export class TruststackersAdapter implements Adapter {
     this.counter = 0;
     this.nowMs = undefined;
     this.policy = { propose: 'hold', witnessed: false };
+    this.claimStoreUnreadable = false;
     this.snapshots.clear();
     await this.build(true);
     for (const p of old) for (const f of [p, `${p}-wal`, `${p}-shm`]) if (existsSync(f)) rmSync(f, { force: true });

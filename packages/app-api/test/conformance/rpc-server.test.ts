@@ -118,7 +118,7 @@ describe('capabilities and provision', () => {
     for (const t of ['vrc/relationships/propose/0.1', 'vrc/relationships/issue/0.1', 'vrc/relationships/witness-share/0.1']) {
       assert.ok(caps.supportedTypes.includes(`https://trusttasks.org/spec/${t}`), t);
     }
-    for (const o of ['trigger.consent', 'clock', 'restart', 'proofVerify', 'attested']) assert.ok(caps.optional.includes(o), o);
+    for (const o of ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'proofVerify', 'attested']) assert.ok(caps.optional.includes(o), o);
     for (const o of ['control', 'idempotencyKey']) assert.ok(!caps.optional.includes(o), `${o} is not claimed`);
     assert.equal(caps.carriers[0].typeUri, WIDGET_TYPE);
     const p = await s.call('provision', { roles: ['iut'] });
@@ -161,6 +161,27 @@ describe('send through the real pipeline', () => {
     assert.deepEqual(await s.call('observe', { query: 'documentState', id: uid(1) }), { value: 'responded' });
   });
 
+  it('fault.claimStore fails closed (unavailable, retryable, nothing run), burns no id, and reset clears the fault', async () => {
+    const s = start(['--attested']);
+    const iut = (await s.call('provision', { roles: ['iut'] })).iut;
+    await s.call('setClock', { iso: START });
+    await s.call('trigger', { action: 'fault', args: { claimStore: 'unreadable' } });
+    const bytes = widget(iut.vid, 1);
+    const refused = JSON.parse((await s.call('send', { from: actor, bytes })).replies[0]);
+    assert.equal(refused.payload.code, 'unavailable');
+    assert.equal(refused.payload.retryable, true);
+    assert.deepEqual(await s.call('observe', { query: 'handled' }), { value: 0 });
+    await s.call('trigger', { action: 'fault', args: { claimStore: 'ok' } });
+    const again = JSON.parse((await s.call('send', { from: actor, bytes })).replies[0]);
+    assert.equal(again.type, `${WIDGET_TYPE}#response`);
+    assert.deepEqual(await s.call('observe', { query: 'handled' }), { value: 1 });
+    await s.call('trigger', { action: 'fault', args: { claimStore: 'unreadable' } });
+    await s.call('reset');
+    await s.call('setClock', { iso: START });
+    const afterReset = JSON.parse((await s.call('send', { from: actor, bytes })).replies[0]);
+    assert.equal(afterReset.type, `${WIDGET_TYPE}#response`);
+    assert.match((await s.rpc('trigger', { action: 'fault', args: { claimStore: 'maybe' } })).error?.message ?? '', /unreadable or ok/);
+  });
   it('Tier 2 refuses an unsigned request (proofRequired) and refuses a wrong recipient; neither runs the task', async () => {
     const s = start(['--attested', '--identity', 'key']);
     const iut = (await s.call('provision', { roles: ['iut'] })).iut;
