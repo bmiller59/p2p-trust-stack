@@ -12,7 +12,9 @@
  * a hold is answered with a `trust-task-next-step` (continuation `resubmit`, `inResponseTo` filled,
  * same thread) rather than silence or an error. A resubmission on the thread (fresh id) gets a
  * further next-step while held, the acceptance (never a second execution) after the human accepted,
- * and the decline after the human declined. The exchange is keyed by the thread.
+ * and the decline after the human declined. A proposal still held after the lapse period (seven days) is
+ * expired: `taskFailed` / `deadlineLapsed`, the relationship DID's secret key deleted, its document kept.
+ * The exchange is keyed by the thread.
  *
  * The decision itself is `decide(exchangeId, accept|decline)`: the agent's UI or API calls it. The
  * personhood ceremony's acknowledge entry points are NOT driven from here (see the P6 report).
@@ -26,6 +28,9 @@ import {
   ExchangeDidLimitError,
   checkProposedRelationshipDid,
   declineExchange,
+  expireExchange,
+  expireLapsedHeldExchanges,
+  isHeldLapsed,
   mintExchangeRelationshipDid,
 } from '@p2p-trust-stack/core/relationship/exchange-dids.js';
 import { TaskError, buildErrorDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
@@ -33,6 +38,7 @@ import type { HandlerContext, PipelineHandler } from '@p2p-trust-stack/core/serv
 import { buildNextStep } from '@p2p-trust-stack/core/services/trust-tasks/boundary/next-step.js';
 import { VRC_PROPOSE_SPEC } from '@p2p-trust-stack/core/services/trust-tasks/boundary/runtime.js';
 import type { TrustTaskDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/runtime.js';
+import { DEFAULT_CEREMONY_TTL_MS } from '../tx/ceremony-doc-participant.js';
 import { PROPOSE_DECLINED, PROPOSE_RESPONSE_TYPE, PROPOSE_TYPE, actorOf } from './shared.js';
 
 export type ProposeDecision = 'accept' | 'decline' | 'hold';
@@ -66,6 +72,11 @@ export interface VrcProposeDeps {
   policy?: ProposeConsentPolicy;
   now?: () => number;
   newId?: () => string;
+  /**
+   * How long a proposal may stay held before it lapses (decision 37): the ceremony expiry option, seven days by
+   * default. A lapsed proposal answers `taskFailed` with `details.reason: deadlineLapsed`.
+   */
+  ttlMs?: number;
   /** The serving identifier when a reply is built outside a request (a decision on a held proposal). */
   onHeld?: (row: ExchangeDidRow) => void;
 }
@@ -79,15 +90,19 @@ export async function ensureRemoteIdentity(db: DataSource, did: string): Promise
   return uuid;
 }
 
+const lapsed = (): TaskError => new TaskError({ reason: 'deadlineLapsed', internalMessage: 'the held proposal lapsed with no decision' });
 const refusal = (reason: string): TaskError => new TaskError({ code: 'malformedRequest', retryable: false, internalMessage: reason });
 
 export class VrcProposeService {
   private readonly deps: VrcProposeDeps;
   private readonly policy: ProposeConsentPolicy;
   private readonly now: () => number;
+  private readonly ttlMs: number;
 
   constructor(deps: VrcProposeDeps) {
     this.deps = deps;
+    this.ttlMs = deps.ttlMs ?? DEFAULT_CEREMONY_TTL_MS;
+    if (!Number.isFinite(this.ttlMs) || this.ttlMs < 1) throw new RangeError('ttlMs must be a positive number of milliseconds');
     this.policy = deps.policy ?? HOLD_EVERYTHING;
     this.now = deps.now ?? Date.now;
   }
@@ -166,7 +181,13 @@ export class VrcProposeService {
 
   /** The answer for the exchange as it stands now: next-step while held, the acceptance, or the decline. */
   private async reply(row: ExchangeDidRow, doc: TrustTaskDocument<unknown>, ctx: HandlerContext, info: ProposalInfo): Promise<TrustTaskDocument<unknown>> {
+    if (row.state === 'held' && isHeldLapsed(row.createdAt, this.now(), this.ttlMs)) {
+      await expireExchange(this.deps.db, row.exchangeId, this.now());
+      throw lapsed();
+    }
     switch (row.state) {
+      case 'expired':
+        throw lapsed();
       case 'held':
         return buildNextStep(
           { id: doc.id, type: doc.type, threadId: row.exchangeId, issuer: doc.issuer, recipient: doc.recipient },
@@ -200,8 +221,14 @@ export class VrcProposeService {
     } as unknown as TrustTaskDocument<unknown>;
   }
 
-  /** Held proposals, oldest first (the agent's UI lists these). */
+  /** The janitor hook: expire every held proposal past its lapse period (secret key deleted, document and row kept). */
+  async expireLapsed(): Promise<number> {
+    return expireLapsedHeldExchanges(this.deps.db, this.ttlMs, this.now());
+  }
+
+  /** Held proposals, oldest first (the agent's UI lists these); lapsed ones are expired first and not listed. */
   async listHeld(): Promise<ExchangeDidRow[]> {
+    await this.expireLapsed();
     const rows = await this.deps.db.all<{ exchange_id: string }>(
       "SELECT exchange_id FROM vrc_exchange_relationship_dids WHERE state = 'held' AND role = 'acceptor' ORDER BY created_at, exchange_id",
     );
@@ -219,6 +246,10 @@ export class VrcProposeService {
   async decide(exchangeId: string, decision: 'accept' | 'decline'): Promise<TrustTaskDocument<unknown>> {
     const row = await exchangeDids.findByExchangeId(this.deps.db, exchangeId);
     if (row === null || row.role !== 'acceptor' || row.state !== 'held') throw new TaskError({ reason: 'notFound', internalMessage: 'no held proposal for that exchange' });
+    if (isHeldLapsed(row.createdAt, this.now(), this.ttlMs)) {
+      await expireExchange(this.deps.db, exchangeId, this.now());
+      throw lapsed();
+    }
     const newId = this.deps.newId ?? (() => crypto.randomUUID());
     const issuedAt = new Date(Math.floor(this.now() / 1000) * 1000).toISOString().replace('.000Z', 'Z');
     if (decision === 'decline') {

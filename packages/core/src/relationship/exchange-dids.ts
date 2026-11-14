@@ -188,6 +188,32 @@ export async function declineExchange(db: DataSource, exchangeId: string, now: n
   return true;
 }
 
+/**
+ * A held proposal lapsed with no decision (decision 37): same relationship-end rule as a decline or an end.
+ * The unused local relationship DID loses its secret key, the public document and the row stay (as
+ * `expired`, so the counterparty's DID cannot be reused). Only a `held` exchange lapses; anything else
+ * (decided in the meantime, already expired) returns false, so this is idempotent.
+ */
+export async function expireExchange(db: DataSource, exchangeId: string, now: number = Date.now()): Promise<boolean> {
+  const exchange = await exchangeDids.findByExchangeId(db, exchangeId);
+  if (exchange === null || exchange.state !== 'held') return false;
+  await new DidManager(db).deleteRelationshipSecret(exchange.localRelationshipDid);
+  await exchangeDids.setState(db, exchangeId, 'expired', now);
+  return true;
+}
+
+/** Whether a held proposal created at `createdAt` has lapsed at `now` (`>=`, as for a ceremony deadline). */
+export const isHeldLapsed = (createdAt: number, now: number, ttlMs: number): boolean => now - createdAt >= ttlMs;
+
+/** The janitor: expire every held proposal older than `ttlMs`. Returns how many lapsed. */
+export async function expireLapsedHeldExchanges(db: DataSource, ttlMs: number, now: number = Date.now()): Promise<number> {
+  let n = 0;
+  for (const row of await exchangeDids.listHeldCreatedAtOrBefore(db, now - ttlMs)) {
+    if (await expireExchange(db, row.exchangeId, now)) n++;
+  }
+  return n;
+}
+
 /** End every exchange between a connection pair (relationship teardown). Returns how many were ended. */
 export async function endExchangesForConnections(db: DataSource, localConnectionDid: string, remoteConnectionDid: string): Promise<number> {
   const rows = await exchangeDids.listByConnections(db, localConnectionDid, remoteConnectionDid);

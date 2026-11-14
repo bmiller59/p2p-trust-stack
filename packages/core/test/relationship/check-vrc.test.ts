@@ -17,7 +17,7 @@ import { getMigrationsDir } from '../../src/db/migrations-dir.js';
 import * as identitiesRepo from '../../src/db/repositories/identities-repo.js';
 import * as didDocumentsRepo from '../../src/db/repositories/did-documents-repo.js';
 import * as exchangeDids from '../../src/db/repositories/vrc-exchange-dids-repo.js';
-import { declineExchange, loadExchangeSigner, mintExchangeRelationshipDid } from '../../src/relationship/exchange-dids.js';
+import { declineExchange, expireExchange, expireLapsedHeldExchanges, isHeldLapsed, loadExchangeSigner, mintExchangeRelationshipDid } from '../../src/relationship/exchange-dids.js';
 import { mintExchangeVrc } from '../../src/relationship/vrc-mint.js';
 import { checkVrc, checkIncomingVrc } from '../../src/relationship/exchange-vrc.js';
 import { DidProofVerifier } from '../../src/services/trust-tasks/boundary/proof/verify.js';
@@ -111,3 +111,46 @@ describe('held and declined exchanges', () => {
     await assert.rejects(() => exchangeDids.create(ds, { exchangeId: 'h-2', localConnectionDid: 'x', remoteConnectionDid: 'y', localRelationshipDid: 'did:peer:4zNew', remoteRelationshipDid: 'did:key:zTheirs', role: 'acceptor' }));
   });
 });
+
+describe('lapsed held exchanges (decision 37)', () => {
+  const DAY = 24 * 60 * 60 * 1000;
+  const T0 = Date.parse('2026-11-12T10:00:00Z');
+  const held = async (ds: SqliteDataSource, me: string, id: string, theirs: string, now: number, state: 'held' | 'accepted' = 'held') =>
+    mintExchangeRelationshipDid(ds, { exchangeId: id, role: 'acceptor', localIdentityUuid: me, localConnectionDid: 'did:scid:vh:me', remoteConnectionDid: 'did:key:zPeer', remoteRelationshipDid: theirs, passphrase: PASS, state, now });
+
+  it('the lapse test is >= the period', () => {
+    assert.equal(isHeldLapsed(T0, T0 + 7 * DAY - 1, 7 * DAY), false);
+    assert.equal(isHeldLapsed(T0, T0 + 7 * DAY, 7 * DAY), true);
+  });
+
+  it('expiring a held exchange deletes the secret key, keeps the public document and the row as expired, and is idempotent', async () => {
+    const ds = await db('lapse-one');
+    const me = await ident(ds, 'did:scid:vh:me');
+    const row = await held(ds, me, 'l-1', 'did:key:zT1', T0);
+    assert.equal(await expireExchange(ds, 'l-1', T0 + 8 * DAY), true);
+    const after = (await exchangeDids.findByExchangeId(ds, 'l-1'))!;
+    assert.equal(after.state, 'expired');
+    assert.equal(after.updatedAt, T0 + 8 * DAY);
+    assert.equal(await loadExchangeSigner(ds, 'l-1', PASS), null);
+    assert.ok(await didDocumentsRepo.findByRealDid(ds, row.localRelationshipDid), 'public document kept');
+    assert.equal(await expireExchange(ds, 'l-1'), false, 'terminal');
+    assert.equal(await declineExchange(ds, 'l-1'), false, 'cannot be declined afterwards');
+    // The counterparty's DID stays reserved and the expired exchange no longer counts as pending.
+    await assert.rejects(() => exchangeDids.create(ds, { exchangeId: 'l-x', localConnectionDid: 'x', remoteConnectionDid: 'y', localRelationshipDid: 'did:peer:4zNew2', remoteRelationshipDid: 'did:key:zT1', role: 'acceptor' }));
+  });
+
+  it('the janitor expires only held exchanges at or past the period and leaves the rest alone', async () => {
+    const ds = await db('lapse-sweep');
+    const me = await ident(ds, 'did:scid:vh:me');
+    await held(ds, me, 'old', 'did:key:zT2', T0);
+    await held(ds, me, 'edge', 'did:key:zT3', T0 + DAY);
+    await held(ds, me, 'young', 'did:key:zT4', T0 + 2 * DAY);
+    await held(ds, me, 'accepted-old', 'did:key:zT5', T0, 'accepted');
+    assert.equal(await expireLapsedHeldExchanges(ds, 7 * DAY, T0 + 8 * DAY), 2);
+    const states = Object.fromEntries(await Promise.all(['old', 'edge', 'young', 'accepted-old'].map(async (id) => [id, (await exchangeDids.findByExchangeId(ds, id))!.state])));
+    assert.deepEqual(states, { old: 'expired', edge: 'expired', young: 'held', 'accepted-old': 'accepted' });
+    assert.ok(await loadExchangeSigner(ds, 'accepted-old', PASS), 'a decided exchange keeps its key');
+    assert.equal(await expireLapsedHeldExchanges(ds, 7 * DAY, T0 + 8 * DAY), 0, 'idempotent');
+  });
+});
+

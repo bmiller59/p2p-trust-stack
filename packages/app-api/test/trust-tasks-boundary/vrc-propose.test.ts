@@ -15,6 +15,9 @@ import { SKIP, VECTORS_DIR, loadSuiteApi } from './suite-runner.ts';
 import * as exchangeDids from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
 import { signDocument, createEd25519BoundarySigner } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/signer.js';
 import { didKeyFromEd25519 } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/resolver.js';
+import * as didDocumentsRepo from '@p2p-trust-stack/core/db/repositories/did-documents-repo.js';
+import { loadExchangeSigner } from '@p2p-trust-stack/core/relationship/exchange-dids.js';
+import { PASSPHRASE } from './vrc-adapter.ts';
 import { ed25519 } from '@noble/curves/ed25519.js';
 
 const adapters: VrcBoundaryAdapter[] = [];
@@ -146,3 +149,61 @@ describe('design: propose authorisation and storage (AUTHZ-001, refuse before st
     assert.deepEqual(codes, ['hold', 'hold', 'hold', 'hold', 'hold', 'unavailable', 'unavailable']);
   });
 });
+
+describe('design: a held proposal lapses after seven days (decision 37, VRC-PRO-020/021 around the lapse)', () => {
+  const A = actor(0x0a), R = actor(0x0c), R2 = actor(0x0d);
+  const req = (n: number) => `urn:uuid:cccccccc-cccc-4ccc-8ccc-00000000000${n}`;
+  const DAY = 24 * 60 * 60 * 1000;
+  const elapsed = new WeakMap<VrcBoundaryAdapter, number>();
+  const advance = async (a: VrcBoundaryAdapter, ms: number) => { elapsed.set(a, elapsed.get(a)! + ms); await a.advance(ms); };
+  const start = async () => { const a = await make(false); await a.setClock(NOW); elapsed.set(a, 0); await a.trigger('policy', { propose: 'hold' }); return a; };
+  // The document is stamped (and its proof created) at the adapter's current clock, so only the held proposal ages.
+  const sendAs = async (adapter: VrcBoundaryAdapter, id: string, thread: string, rel: string) => {
+    const at = Date.parse(NOW) + elapsed.get(adapter)!;
+    const doc = { id, threadId: thread, type: PROPOSE, issuer: A.did, recipient: adapter.signer.did, issuedAt: new Date(at).toISOString().replace('.000Z', 'Z'), payload: { relationshipDid: rel } };
+    return JSON.parse((await adapter.send({ from: { kind: 'actor', vid: A.did }, bytes: JSON.stringify(signDocument(doc, A.signer, { created: at })) })).replies[0]!);
+  };
+
+  it('before the period a resubmission is a further next-step (VRC-PRO-020); after it, taskFailed deadlineLapsed, the key is gone, the document kept', async () => {
+    const adapter = await start();
+    assert.equal((await sendAs(adapter, req(1), req(1), R.did)).type, 'https://trusttasks.org/spec/trust-task-next-step/0.1');
+    const row = (await exchangeDids.findByExchangeId(adapter.db, req(1)))!;
+    await advance(adapter, 7 * DAY - 2000);
+    assert.equal((await sendAs(adapter, req(2), req(1), R.did)).type, 'https://trusttasks.org/spec/trust-task-next-step/0.1', 'still held just inside the period');
+    await advance(adapter, 3000);
+    const lapsed = await sendAs(adapter, req(3), req(1), R.did);
+    assert.equal(lapsed.type, 'https://trusttasks.org/spec/trust-task-error/0.6');
+    assert.equal(lapsed.payload.code, 'taskFailed');
+    assert.equal(lapsed.payload.details.reason, 'deadlineLapsed');
+    assert.equal(lapsed.payload.retryable, false);
+    assert.equal((await exchangeDids.findByExchangeId(adapter.db, req(1)))!.state, 'expired');
+    assert.equal(await loadExchangeSigner(adapter.db, req(1), PASSPHRASE), null, 'secret key deleted');
+    assert.ok(await didDocumentsRepo.findByRealDid(adapter.db, row.localRelationshipDid), 'public document kept');
+    // Terminal: the same answer on every later resubmission, and no decision can be taken any more.
+    assert.equal((await sendAs(adapter, req(4), req(1), R.did)).payload.details.reason, 'deadlineLapsed');
+    await assert.rejects(() => adapter.propose.decide(req(1), 'accept'), /no held proposal/);
+  });
+
+  it('a decision after the period is refused as lapsed, and the janitor hook expires a held proposal nobody resubmitted', async () => {
+    const adapter = await start();
+    await sendAs(adapter, req(5), req(5), R.did);
+    await sendAs(adapter, req(6), req(6), R2.did);
+    await advance(adapter, 7 * DAY);
+    await assert.rejects(() => adapter.propose.decide(req(5), 'accept'), (e: unknown) => (e as { reason?: string }).reason === 'deadlineLapsed' || /lapsed/.test(String((e as Error).message)));
+    assert.equal((await exchangeDids.findByExchangeId(adapter.db, req(5)))!.state, 'expired');
+    assert.equal(await adapter.propose.expireLapsed(), 1, 'the other one, by the janitor');
+    assert.equal((await exchangeDids.findByExchangeId(adapter.db, req(6)))!.state, 'expired');
+    assert.deepEqual(await adapter.propose.listHeld(), []);
+    assert.equal(await adapter.propose.expireLapsed(), 0);
+  });
+
+  it('an accepted proposal never lapses', async () => {
+    const adapter = await start();
+    await sendAs(adapter, req(7), req(7), R.did);
+    await adapter.propose.decide(req(7), 'accept');
+    await advance(adapter, 30 * DAY);
+    assert.equal(await adapter.propose.expireLapsed(), 0);
+    assert.equal((await sendAs(adapter, req(8), req(7), R.did)).payload.accept, true);
+  });
+});
+

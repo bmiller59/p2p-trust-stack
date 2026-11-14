@@ -18,9 +18,10 @@ import type { DataSource } from '../data-source.js';
 export type ExchangeRole = 'proposer' | 'acceptor';
 /**
  * `held` and `declined` (conformance P6) are acceptor-side states for a boundary `propose` whose human
- * decision is pending or negative; the column is free text, so no migration is involved.
+ * decision is pending or negative; the column is free text, so no migration is involved. `expired` is the
+ * terminal state of a held proposal whose lapse period passed with no decision (decision 37).
  */
-export type ExchangeState = 'proposed' | 'held' | 'declined' | 'accepted' | 'issued-by-me' | 'received' | 'ended';
+export type ExchangeState = 'proposed' | 'held' | 'declined' | 'expired' | 'accepted' | 'issued-by-me' | 'received' | 'ended';
 
 export interface ExchangeDidRow {
   exchangeId: string;
@@ -189,4 +190,14 @@ export async function setRemoteIdentityUuid(db: DataSource, exchangeId: string, 
     exchangeId,
     identityUuid,
   );
+}
+
+/** Held acceptor-side proposals created at or before `cutoffMs`, oldest first. */
+export async function listHeldCreatedAtOrBefore(db: DataSource, cutoffMs: number): Promise<ExchangeDidRow[]> {
+  const rows = await db.all<RawRow>(
+    `SELECT * FROM vrc_exchange_relationship_dids
+      WHERE state = 'held' AND role = 'acceptor' AND created_at <= ? ORDER BY created_at, exchange_id`,
+    cutoffMs,
+  );
+  return rows.map(toRow);
 }

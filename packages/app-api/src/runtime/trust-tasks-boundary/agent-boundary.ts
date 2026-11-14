@@ -99,6 +99,7 @@ export async function startAgentBoundary(deps: AgentBoundaryDeps): Promise<Agent
     try {
       await settleAcceptedClaims(guard, deps.txManager);
       await guard.pruneExpired();
+      await propose.expireLapsed();
     } catch (err) {
       logger.error('[trust-tasks] settle sweep failed:', (err as Error)?.message);
     }

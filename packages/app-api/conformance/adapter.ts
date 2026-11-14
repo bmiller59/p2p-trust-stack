@@ -594,7 +594,7 @@ export class TruststackersAdapter implements Adapter {
     const row = await exchangeDids.findByExchangeId(this.db, String(q.id));
     if (row !== null) {
       if (row.state === 'held') return { value: 'accepted' };
-      if (row.state === 'declined') return { value: 'errored' };
+      if (row.state === 'declined' || row.state === 'expired') return { value: 'errored' };
       return { value: 'responded' };
     }
     const ceremony = await this.ceremony.store.getProposal(String(q.id));
