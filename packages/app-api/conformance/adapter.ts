@@ -51,7 +51,8 @@ import { VrcReceiveParticipant } from '../src/runtime/tx/vrc-receive-participant
 import { WitnessShareParticipant } from '../src/runtime/tx/witness-share-participant.ts';
 import { createWitnessShareHandler } from '../src/runtime/trust-tasks-boundary/witness-share.ts';
 import { CEREMONY_CO_SIGN_WIRE_TYPE, CEREMONY_PROPOSE_WIRE_TYPE, CEREMONY_RESET_WIRE_TYPE, CEREMONY_STATUS_WIRE_TYPE } from '@p2p-trust-stack/core/services/trust-tasks/boundary/ceremony-spec.js';
-import { createCeremonyDocHandlers } from '../src/runtime/trust-tasks-boundary/ceremony-doc.ts';
+import { consentBinding, createCeremonyDocHandlers } from '../src/runtime/trust-tasks-boundary/ceremony-doc.ts';
+import { randomBytes } from 'node:crypto';
 import { HttpBinding } from './http-binding.ts';
 import type { Reason } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
 import { FaultableParticipant, TwoPhaseFaults, parseReason, parseTwoPhase } from './two-phase.ts';
@@ -231,6 +232,8 @@ export class TruststackersAdapter implements Adapter {
   presentation!: CredentialPresentationParticipant;
   /** Consent prompts raised for the (simulated) human by `task-consent/request`. */
   readonly consentPrompts: ConsentPrompt[] = [];
+  /** Executors this device is enrolled with (`trigger enrolExecutor`); empty until the suite enrols one. */
+  readonly enrolledExecutors = new Set<string>();
   ceremony!: CeremonyDocParticipant;
   retained!: RetainedDocuments;
   verifier!: DidProofVerifier;
@@ -340,7 +343,7 @@ export class TruststackersAdapter implements Adapter {
     const dtg = this.options.dtg === false ? [] : [
       createCredentialIssueHandler({ db: this.db, txManager: this.txManager, participant: new CredentialReceiveParticipant(`peer:${did}`, this.db, this.txDb), verifier: this.verifier, attachTx: (id, txId) => this.guard.attachTx(id, txId) }),
       createCredentialPresentHandler({ txManager: this.txManager, participant: this.presentation, verifier: this.verifier, attachTx: (id, txId) => this.guard.attachTx(id, txId) }),
-      createTaskConsentRequestHandler({ isEnrolledExecutor: () => true, prompt: (p) => { this.consentPrompts.push(p); } }),
+      createTaskConsentRequestHandler({ isEnrolledExecutor: (did) => this.enrolledExecutors.has(did), prompt: (p) => { this.consentPrompts.push(p); } }),
       ...(this.options.ceremony === false ? [] : [createTaskConsentDecisionHandler({ txManager: this.txManager, participant: this.ceremony, attachTx: (id, txId) => this.guard.attachTx(id, txId) })]),
     ];
     const issue = this.options.issue === false ? [] : [createVrcIssueHandler({
@@ -447,7 +450,7 @@ export class TruststackersAdapter implements Adapter {
         ? [{ typeUri: WIDGET_TYPE, class: 'consequential' as const, validPayload: { subject: 'did:web:alice.example' } }]
         : mode === 'issue' ? [{ typeUri: ISSUE_TYPE, class: 'consequential' as const, validPayload: {} }] : [],
       cryptosuites: ['eddsa-jcs-2022'],
-      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', ...(this.options.ceremony === false ? [] : ['ceremony', 'ceremony.status', 'trigger.ceremonyDeadline', 'trigger.ceremonyEffect', 'observe.retained']), 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.attested ? ['attested'] : [])],
+      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', ...(this.options.ceremony === false ? [] : ['ceremony', 'ceremony.status', 'trigger.ceremonyDeadline', 'trigger.ceremonyEffect', 'observe.retained']), 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.options.dtg === false ? [] : ['trigger.consentEnrol', 'trigger.presentationNonce', ...(this.options.ceremony === false ? [] : ['trigger.consentBinding'])]), ...(this.attested ? ['attested'] : [])],
       ...(this.options.ceremony === false ? {} : {
         ceremony: {
           beginType: CEREMONY_PROPOSE_WIRE_TYPE, approveType: CEREMONY_CO_SIGN_WIRE_TYPE, resetType: CEREMONY_RESET_WIRE_TYPE, statusType: CEREMONY_STATUS_WIRE_TYPE, statusPayload: {}, proposerApproves: this.options.ceremonyProposerApproves === true,
@@ -558,6 +561,24 @@ export class TruststackersAdapter implements Adapter {
       const signed = this.attested ? signDocument(doc as unknown as Record<string, unknown>, this.signer, { created: this.now() }) : doc;
       return { documents: [JSON.stringify(signed)] };
     }
+    // Helper actions of the 3b-DTG groups (suite docs/04 section 4.4): the JSON value travels in documents[0].
+    if (action === 'enrolExecutor' && this.options.dtg !== false) {
+      if (typeof args.vid !== 'string' || args.vid === '') throw new Error('enrolExecutor needs a vid');
+      this.enrolledExecutors.add(args.vid);
+      return { documents: [] };
+    }
+    if (action === 'consentBinding' && this.options.dtg !== false && this.options.ceremony !== false) {
+      if (typeof args.thread !== 'string' || args.thread === '') throw new Error('consentBinding needs a thread');
+      const held = await this.ceremony.store.getProposal(args.thread);
+      if (held === null) throw new Error(`no held consent for thread ${args.thread}`);
+      const { challenge, payloadDigest } = consentBinding(held);
+      return { documents: [JSON.stringify({ challenge, payloadDigest })] };
+    }
+    if (action === 'presentationNonce' && this.options.dtg !== false) {
+      // The verifier opens the thread and names the nonce: the nonce IS the thread (single use; credential-exchange/present).
+      const nonce = `nonce-${randomBytes(16).toString('hex')}`;
+      return { documents: [JSON.stringify({ nonce, threadId: nonce })] };
+    }
     throw new Error(`unknown trigger ${action}`);
   }
 
@@ -576,6 +597,8 @@ export class TruststackersAdapter implements Adapter {
     await this.closeDbs();
     this.counter = 0;
     this.nowMs = undefined;
+    this.consentPrompts.length = 0;
+    this.enrolledExecutors.clear();
     this.policy = { propose: 'hold', witnessed: false };
     this.claimStoreUnreadable = false;
     this.snapshots.clear();
@@ -601,7 +624,7 @@ export class TruststackersAdapter implements Adapter {
   }
   private async handledCount(): Promise<number> {
     const accepted = await this.count("SELECT COUNT(*) AS n FROM vrc_exchange_relationship_dids WHERE role = 'acceptor' AND state IN ('accepted','received','issued-by-me')");
-    return accepted + (await this.storedCount()) + (await this.widgetCount()) + (await this.communityCount());
+    return accepted + (await this.storedCount()) + (await this.widgetCount()) + (await this.communityCount()) + this.consentPrompts.length;
   }
 
   async observe(q: ObserveQuery): Promise<ObserveResult> {
@@ -614,6 +637,11 @@ export class TruststackersAdapter implements Adapter {
     if (q.query === 'stored') {
       if (q.kind === 'vrc') return { value: await this.storedCount() };
       if (q.kind === 'vwc') return { value: await this.witnessCount() };
+      if (q.kind === 'credential') {
+        // Credentials kept from credential-exchange/issue: every stored credential that is not a VRC (digest selects one).
+        return { value: q.digest === undefined ? await this.count("SELECT COUNT(*) AS n FROM credentials WHERE vc_type <> 'vrc'") : Number((await this.db.get<{ n: number | string }>("SELECT COUNT(*) AS n FROM credentials WHERE vc_type <> 'vrc' AND credential_digest = ?", q.digest))!.n) };
+      }
+      if (q.kind === 'presentation') return { value: await this.count('SELECT COUNT(*) AS n FROM credential_presentations') };
       if (q.kind === 'ceremony-effect') return { value: await this.communityCount() };
       return { value: await this.handledCount() };
     }

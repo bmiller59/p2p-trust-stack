@@ -96,13 +96,17 @@ function statusPayload(p: CeremonyProposal, approvals: number): Record<string, u
  * transaction, read the coordinator's outcome and the stored ceremony, and answer by the verdict.
  * `task-consent/decision` (P5b) reuses it, so a decision and a co-sign are one code path.
  */
+const replyThread = (doc: TrustTaskDocument<unknown>, fallback: string): string =>
+  typeof doc.threadId === 'string' && doc.threadId !== '' ? doc.threadId : typeof doc.id === 'string' ? doc.id : fallback;
+
 export function createCeremonyDriver(deps: CeremonyDocDeps) {
   const store = deps.participant.store;
 
+  /** The reply is on the request's thread; a request that carried none opens one named by its own id (framework: thread of an unthreaded document). */
   const reply = (doc: TrustTaskDocument<unknown>, ctx: HandlerContext, actor: string, ceremonyId: string, payload: Record<string, unknown>): TrustTaskDocument<unknown> =>
     ({
       id: ctx.newId(),
-      threadId: ceremonyId,
+      threadId: replyThread(doc, ceremonyId),
       type: `${String(doc.type)}#response`,
       issuer: ctx.myVid ?? (doc.recipient as string),
       recipient: actor,
@@ -138,7 +142,7 @@ export function createCeremonyDriver(deps: CeremonyDocDeps) {
       case 'next-step': {
         const required = Math.max(declaredAdmins(proposal).size, 1);
         return buildNextStep(
-          { id: doc.id, type: doc.type, threadId: ceremonyId, issuer: doc.issuer, recipient: doc.recipient },
+          { id: doc.id, type: doc.type, threadId: replyThread(doc, ceremonyId), issuer: doc.issuer, recipient: doc.recipient },
           {
             // The request's own type is never named: a held co-sign is not re-issued by its sender (the other admins co-sign), so
             // naming it would imply `resubmit` (SPEC.md 8.6). A held begin names the co-sign; a held co-sign names only the status task.

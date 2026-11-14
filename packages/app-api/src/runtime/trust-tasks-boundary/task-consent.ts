@@ -8,8 +8,7 @@
  * existing ceremony hold, through the same participant and the same driver as a `ceremony:co-sign`:
  *   - the document proof is `assertionMethod` (the identity-key slot; the purpose pin is `ATTESTATION_SLUGS`) and the
  *     approver is the verified signer, equal to the envelope issuer (decision A4; nothing in the payload names anyone);
- *   - an approver who is not on the ceremony and a ceremony that does not exist are one refusal (`notFoundOrNotPermitted`),
- *     decided before any content is compared, so the binding errors below are never an oracle for an outsider;
+ *   - a ceremony the digest does not name is `noPending`; a signer outside the approver set is `notAnApprover` (consumer 5, after the binding checks);
  *   - `payloadDigest` and `challenge` are derived from the stored proposal (`core .../task-consent.ts`); a mismatch is
  *     `task-consent/decision:noPending` (digest) or `:challengeMismatch`; `actionId`, when present, must be the ceremony id;
  *   - `evidence` (WebAuthn, approver-signed statement) cannot be verified by this stack and is refused `:evidenceInvalid`;
@@ -39,6 +38,7 @@ import {
   DECISION_ACTION_MISMATCH,
   DECISION_CHALLENGE_MISMATCH,
   DECISION_EVIDENCE_INVALID,
+  DECISION_NOT_AN_APPROVER,
   DECISION_NO_PENDING,
   TASK_CONSENT_DECISION_RESPONSE_TYPE,
   TASK_CONSENT_DECISION_TYPE,
@@ -54,7 +54,6 @@ import { consentBinding, createCeremonyDriver } from './ceremony-doc.js';
 import type { CeremonyDocDeps } from './ceremony-doc.js';
 
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
-const notFound = (): TaskError => new TaskError({ reason: 'notFoundOrNotPermitted', internalMessage: 'unknown ceremony or not permitted' });
 
 export function createTaskConsentDecisionHandler(deps: CeremonyDocDeps): PipelineHandler {
   const { store, reply, drive, runOperation } = createCeremonyDriver(deps);
@@ -64,23 +63,28 @@ export function createTaskConsentDecisionHandler(deps: CeremonyDocDeps): Pipelin
     consequential: true,
     handle: async (doc, ctx) => {
       const actor = actorOf(doc, ctx);
-      const ceremonyId = typeof doc.threadId === 'string' && doc.threadId !== '' ? doc.threadId : undefined;
+      // Consumer 1: refuse any proof purpose but assertionMethod, at every tier (the pipeline pins it at Tier 2 only).
+      const proof = (doc as { proof?: unknown }).proof;
+      if (isObj(proof) && proof.proofPurpose !== 'assertionMethod') throw new TaskError({ code: 'proofInvalid', retryable: false, internalMessage: 'a consent decision must be proven under assertionMethod' });
       const decision = parseDecisionPayload(doc.payload);
-      // Eligibility first and with one answer: nothing about a ceremony is revealed to someone who is not on it.
-      const stored = ceremonyId === undefined ? null : await store.getProposal(ceremonyId);
-      if (ceremonyId === undefined || stored === null || !declaredAdmins(stored).has(actor)) throw notFound();
-
-      if (decision.hasEvidence) throw new TaskError({ code: DECISION_EVIDENCE_INVALID, retryable: false, internalMessage: 'evidence cannot be verified by this stack' });
-      const binding = consentBinding(stored);
-      if (decision.payloadDigest !== binding.payloadDigest) throw new TaskError({ code: DECISION_NO_PENDING, retryable: false, internalMessage: 'no pending consent for this digest' });
+      // Consumer 2: the pending request is found by `payloadDigest` (the thread names it too when the producer set one; a
+      // decision need not carry a thread). Absent, or one whose digest this is not: `noPending`.
+      const threadId = typeof doc.threadId === 'string' && doc.threadId !== '' ? doc.threadId : undefined;
+      const byThread = threadId === undefined ? null : await store.getProposal(threadId);
+      const stored = byThread ?? (await store.listPending()).find((p) => consentBinding(p).payloadDigest === decision.payloadDigest) ?? null;
+      const binding = stored === null ? undefined : consentBinding(stored);
+      if (stored === null || binding === undefined || decision.payloadDigest !== binding.payloadDigest) throw new TaskError({ code: DECISION_NO_PENDING, retryable: false, internalMessage: 'no pending consent for this digest' });
+      const ceremonyId = stored.proposalId;
+      // Consumers 3 to 5, in the specification's order, then 7 (evidence).
       if (decision.challenge !== binding.challenge) throw new TaskError({ code: DECISION_CHALLENGE_MISMATCH, retryable: false, internalMessage: 'challenge does not match' });
       if (decision.actionId !== undefined && decision.actionId !== ceremonyId) throw new TaskError({ code: DECISION_ACTION_MISMATCH, retryable: false, internalMessage: 'actionId names another action' });
+      if (!declaredAdmins(stored).has(actor)) throw new TaskError({ code: DECISION_NOT_AN_APPROVER, retryable: false, internalMessage: 'the proven signer is not in the approver set' });
+      if (decision.hasEvidence) throw new TaskError({ code: DECISION_EVIDENCE_INVALID, retryable: false, internalMessage: 'evidence cannot be verified by this stack' });
 
       if (decision.decision === 'deny') {
         await runOperation(doc, { op: CEREMONY_DENY, params: { ceremonyId, approverDid: actor, nowMs: ctx.now } }, 'denial');
         return reply(doc, ctx, actor, ceremonyId, { status: 'denied', payloadDigest: binding.payloadDigest });
       }
-      const proof = (doc as { proof?: unknown }).proof;
       const signature = isObj(proof) && typeof proof.proofValue === 'string' ? proof.proofValue : '';
       return drive(
         doc,
