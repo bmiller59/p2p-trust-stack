@@ -1,6 +1,7 @@
 [
   {
     "impl": "truststackers-agent-didkey-attested",
+    "implementation": "truststackers-agent-didkey-attested",
     "tier": 1,
     "results": [
       {
@@ -115,12 +116,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
-          "step 4: stored witnessed credentials 1, expected 2",
-          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TD-006",
@@ -286,6 +282,19 @@
         "family": "vrc-witness-share",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "WSH-024",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a receiver must refuse a second, different share on one exchange is not determined (docs/10 section 12); the vector asserts the permissive reading. Not gating. (observed: fail)",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
       },
       {
         "id": "ENV-001",
@@ -1158,6 +1167,231 @@
         "tier": 1,
         "status": "CLARIFY",
         "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DIS-001",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-002",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-003",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-004",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-005",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-006",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-007",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-008",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-009",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-010",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-011",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-012",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-013",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-014",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-015",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DIS-016",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "DIS-017",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "BND-001",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-002",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-003",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-004",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-005",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-006",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "2PC-001",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-002",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-006",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-007",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-008",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail closed with unavailable is the design rule (docs/04 section 12), as for DUP-007. Not gating. (observed: pass)",
         "failures": []
       },
       {
@@ -1495,6 +1729,7 @@
   },
   {
     "impl": "truststackers-agent-didkey-attested",
+    "implementation": "truststackers-agent-didkey-attested",
     "tier": 2,
     "results": [
       {
@@ -1609,12 +1844,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
-          "step 4: stored witnessed credentials 1, expected 2",
-          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TD-006",
@@ -1778,6 +2008,19 @@
         "family": "vrc-witness-share",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "WSH-024",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a receiver must refuse a second, different share on one exchange is not determined (docs/10 section 12); the vector asserts the permissive reading. Not gating. (observed: fail)",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
       },
       {
         "id": "ENV-001",
@@ -2646,6 +2889,231 @@
         "failures": []
       },
       {
+        "id": "DIS-001",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-002",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-003",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-004",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-005",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-006",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-007",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-008",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-009",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-010",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-011",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-012",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-013",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-014",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-015",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DIS-016",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-017",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "BND-001",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-002",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-003",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-004",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-005",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-006",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "2PC-001",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-002",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-006",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-007",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-008",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail closed with unavailable is the design rule (docs/04 section 12), as for DUP-007. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
         "id": "VRC-PRO-001",
         "group": "VRC-PRO",
         "family": "vrc-propose",
@@ -2974,6 +3442,7 @@
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
+    "implementation": "truststackers-agent-scidvh-attested",
     "tier": 1,
     "results": [
       {
@@ -3088,12 +3557,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
-          "step 4: stored witnessed credentials 1, expected 2",
-          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TD-006",
@@ -3259,6 +3723,19 @@
         "family": "vrc-witness-share",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "WSH-024",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a receiver must refuse a second, different share on one exchange is not determined (docs/10 section 12); the vector asserts the permissive reading. Not gating. (observed: fail)",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
       },
       {
         "id": "ENV-001",
@@ -4131,6 +4608,231 @@
         "tier": 1,
         "status": "CLARIFY",
         "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DIS-001",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-002",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-003",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-004",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-005",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-006",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-007",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-008",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-009",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-010",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-011",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-012",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-013",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-014",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-015",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DIS-016",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "DIS-017",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "BND-001",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-002",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-003",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-004",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-005",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-006",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "2PC-001",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-002",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-006",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-007",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-008",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail closed with unavailable is the design rule (docs/04 section 12), as for DUP-007. Not gating. (observed: pass)",
         "failures": []
       },
       {
@@ -4468,6 +5170,7 @@
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
+    "implementation": "truststackers-agent-scidvh-attested",
     "tier": 2,
     "results": [
       {
@@ -4582,12 +5285,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
-          "step 4: stored witnessed credentials 1, expected 2",
-          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TD-006",
@@ -4751,6 +5449,19 @@
         "family": "vrc-witness-share",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "WSH-024",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a receiver must refuse a second, different share on one exchange is not determined (docs/10 section 12); the vector asserts the permissive reading. Not gating. (observed: fail)",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
       },
       {
         "id": "ENV-001",
@@ -5616,6 +6327,231 @@
         "tier": 1,
         "status": "CLARIFY",
         "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DIS-001",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-002",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-003",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-004",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-005",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-006",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-007",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-008",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-009",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-010",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-011",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-012",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-013",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-014",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-015",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DIS-016",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-017",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "BND-001",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-002",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-003",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-004",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-005",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-006",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "2PC-001",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-002",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-006",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-007",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-008",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail closed with unavailable is the design rule (docs/04 section 12), as for DUP-007. Not gating. (observed: pass)",
         "failures": []
       },
       {
@@ -5947,6 +6883,7 @@
   },
   {
     "impl": "truststackers-agent-didkey-tier1",
+    "implementation": "truststackers-agent-didkey-tier1",
     "tier": 1,
     "results": [
       {
@@ -6061,12 +6998,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
-          "step 4: stored witnessed credentials 1, expected 2",
-          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TD-006",
@@ -6232,6 +7164,19 @@
         "family": "vrc-witness-share",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "WSH-024",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a receiver must refuse a second, different share on one exchange is not determined (docs/10 section 12); the vector asserts the permissive reading. Not gating. (observed: fail)",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
       },
       {
         "id": "ENV-001",
@@ -7090,6 +8035,231 @@
         "tier": 1,
         "status": "CLARIFY",
         "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DIS-001",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-002",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-003",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-004",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-005",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-006",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-007",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-008",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-009",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-010",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-011",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-012",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-013",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-014",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-015",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-016",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "DIS-017",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "BND-001",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-002",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-003",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-004",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-005",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-006",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "2PC-001",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-002",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-006",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-007",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-008",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail closed with unavailable is the design rule (docs/04 section 12), as for DUP-007. Not gating. (observed: pass)",
         "failures": []
       },
       {
@@ -7426,6 +8596,7 @@
   },
   {
     "impl": "truststackers-agent-scidvh-tier1",
+    "implementation": "truststackers-agent-scidvh-tier1",
     "tier": 1,
     "results": [
       {
@@ -7540,12 +8711,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
-          "step 4: stored witnessed credentials 1, expected 2",
-          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TD-006",
@@ -7711,6 +8877,19 @@
         "family": "vrc-witness-share",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "WSH-024",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a receiver must refuse a second, different share on one exchange is not determined (docs/10 section 12); the vector asserts the permissive reading. Not gating. (observed: fail)",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
       },
       {
         "id": "ENV-001",
@@ -8569,6 +9748,231 @@
         "tier": 1,
         "status": "CLARIFY",
         "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DIS-001",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-002",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-003",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-004",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-005",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-006",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-007",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-008",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-009",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-010",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-011",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-012",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-013",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-014",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-015",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "DIS-016",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "DIS-017",
+        "group": "DIS",
+        "family": "trust-task-discovery",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "type not declared: https://trusttasks.org/spec/trust-task-discovery/0.4"
+      },
+      {
+        "id": "BND-001",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-002",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-003",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-004",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-005",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "BND-006",
+        "group": "BND",
+        "family": "https-binding",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability binding:https"
+      },
+      {
+        "id": "2PC-001",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-002",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-006",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-007",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:trigger.twoPhase"
+      },
+      {
+        "id": "2PC-008",
+        "group": "2PC",
+        "family": "two-phase-commit",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail closed with unavailable is the design rule (docs/04 section 12), as for DUP-007. Not gating. (observed: pass)",
         "failures": []
       },
       {
