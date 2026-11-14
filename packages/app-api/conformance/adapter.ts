@@ -51,6 +51,7 @@ import { VrcReceiveParticipant } from '../src/runtime/tx/vrc-receive-participant
 import { WitnessShareParticipant } from '../src/runtime/tx/witness-share-participant.ts';
 import { createWitnessShareHandler } from '../src/runtime/trust-tasks-boundary/witness-share.ts';
 import { createCeremonyDocHandlers } from '../src/runtime/trust-tasks-boundary/ceremony-doc.ts';
+import { FaultableParticipant, TwoPhaseFaults, parseReason, parseTwoPhase } from './two-phase.ts';
 import { RetainedDocuments } from '../src/runtime/trust-tasks-boundary/retained.ts';
 import { CeremonyDocParticipant } from '../src/runtime/tx/ceremony-doc-participant.ts';
 import type { CeremonyEffect, CeremonyEstablishment } from '../src/runtime/tx/ceremony-doc-participant.ts';
@@ -133,6 +134,10 @@ export class TruststackersAdapter implements Adapter {
   /** `fault {claimStore: 'unreadable'}`: the duplicate-record table cannot be read or written (the rest of the database still can). */
   private claimStoreUnreadable = false;
   private snapshots = new Map<string, string>();
+  /** `trigger twoPhase`: the one-shot fault of the next issue transaction, and the transaction `inflight`/`unknown` left waiting. */
+  private readonly faults = new TwoPhaseFaults();
+  /** The `send` whose transaction is parked, answered by `settle`. */
+  private pendingSend: Promise<SendResult> | undefined;
   private pinned: PinnedDocuments | undefined;
   readonly attested: boolean;
   readonly name: string;
@@ -256,7 +261,7 @@ export class TruststackersAdapter implements Adapter {
     const issue = this.options.issue === false ? [] : [createVrcIssueHandler({
       db: this.db,
       txManager: this.txManager,
-      participant: this.receive,
+      participant: new FaultableParticipant(this.receive, this.faults),
       verifier: this.verifier,
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     })];
@@ -353,7 +358,7 @@ export class TruststackersAdapter implements Adapter {
         ? [{ typeUri: WIDGET_TYPE, class: 'consequential' as const, validPayload: { subject: 'did:web:alice.example' } }]
         : mode === 'issue' ? [{ typeUri: ISSUE_TYPE, class: 'consequential' as const, validPayload: {} }] : [],
       cryptosuites: ['eddsa-jcs-2022'],
-      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.attested ? ['attested'] : [])],
+      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.attested ? ['attested'] : [])],
       pins: { framework: FRAMEWORK_VERSION, error: ERROR_SPEC_VERSION, binding: 'none' },
     };
   }
@@ -409,6 +414,18 @@ export class TruststackersAdapter implements Adapter {
       this.claimStoreUnreadable = args.claimStore === 'unreadable';
       return { documents: [] };
     }
+    if (action === 'twoPhase') {
+      this.faults.arm(parseTwoPhase(args));
+      return { documents: [] };
+    }
+    if (action === 'settle') {
+      if (args.outcome !== 'commit' && args.outcome !== 'abort') throw new Error('settle outcome must be commit or abort');
+      const pending = this.pendingSend;
+      if (pending === undefined || !this.faults.isParked) throw new Error('no transaction is waiting to be settled');
+      this.pendingSend = undefined;
+      this.faults.release(args.outcome === 'commit' ? 'yes' : 'no', args.outcome === 'abort' ? parseReason(args) : undefined);
+      return { documents: (await pending).replies };
+    }
     if (action === 'policy') {
       const p = args.propose;
       if (p !== 'accept' && p !== 'decline' && p !== 'hold') throw new Error('policy.propose must be accept, decline or hold');
@@ -429,6 +446,10 @@ export class TruststackersAdapter implements Adapter {
     await this.build(false);
   }
   async reset(): Promise<void> {
+    const waiting = this.pendingSend;
+    this.pendingSend = undefined;
+    this.faults.clear();
+    await waiting?.catch(() => undefined);
     const old = [this.dbPath, this.txPath];
     await this.closeDbs();
     this.counter = 0;
@@ -477,7 +498,17 @@ export class TruststackersAdapter implements Adapter {
     const ceremony = await this.ceremony.store.getProposal(String(q.id));
     if (ceremony !== null) return { value: ceremony.status === 'pending' ? 'accepted' : ceremony.status === 'crystallized' ? 'responded' : 'errored' };
     const claim = await this.guard.find(String(q.id));
-    if (claim !== null) return { value: claim.state === 'completed' ? 'responded' : 'accepted' };
+    if (claim !== null) {
+      if (claim.state !== 'completed') return { value: 'accepted' };
+      // A completed document ends responded, or errored when the retained answer is an error document.
+      let type: unknown;
+      try {
+        type = (JSON.parse(claim.response ?? 'null') as { type?: unknown } | null)?.type;
+      } catch {
+        type = undefined;
+      }
+      return { value: typeof type === 'string' && type.startsWith('https://trusttasks.org/spec/trust-task-error/') ? 'errored' : 'responded' };
+    }
     return { value: 'unknown' };
   }
 
@@ -513,6 +544,21 @@ export class TruststackersAdapter implements Adapter {
   }
 
   async send(params: SendParams): Promise<SendResult> {
+    const parked = this.faults.parkSignal();
+    const work = this.deliver(params);
+    const first = await Promise.race([work, parked]);
+    if (first === 'parked') {
+      // The transaction is prepared and waiting (`twoPhase inflight|unknown`): nothing comes back yet. `settle` collects the answer.
+      this.pendingSend = work;
+      work.catch(() => undefined);
+      return { replies: [], transport: { kind: 'none' }, quiescentAfterMs: 0 };
+    }
+    // `twoPhase commit` with `deliver: false`: the transaction committed and the reply was lost on the way back.
+    if (this.faults.takeDroppedReply()) return { replies: [], transport: { kind: 'none' }, quiescentAfterMs: 0 };
+    return first;
+  }
+
+  private async deliver(params: SendParams): Promise<SendResult> {
     const result = await this.pipeline.process({ raw: params.bytes, sender: params.from.kind === 'none' ? undefined : params.from.vid });
     const replies = result.document === undefined ? [] : [JSON.stringify(result.document)];
     return { replies, transport: { status: result.status, kind: replies.length === 0 ? ('none' as const) : ('document' as const) }, quiescentAfterMs: 0 };

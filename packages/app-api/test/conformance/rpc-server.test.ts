@@ -118,7 +118,7 @@ describe('capabilities and provision', () => {
     for (const t of ['vrc/relationships/propose/0.1', 'vrc/relationships/issue/0.1', 'vrc/relationships/witness-share/0.1']) {
       assert.ok(caps.supportedTypes.includes(`https://trusttasks.org/spec/${t}`), t);
     }
-    for (const o of ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'proofVerify', 'attested']) assert.ok(caps.optional.includes(o), o);
+    for (const o of ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', 'proofVerify', 'attested']) assert.ok(caps.optional.includes(o), o);
     for (const o of ['control', 'idempotencyKey']) assert.ok(!caps.optional.includes(o), `${o} is not claimed`);
     assert.equal(caps.carriers[0].typeUri, WIDGET_TYPE);
     const p = await s.call('provision', { roles: ['iut'] });
