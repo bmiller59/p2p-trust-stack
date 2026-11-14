@@ -39,6 +39,7 @@ export const DECISION_NO_PENDING = 'task-consent/decision:noPending';
 export const DECISION_CHALLENGE_MISMATCH = 'task-consent/decision:challengeMismatch';
 export const DECISION_ACTION_MISMATCH = 'task-consent/decision:actionMismatch';
 export const DECISION_EVIDENCE_INVALID = 'task-consent/decision:evidenceInvalid';
+export const DECISION_NOT_AN_APPROVER = 'task-consent/decision:notAnApprover';
 
 const DIGEST = /^(z[1-9A-HJ-NP-Za-km-z]+|u[A-Za-z0-9_-]+)$/;
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -80,7 +81,30 @@ export interface DecisionPayload {
   hasEvidence: boolean;
 }
 
-/** The payload rules the small schema reader does not enforce (lengths, enum, digest form). Throws `malformedRequest`. */
+/**
+ * The `Evidence` tagged union of decision 0.2 (the small schema reader does not enforce `oneOf`): `webauthn` carries exactly
+ * `kind` and an `assertion` (an AuthenticatorAssertionResponse with id, rawId, type and a response of clientDataJSON,
+ * authenticatorData and signature); `approverSigned` carries exactly `kind` and an object `statement`. Anything else, `didSigned`
+ * included, is `malformedRequest`; this checks the shape only, never the cryptography.
+ */
+function checkEvidenceShape(evidence: unknown): void {
+  if (!isObj(evidence)) throw malformed('evidence');
+  const keys = Object.keys(evidence).sort().join(',');
+  if (evidence.kind === 'webauthn') {
+    const a = evidence.assertion;
+    const r = isObj(a) ? a.response : undefined;
+    const text = (v: unknown): boolean => typeof v === 'string' && v !== '';
+    if (keys !== 'assertion,kind' || !isObj(a) || !text(a.id) || !text(a.rawId) || a.type !== 'public-key' || !isObj(r) || !text(r.clientDataJSON) || !text(r.authenticatorData) || !text(r.signature)) throw malformed('evidence.webauthn');
+    return;
+  }
+  if (evidence.kind === 'approverSigned') {
+    if (keys !== 'kind,statement' || !isObj(evidence.statement)) throw malformed('evidence.approverSigned');
+    return;
+  }
+  throw malformed('evidence.kind');
+}
+
+/** The payload rules the small schema reader does not enforce (lengths, enum, digest form, evidence union). Throws `malformedRequest`. */
 export function parseDecisionPayload(payload: unknown): DecisionPayload {
   if (!isObj(payload)) throw malformed('the decision payload is not an object');
   const { challenge, payloadDigest, decision, reason, actionId, evidence } = payload;
@@ -89,7 +113,7 @@ export function parseDecisionPayload(payload: unknown): DecisionPayload {
   if (decision !== 'approve' && decision !== 'deny') throw malformed('decision');
   if (reason !== undefined && (typeof reason !== 'string' || reason.length > 500)) throw malformed('reason');
   if (actionId !== undefined && (typeof actionId !== 'string' || actionId.length < 1 || actionId.length > 128)) throw malformed('actionId');
-  if (evidence !== undefined && !isObj(evidence)) throw malformed('evidence');
+  if (evidence !== undefined) checkEvidenceShape(evidence);
   return {
     challenge,
     payloadDigest,

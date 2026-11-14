@@ -109,12 +109,14 @@ describe('task-consent: derived challenge and digest', () => {
 
 describe('task-consent: payload rules the small schema reader does not enforce', () => {
   const good = { challenge: 'c'.repeat(16), payloadDigest: DIGEST, decision: 'approve' };
+  const assertion = { id: 'a', rawId: 'a', type: 'public-key', response: { clientDataJSON: 'e30', authenticatorData: 'AA', signature: 'AA' } };
   it('accepts a minimal decision and reports evidence without trusting it', () => {
     assert.deepEqual(parseDecisionPayload(good), { ...good, hasEvidence: false });
-    assert.equal(parseDecisionPayload({ ...good, evidence: { kind: 'webauthn', assertion: {} } }).hasEvidence, true);
+    assert.equal(parseDecisionPayload({ ...good, evidence: { kind: 'webauthn', assertion } }).hasEvidence, true);
+    assert.equal(parseDecisionPayload({ ...good, evidence: { kind: 'approverSigned', statement: {} } }).hasEvidence, true);
   });
   it('refuses a short challenge, a bad digest, a bad decision, an oversize reason and an empty actionId', () => {
-    for (const bad of [{ challenge: 'short' }, { payloadDigest: 'abc' }, { payloadDigest: 'z0OIl0OIl0OIl0OIl0' }, { decision: 'maybe' }, { reason: 'x'.repeat(501) }, { actionId: '' }, { evidence: 'x' }]) {
+    for (const bad of [{ challenge: 'short' }, { payloadDigest: 'abc' }, { payloadDigest: 'z0OIl0OIl0OIl0OIl0' }, { decision: 'maybe' }, { reason: 'x'.repeat(501) }, { actionId: '' }, { evidence: 'x' }, { evidence: { kind: 'sms', code: '1' } }, { evidence: { kind: 'didSigned', statement: {} } }, { evidence: { kind: 'webauthn' } }, { evidence: { kind: 'webauthn', assertion: { ...assertion, response: { clientDataJSON: 'e30', authenticatorData: 'AA' } } } }, { evidence: { kind: 'approverSigned', statement: 'eyJ0' } }, { evidence: { kind: 'webauthn', assertion, statement: {} } }]) {
       assert.throws(() => parseDecisionPayload({ ...good, ...bad }), (e: { code?: string }) => e.code === 'malformedRequest');
     }
   });
