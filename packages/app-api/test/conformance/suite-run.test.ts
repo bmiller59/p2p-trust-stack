@@ -62,7 +62,7 @@ describe('the suite against the truststackers adapter (did:key agent: the harnes
       assert.ok(ids(tier2, 'PASS').includes(id), `${id} passes at tier 2`);
     }
     // The ceremony documents (CER, 2PC-003..005, TIME-103) are measured: hold, quorum, refusal, indeterminate and settle, retention.
-    for (const id of ['CER-001', 'CER-003', 'CER-005', 'CER-006', 'CER-008', 'CER-009', 'CER-010', 'CER-011', 'CER-012', 'CER-013', '2PC-003', '2PC-004', '2PC-005', 'TIME-103']) {
+    for (const id of ['CER-001', 'CER-003', 'CER-005', 'CER-006', 'CER-008', 'CER-009', 'CER-010', 'CER-011', 'CER-012', 'CER-013', 'CER-014', 'CER-015', 'CER-016', '2PC-003', '2PC-004', '2PC-005', 'TIME-103']) {
       assert.ok(ids(tier2, 'PASS').includes(id) || ids(tier2, 'CLARIFY').includes(id), `${id} is measured at tier 2`);
     }
     // The only skips are things the adapter does not claim (see ALLOWED_SKIP).

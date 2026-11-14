@@ -20,6 +20,10 @@ export interface CeremonyDecl {
   approveType: string;
   resetType: string;
   statusType?: string;
+  /** Request payload template of the status task; declared together with `statusType`. */
+  statusPayload?: Record<string, unknown>;
+  /** Whether a begin records the proposer's approval (suite docs/04 section 11.4). Required. */
+  proposerApproves: boolean;
   beginPayload: Record<string, unknown>;
   approvePayload: Record<string, unknown>;
   resetPayload: Record<string, unknown>;

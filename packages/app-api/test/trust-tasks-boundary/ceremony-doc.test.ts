@@ -431,6 +431,17 @@ describe('ceremony-doc: proposer approval, effect outcome unknown, approval wind
     assert.equal(reasonOf(await send(a, cosign(a, X, t))), 'deadlineLapsed');
   });
 
+  it('declares the native quorum model and the status task: proposerApproves false by default, true only when the option counts the begin', async () => {
+    const native = await new VrcBoundaryAdapter({ attested: true }).init();
+    const counting = await new VrcBoundaryAdapter({ attested: true, ceremonyProposerApproves: true }).init();
+    adapters.push(native, counting);
+    const n = (await native.capabilities()).ceremony!;
+    assert.equal(n.proposerApproves, false);
+    assert.equal(n.statusType, CEREMONY_STATUS_WIRE_TYPE);
+    assert.deepEqual(n.statusPayload, {});
+    assert.equal((await counting.capabilities()).ceremony!.proposerApproves, true);
+  });
+
   it('observe retained: the request as delivered and the reply as sent, empty when there is none', async () => {
     useClock(START);
     const a = await new VrcBoundaryAdapter({ attested: true }).init();

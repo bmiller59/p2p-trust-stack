@@ -82,7 +82,7 @@ export interface TruststackersAdapterOptions {
    * establishment (`createVtc`, fan-out) belongs to the hosting server, not to this agent.
    */
   ceremony?: boolean;
-  /** Count the begin as the proposer's approval (the suite's ceremony model, docs/04 section 11.4). Default false: every named admin co-signs. */
+  /** Count the begin as the proposer's approval (a measuring flag, not the stack's model). Default false: begin records no approval, every named admin co-signs; the capability declaration `proposerApproves` follows this option. */
   ceremonyProposerApproves?: boolean;
   /** Ceremony deadline in milliseconds from the begin document (default 7 days). */
   ceremonyTtlMs?: number;
@@ -428,7 +428,7 @@ export class TruststackersAdapter implements Adapter {
       optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', ...(this.options.ceremony === false ? [] : ['ceremony', 'ceremony.status', 'trigger.ceremonyDeadline', 'trigger.ceremonyEffect', 'observe.retained']), 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.attested ? ['attested'] : [])],
       ...(this.options.ceremony === false ? {} : {
         ceremony: {
-          beginType: CEREMONY_PROPOSE_WIRE_TYPE, approveType: CEREMONY_CO_SIGN_WIRE_TYPE, resetType: CEREMONY_RESET_WIRE_TYPE, statusType: CEREMONY_STATUS_WIRE_TYPE,
+          beginType: CEREMONY_PROPOSE_WIRE_TYPE, approveType: CEREMONY_CO_SIGN_WIRE_TYPE, resetType: CEREMONY_RESET_WIRE_TYPE, statusType: CEREMONY_STATUS_WIRE_TYPE, statusPayload: {}, proposerApproves: this.options.ceremonyProposerApproves === true,
           beginPayload: { name: 'fixture-community', kind: 'vtc', threshold: 2, adminDids: ['$A', '$X'] }, approvePayload: {}, resetPayload: {},
         },
       }),
