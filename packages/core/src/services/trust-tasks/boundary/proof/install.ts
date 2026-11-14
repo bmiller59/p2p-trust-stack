@@ -12,7 +12,7 @@ import { DidResolver } from '../../../../did/did-resolver.js';
 import type { DidResolutionService } from '../../../../did/did-resolution-service.js';
 import type { RotationLogSource } from '../../../../did/rotation-log-source.js';
 import type { DidDocument } from '../../../../did/types.js';
-import { BOUNDARY_KEY_FRAGMENT, setBoundarySigner } from './signer.js';
+import { BOUNDARY_KEY_FRAGMENT, DEDICATED_BOUNDARY_KEY_FRAGMENT, createCutoverBoundarySigner, setBoundarySigner } from './signer.js';
 import type { BoundarySigner } from './signer.js';
 import {
   BoundedRotationLogSource, CompositeKeyResolver, DidKeyResolver, DidResolverKeyResolver, ResolutionRateLimiter, SourcedKeyResolver,
@@ -27,11 +27,18 @@ export interface BoundarySignerInstall {
   keys: () => { publicKey: Uint8Array; secretKey: Uint8Array };
   /** The identifier's own DID document, to check `#key-1` against the key before installing. */
   didDocument: DidDocument | undefined;
+  /**
+   * The dedicated boundary key (gate G2). Absent (the default): the signer is `#key-1` only. Present:
+   * the signer is `#key-1` for proofs created before `cutoverAtMs` and `#key-boundary` from it on,
+   * but ONLY when the document publishes `#key-boundary` equal to the key held AND lists it under
+   * `authentication`; otherwise the signer stays `#key-1` and the reason is returned.
+   */
+  dedicated?: { keys: () => { publicKey: Uint8Array; secretKey: Uint8Array }; cutoverAtMs: number };
 }
 
 /** The raw Ed25519 key published at `#key-1`, or null. */
-function key1Of(doc: DidDocument | undefined): Uint8Array | null {
-  const vm = doc?.verificationMethod?.find((m) => m.id === `#${BOUNDARY_KEY_FRAGMENT}` || m.id.endsWith(`#${BOUNDARY_KEY_FRAGMENT}`));
+function key1Of(doc: DidDocument | undefined, fragment: string = BOUNDARY_KEY_FRAGMENT): Uint8Array | null {
+  const vm = doc?.verificationMethod?.find((m) => m.id === `#${fragment}` || m.id.endsWith(`#${fragment}`));
   if (vm === undefined) return null;
   try {
     const raw = base58btc.decode(vm.publicKeyMultibase);
@@ -46,7 +53,7 @@ function key1Of(doc: DidDocument | undefined): Uint8Array | null {
  * the identifier's document publishes at `#key-1` (a signer whose key peers cannot find would sign
  * documents nobody can verify). Returns whether it installed and, if not, why.
  */
-export function installBoundarySigner(options: BoundarySignerInstall): { installed: boolean; reason?: string } {
+export function installBoundarySigner(options: BoundarySignerInstall): { installed: boolean; reason?: string; key?: 'key-1' | 'dedicated' } {
   const published = key1Of(options.didDocument);
   if (published === null) return { installed: false, reason: 'the identifier document publishes no Ed25519 #key-1' };
   const held = options.keys().publicKey;
@@ -54,6 +61,23 @@ export function installBoundarySigner(options: BoundarySignerInstall): { install
     return { installed: false, reason: 'the signing key held is not the key published at #key-1' };
   }
   const { did, keys } = options;
+  let dedicatedNote: string | undefined;
+  if (options.dedicated !== undefined) {
+    const { dedicated } = options;
+    const publishedDedicated = key1Of(options.didDocument, DEDICATED_BOUNDARY_KEY_FRAGMENT);
+    const listed = options.didDocument?.authentication?.some((a) => a === `#${DEDICATED_BOUNDARY_KEY_FRAGMENT}` || a.endsWith(`#${DEDICATED_BOUNDARY_KEY_FRAGMENT}`)) === true;
+    if (publishedDedicated === null || !listed) dedicatedNote = 'the identifier document does not publish #key-boundary under authentication; staying on #key-1';
+    else if (Buffer.compare(Buffer.from(publishedDedicated), Buffer.from(dedicated.keys().publicKey)) !== 0) dedicatedNote = 'the dedicated key held is not the key published at #key-boundary; staying on #key-1';
+    else {
+      setBoundarySigner(createCutoverBoundarySigner({
+        did,
+        legacySecretKey: () => keys().secretKey,
+        dedicatedSecretKey: () => dedicated.keys().secretKey,
+        cutoverAtMs: dedicated.cutoverAtMs,
+      }));
+      return { installed: true, key: 'dedicated' };
+    }
+  }
   const signer: BoundarySigner = {
     did,
     verificationMethod: `${did}#${BOUNDARY_KEY_FRAGMENT}`,
@@ -63,7 +87,7 @@ export function installBoundarySigner(options: BoundarySignerInstall): { install
     sign: (message) => ed25519.sign(message, keys().secretKey),
   };
   setBoundarySigner(signer);
-  return { installed: true };
+  return dedicatedNote === undefined ? { installed: true } : { installed: true, key: 'key-1', reason: dedicatedNote };
 }
 
 export interface VerifierResolverOptions {

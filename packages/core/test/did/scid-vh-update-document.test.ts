@@ -18,7 +18,6 @@ import { generateEd25519KeyPair, generateEd25519KeyPairFromSeed } from '../../sr
 import { extractMlDsa65PublicKey, extractHybridKemPublicKey } from '../../src/relationship/key-extract.js';
 import { mlDsa65Verify } from '../../src/crypto/pqc.js';
 import { BOUNDARY_VM_ID, carryForwardViolations } from '../../src/did/document-carry-forward.js';
-import type { RotationLogEntry } from '../../src/did/rotation-types.js';
 import type { DidDocument } from '../../src/did/types.js';
 
 const SEED = new Uint8Array(32).fill(0x41);

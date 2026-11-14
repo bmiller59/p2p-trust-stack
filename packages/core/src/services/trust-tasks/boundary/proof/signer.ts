@@ -26,10 +26,18 @@ export interface BoundarySigner {
   readonly publicKey: Uint8Array;
   /** Signs the 64 bytes of `hashData`. */
   sign(message: Uint8Array): Uint8Array;
+  /**
+   * Optional: the signer to use for a proof whose `created` is `createdMs`. A signer with a cutover
+   * (`createCutoverBoundarySigner`) answers the legacy `#key-1` signer before the cutover instant
+   * and the dedicated-key signer from it on. `signDocument` consults it; absent means "this signer".
+   */
+  at?(createdMs: number): BoundarySigner;
 }
 
-/** The fragment used until a dedicated boundary key exists (gate G2): the only place it is named. */
+/** The fragment used until the dedicated boundary key is switched on (gate G2). */
 export const BOUNDARY_KEY_FRAGMENT = 'key-1';
+/** The dedicated boundary-signing method's fragment (`BOUNDARY_VM_FRAGMENT` in the DID layer). */
+export const DEDICATED_BOUNDARY_KEY_FRAGMENT = 'key-boundary';
 
 /** A signer over an Ed25519 secret key (32-byte seed) for `did`, signing as `did#<fragment>`. */
 export function createEd25519BoundarySigner(options: { did: string; secretKey: Uint8Array; fragment?: string; verificationMethod?: string }): BoundarySigner {
@@ -40,6 +48,31 @@ export function createEd25519BoundarySigner(options: { did: string; secretKey: U
     verificationMethod: options.verificationMethod ?? `${options.did}#${options.fragment ?? BOUNDARY_KEY_FRAGMENT}`,
     publicKey,
     sign: (message) => ed25519.sign(message, secretKey),
+  };
+}
+
+/**
+ * A signer that signs as `did#key-1` for proofs created BEFORE `cutoverAtMs` and as
+ * `did#key-boundary` (the dedicated key) from it on. The switch is by the proof's `created`, the
+ * same instant a time-pinned verifier judges, so a document and the key set it is checked against
+ * always agree on which side of the cutover it falls.
+ */
+export function createCutoverBoundarySigner(options: {
+  did: string;
+  legacySecretKey: () => Uint8Array;
+  dedicatedSecretKey: () => Uint8Array;
+  cutoverAtMs: number;
+}): BoundarySigner {
+  const legacy = (): BoundarySigner => createEd25519BoundarySigner({ did: options.did, secretKey: options.legacySecretKey(), fragment: BOUNDARY_KEY_FRAGMENT });
+  const dedicated = (): BoundarySigner => createEd25519BoundarySigner({ did: options.did, secretKey: options.dedicatedSecretKey(), fragment: DEDICATED_BOUNDARY_KEY_FRAGMENT });
+  return {
+    did: options.did,
+    verificationMethod: `${options.did}#${BOUNDARY_KEY_FRAGMENT}`,
+    get publicKey() {
+      return legacy().publicKey;
+    },
+    sign: (message) => legacy().sign(message),
+    at: (createdMs) => (createdMs >= options.cutoverAtMs ? dedicated() : legacy()),
   };
 }
 
@@ -71,7 +104,8 @@ export interface SignOptions {
  * own `@context`, if any, is copied into the proof configuration. A document signed here has its
  * `proof` member replaced, never merged.
  */
-export function signDocument<T extends Record<string, unknown>>(doc: T, signer: BoundarySigner, options: SignOptions): T & { proof: Record<string, unknown> } {
+export function signDocument<T extends Record<string, unknown>>(doc: T, signerOrCutover: BoundarySigner, options: SignOptions): T & { proof: Record<string, unknown> } {
+  const signer = signerOrCutover.at?.(options.created) ?? signerOrCutover;
   const { proof: _dropped, ...body } = doc as Record<string, unknown>;
   if (body.issuer !== signer.did && options.allowIssuerMismatch !== true) {
     throw new Error('the document issuer is not the signing identifier');
