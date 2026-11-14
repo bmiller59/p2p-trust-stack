@@ -9,6 +9,7 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -72,6 +73,7 @@
         "group": "AUTHZ",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -88,6 +90,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -95,6 +98,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -102,6 +106,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -109,6 +114,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -116,6 +122,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -123,6 +130,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -130,6 +138,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -137,6 +146,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -144,6 +154,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -151,6 +162,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -158,6 +170,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -165,6 +178,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -172,6 +186,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -179,6 +194,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -186,6 +202,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -193,6 +210,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -200,6 +218,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -207,6 +226,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -221,6 +241,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -228,6 +249,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -235,6 +257,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -242,6 +265,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -249,6 +273,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -265,6 +290,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -273,6 +299,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -281,6 +308,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -301,6 +329,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -378,6 +407,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -393,6 +423,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -400,6 +431,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -407,6 +439,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -414,6 +447,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -422,6 +456,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -505,6 +540,7 @@
         "group": "ID",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -513,6 +549,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -520,6 +557,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -820,6 +858,7 @@
         "group": "PRF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -828,6 +867,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -835,6 +875,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -849,6 +890,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -863,6 +905,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -870,6 +913,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -884,6 +928,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -898,6 +943,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -919,6 +965,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -926,6 +973,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -940,6 +988,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -947,6 +996,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -954,6 +1004,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1006,10 +1057,26 @@
         "status": "PASS"
       },
       {
+        "id": "TIME-104",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-105",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "TIME-103",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1017,6 +1084,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1024,6 +1092,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1031,6 +1100,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1038,6 +1108,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1045,6 +1116,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1052,6 +1124,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1060,6 +1133,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1068,6 +1142,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1076,6 +1151,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1084,6 +1160,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1092,6 +1169,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1100,6 +1178,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1108,6 +1187,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1116,6 +1196,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1124,6 +1205,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1132,6 +1214,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1140,6 +1223,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1148,6 +1232,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1156,6 +1241,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1181,6 +1267,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1188,6 +1275,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1195,6 +1283,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1202,6 +1291,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1209,6 +1299,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1216,6 +1307,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1223,6 +1315,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1230,6 +1323,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1237,6 +1331,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1244,6 +1339,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1258,6 +1354,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1265,6 +1362,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1289,6 +1387,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -1304,6 +1403,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1311,6 +1411,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1318,6 +1419,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1325,6 +1427,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1332,6 +1435,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1339,6 +1443,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1346,6 +1451,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1362,6 +1468,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1369,6 +1476,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1385,6 +1493,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1399,6 +1508,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1413,6 +1523,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional ceremony.status"
       },
@@ -1421,6 +1532,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1437,6 +1549,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1444,6 +1557,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1467,6 +1581,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1483,6 +1598,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1510,6 +1626,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1533,6 +1650,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1540,6 +1658,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1575,6 +1694,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1589,6 +1709,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1603,6 +1724,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -1619,6 +1741,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -1683,6 +1806,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1690,6 +1814,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1697,6 +1822,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1734,6 +1860,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1741,6 +1868,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1748,6 +1876,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1755,6 +1884,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1762,6 +1892,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1769,6 +1900,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1776,6 +1908,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1783,6 +1916,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1790,6 +1924,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1797,6 +1932,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1804,6 +1940,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -1812,6 +1949,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -1820,6 +1958,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -1859,7 +1998,15 @@
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
       }
-    ]
+    ],
+    "window": {
+      "maxAgeSeconds": 300,
+      "clockSkewSeconds": 60,
+      "expiryHorizonSeconds": 2592000
+    },
+    "windowDifference": [],
+    "clockMode": "set",
+    "salt": "2679ae15a43a"
   },
   {
     "impl": "truststackers-agent-didkey-attested",
@@ -1871,6 +2018,7 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1934,6 +2082,7 @@
         "group": "AUTHZ",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1950,6 +2099,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1957,6 +2107,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1964,6 +2115,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1971,6 +2123,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1978,6 +2131,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1985,6 +2139,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1992,6 +2147,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -1999,6 +2155,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2006,6 +2163,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2013,6 +2171,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2020,6 +2179,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2027,6 +2187,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2034,6 +2195,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2041,6 +2203,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2048,6 +2211,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2055,6 +2219,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2062,6 +2227,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2069,6 +2235,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2083,6 +2250,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2090,6 +2258,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2097,6 +2266,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2104,6 +2274,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2111,6 +2282,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2127,6 +2299,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2134,6 +2307,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2141,6 +2315,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2161,6 +2336,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2238,6 +2414,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2252,6 +2429,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2259,6 +2437,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2266,6 +2445,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2273,6 +2453,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2280,6 +2461,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2361,6 +2543,7 @@
         "group": "ID",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2368,6 +2551,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2375,6 +2559,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2673,6 +2858,7 @@
         "group": "PRF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2681,6 +2867,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2688,6 +2875,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2702,6 +2890,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2716,6 +2905,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2723,6 +2913,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2737,6 +2928,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2751,6 +2943,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2772,6 +2965,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2779,6 +2973,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2793,6 +2988,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2800,6 +2996,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2807,6 +3004,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2859,10 +3057,26 @@
         "status": "PASS"
       },
       {
+        "id": "TIME-104",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-105",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "TIME-103",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2870,6 +3084,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2877,6 +3092,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2884,6 +3100,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2891,6 +3108,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2898,6 +3116,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -2905,6 +3124,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2913,6 +3133,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2921,6 +3142,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2929,6 +3151,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2937,6 +3160,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2945,6 +3169,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2953,6 +3178,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2961,6 +3187,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2969,6 +3196,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2977,6 +3205,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2985,6 +3214,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -2993,6 +3223,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -3001,6 +3232,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -3009,6 +3241,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3034,6 +3267,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3041,6 +3275,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3048,6 +3283,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3055,6 +3291,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3062,6 +3299,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3069,6 +3307,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3076,6 +3315,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3083,6 +3323,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3090,6 +3331,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3097,6 +3339,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3111,6 +3354,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3118,6 +3362,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3142,6 +3387,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3156,6 +3402,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3163,6 +3410,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3170,6 +3418,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3177,6 +3426,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3184,6 +3434,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3191,6 +3442,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3198,6 +3450,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3214,6 +3467,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3221,6 +3475,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3237,6 +3492,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3251,6 +3507,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3265,6 +3522,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional ceremony.status"
       },
@@ -3273,6 +3531,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3289,6 +3548,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3296,6 +3556,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3319,6 +3580,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3335,6 +3597,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3362,6 +3625,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3385,6 +3649,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3392,6 +3657,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3427,6 +3693,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3441,6 +3708,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3455,6 +3723,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -3470,6 +3739,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3532,6 +3802,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3539,6 +3810,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3546,6 +3818,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3583,6 +3856,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3590,6 +3864,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3597,6 +3872,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3604,6 +3880,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3611,6 +3888,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3618,6 +3896,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3625,6 +3904,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3632,6 +3912,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3639,6 +3920,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3646,6 +3928,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3653,6 +3936,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3660,6 +3944,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3667,6 +3952,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3705,7 +3991,15 @@
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
       }
-    ]
+    ],
+    "window": {
+      "maxAgeSeconds": 300,
+      "clockSkewSeconds": 60,
+      "expiryHorizonSeconds": 2592000
+    },
+    "windowDifference": [],
+    "clockMode": "set",
+    "salt": "f323794b5bc4"
   },
   {
     "impl": "truststackers-agent-didkey-tier1",
@@ -3717,6 +4011,7 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3780,6 +4075,7 @@
         "group": "AUTHZ",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3796,6 +4092,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3803,6 +4100,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3810,6 +4108,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3817,6 +4116,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3824,6 +4124,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3831,6 +4132,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3838,6 +4140,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3845,6 +4148,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3852,6 +4156,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3859,6 +4164,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3866,6 +4172,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3873,6 +4180,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3880,6 +4188,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3887,6 +4196,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3894,6 +4204,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3901,6 +4212,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3908,6 +4220,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3915,6 +4228,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3929,6 +4243,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3936,6 +4251,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3943,6 +4259,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3950,6 +4267,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3957,6 +4275,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -3973,6 +4292,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -3981,6 +4301,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -3989,6 +4310,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4009,6 +4331,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4086,6 +4409,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4101,6 +4425,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4108,6 +4433,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4115,6 +4441,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4122,6 +4449,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -4130,6 +4458,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -4213,6 +4542,7 @@
         "group": "ID",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -4221,6 +4551,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4228,6 +4559,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4528,6 +4860,7 @@
         "group": "PRF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4535,6 +4868,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4542,6 +4876,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4556,6 +4891,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4570,6 +4906,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4577,6 +4914,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4591,6 +4929,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4605,6 +4944,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4626,6 +4966,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4633,6 +4974,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4647,6 +4989,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4654,6 +4997,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4661,6 +5005,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4713,10 +5058,26 @@
         "status": "PASS"
       },
       {
+        "id": "TIME-104",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-105",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "TIME-103",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4724,6 +5085,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4731,6 +5093,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4738,6 +5101,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4745,6 +5109,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4752,6 +5117,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4759,6 +5125,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4766,6 +5133,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4773,6 +5141,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4780,6 +5149,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4787,6 +5157,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4794,6 +5165,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4801,6 +5173,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4808,6 +5181,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4815,6 +5189,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4822,6 +5197,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4829,6 +5205,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4836,6 +5213,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4843,6 +5221,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4850,6 +5229,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4875,6 +5255,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4882,6 +5263,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4889,6 +5271,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4896,6 +5279,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4903,6 +5287,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4910,6 +5295,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4917,6 +5303,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4924,6 +5311,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4931,6 +5319,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4938,6 +5327,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4952,6 +5342,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4959,6 +5350,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -4975,13 +5367,16 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "The proof is RECOMMENDED on the request, but the specification does not say a responder must answer an unsigned query: a responder may refuse it by its own permission policy (VTI answers discovery only to signed callers). Not gating; the Tier 2 profile signs. (observed: pass)",
+        "failures": []
       },
       {
         "id": "DIS-016",
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -4997,6 +5392,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5004,6 +5400,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5011,6 +5408,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5018,6 +5416,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5025,6 +5424,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5032,6 +5432,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5039,6 +5440,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5055,6 +5457,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5062,6 +5465,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5078,6 +5482,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5092,6 +5497,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5106,6 +5512,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional ceremony.status"
       },
@@ -5114,6 +5521,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5130,6 +5538,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5137,6 +5546,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5160,6 +5570,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5176,6 +5587,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5203,6 +5615,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5226,6 +5639,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5233,6 +5647,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5268,6 +5683,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5282,6 +5698,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5296,6 +5713,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5311,6 +5729,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -5375,6 +5794,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5382,6 +5802,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5389,6 +5810,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5426,6 +5848,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5433,6 +5856,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5440,6 +5864,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5447,6 +5872,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5454,6 +5880,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5461,6 +5888,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5468,6 +5896,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5475,6 +5904,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5482,6 +5912,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5489,6 +5920,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5496,6 +5928,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -5504,6 +5937,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -5512,6 +5946,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -5551,7 +5986,15 @@
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
       }
-    ]
+    ],
+    "window": {
+      "maxAgeSeconds": 300,
+      "clockSkewSeconds": 60,
+      "expiryHorizonSeconds": 2592000
+    },
+    "windowDifference": [],
+    "clockMode": "set",
+    "salt": "6e000db16934"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -5563,6 +6006,7 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5626,6 +6070,7 @@
         "group": "AUTHZ",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5642,6 +6087,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5649,6 +6095,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5656,6 +6103,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5663,6 +6111,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5670,6 +6119,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5677,6 +6127,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5684,6 +6135,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5691,6 +6143,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5698,6 +6151,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5705,6 +6159,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5712,6 +6167,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5719,6 +6175,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5726,6 +6183,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5733,6 +6191,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5740,6 +6199,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5747,6 +6207,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5754,6 +6215,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5761,6 +6223,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5775,6 +6238,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5782,6 +6246,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5789,6 +6254,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5796,6 +6262,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5803,6 +6270,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5819,6 +6287,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -5827,6 +6296,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -5835,6 +6305,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5855,6 +6326,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5932,6 +6404,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5947,6 +6420,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5954,6 +6428,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5961,6 +6436,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -5968,6 +6444,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -5976,6 +6453,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -6059,6 +6537,7 @@
         "group": "ID",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -6067,6 +6546,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6074,6 +6554,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6374,6 +6855,7 @@
         "group": "PRF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6382,6 +6864,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6389,6 +6872,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6403,6 +6887,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6417,6 +6902,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6424,6 +6910,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6438,6 +6925,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6452,6 +6940,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6473,6 +6962,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6480,6 +6970,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6494,6 +6985,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6501,6 +6993,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6508,6 +7001,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6560,10 +7054,26 @@
         "status": "PASS"
       },
       {
+        "id": "TIME-104",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-105",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "TIME-103",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6571,6 +7081,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6578,6 +7089,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6585,6 +7097,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6592,6 +7105,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6599,6 +7113,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6606,6 +7121,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6614,6 +7130,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6622,6 +7139,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6630,6 +7148,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6638,6 +7157,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6646,6 +7166,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6654,6 +7175,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6662,6 +7184,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6670,6 +7193,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6678,6 +7202,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6686,6 +7211,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6694,6 +7220,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6702,6 +7229,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -6710,6 +7238,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6735,6 +7264,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6742,6 +7272,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6749,6 +7280,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6756,6 +7288,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6763,6 +7296,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6770,6 +7304,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6777,6 +7312,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6784,6 +7320,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6791,6 +7328,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6798,6 +7336,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6812,6 +7351,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6819,6 +7359,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6843,6 +7384,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -6858,6 +7400,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6865,6 +7408,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6872,6 +7416,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6879,6 +7424,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6886,6 +7432,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6893,6 +7440,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6900,6 +7448,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6916,6 +7465,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6923,6 +7473,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6939,6 +7490,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6953,6 +7505,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6967,6 +7520,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional ceremony.status"
       },
@@ -6975,6 +7529,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6991,6 +7546,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -6998,6 +7554,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7021,6 +7578,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7037,6 +7595,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7064,6 +7623,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7087,6 +7647,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7094,6 +7655,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7129,6 +7691,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7143,6 +7706,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7157,6 +7721,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
       },
@@ -7173,6 +7738,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -7237,6 +7803,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7244,6 +7811,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7251,6 +7819,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7288,6 +7857,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7295,6 +7865,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7302,6 +7873,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7309,6 +7881,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7316,6 +7889,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7323,6 +7897,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7330,6 +7905,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7337,6 +7913,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7344,6 +7921,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7351,6 +7929,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7358,6 +7937,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -7366,6 +7946,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -7374,6 +7955,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -7413,7 +7995,15 @@
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
       }
-    ]
+    ],
+    "window": {
+      "maxAgeSeconds": 300,
+      "clockSkewSeconds": 60,
+      "expiryHorizonSeconds": 2592000
+    },
+    "windowDifference": [],
+    "clockMode": "set",
+    "salt": "36a26bbecd39"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -7425,6 +8015,7 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7488,6 +8079,7 @@
         "group": "AUTHZ",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7504,6 +8096,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7511,6 +8104,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7518,6 +8112,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7525,6 +8120,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7532,6 +8128,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7539,6 +8136,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7546,6 +8144,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7553,6 +8152,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7560,6 +8160,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7567,6 +8168,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7574,6 +8176,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7581,6 +8184,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7588,6 +8192,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7595,6 +8200,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7602,6 +8208,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7609,6 +8216,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7616,6 +8224,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7623,6 +8232,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7637,6 +8247,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7644,6 +8255,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7651,6 +8263,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7658,6 +8271,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7665,6 +8279,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7681,6 +8296,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7688,6 +8304,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7695,6 +8312,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7715,6 +8333,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7792,6 +8411,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7806,6 +8426,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7813,6 +8434,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7820,6 +8442,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7827,6 +8450,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7834,6 +8458,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7915,6 +8540,7 @@
         "group": "ID",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7922,6 +8548,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -7929,6 +8556,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8227,6 +8855,7 @@
         "group": "PRF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8235,6 +8864,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8242,6 +8872,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8256,6 +8887,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8270,6 +8902,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8277,6 +8910,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8291,6 +8925,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8305,6 +8940,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8326,6 +8962,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8333,6 +8970,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8347,6 +8985,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8354,6 +8993,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8361,6 +9001,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8413,10 +9054,26 @@
         "status": "PASS"
       },
       {
+        "id": "TIME-104",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-105",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "TIME-103",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8424,6 +9081,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8431,6 +9089,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8438,6 +9097,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8445,6 +9105,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8452,6 +9113,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8459,6 +9121,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8467,6 +9130,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8475,6 +9139,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8483,6 +9148,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8491,6 +9157,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8499,6 +9166,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8507,6 +9175,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8515,6 +9184,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8523,6 +9193,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8531,6 +9202,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8539,6 +9211,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8547,6 +9220,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8555,6 +9229,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -8563,6 +9238,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8588,6 +9264,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8595,6 +9272,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8602,6 +9280,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8609,6 +9288,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8616,6 +9296,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8623,6 +9304,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8630,6 +9312,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8637,6 +9320,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8644,6 +9328,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8651,6 +9336,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8665,6 +9351,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8672,6 +9359,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8696,6 +9384,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8710,6 +9399,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8717,6 +9407,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8724,6 +9415,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8731,6 +9423,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8738,6 +9431,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8745,6 +9439,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8752,6 +9447,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8768,6 +9464,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8775,6 +9472,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8791,6 +9489,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8805,6 +9504,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8819,6 +9519,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional ceremony.status"
       },
@@ -8827,6 +9528,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8843,6 +9545,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8850,6 +9553,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8873,6 +9577,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8889,6 +9594,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8916,6 +9622,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8939,6 +9646,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8946,6 +9654,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8981,6 +9690,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -8995,6 +9705,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9009,6 +9720,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "only runs at tier 1"
       },
@@ -9024,6 +9736,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9086,6 +9799,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9093,6 +9807,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9100,6 +9815,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9137,6 +9853,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9144,6 +9861,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9151,6 +9869,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9158,6 +9877,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9165,6 +9885,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9172,6 +9893,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9179,6 +9901,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9186,6 +9909,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9193,6 +9917,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9200,6 +9925,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9207,6 +9933,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9214,6 +9941,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9221,6 +9949,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9259,7 +9988,15 @@
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
       }
-    ]
+    ],
+    "window": {
+      "maxAgeSeconds": 300,
+      "clockSkewSeconds": 60,
+      "expiryHorizonSeconds": 2592000
+    },
+    "windowDifference": [],
+    "clockMode": "set",
+    "salt": "007089b74185"
   },
   {
     "impl": "truststackers-agent-scidvh-tier1",
@@ -9271,6 +10008,7 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9334,6 +10072,7 @@
         "group": "AUTHZ",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9350,6 +10089,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9357,6 +10097,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9364,6 +10105,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9371,6 +10113,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9378,6 +10121,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9385,6 +10129,7 @@
         "group": "TD",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9392,6 +10137,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9399,6 +10145,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9406,6 +10153,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9413,6 +10161,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9420,6 +10169,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9427,6 +10177,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9434,6 +10185,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9441,6 +10193,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9448,6 +10201,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9455,6 +10209,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9462,6 +10217,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9469,6 +10225,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9483,6 +10240,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9490,6 +10248,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9497,6 +10256,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9504,6 +10264,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9511,6 +10272,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9527,6 +10289,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -9535,6 +10298,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -9543,6 +10307,7 @@
         "group": "WSH",
         "family": "vrc-witness-share",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9563,6 +10328,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9640,6 +10406,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9655,6 +10422,7 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9662,6 +10430,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9669,6 +10438,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9676,6 +10446,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -9684,6 +10455,7 @@
         "group": "RSP",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -9767,6 +10539,7 @@
         "group": "ID",
         "family": "framework",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -9775,6 +10548,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -9782,6 +10556,7 @@
         "group": "LIF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10082,6 +10857,7 @@
         "group": "PRF",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10089,6 +10865,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10096,6 +10873,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10110,6 +10888,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10124,6 +10903,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10131,6 +10911,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10145,6 +10926,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10159,6 +10941,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10180,6 +10963,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10187,6 +10971,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10201,6 +10986,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10208,6 +10994,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10215,6 +11002,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10267,10 +11055,26 @@
         "status": "PASS"
       },
       {
+        "id": "TIME-104",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-105",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "TIME-103",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10278,6 +11082,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10285,6 +11090,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10292,6 +11098,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10299,6 +11106,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10306,6 +11114,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10313,6 +11122,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10320,6 +11130,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10327,6 +11138,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10334,6 +11146,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10341,6 +11154,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10348,6 +11162,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10355,6 +11170,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10362,6 +11178,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10369,6 +11186,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10376,6 +11194,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10383,6 +11202,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10390,6 +11210,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10397,6 +11218,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10404,6 +11226,7 @@
         "group": "DUP",
         "family": "framework",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10429,6 +11252,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10436,6 +11260,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10443,6 +11268,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10450,6 +11276,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10457,6 +11284,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10464,6 +11292,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10471,6 +11300,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10478,6 +11308,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10485,6 +11316,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10492,6 +11324,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10506,6 +11339,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10513,6 +11347,7 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10529,13 +11364,16 @@
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "The proof is RECOMMENDED on the request, but the specification does not say a responder must answer an unsigned query: a responder may refuse it by its own permission policy (VTI answers discovery only to signed callers). Not gating; the Tier 2 profile signs. (observed: pass)",
+        "failures": []
       },
       {
         "id": "DIS-016",
         "group": "DIS",
         "family": "trust-task-discovery",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -10551,6 +11389,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10558,6 +11397,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10565,6 +11405,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10572,6 +11413,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10579,6 +11421,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10586,6 +11429,7 @@
         "group": "BND",
         "family": "https-binding",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10593,6 +11437,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10609,6 +11454,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10616,6 +11462,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10632,6 +11479,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10646,6 +11494,7 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10660,6 +11509,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "SKIP",
         "reason": "implementation declares optional ceremony.status"
       },
@@ -10668,6 +11518,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10684,6 +11535,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10691,6 +11543,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10714,6 +11567,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10730,6 +11584,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10757,6 +11612,7 @@
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10780,6 +11636,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10787,6 +11644,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10822,6 +11680,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10836,6 +11695,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10850,6 +11710,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10865,6 +11726,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -10929,6 +11791,7 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10936,6 +11799,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10943,6 +11807,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10980,6 +11845,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10987,6 +11853,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -10994,6 +11861,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -11001,6 +11869,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -11008,6 +11877,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -11015,6 +11885,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -11022,6 +11893,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -11029,6 +11901,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -11036,6 +11909,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -11043,6 +11917,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
+        "anchor": true,
         "status": "PASS"
       },
       {
@@ -11050,6 +11925,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -11058,6 +11934,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -11066,6 +11943,7 @@
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
+        "anchor": true,
         "status": "SKIP",
         "reason": "tier 2 not selected"
       },
@@ -11105,6 +11983,14 @@
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
       }
-    ]
+    ],
+    "window": {
+      "maxAgeSeconds": 300,
+      "clockSkewSeconds": 60,
+      "expiryHorizonSeconds": 2592000
+    },
+    "windowDifference": [],
+    "clockMode": "set",
+    "salt": "8a583ae120f7"
   }
 ]

@@ -12,6 +12,15 @@
   ],
   "rows": [
     {
+      "window": {
+        "maxAgeSeconds": 300,
+        "clockSkewSeconds": 60,
+        "expiryHorizonSeconds": 2592000
+      },
+      "windowDifference": [],
+      "windowSkipped": [],
+      "clockMode": "set",
+      "clockSkipped": [],
       "impl": "truststackers-agent-didkey",
       "tier": 2,
       "tiers": [
@@ -32,17 +41,29 @@
             "SKIP": 1,
             "KNOWN-FAIL": 0,
             "CLARIFY": 6
-          }
+          },
+          "anchors": {
+            "pass": 6,
+            "ran": 6,
+            "total": 7
+          },
+          "green": true
         },
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 117,
+            "PASS": 119,
             "FAIL": 0,
             "SKIP": 4,
             "KNOWN-FAIL": 0,
             "CLARIFY": 4
-          }
+          },
+          "anchors": {
+            "pass": 45,
+            "ran": 45,
+            "total": 45
+          },
+          "green": true
         },
         "https-binding": {
           "status": "PASS",
@@ -52,17 +73,29 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 0
-          }
+          },
+          "anchors": {
+            "pass": 6,
+            "ran": 6,
+            "total": 6
+          },
+          "green": true
         },
         "trust-task-discovery": {
           "status": "PASS",
           "counts": {
-            "PASS": 16,
+            "PASS": 15,
             "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 1
-          }
+            "CLARIFY": 2
+          },
+          "anchors": {
+            "pass": 13,
+            "ran": 13,
+            "total": 13
+          },
+          "green": true
         },
         "two-phase-commit": {
           "status": "PASS",
@@ -72,7 +105,13 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 2
-          }
+          },
+          "anchors": {
+            "pass": 5,
+            "ran": 5,
+            "total": 5
+          },
+          "green": true
         },
         "vrc-issue": {
           "status": "PASS",
@@ -82,7 +121,13 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 6
-          }
+          },
+          "anchors": {
+            "pass": 16,
+            "ran": 16,
+            "total": 16
+          },
+          "green": true
         },
         "vrc-propose": {
           "status": "PASS",
@@ -92,7 +137,13 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
-          }
+          },
+          "anchors": {
+            "pass": 7,
+            "ran": 7,
+            "total": 7
+          },
+          "green": true
         },
         "vrc-witness-share": {
           "status": "PASS",
@@ -102,12 +153,27 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 2
-          }
+          },
+          "anchors": {
+            "pass": 26,
+            "ran": 26,
+            "total": 26
+          },
+          "green": true
         }
       },
       "needsNonAttestedRun": []
     },
     {
+      "window": {
+        "maxAgeSeconds": 300,
+        "clockSkewSeconds": 60,
+        "expiryHorizonSeconds": 2592000
+      },
+      "windowDifference": [],
+      "windowSkipped": [],
+      "clockMode": "set",
+      "clockSkipped": [],
       "impl": "truststackers-agent-scidvh",
       "tier": 2,
       "tiers": [
@@ -128,17 +194,29 @@
             "SKIP": 1,
             "KNOWN-FAIL": 0,
             "CLARIFY": 6
-          }
+          },
+          "anchors": {
+            "pass": 6,
+            "ran": 6,
+            "total": 7
+          },
+          "green": true
         },
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 117,
+            "PASS": 119,
             "FAIL": 0,
             "SKIP": 4,
             "KNOWN-FAIL": 0,
             "CLARIFY": 4
-          }
+          },
+          "anchors": {
+            "pass": 45,
+            "ran": 45,
+            "total": 45
+          },
+          "green": true
         },
         "https-binding": {
           "status": "PASS",
@@ -148,17 +226,29 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 0
-          }
+          },
+          "anchors": {
+            "pass": 6,
+            "ran": 6,
+            "total": 6
+          },
+          "green": true
         },
         "trust-task-discovery": {
           "status": "PASS",
           "counts": {
-            "PASS": 16,
+            "PASS": 15,
             "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 1
-          }
+            "CLARIFY": 2
+          },
+          "anchors": {
+            "pass": 13,
+            "ran": 13,
+            "total": 13
+          },
+          "green": true
         },
         "two-phase-commit": {
           "status": "PASS",
@@ -168,7 +258,13 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 2
-          }
+          },
+          "anchors": {
+            "pass": 5,
+            "ran": 5,
+            "total": 5
+          },
+          "green": true
         },
         "vrc-issue": {
           "status": "PASS",
@@ -178,7 +274,13 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 6
-          }
+          },
+          "anchors": {
+            "pass": 16,
+            "ran": 16,
+            "total": 16
+          },
+          "green": true
         },
         "vrc-propose": {
           "status": "PASS",
@@ -188,7 +290,13 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
-          }
+          },
+          "anchors": {
+            "pass": 7,
+            "ran": 7,
+            "total": 7
+          },
+          "green": true
         },
         "vrc-witness-share": {
           "status": "PASS",
@@ -198,7 +306,13 @@
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 2
-          }
+          },
+          "anchors": {
+            "pass": 26,
+            "ran": 26,
+            "total": 26
+          },
+          "green": true
         }
       },
       "needsNonAttestedRun": []
