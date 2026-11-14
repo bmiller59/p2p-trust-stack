@@ -1,6 +1,7 @@
 {
   "format": "tt-conformance-matrix/0.1",
   "families": [
+    "ceremony-doc",
     "framework",
     "https-binding",
     "trust-task-discovery",
@@ -11,7 +12,7 @@
   ],
   "rows": [
     {
-      "impl": "truststackers-agent-didkey-attested",
+      "impl": "truststackers-agent-didkey",
       "tier": 2,
       "tiers": [
         1,
@@ -19,254 +20,66 @@
       ],
       "runs": [
         "truststackers-agent-didkey-attested@1",
-        "truststackers-agent-didkey-attested@2"
+        "truststackers-agent-didkey-attested@2",
+        "truststackers-agent-didkey-tier1@1"
       ],
       "families": {
+        "ceremony-doc": {
+          "status": "SKIP",
+          "counts": {
+            "PASS": 0,
+            "FAIL": 0,
+            "SKIP": 13,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          }
+        },
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 102,
+            "PASS": 116,
             "FAIL": 0,
-            "SKIP": 18,
+            "SKIP": 5,
             "KNOWN-FAIL": 0,
             "CLARIFY": 4
           }
         },
         "https-binding": {
-          "status": "SKIP",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
+            "PASS": 6,
             "FAIL": 0,
-            "SKIP": 6,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 0
           }
         },
         "trust-task-discovery": {
-          "status": "SKIP",
-          "counts": {
-            "PASS": 0,
-            "FAIL": 0,
-            "SKIP": 17,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 0
-          }
-        },
-        "two-phase-commit": {
-          "status": "CLARIFY",
-          "counts": {
-            "PASS": 0,
-            "FAIL": 0,
-            "SKIP": 4,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 1
-          }
-        },
-        "vrc-issue": {
-          "status": "PASS",
-          "counts": {
-            "PASS": 19,
-            "FAIL": 0,
-            "SKIP": 0,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 6
-          }
-        },
-        "vrc-propose": {
-          "status": "PASS",
-          "counts": {
-            "PASS": 22,
-            "FAIL": 0,
-            "SKIP": 1,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 3
-          }
-        },
-        "vrc-witness-share": {
-          "status": "PASS",
-          "counts": {
-            "PASS": 27,
-            "FAIL": 0,
-            "SKIP": 0,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 2
-          }
-        }
-      },
-      "needsNonAttestedRun": [
-        "PRF-108",
-        "DUP-101",
-        "DUP-102",
-        "DUP-103",
-        "DUP-104",
-        "DUP-105",
-        "DUP-106",
-        "DUP-107",
-        "DUP-108",
-        "DUP-109",
-        "DUP-110",
-        "DUP-111",
-        "DUP-112",
-        "DUP-113",
-        "DIS-015",
-        "VRC-PRO-011"
-      ]
-    },
-    {
-      "impl": "truststackers-agent-scidvh-attested",
-      "tier": 2,
-      "tiers": [
-        1,
-        2
-      ],
-      "runs": [
-        "truststackers-agent-scidvh-attested@1",
-        "truststackers-agent-scidvh-attested@2"
-      ],
-      "families": {
-        "framework": {
-          "status": "PASS",
-          "counts": {
-            "PASS": 102,
-            "FAIL": 0,
-            "SKIP": 18,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 4
-          }
-        },
-        "https-binding": {
-          "status": "SKIP",
-          "counts": {
-            "PASS": 0,
-            "FAIL": 0,
-            "SKIP": 6,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 0
-          }
-        },
-        "trust-task-discovery": {
-          "status": "SKIP",
-          "counts": {
-            "PASS": 0,
-            "FAIL": 0,
-            "SKIP": 17,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 0
-          }
-        },
-        "two-phase-commit": {
-          "status": "CLARIFY",
-          "counts": {
-            "PASS": 0,
-            "FAIL": 0,
-            "SKIP": 4,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 1
-          }
-        },
-        "vrc-issue": {
-          "status": "PASS",
-          "counts": {
-            "PASS": 19,
-            "FAIL": 0,
-            "SKIP": 0,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 6
-          }
-        },
-        "vrc-propose": {
-          "status": "PASS",
-          "counts": {
-            "PASS": 22,
-            "FAIL": 0,
-            "SKIP": 1,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 3
-          }
-        },
-        "vrc-witness-share": {
-          "status": "PASS",
-          "counts": {
-            "PASS": 27,
-            "FAIL": 0,
-            "SKIP": 0,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 2
-          }
-        }
-      },
-      "needsNonAttestedRun": [
-        "PRF-108",
-        "DUP-101",
-        "DUP-102",
-        "DUP-103",
-        "DUP-104",
-        "DUP-105",
-        "DUP-106",
-        "DUP-107",
-        "DUP-108",
-        "DUP-109",
-        "DUP-110",
-        "DUP-111",
-        "DUP-112",
-        "DUP-113",
-        "DIS-015",
-        "VRC-PRO-011"
-      ]
-    },
-    {
-      "impl": "truststackers-agent-didkey-tier1",
-      "tier": 1,
-      "tiers": [
-        1
-      ],
-      "families": {
-        "framework": {
-          "status": "PASS",
-          "counts": {
-            "PASS": 109,
-            "FAIL": 0,
-            "SKIP": 11,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 4
-          }
-        },
-        "https-binding": {
-          "status": "SKIP",
-          "counts": {
-            "PASS": 0,
-            "FAIL": 0,
-            "SKIP": 6,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 0
-          }
-        },
-        "trust-task-discovery": {
-          "status": "SKIP",
-          "counts": {
-            "PASS": 0,
-            "FAIL": 0,
-            "SKIP": 17,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 0
-          }
-        },
-        "two-phase-commit": {
-          "status": "CLARIFY",
-          "counts": {
-            "PASS": 0,
-            "FAIL": 0,
-            "SKIP": 4,
-            "KNOWN-FAIL": 0,
-            "CLARIFY": 1
-          }
-        },
-        "vrc-issue": {
           "status": "PASS",
           "counts": {
             "PASS": 16,
             "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 1
+          }
+        },
+        "two-phase-commit": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 3,
+            "FAIL": 0,
             "SKIP": 3,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 2
+          }
+        },
+        "vrc-issue": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 19,
+            "FAIL": 0,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 6
           }
@@ -274,9 +87,9 @@
         "vrc-propose": {
           "status": "PASS",
           "counts": {
-            "PASS": 20,
+            "PASS": 23,
             "FAIL": 0,
-            "SKIP": 3,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
           }
@@ -284,9 +97,9 @@
         "vrc-witness-share": {
           "status": "PASS",
           "counts": {
-            "PASS": 25,
+            "PASS": 27,
             "FAIL": 0,
-            "SKIP": 2,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 2
           }
@@ -295,58 +108,74 @@
       "needsNonAttestedRun": []
     },
     {
-      "impl": "truststackers-agent-scidvh-tier1",
-      "tier": 1,
+      "impl": "truststackers-agent-scidvh",
+      "tier": 2,
       "tiers": [
-        1
+        1,
+        2
+      ],
+      "runs": [
+        "truststackers-agent-scidvh-attested@1",
+        "truststackers-agent-scidvh-attested@2",
+        "truststackers-agent-scidvh-tier1@1"
       ],
       "families": {
+        "ceremony-doc": {
+          "status": "SKIP",
+          "counts": {
+            "PASS": 0,
+            "FAIL": 0,
+            "SKIP": 13,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          }
+        },
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 109,
+            "PASS": 116,
             "FAIL": 0,
-            "SKIP": 11,
+            "SKIP": 5,
             "KNOWN-FAIL": 0,
             "CLARIFY": 4
           }
         },
         "https-binding": {
-          "status": "SKIP",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
+            "PASS": 6,
             "FAIL": 0,
-            "SKIP": 6,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 0
           }
         },
         "trust-task-discovery": {
-          "status": "SKIP",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
+            "PASS": 16,
             "FAIL": 0,
-            "SKIP": 17,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 1
           }
         },
         "two-phase-commit": {
-          "status": "CLARIFY",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
+            "PASS": 3,
             "FAIL": 0,
-            "SKIP": 4,
+            "SKIP": 3,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 1
+            "CLARIFY": 2
           }
         },
         "vrc-issue": {
           "status": "PASS",
           "counts": {
-            "PASS": 16,
+            "PASS": 19,
             "FAIL": 0,
-            "SKIP": 3,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 6
           }
@@ -354,9 +183,9 @@
         "vrc-propose": {
           "status": "PASS",
           "counts": {
-            "PASS": 20,
+            "PASS": 23,
             "FAIL": 0,
-            "SKIP": 3,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
           }
@@ -364,9 +193,9 @@
         "vrc-witness-share": {
           "status": "PASS",
           "counts": {
-            "PASS": 25,
+            "PASS": 27,
             "FAIL": 0,
-            "SKIP": 2,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 2
           }
