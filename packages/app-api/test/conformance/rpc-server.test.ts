@@ -135,7 +135,21 @@ describe('capabilities and provision', () => {
     const none = start(['--carrier', 'none', '--no-witness-share', '--no-issue', '--no-ceremony']);
     const c2 = await none.call('capabilities');
     assert.deepEqual(c2.carriers, []);
-    assert.deepEqual(c2.supportedTypes, ['https://trusttasks.org/spec/vrc/relationships/propose/0.1']);
+    assert.deepEqual(c2.supportedTypes, ['https://trusttasks.org/spec/trust-task-discovery/0.4', 'https://trusttasks.org/spec/vrc/relationships/propose/0.1']);
+  });
+
+  it('declares discovery 0.4 and lists every served task, discovery included, in registry and URN form, as the discovery answer does', async () => {
+    const s = start(['--attested', '--identity', 'key']);
+    const caps = await s.call('capabilities');
+    const p = await s.call('provision', { roles: ['iut'] });
+    await s.call('setClock', { iso: START });
+    const doc = { id: uid(900), type: 'https://trusttasks.org/spec/trust-task-discovery/0.4', issuer: A_DID, recipient: p.iut.vid, issuedAt: '2026-11-12T10:00:00Z', payload: {} };
+    const sent = await s.call('send', { from: { kind: 'actor', vid: A_DID }, bytes: JSON.stringify(signDocument(doc, A, { created: Date.parse(START) })) });
+    const listed = JSON.parse(sent.replies[0]).payload.supportedTypes as string[];
+    assert.deepEqual([...caps.supportedTypes].sort(), [...listed].sort());
+    assert.ok(caps.supportedTypes.includes('https://trusttasks.org/spec/trust-task-discovery/0.4'));
+    assert.ok(caps.supportedTypes.some((t: string) => t.startsWith('urn:p2pts:tasks:spec:ceremony:')), 'the private ceremony types are listed in URN form');
+    for (const o of ['discovery.acceptanceWindow', 'discovery.expiryHorizon']) assert.ok(caps.optional.includes(o), o);
   });
 });
 

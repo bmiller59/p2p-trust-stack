@@ -41,7 +41,7 @@ import type { KeyResolver, ResolvedKeySet } from '@p2p-trust-stack/core/services
 import { BOUNDARY_KEY_FRAGMENT, createEd25519BoundarySigner, signDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/signer.js';
 import type { BoundarySigner } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/signer.js';
 import { TrustTaskRecorder } from '@p2p-trust-stack/core/services/trust-tasks/boundary/recorder.js';
-import { createDiscoveryHandler } from '@p2p-trust-stack/core/services/trust-tasks/boundary/discovery.js';
+import { advertisedTypes, createDiscoveryHandler } from '@p2p-trust-stack/core/services/trust-tasks/boundary/discovery.js';
 import { HandlerRegistry } from '@p2p-trust-stack/core/services/trust-tasks/boundary/handlers.js';
 import type { SpecPolicy, TrustTaskDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/runtime.js';
 import { ERROR_SPEC_VERSION, FRAMEWORK_VERSION } from '@p2p-trust-stack/core/services/trust-tasks/boundary/pins.js';
@@ -55,12 +55,11 @@ import { RetainedDocuments } from '../src/runtime/trust-tasks-boundary/retained.
 import { CeremonyDocParticipant } from '../src/runtime/tx/ceremony-doc-participant.ts';
 import type { CeremonyEffect, CeremonyEstablishment } from '../src/runtime/tx/ceremony-doc-participant.ts';
 import { TaskError } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
-import { CEREMONY_WIRE_TYPES } from '@p2p-trust-stack/core/services/trust-tasks/boundary/ceremony-spec.js';
 import { VtcStore } from '@p2p-trust-stack/core/vtc/store.js';
 import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-resolver.js';
 import { CompensationExecutor, DataSourceLogSink, TransactionCoordinator, TransactionLog, TransactionManager, TX_SCHEMA_SQL, applyTxSchemaAdditions } from '@p2p-trust-stack/core/tx/index.js';
 import type { ProposeConsentPolicy, ProposeDecision } from '../src/runtime/trust-tasks-boundary/vrc-propose.ts';
-import { ISSUE_TYPE, PROPOSE_TYPE, WITNESS_SHARE_TYPE } from '../src/runtime/trust-tasks-boundary/shared.ts';
+import { ISSUE_TYPE } from '../src/runtime/trust-tasks-boundary/shared.ts';
 import type { Adapter, Capabilities, ObserveQuery, ObserveResult, ProofVerifyResult, ProvisionedRole, SendParams, SendResult } from './contract.ts';
 
 /** The suite's generic carrier task (its reference adapter serves the same type). A conformance fixture, not an agent feature. */
@@ -153,6 +152,7 @@ export class TruststackersAdapter implements Adapter {
   ceremony!: CeremonyDocParticipant;
   retained!: RetainedDocuments;
   verifier!: DidProofVerifier;
+  registry!: HandlerRegistry;
   recorder!: TrustTaskRecorder;
   private dbPath!: string;
   private txPath!: string;
@@ -260,7 +260,7 @@ export class TruststackersAdapter implements Adapter {
       verifier: this.verifier,
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     })];
-    const registry = new HandlerRegistry([this.propose.handler(), ...issue, ...witness, ...ceremony, ...(this.carrierMode() === 'widget' ? [this.widgetHandler()] : [])]);
+    const registry = this.registry = new HandlerRegistry([this.propose.handler(), ...issue, ...witness, ...ceremony, ...(this.carrierMode() === 'widget' ? [this.widgetHandler()] : [])]);
     registry.register(createDiscoveryHandler(registry));
     this.recorder = new TrustTaskRecorder(this.db, { node: 'agent' });
     this.pipeline = new Pipeline({
@@ -346,18 +346,14 @@ export class TruststackersAdapter implements Adapter {
       version: '0.0.0-p8',
       tierMax: (this.attested ? 2 : 1) as 1 | 2,
       bindings: ['in-process'],
-      supportedTypes: [
-        PROPOSE_TYPE,
-        ...(this.options.issue === false ? [] : [ISSUE_TYPE]),
-        ...(this.options.witness === true ? [WITNESS_SHARE_TYPE] : []),
-        ...(this.options.ceremony === false ? [] : CEREMONY_WIRE_TYPES),
-        ...(mode === 'widget' ? [WIDGET_TYPE] : []),
-      ],
+      // Discovery 0.4 (docs/04 section 11.2): every served task's Type URI, discovery's own included, exactly as the
+      // discovery answer lists them (registry form for the https types, URN form for the private ceremony types).
+      supportedTypes: advertisedTypes(this.registry).map((t) => t.type),
       carriers: mode === 'widget'
         ? [{ typeUri: WIDGET_TYPE, class: 'consequential' as const, validPayload: { subject: 'did:web:alice.example' } }]
         : mode === 'issue' ? [{ typeUri: ISSUE_TYPE, class: 'consequential' as const, validPayload: {} }] : [],
       cryptosuites: ['eddsa-jcs-2022'],
-      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'proofVerify', ...(this.attested ? ['attested'] : [])],
+      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.attested ? ['attested'] : [])],
       pins: { framework: FRAMEWORK_VERSION, error: ERROR_SPEC_VERSION, binding: 'none' },
     };
   }
