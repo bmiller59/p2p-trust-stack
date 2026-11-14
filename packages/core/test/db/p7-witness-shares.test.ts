@@ -37,10 +37,10 @@ after(() => rmSync(root, { recursive: true, force: true }));
 const tables = async (ds: SqliteDataSource) => (await ds.all<{ name: string }>("SELECT name FROM sqlite_master WHERE type = 'table'")).map((r) => r.name);
 
 describe('migration 0022', () => {
-  it('is the next free number, the version file is 26, and it applies to a populated 0021-era database without touching it', async () => {
+  it('is the next free number after 0021 (0023 follows), the version file is 26 until 0023, and it applies to a populated 0021-era database without touching it', async () => {
     const files = readdirSync(MIGRATIONS).filter((f) => f.endsWith('.sql')).sort();
-    assert.equal(files.at(-1), '0022_witness_shares.sql');
-    assert.equal(readFileSync(join(MIGRATIONS, '..', 'SCHEMA_VERSION'), 'utf8').trim(), '26');
+    assert.equal(files.at(-2), '0022_witness_shares.sql');
+    assert.equal(files.at(-1), '0023_credential_presentations.sql');
 
     const dir = join(root, 'populated');
     const migrations = join(dir, 'migrations');
@@ -55,8 +55,8 @@ describe('migration 0022', () => {
       `INSERT INTO trust_tasks (uuid, thread_id, type, direction, payload, status, created_at, updated_at)
        VALUES ('old-1', 't-1', 'task:p2pts:vtc:establish:0.1', 'request', '{"a":1}', 'recorded', 1, 1)`,
     );
-    assert.deepEqual(runMigrations(ds.getRawDb(), MIGRATIONS), ['0022_witness_shares.sql']);
-    assert.deepEqual((await tables(ds)).filter((t) => !before.includes(t)).sort(), ['witness_share_evidence', 'witnessed_credentials']);
+    assert.deepEqual(runMigrations(ds.getRawDb(), MIGRATIONS), ['0022_witness_shares.sql', '0023_credential_presentations.sql']);
+    assert.deepEqual((await tables(ds)).filter((t) => !before.includes(t)).sort(), ['credential_presentations', 'witness_share_evidence', 'witnessed_credentials']);
     assert.equal((await ds.get<{ payload: string }>("SELECT payload FROM trust_tasks WHERE uuid = 'old-1'"))!.payload, '{"a":1}');
     assert.deepEqual(runMigrations(ds.getRawDb(), MIGRATIONS), [], 'idempotent');
     await ds.close();

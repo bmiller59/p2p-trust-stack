@@ -36,12 +36,13 @@ const columns = async (ds: SqliteDataSource, table: string): Promise<string[]> =
   (await ds.all<{ name: string }>(`PRAGMA table_info(${table})`)).map((c) => c.name);
 
 describe('migration 0021 and the schema version', () => {
-  it('is the next free number after 0020, named per the plan; the version file is 26 with P7\'s 0022 (0021 took it 24 -> 25)', () => {
+  it('is the next free number after 0020, named per the plan; the version file is 27 with P7\'s 0022 and P5b\'s 0023 (0021 took it 24 -> 25)', () => {
     const files = readdirSync(MIGRATIONS).filter((f) => f.endsWith('.sql')).sort();
-    assert.equal(files.at(-1), '0022_witness_shares.sql');
-    assert.equal(files.at(-2), '0021_trust_task_boundary.sql');
-    assert.equal(files.at(-3), '0020_community_policy_bindings.sql');
-    assert.equal(readFileSync(join(MIGRATIONS, '..', 'SCHEMA_VERSION'), 'utf8').trim(), '26');
+    assert.equal(files.at(-1), '0023_credential_presentations.sql');
+    assert.equal(files.at(-2), '0022_witness_shares.sql');
+    assert.equal(files.at(-3), '0021_trust_task_boundary.sql');
+    assert.equal(files.at(-4), '0020_community_policy_bindings.sql');
+    assert.equal(readFileSync(join(MIGRATIONS, '..', 'SCHEMA_VERSION'), 'utf8').trim(), '27');
   });
 
   it('applies to a populated 0020-era database: old rows survive with null new columns, new tables are empty', async () => {
@@ -59,7 +60,7 @@ describe('migration 0021 and the schema version', () => {
     assert.ok(!(await columns(ds, 'trust_tasks')).includes('raw_document'));
 
     const applied = runMigrations(ds.getRawDb(), MIGRATIONS);
-    assert.deepEqual(applied, ['0021_trust_task_boundary.sql', '0022_witness_shares.sql']);
+    assert.deepEqual(applied, ['0021_trust_task_boundary.sql', '0022_witness_shares.sql', '0023_credential_presentations.sql']);
     const old = await trustTasksRepo.findByUuid(ds, 'old-1');
     assert.equal(old?.payload, '{"a":1}');
     for (const k of ['rawDocument', 'digest', 'taskDigest', 'issuedAt', 'expiresAt', 'inReplyTo', 'errorCode', 'disposition', 'verifiedSigner', 'lifecycle'] as const) {
@@ -74,7 +75,7 @@ describe('migration 0021 and the schema version', () => {
     const ds = new SqliteDataSource(':memory:');
     runMigrations(ds.getRawDb(), MIGRATIONS);
     const rows = await ds.all<{ filename: string }>("SELECT filename FROM schema_migrations WHERE filename LIKE '__schema_version__%'");
-    assert.deepEqual(rows.map((r) => r.filename), ['__schema_version__:26']);
+    assert.deepEqual(rows.map((r) => r.filename), ['__schema_version__:27']);
     await ds.close();
   });
 
