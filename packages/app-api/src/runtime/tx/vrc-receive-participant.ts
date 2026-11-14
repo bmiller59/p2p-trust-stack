@@ -30,6 +30,7 @@ import { logger } from '@p2p-trust-stack/core/util/logger.js';
 import * as exchangeDids from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
 import { checkIncomingVrc, findExchangeVrc } from '@p2p-trust-stack/core/relationship/exchange-vrc.js';
 import type { InnerProofVerifier } from '@p2p-trust-stack/core/relationship/exchange-vrc.js';
+import type { ExchangeDidRow } from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
 import { recordAbortReason } from '@p2p-trust-stack/core/tx/ceremony-guard.js';
 import { TaskError } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
 import { sha256 } from '@p2p-trust-stack/core/crypto/primitives.js';
@@ -93,6 +94,9 @@ export class VrcReceiveParticipant implements Participant {
   }
 
   async prepare(txId: string, operations: Operation[]): Promise<Vote> {
+    // The conformant path (exchange credentials) applies its effect at COMMIT: prepare only checks and records what to apply,
+    // so a credential is never visible while the transaction is undecided and an abort leaves nothing to undo.
+    const pending: StoreRemoteVrcParams[] = [];
     for (const op of operations) {
       if (op.op !== 'store_remote_vrc') continue;
 
@@ -101,7 +105,8 @@ export class VrcReceiveParticipant implements Participant {
 
       if (params.exchangeId !== undefined) {
         try {
-          await this.storeExchangeVrc(params);
+          await this.checkExchangeVrc(params);
+          pending.push(params);
         } catch (err) {
           logger.error(`[vrc-receive] exchange VRC refused for tx ${txId}:`, (err as Error)?.message);
           recordAbortReason(txId, err);
@@ -141,20 +146,20 @@ export class VrcReceiveParticipant implements Participant {
 
     // Durably record 'prepared' BEFORE voting yes.
     await this.txDb.run(
-      `INSERT OR REPLACE INTO tx_participant_state (tx_id, pid, outcome)
-       VALUES (?, ?, 'prepared')`,
-      txId, this.pid,
+      `INSERT OR REPLACE INTO tx_participant_state (tx_id, pid, outcome, pending_ops)
+       VALUES (?, ?, 'prepared', ?)`,
+      txId, this.pid, pending.length === 0 ? null : JSON.stringify(pending),
     );
 
     return 'yes';
   }
 
   /**
-   * Conformant path. Checks come from the exchange record, never from the sender's say-so, and run
+   * Conformant path, phase 1. Checks come from the exchange record, never from the sender's say-so, and run
    * before anything is stored. A different credential from the same counterparty relationship DID in
    * the same exchange is `alreadyIssued`; the same bytes again are an idempotent success.
    */
-  private async storeExchangeVrc(params: StoreRemoteVrcParams): Promise<void> {
+  private async checkExchangeVrc(params: StoreRemoteVrcParams): Promise<ExchangeDidRow> {
     const exchange = await exchangeDids.findByExchangeId(this.appDb, params.exchangeId as string);
     if (exchange === null || exchange.state === 'ended' || exchange.remoteRelationshipDid === null) {
       throw new TaskError({ reason: 'notAccepted', internalMessage: 'no accepted exchange for this VRC' });
@@ -181,14 +186,27 @@ export class VrcReceiveParticipant implements Participant {
         internalMessage: 'the exchange already holds a different credential',
       });
     }
+    return exchange;
+  }
+
+  /** Conformant path, phase 2: store the credential against the exchange's root identities. Idempotent (digest dedup, state only moves forward). */
+  private async applyExchangeVrc(params: StoreRemoteVrcParams): Promise<void> {
+    const exchange = await this.checkExchangeVrc(params);
     this.vtcStore.storeReceivedDtgVrc(params.w3cVcJson, params.issuerDid, params.subjectDid, undefined, {
-      issuerIdentityUuid: exchange.remoteIdentityUuid,
-      subjectIdentityUuid: exchange.localIdentityUuid,
+      issuerIdentityUuid: exchange.remoteIdentityUuid as string,
+      subjectIdentityUuid: exchange.localIdentityUuid as string,
     });
     if (exchange.state === 'accepted') await exchangeDids.setState(this.appDb, exchange.exchangeId, 'received');
   }
 
   async commit(txId: string): Promise<void> {
+    const row = await this.txDb.get<{ outcome: string; pending_ops: string | null }>(
+      'SELECT outcome, pending_ops FROM tx_participant_state WHERE tx_id = ? AND pid = ?',
+      txId, this.pid,
+    );
+    if (row?.outcome === 'prepared' && row.pending_ops) {
+      for (const params of JSON.parse(row.pending_ops) as StoreRemoteVrcParams[]) await this.applyExchangeVrc(params);
+    }
     await this.txDb.run(
       "UPDATE tx_participant_state SET outcome = 'committed' WHERE tx_id = ? AND pid = ?",
       txId, this.pid,
@@ -197,11 +215,11 @@ export class VrcReceiveParticipant implements Participant {
   }
 
   async abort(txId: string): Promise<void> {
-    // storeReceivedDtgVrc is idempotent (digest dedup), so a precise rollback
-    // would delete by credential digest. For now, mark aborted and rely on the
-    // next push/election to reconcile state.
+    // The conformant path has stored nothing before commit. The legacy path stores at prepare
+    // (storeReceivedDtgVrc is digest-deduplicated, so a precise rollback would delete by digest);
+    // it is marked aborted and left for the next push/election to reconcile.
     await this.txDb.run(
-      "UPDATE tx_participant_state SET outcome = 'aborted' WHERE tx_id = ? AND pid = ?",
+      "UPDATE tx_participant_state SET outcome = 'aborted', pending_ops = NULL WHERE tx_id = ? AND pid = ?",
       txId, this.pid,
     );
     logger.info(`[vrc-receive] ${txId.slice(0, 8)} aborted`);

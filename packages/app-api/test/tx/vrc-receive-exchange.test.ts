@@ -63,14 +63,17 @@ async function setup(name: string, exchangeId = 'propose-1') {
   const prepare = (txId: string, w3cVcJson: string, id: string | undefined = exchangeId) =>
     participant.prepare(txId, [{ op: 'store_remote_vrc', params: { w3cVcJson, issuerDid: aRow.localRelationshipDid, subjectDid: bRow.localRelationshipDid, exchangeId: id, issuerIdentity: { forged: true } } } as never]);
   const count = async () => (await dsB.get<{ n: number }>("SELECT COUNT(*) AS n FROM credentials WHERE vc_type = 'vrc'"))!.n;
-  return { dsA, dsB, aRow, bRow, aA, bB, aInB, json, prepare, count };
+  return { dsA, dsB, aRow, bRow, aA, bB, aInB, json, prepare, count, participant, txDb };
 }
 
 describe('VrcReceiveParticipant, exchange path', () => {
   it('stores the credential against the exchange identities and is idempotent on a repeat', async () => {
     const s = await setup('ok');
     assert.equal(await s.prepare('tx-1', s.json), 'yes');
+    assert.equal(await s.count(), 0, 'nothing is stored while the transaction is undecided');
+    await s.participant.commit('tx-1');
     assert.equal(await s.prepare('tx-2', s.json), 'yes');
+    await s.participant.commit('tx-2');
     assert.equal(await s.count(), 1);
     const row = (await s.dsB.get<{ issuer_identity_uuid: string; subject_identity_uuid: string }>("SELECT * FROM credentials WHERE vc_type = 'vrc'"))!;
     assert.equal(row.issuer_identity_uuid, s.aInB);
@@ -103,6 +106,7 @@ describe('VrcReceiveParticipant, exchange path', () => {
     clearAbortReasons();
     const s = await setup('again');
     assert.equal(await s.prepare('tx-1', s.json), 'yes');
+    await s.participant.commit('tx-1');
     const signer = (await loadExchangeSigner(s.dsA, 'propose-1', PASS))!;
     const second = buildDtgCredential({
       subtype: 'RelationshipCredential', id: 'urn:uuid:11111111-1111-4111-8111-111111111111',
@@ -113,5 +117,27 @@ describe('VrcReceiveParticipant, exchange path', () => {
     assert.equal(await s.prepare('tx-2', serializeDtgCredential(second)), 'no');
     assert.equal(getAbortReason('tx-2')?.code, 'vrc/relationships/issue:alreadyIssued');
     assert.equal(await s.count(), 1);
+  });
+
+  it('stores nothing on abort, and nothing before commit', async () => {
+    const s = await setup('abort');
+    assert.equal(await s.prepare('tx-x', s.json), 'yes');
+    assert.equal(await s.participant.inquiry('tx-x'), 'prepared');
+    assert.equal(await s.count(), 0);
+    await s.participant.abort('tx-x');
+    assert.equal(await s.participant.inquiry('tx-x'), 'aborted');
+    assert.equal(await s.count(), 0);
+    assert.equal((await exchangeDids.findByExchangeId(s.dsB, 'propose-1'))?.state, 'accepted', 'the exchange is not advanced');
+    await s.participant.commit('tx-x');
+    assert.equal(await s.count(), 0, 'a stray commit for an aborted transaction applies nothing');
+  });
+
+  it('commits from the durable record: a participant built after a restart still applies what was prepared', async () => {
+    const s = await setup('restart');
+    assert.equal(await s.prepare('tx-r', s.json), 'yes');
+    const reborn = new VrcReceiveParticipant('peer:b', s.dsB, s.txDb, new VtcStore(s.dsB.getRawDb(), {} as IdentityResolver), {} as IdentityResolver);
+    await reborn.commit('tx-r');
+    assert.equal(await s.count(), 1);
+    assert.equal(await reborn.inquiry('tx-r'), 'committed');
   });
 });
