@@ -42,8 +42,9 @@ import {
   mlDsa65Sign,
   mlDsa65Verify,
 } from '../crypto/pqc.js';
-import { extractMlDsa65PublicKey, extractHybridKemPublicKey } from '../relationship/key-extract.js';
+import { extractMlDsa65PublicKey } from '../relationship/key-extract.js';
 import { buildDidPeer4Document } from './create.js';
+import { addBoundaryVerificationMethod, carryForwardDocument, carryForwardViolations } from './document-carry-forward.js';
 import { computeRotationEntryDigest, computeNextKeyCommitments, computeNextKeyCommitment } from './rotation-codec.js';
 import { verifyWitnessAttestation } from './witness-attestation.js';
 import type { DidDocument, DidParameters, ServiceEndpoint, VerificationMethod } from './types.js';
@@ -442,41 +443,32 @@ export class ScidVhMethod implements DidMethod {
       );
     }
 
-    // Build new DID document preserving alsoKnownAs and updating parameters.
+    // Build the new DID document by CARRYING FORWARD the previous one (gate G2, K2): a deep clone
+    // with only the identity slot(s) replaced. It is never rebuilt from the fixed-slot builder, so
+    // a Slot-A document keeps its permanent #key-1/#key-2 (TSP VID) and #key-scid slot, the PQ keys
+    // and any added verification method (e.g. #key-boundary) survive, and services are kept.
     const prevAlsoKnownAs = overrideAlsoKnownAs !== undefined
       ? overrideAlsoKnownAs
       : (prevEntry.didDocument.alsoKnownAs ?? []);
     const prevParameters = prevEntry.parameters ?? {};
-    const agreementKeyPair = ed25519ToX25519(newSigningKeyPair.secretKey);
-    // Carry the POST-QUANTUM roots of trust across the rotation. They are
-    // long-lived roots, not per-version keys, so a rotation must RE-PUBLISH them —
-    // otherwise the first rotation would strip #key-mldsa/#key-kem from the
-    // document and every subsequent ML-DSA rotation signature would become
-    // unverifiable (the key to check it against would be gone).
-    const carriedMlDsa = params.mlDsa65KeyPair?.publicKey
-      ?? extractMlDsa65PublicKey(prevEntry.didDocument);
-    const carriedKem = extractHybridKemPublicKey(prevEntry.didDocument);
-    const newDocument = buildDidPeer4Document(
-      newSigningKeyPair.publicKey,
-      agreementKeyPair.publicKey,
-      params.transport,
-      undefined,
-      { mlDsa65PublicKey: carriedMlDsa, hybridKemPublicKey: carriedKem },
-    );
 
+    // The new entry commits BOTH its live identity key (so a later metadata-only entry, such as
+    // updateDocument or a name claim, can self-commit without rotating) AND a fresh next key (so a
+    // genuine rotation stays possible). Mirrors SpeculativeRotationService and genesis.
     const nextKeyCommitment = computeNextKeyCommitment(nextSigningPublicKey);
+    const nextKeyCommitments = [computeNextKeyCommitment(newSigningKeyPair.publicKey), nextKeyCommitment];
     const newParameters: DidParameters = {
       ...prevParameters,
-      nextKeyHashes: [Buffer.from(nextKeyCommitment).toString('base64')],
+      nextKeyHashes: nextKeyCommitments.map(h => Buffer.from(h).toString('base64')),
     };
-    const documentWithId: DidDocument = {
-      ...newDocument,
+    const documentWithId: DidDocument = carryForwardDocument(prevEntry.didDocument, newSigningKeyPair, {
       id: prevEntry.didDocument.id,
       alsoKnownAs: prevAlsoKnownAs,
       parameters: newParameters,
-    };
+      transport: params.transport,
+      mlDsa65PublicKey: params.mlDsa65KeyPair?.publicKey,
+    });
 
-    const nextKeyCommitments = [nextKeyCommitment];
     const unsignedEntry = {
       version: prevEntry.version + 1,
       parameters: newParameters,
@@ -518,6 +510,139 @@ export class ScidVhMethod implements DidMethod {
     this.config.store?.appendEntry(prevEntry.didDocument.id!, newEntry);
 
     return newEntry;
+  }
+
+  // ---------------------------------------------------------------------------
+  // updateDocument() — metadata-only entry with carry-forward (gate G2, K1)
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Append a log entry that changes the DID DOCUMENT but not the identity key (a "self-commit"
+   * entry): the DID, `#key-1` (the TSP VID) and the chain's signing key stay as they are.
+   *
+   * The new document is a deep clone of the previous one handed to `mutate`; the result must be a
+   * carry-forward of it (no verification method removed or changed, no relationship entry lost),
+   * so nothing already published, the PQ keys included, can be dropped by an update.
+   *
+   * Commitments: without `nextSigningPublicKey` the entry re-commits the previous set plus the live
+   * identity key (every pre-committed next key stays usable, including the one an agent already
+   * holds); with it, the set is `[live key, nextSigningPublicKey]` like a rotation.
+   *
+   * The entry is signed by the current identity key (`#key-scid` on Slot-A, `#key-1` on Slot-B) and,
+   * when `mlDsa65KeyPair` is given, ML-DSA-65 signed. The extended log is validated before the
+   * entry is returned or stored: an entry `validateChain` would reject is never produced.
+   *
+   * `createdAt` is `now` (default: the clock) in whole seconds, never earlier than the previous
+   * entry's. It is a signer-asserted field: verifiers must not treat it as a trusted time anchor.
+   */
+  async updateDocument(params: {
+    currentLog: RotationLogEntry[];
+    /** The CURRENT identity key pair (signs the entry; must be the chain's current signing key). */
+    identityKeyPair: Ed25519KeyPair;
+    mutate: (doc: DidDocument) => void | DidDocument;
+    nextSigningPublicKey?: Uint8Array;
+    witnessAttestations?: Vrc[];
+    mlDsa65KeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
+    /** Epoch ms for `createdAt` (default `Date.now()`). */
+    now?: number;
+  }): Promise<RotationLogEntry> {
+    const { currentLog, identityKeyPair } = params;
+    if (currentLog.length === 0) {
+      throw new Error('ScidVhMethod.updateDocument: currentLog must contain at least the genesis entry');
+    }
+    const prev = currentLog[currentLog.length - 1];
+    const prevKey = extractSigningPublicKey(prev.didDocument);
+    if (!bytesEqual(identityKeyPair.publicKey, prevKey)) {
+      throw new Error("ScidVhMethod.updateDocument: identityKeyPair is not the previous entry's current signing key");
+    }
+    const selfCommitment = computeNextKeyCommitment(identityKeyPair.publicKey);
+    if (!prev.nextKeyCommitments.some(c => bytesEqual(c, selfCommitment))) {
+      throw new Error("ScidVhMethod.updateDocument: the identity key is not in the previous entry's nextKeyCommitments (a self-commit entry would not validate)");
+    }
+
+    const nextKeyCommitments: Uint8Array[] = params.nextSigningPublicKey
+      ? [selfCommitment, computeNextKeyCommitment(params.nextSigningPublicKey)]
+      : [...prev.nextKeyCommitments];
+    if (!nextKeyCommitments.some(c => bytesEqual(c, selfCommitment))) nextKeyCommitments.push(selfCommitment);
+
+    const draft = structuredClone(prev.didDocument);
+    const mutated = params.mutate(draft) ?? draft;
+    const problems = carryForwardViolations(prev.didDocument, mutated);
+    if (problems.length > 0) {
+      throw new Error(`ScidVhMethod.updateDocument: not a carry-forward of the previous document: ${problems.join('; ')}`);
+    }
+    if (extractSigningPublicKey(mutated).some((b, i) => b !== prevKey[i])) {
+      throw new Error('ScidVhMethod.updateDocument: the identity key must not change (use rotate())');
+    }
+
+    const newParameters: DidParameters = {
+      ...(prev.parameters ?? {}),
+      nextKeyHashes: nextKeyCommitments.map(h => Buffer.from(h).toString('base64')),
+    };
+    const didDocument: DidDocument = { ...mutated, id: prev.didDocument.id, parameters: newParameters };
+    const unsignedEntry = {
+      version: prev.version + 1,
+      parameters: newParameters,
+      didDocument,
+      prevHash: prev.digest as Uint8Array | null,
+      nextKeyCommitments,
+      createdAt: Math.max(Math.floor((params.now ?? Date.now()) / 1000), prev.createdAt),
+    };
+    const digest = computeRotationEntryDigest(unsignedEntry);
+
+    const witnessAttestations = params.witnessAttestations ?? [];
+    if (this.config.witnessVtc) {
+      const minAttestations = this.config.minAttestations ?? 1;
+      const validCount = witnessAttestations.filter(
+        vrc => verifyWitnessAttestation(vrc, this.config.witnessVtc!, digest).valid,
+      ).length;
+      if (validCount < minAttestations) {
+        throw new Error(
+          `ScidVhMethod.updateDocument: insufficient valid witness attestations (${validCount}/${minAttestations} required)`,
+        );
+      }
+    }
+    const entry: RotationLogEntry = {
+      ...unsignedEntry,
+      digest,
+      signature: signEd25519(digest, identityKeyPair.secretKey),
+      mlDsa65Signature: params.mlDsa65KeyPair ? mlDsa65Sign(digest, params.mlDsa65KeyPair.secretKey) : undefined,
+      witnessAttestations,
+    };
+
+    const extended = [...currentLog, entry];
+    if (this.validateEntries(extended).length !== extended.length) {
+      throw new Error('ScidVhMethod.updateDocument: the new entry does not validate under validateChain');
+    }
+    this.config.store?.appendEntry(prev.didDocument.id!, entry);
+    return entry;
+  }
+
+  /**
+   * Add the dedicated boundary verification method (`#key-boundary`, listed under `authentication`)
+   * in place: the same DID, the identity key and `#key-1` untouched. A thin wrapper over
+   * `updateDocument` (see there for the other parameters).
+   */
+  async addBoundaryKey(params: {
+    currentLog: RotationLogEntry[];
+    identityKeyPair: Ed25519KeyPair;
+    boundaryPublicKey: Uint8Array;
+    nextSigningPublicKey?: Uint8Array;
+    witnessAttestations?: Vrc[];
+    mlDsa65KeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
+    now?: number;
+  }): Promise<RotationLogEntry> {
+    const { boundaryPublicKey, ...rest } = params;
+    return this.updateDocument({ ...rest, mutate: (doc) => { addBoundaryVerificationMethod(doc, boundaryPublicKey); } });
+  }
+
+  /**
+   * The longest valid prefix of a log under `validateChain`: digest, hash chain, signing-key
+   * commitment and signatures (Ed25519, and ML-DSA-65 when present). Read-only; used by time-pinned
+   * resolution, which selects an entry from the VALIDATED chain only.
+   */
+  validateEntries(log: RotationLogEntry[]): RotationLogEntry[] {
+    return this.validateChain(log).validEntries;
   }
 
   // ---------------------------------------------------------------------------
