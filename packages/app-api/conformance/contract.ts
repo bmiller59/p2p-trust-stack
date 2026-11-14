@@ -40,10 +40,12 @@ export interface Capabilities {
   supportedTypes: string[];
   carriers: CarrierDecl[];
   cryptosuites: string[];
-  /** control, idempotencyKey, restart, trigger.consent, trigger.twoPhase, ceremony, ceremony.status, trigger.ceremonyDeadline, trigger.ceremonyEffect, observe.retained, fault.claimStore, discovery.acceptanceWindow, discovery.expiryHorizon, binding.requireBearer, clock, proofVerify, attested */
+  /** control, idempotencyKey, restart, trigger.consent, trigger.twoPhase, ceremony, ceremony.status, trigger.ceremonyDeadline, trigger.ceremonyEffect, observe.retained, fault.claimStore, discovery.acceptanceWindow, discovery.expiryHorizon, binding.requireBearer, clock (or clockFree; exactly one), proofVerify, attested */
   optional: string[];
   /** Present with the optional capability `ceremony`. */
   ceremony?: CeremonyDecl;
+  /** The acceptance window the implementation enforces and advertises, in whole seconds (suite docs/04 section 6); absent means the profile pins. */
+  window?: { maxAgeSeconds: number; clockSkewSeconds: number; expiryHorizonSeconds: number };
   pins: { framework: string; error: string; binding: string };
 }
 

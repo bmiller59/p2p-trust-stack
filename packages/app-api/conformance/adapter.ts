@@ -44,7 +44,7 @@ import { TrustTaskRecorder } from '@p2p-trust-stack/core/services/trust-tasks/bo
 import { advertisedTypes, createDiscoveryHandler } from '@p2p-trust-stack/core/services/trust-tasks/boundary/discovery.js';
 import { HandlerRegistry } from '@p2p-trust-stack/core/services/trust-tasks/boundary/handlers.js';
 import type { SpecPolicy, TrustTaskDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/runtime.js';
-import { ERROR_SPEC_VERSION, FRAMEWORK_VERSION } from '@p2p-trust-stack/core/services/trust-tasks/boundary/pins.js';
+import { ACCEPTANCE_WINDOW, ERROR_SPEC_VERSION, FRAMEWORK_VERSION } from '@p2p-trust-stack/core/services/trust-tasks/boundary/pins.js';
 import { VrcProposeService } from '../src/runtime/trust-tasks-boundary/vrc-propose.ts';
 import { createVrcIssueHandler } from '../src/runtime/trust-tasks-boundary/vrc-issue.ts';
 import { VrcReceiveParticipant } from '../src/runtime/tx/vrc-receive-participant.ts';
@@ -454,6 +454,13 @@ export class TruststackersAdapter implements Adapter {
           beginPayload: { name: 'fixture-community', kind: 'vtc', threshold: 2, adminDids: ['$A', '$X'] }, approvePayload: {}, resetPayload: {},
         },
       }),
+      // The window the pipeline enforces (the same constants the discovery answer states), so a vector measures this
+      // implementation against its own window, not a number the suite assumes (suite docs/04 section 6).
+      window: {
+        maxAgeSeconds: ACCEPTANCE_WINDOW.maxAgeMs / 1000,
+        clockSkewSeconds: ACCEPTANCE_WINDOW.skewMs / 1000,
+        expiryHorizonSeconds: ACCEPTANCE_WINDOW.expiryHorizonMs / 1000,
+      },
       pins: { framework: FRAMEWORK_VERSION, error: ERROR_SPEC_VERSION, binding: this.options.https === false ? 'none' : 'https/0.3' },
     };
   }
