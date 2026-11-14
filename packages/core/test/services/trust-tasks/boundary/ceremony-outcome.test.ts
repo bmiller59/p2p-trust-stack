@@ -76,6 +76,11 @@ describe("failures are taskFailed with a closed reason; expiry is deadlineLapsed
       if (v.kind === "error") assert.equal(v.reason, reason);
     }
   });
+  it("a recorded client-error code without a reason (malformedRequest, idConflict) is kept, not turned into internalError", () => {
+    for (const code of ["malformedRequest", "idConflict"] as const) {
+      assert.deepEqual(ceremonyVerdict(facts({ outcome: "aborted", abortReason: { code, retryable: false } })), { kind: "error", code, retryable: false });
+    }
+  });
   it("an aborted proposal maps to an error, never a response", () => {
     assert.equal(ceremonyVerdict(facts({ proposal: { status: "aborted" } })).kind, "error");
   });
@@ -93,5 +98,31 @@ describe("wire form of the ceremony types (plan 2.3)", () => {
     }
     assert.equal(toWireTypeUri(CEREMONY_PROPOSE_TYPE), "urn:p2pts:tasks:spec:ceremony:propose:0.1");
     assert.equal(toWireTypeUri(CEREMONY_CO_SIGN_TYPE), "urn:p2pts:tasks:spec:ceremony:co-sign:0.1");
+  });
+});
+
+describe("ceremony document specs (P8c)", () => {
+  it("serves four private types, each with a valid URN, the right proof policy and a closed payload", async () => {
+    const m = await import("../../../../src/services/trust-tasks/boundary/ceremony-spec.ts");
+    const wires = [m.CEREMONY_PROPOSE_WIRE_TYPE, m.CEREMONY_CO_SIGN_WIRE_TYPE, m.CEREMONY_STATUS_WIRE_TYPE, m.CEREMONY_RESET_WIRE_TYPE];
+    assert.deepEqual(wires, [
+      "urn:p2pts:tasks:spec:ceremony:propose:0.1",
+      "urn:p2pts:tasks:spec:ceremony:co-sign:0.1",
+      "urn:p2pts:tasks:spec:ceremony:status:0.1",
+      "urn:p2pts:tasks:spec:ceremony:reset:0.1",
+    ]);
+    assert.deepEqual([...m.CEREMONY_WIRE_TYPES], wires);
+    for (const w of wires) {
+      assert.ok(tryParseTypeUri(w) !== null, w);
+      assert.equal(toWireTypeUri(fromWireTypeUri(w)!), w);
+    }
+    for (const spec of [m.CEREMONY_PROPOSE_SPEC, m.CEREMONY_CO_SIGN_SPEC, m.CEREMONY_STATUS_SPEC, m.CEREMONY_RESET_SPEC]) {
+      assert.equal(spec.isProofRequired, true);
+      assert.equal(spec.isRecipientRequired, true);
+      assert.equal((spec.payloadSchema as { additionalProperties: boolean }).additionalProperties, false);
+    }
+    // the mutating documents date themselves; the read does not need to
+    assert.equal(m.CEREMONY_PROPOSE_SPEC.isIssuedAtRequired, true);
+    assert.equal(m.CEREMONY_STATUS_SPEC.isIssuedAtRequired, false);
   });
 });

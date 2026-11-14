@@ -24,7 +24,7 @@ import type { TxOutcome } from './lifecycle.js';
 export type CeremonyVerdict =
   | { kind: 'respond' }
   | { kind: 'next-step' }
-  | { kind: 'error'; code: 'taskFailed' | 'internalError' | 'permissionDenied' | 'unavailable'; reason?: Reason; retryable: boolean }
+  | { kind: 'error'; code: 'taskFailed' | 'internalError' | 'permissionDenied' | 'unavailable' | 'malformedRequest' | 'idConflict'; reason?: Reason; retryable: boolean }
   | { kind: 'indeterminate'; retryable: true };
 
 export interface CeremonyFacts {
@@ -38,14 +38,17 @@ export interface CeremonyFacts {
 
 const LAPSED: CeremonyVerdict = { kind: 'error', code: 'taskFailed', reason: 'deadlineLapsed', retryable: REASONS.deadlineLapsed.retryable };
 
+/** Standard codes a participant may record without a closed reason; anything else is opaque. */
+const PASS_THROUGH: ReadonlySet<string> = new Set(['taskFailed', 'unavailable', 'permissionDenied', 'malformedRequest', 'idConflict']);
+
 function failure(reason: { code: string; retryable: boolean; reason?: string } | undefined): CeremonyVerdict {
   if (reason === undefined) return { kind: 'error', code: 'taskFailed', retryable: false };
   if (reason.reason !== undefined) {
     if (!isReason(reason.reason)) return { kind: 'error', code: 'internalError', retryable: false };
     return { kind: 'error', code: REASONS[reason.reason].code, reason: reason.reason, retryable: REASONS[reason.reason].retryable };
   }
-  if (reason.code === 'taskFailed' || reason.code === 'unavailable' || reason.code === 'permissionDenied') {
-    return { kind: 'error', code: reason.code, retryable: reason.retryable };
+  if (PASS_THROUGH.has(reason.code)) {
+    return { kind: 'error', code: reason.code as Extract<CeremonyVerdict, { kind: 'error' }>['code'], retryable: reason.retryable };
   }
   return { kind: 'error', code: 'internalError', retryable: false };
 }
