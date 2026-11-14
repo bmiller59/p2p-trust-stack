@@ -28,6 +28,7 @@ import { ceremonyVerdict } from '@p2p-trust-stack/core/services/trust-tasks/boun
 import type { CeremonyVerdict } from '@p2p-trust-stack/core/services/trust-tasks/boundary/ceremony-outcome.js';
 import type { HandlerContext, PipelineHandler } from '@p2p-trust-stack/core/services/trust-tasks/boundary/handlers.js';
 import type { TxOutcome } from '@p2p-trust-stack/core/services/trust-tasks/boundary/lifecycle.js';
+import { consentChallenge, consentPayloadDigest } from '@p2p-trust-stack/core/services/trust-tasks/boundary/task-consent.js';
 import { buildNextStep } from '@p2p-trust-stack/core/services/trust-tasks/boundary/next-step.js';
 import type { TrustTaskDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/runtime.js';
 import { closeIfLapsed, getAbortReason } from '@p2p-trust-stack/core/tx/ceremony-guard.js';
@@ -72,6 +73,13 @@ export function effectiveOutcome(status: CeremonyProposal['status'], outcome: Tx
   return status === 'pending' && outcome === 'committed' ? undefined : outcome;
 }
 
+/** The challenge, digest and task type a `task-consent/decision` for this ceremony must echo. */
+export function consentBinding(p: CeremonyProposal): { challenge: string; payloadDigest: string; taskType: string } {
+  const challenge = consentChallenge({ ceremonyId: p.proposalId, proposalHash: p.proposalHash });
+  const subject = { name: p.name, kind: p.kind, threshold: p.threshold, adminDids: p.adminDids, parentCommunityDid: p.parentCommunityDid };
+  return { challenge, payloadDigest: consentPayloadDigest({ taskType: CEREMONY_PROPOSE_WIRE_TYPE, subject, challenge }), taskType: CEREMONY_PROPOSE_WIRE_TYPE };
+}
+
 function statusPayload(p: CeremonyProposal, approvals: number): Record<string, unknown> {
   return {
     ceremonyId: p.proposalId,
@@ -83,7 +91,12 @@ function statusPayload(p: CeremonyProposal, approvals: number): Record<string, u
   };
 }
 
-export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandler[] {
+/**
+ * The shared mechanics of every handler that drives the ceremony participant: run one operation in a
+ * transaction, read the coordinator's outcome and the stored ceremony, and answer by the verdict.
+ * `task-consent/decision` (P5b) reuses it, so a decision and a co-sign are one code path.
+ */
+export function createCeremonyDriver(deps: CeremonyDocDeps) {
   const store = deps.participant.store;
 
   const reply = (doc: TrustTaskDocument<unknown>, ctx: HandlerContext, actor: string, ceremonyId: string, payload: Record<string, unknown>): TrustTaskDocument<unknown> =>
@@ -135,7 +148,8 @@ export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandle
             ],
             continuation: 'proceed',
             message: 'co-signatures outstanding',
-            ext: { quorum: { required, received: approvals } },
+            // The `task-consent/decision` binding (P5b): what an approver echoes to approve through that task instead of a co-sign.
+            ext: { quorum: { required, received: approvals }, 'p2pts.consent': consentBinding(proposal) },
           },
           { newId: ctx.newId, now: ctx.clock, issuer: ctx.myVid ?? (doc.recipient as string), recipient: actor },
         ) as unknown as TrustTaskDocument<unknown>;
@@ -144,6 +158,27 @@ export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandle
         throw refusal(verdict);
     }
   }
+
+  /** Run one operation that has no verdict of its own (reset, deny): refused or indeterminate throws, committed returns. */
+  async function runOperation(doc: TrustTaskDocument<unknown>, op: Operation, what: string): Promise<void> {
+    const result = await deps.txManager.run(async (tx) => {
+      tx.enlist(deps.participant, [op]);
+    });
+    if (typeof doc.id === 'string') await deps.attachTx?.(doc.id, result.txId).catch(() => undefined);
+    const outcome = await deps.txManager.getOutcome(result.txId);
+    if (outcome === 'aborted') {
+      const why = getAbortReason(result.txId);
+      if (why === undefined) throw new TaskError({ code: 'taskFailed', retryable: false, internalMessage: `the ${what} was refused` });
+      throw new TaskError({ code: why.code, retryable: why.retryable, ...(why.reason === undefined ? {} : { reason: why.reason }), internalMessage: `the ${what} was refused` });
+    }
+    if (outcome !== 'committed') throw new TaskError({ code: 'indeterminate', retryable: true, internalMessage: `${what} outcome ${outcome}` });
+  }
+
+  return { store, reply, drive, runOperation };
+}
+
+export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandler[] {
+  const { store, reply, drive, runOperation } = createCeremonyDriver(deps);
 
   const begin: PipelineHandler = {
     types: [CEREMONY_PROPOSE_WIRE_TYPE],
@@ -201,17 +236,7 @@ export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandle
     handle: async (doc, ctx) => {
       const actor = actorOf(doc, ctx);
       const ceremonyId = ceremonyIdOf(doc, false);
-      const result = await deps.txManager.run(async (tx) => {
-        tx.enlist(deps.participant, [{ op: CEREMONY_RESET, params: { ceremonyId, actorDid: actor, nowMs: ctx.now } }]);
-      });
-      if (typeof doc.id === 'string') await deps.attachTx?.(doc.id, result.txId).catch(() => undefined);
-      const outcome = await deps.txManager.getOutcome(result.txId);
-      if (outcome === 'aborted') {
-        const why = getAbortReason(result.txId);
-        if (why === undefined) throw new TaskError({ code: 'taskFailed', retryable: false, internalMessage: 'the reset was refused' });
-        throw new TaskError({ code: why.code, retryable: why.retryable, ...(why.reason === undefined ? {} : { reason: why.reason }), internalMessage: 'the reset was refused' });
-      }
-      if (outcome !== 'committed') throw new TaskError({ code: 'indeterminate', retryable: true, internalMessage: `reset outcome ${outcome}` });
+      await runOperation(doc, { op: CEREMONY_RESET, params: { ceremonyId, actorDid: actor, nowMs: ctx.now } }, 'reset');
       const proposal = await store.getProposal(ceremonyId);
       if (proposal === null) throw notFound();
       return reply(doc, ctx, actor, ceremonyId, statusPayload(proposal, (await store.getApprovals(ceremonyId)).length));

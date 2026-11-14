@@ -36,6 +36,8 @@ import { logger } from '@p2p-trust-stack/core/util/logger.js';
 export const CEREMONY_BEGIN = 'ceremony_begin';
 export const CEREMONY_APPROVE = 'ceremony_approve';
 export const CEREMONY_RESET = 'ceremony_reset';
+/** A denial (`task-consent/decision` with `deny`): closes the pending ceremony for every approver. */
+export const CEREMONY_DENY = 'ceremony_deny';
 
 export const DEFAULT_CEREMONY_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -58,6 +60,11 @@ export interface CeremonyApproveParams {
   signature: string;
   /** The hash the approver names; when present it must equal the stored one. */
   proposalHash?: string;
+  nowMs: number;
+}
+export interface CeremonyDenyParams {
+  ceremonyId: string;
+  approverDid: string;
   nowMs: number;
 }
 export interface CeremonyResetParams {
@@ -122,7 +129,7 @@ export class CeremonyDocParticipant implements Participant {
   }
 
   handlesOperation(op: Operation): boolean {
-    return op.op === CEREMONY_BEGIN || op.op === CEREMONY_APPROVE || op.op === CEREMONY_RESET;
+    return op.op === CEREMONY_BEGIN || op.op === CEREMONY_APPROVE || op.op === CEREMONY_RESET || op.op === CEREMONY_DENY;
   }
 
   async prepare(txId: string, operations: Operation[]): Promise<Vote> {
@@ -131,6 +138,7 @@ export class CeremonyDocParticipant implements Participant {
         if (op.op === CEREMONY_BEGIN) await this.begin(op.params as unknown as CeremonyBeginParams);
         else if (op.op === CEREMONY_APPROVE) await this.approve(op.params as unknown as CeremonyApproveParams);
         else if (op.op === CEREMONY_RESET) await this.reset(op.params as unknown as CeremonyResetParams);
+        else if (op.op === CEREMONY_DENY) await this.deny(op.params as unknown as CeremonyDenyParams);
         else return 'no';
       } catch (err) {
         logger.error(`[ceremony-doc] refused for tx ${txId}, ${op.op}:`, (err as Error)?.message);
@@ -260,6 +268,23 @@ export class CeremonyDocParticipant implements Participant {
       throw err;
     }
     await this.store.updateStatus(proposal.proposalId, 'crystallized', nowMs);
+  }
+
+  /**
+   * A denial closes the pending ceremony (stored `aborted`; an aborted ceremony is not resettable). Same eligibility
+   * rule as an approval (an unknown ceremony and a non-admin are one answer); a repeat is a no-op; after commit it is
+   * `alreadyCommitted`; a lapsed ceremony is `deadlineLapsed`.
+   */
+  private async deny(p: CeremonyDenyParams): Promise<void> {
+    if (!p?.ceremonyId || !p.approverDid) throw new TaskError({ code: 'malformedRequest', retryable: false, internalMessage: 'incomplete ceremony_deny' });
+    const stored = await this.store.getProposal(p.ceremonyId);
+    if (!stored || !declaredAdmins(stored).has(p.approverDid)) {
+      throw taskErrorForReason('notFoundOrNotPermitted', { internalMessage: 'unknown ceremony or approver is not an admin' });
+    }
+    const proposal = await closeIfLapsed(this.store, stored, p.nowMs);
+    if (proposal.status === 'aborted') return;
+    assertOpen(proposal, p.nowMs);
+    await this.store.updateStatus(p.ceremonyId, 'aborted');
   }
 
   private async reset(p: CeremonyResetParams): Promise<void> {

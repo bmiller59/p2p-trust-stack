@@ -64,7 +64,8 @@ describe('ceremony-doc: begin and approve (founding)', () => {
     const r = await send(a, begin(a, A, t));
     assert.equal(r.type, NEXT_STEP_TYPE_URI);
     assert.equal(r.payload.continuation, 'proceed');
-    assert.deepEqual(r.payload.ext, { quorum: { required: 2, received: 0 } });
+    assert.deepEqual(r.payload.ext.quorum, { required: 2, received: 0 });
+    assert.deepEqual(Object.keys(r.payload.ext['p2pts.consent']).sort(), ['challenge', 'payloadDigest', 'taskType'], 'the task-consent binding (P5b)');
     assert.deepEqual(r.payload.expects.map((e: { typeUri: string }) => e.typeUri), [CEREMONY_CO_SIGN_WIRE_TYPE, CEREMONY_STATUS_WIRE_TYPE]);
     assert.equal(r.threadId, t);
     assert.equal(r.recipient, A.did);
@@ -79,7 +80,7 @@ describe('ceremony-doc: begin and approve (founding)', () => {
     await send(a, begin(a, A, t));
     const first = await send(a, cosign(a, A, t));
     assert.equal(first.type, NEXT_STEP_TYPE_URI);
-    assert.deepEqual(first.payload.ext, { quorum: { required: 2, received: 1 } });
+    assert.deepEqual(first.payload.ext.quorum, { required: 2, received: 1 });
     assert.equal(await a.communityCount(), 0, 'no effect before the quorum');
     assert.deepEqual(first.payload.expects.map((e: { typeUri: string }) => e.typeUri), [CEREMONY_STATUS_WIRE_TYPE], 'a held co-sign does not name its own type (that would imply resubmit)');
     const last = await send(a, cosign(a, X, t));

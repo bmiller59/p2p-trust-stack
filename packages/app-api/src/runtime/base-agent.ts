@@ -84,6 +84,7 @@ import { UtilityServerUnavailableError } from '../errors.js';
 import { VrcCeremonyParticipant } from './tx/vrc-ceremony-participant.js';
 import { VrcReceiveParticipant } from './tx/vrc-receive-participant.js';
 import { WitnessShareParticipant } from './tx/witness-share-participant.js';
+import { CredentialPresentationParticipant } from './tx/credential-presentation-participant.js';
 import { PersonhoodAckReceiveParticipant } from './tx/personhood-ack-participant.js';
 import {
   awaitCeremonyTerminal,
@@ -356,6 +357,7 @@ export abstract class BaseAgent implements AgentHandle {
   /** VRC receive participant (inbound store_remote_vrc operations). */
   private _vrcReceiveParticipant?: VrcReceiveParticipant;
   private _witnessShareParticipant?: WitnessShareParticipant;
+  private _presentationParticipant?: CredentialPresentationParticipant;
   private _trustTasksListenerOptions?: TrustTaskListenerOptions;
   private _trustTasksBoundary?: AgentBoundary;
   /** Receives the peer's personhood ack via the coordinator (ack_delivery leg). */
@@ -1039,6 +1041,10 @@ export abstract class BaseAgent implements AgentHandle {
         this._witnessShareParticipant = new WitnessShareParticipant(`peer:${this.identity.did}`, this.ds, this._txBootstrap.txDataSource);
         this._txBootstrap.coordinator.registerParticipant(this._witnessShareParticipant);
 
+        // Stores a presentation received as the verifier (`credential-exchange/present`, conformance P5b).
+        this._presentationParticipant = new CredentialPresentationParticipant(`peer:${this.identity.did}`, this.ds, this._txBootstrap.txDataSource);
+        this._txBootstrap.coordinator.registerParticipant(this._presentationParticipant);
+
         // Receiving half of the ceremony's ack_delivery leg. Registered under the
         // same `peer:{vid}` pid as the other local participants; the coordinator
         // routes by `handlesOperation`.
@@ -1138,6 +1144,8 @@ export abstract class BaseAgent implements AgentHandle {
         txManager: this._txBootstrap.manager,
         receive: this._vrcReceiveParticipant,
         witnessShare: this._witnessShareParticipant,
+        credentialReceive: this._txBootstrap.credentialReceiveParticipant,
+        ...(this._presentationParticipant === undefined ? {} : { presentation: this._presentationParticipant }),
         verifier: this.getBoundaryProofVerifier(),
         config,
       });

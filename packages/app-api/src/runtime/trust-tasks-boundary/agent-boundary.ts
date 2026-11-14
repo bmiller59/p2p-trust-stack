@@ -18,6 +18,8 @@ import type { TransactionManager } from '@p2p-trust-stack/core/tx/manager.js';
 import { logger } from '@p2p-trust-stack/core/util/logger.js';
 import type { VrcReceiveParticipant } from '../tx/vrc-receive-participant.js';
 import type { WitnessShareParticipant } from '../tx/witness-share-participant.js';
+import type { CredentialReceiveParticipant } from '../tx/credential-receive-participant.js';
+import type { CredentialPresentationParticipant } from '../tx/credential-presentation-participant.js';
 import { startBoundaryListener } from './listener.js';
 import type { BoundaryListener, BoundaryListenerConfig } from './listener.js';
 import { settleAcceptedClaims } from './settle.js';
@@ -25,6 +27,9 @@ import { HOLD_EVERYTHING, VrcProposeService } from './vrc-propose.js';
 import type { ProposeConsentPolicy } from './vrc-propose.js';
 import { createVrcIssueHandler } from './vrc-issue.js';
 import { createWitnessShareHandler } from './witness-share.js';
+import { createCredentialIssueHandler, createCredentialPresentHandler } from './credential-exchange.js';
+import { createTaskConsentRequestHandler } from './task-consent.js';
+import type { TaskConsentRequestDeps } from './task-consent.js';
 
 export interface AgentBoundaryDeps {
   ds: DataSource;
@@ -37,6 +42,15 @@ export interface AgentBoundaryDeps {
   /** The witness share participant (`store_witness_share`). */
   witnessShare: WitnessShareParticipant;
   verifier: DidProofVerifier;
+  /**
+   * Layer 3b-DTG adapters (conformance P5b). Each is served only when its dependency is given: `credential-exchange/issue`
+   * over the credential receive participant, `credential-exchange/present` over the presentation participant, and
+   * `task-consent/request` (this device as the approver) when a consent policy is given. `task-consent/decision` is the
+   * ceremony HOST's task and rides with the ceremony document handlers, which the agent listener does not serve.
+   */
+  credentialReceive?: CredentialReceiveParticipant;
+  presentation?: CredentialPresentationParticipant;
+  consent?: TaskConsentRequestDeps;
   config: BoundaryListenerConfig;
   /** Called when a proposal starts waiting for the human. */
   onHeld?: (exchangeId: string) => void;
@@ -68,6 +82,7 @@ export async function startAgentBoundary(deps: AgentBoundaryDeps): Promise<Agent
   });
   deps.receive.setInnerProofVerifier(deps.verifier);
   deps.witnessShare.setVerifier(deps.verifier);
+  deps.presentation?.setVerifier(deps.verifier);
   const recorder = new TrustTaskRecorder(deps.ds, { node: 'agent', onError: (err) => logger.error('[trust-tasks] recording a document failed:', (err as Error)?.message) });
   const pipeline = new Pipeline({
     handlers: [
@@ -86,6 +101,9 @@ export async function startAgentBoundary(deps: AgentBoundaryDeps): Promise<Agent
         verifier: deps.verifier,
         attachTx: (id, txId) => guard.attachTx(id, txId),
       }),
+      ...(deps.credentialReceive === undefined ? [] : [createCredentialIssueHandler({ db: deps.ds, txManager: deps.txManager, participant: deps.credentialReceive, verifier: deps.verifier, attachTx: (id, txId) => guard.attachTx(id, txId) })]),
+      ...(deps.presentation === undefined ? [] : [createCredentialPresentHandler({ txManager: deps.txManager, participant: deps.presentation, verifier: deps.verifier, attachTx: (id, txId) => guard.attachTx(id, txId) })]),
+      ...(deps.consent === undefined ? [] : [createTaskConsentRequestHandler(deps.consent)]),
     ],
     servedVids: [deps.did],
     guard,
