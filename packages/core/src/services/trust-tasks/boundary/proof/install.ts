@@ -17,6 +17,7 @@ import type { BoundarySigner } from './signer.js';
 import {
   BoundedRotationLogSource, CompositeKeyResolver, DidKeyResolver, DidResolverKeyResolver, ResolutionRateLimiter, SourcedKeyResolver,
 } from './resolver.js';
+import { TimePinnedKeyResolver } from './time-pinned.js';
 import type { BoundedSourceOptions, KeyResolver, RateLimitOptions } from './resolver.js';
 
 export interface BoundarySignerInstall {
@@ -72,6 +73,8 @@ export interface VerifierResolverOptions {
   remoteSource?: RotationLogSource;
   bounds?: BoundedSourceOptions;
   rateLimit?: RateLimitOptions;
+  /** Resolve did:scid:vh key sets AT `proof.created` from the validated log (gate G2). Default false: latest. */
+  timePinned?: boolean;
 }
 
 class FallbackSource implements RotationLogSource {
@@ -107,7 +110,25 @@ export function createLocalKeyResolver(options: VerifierResolverOptions): KeyRes
     sources.push(new BoundedRotationLogSource(options.remoteSource, { ...options.bounds, limiter: new ResolutionRateLimiter(options.rateLimit) }));
   }
   const logSource: RotationLogSource = sources.length === 1 ? sources[0]! : new FallbackSource(sources);
+  if (options.timePinned === true) {
+    // did:scid:vh answered at `created`; the DidResolver entry stays for did:peer:4 (offline).
+    return new CompositeKeyResolver([new DidKeyResolver(), new TimePinnedKeyResolver({ source: logSource }), new DidResolverKeyResolver(new DidResolver({}))]);
+  }
   return new CompositeKeyResolver([new DidKeyResolver(), new DidResolverKeyResolver(new DidResolver(sources.length === 0 ? {} : { logSource }))]);
+}
+
+/**
+ * The server's TIME-PINNED key resolver (gate G2): did:scid:vh key sets are taken from the validated
+ * rotation-log rows (`DidResolutionService.resolveLog`), never from the cached `document_json`
+ * snapshot, and are pinned to `proof.created`. did:peer:4 resolves offline.
+ */
+export function createTimePinnedServerKeyResolver(service: Pick<DidResolutionService, 'resolveLog'>): KeyResolver {
+  const source: RotationLogSource = {
+    async getLog(did) {
+      return (await service.resolveLog(did))?.entries ?? [];
+    },
+  };
+  return new CompositeKeyResolver([new DidKeyResolver(), new TimePinnedKeyResolver({ source }), new DidResolverKeyResolver(new DidResolver({}))]);
 }
 
 /** The verifier's key resolver for the server, from its database-backed resolution service (a cache-sourced result is refused). */

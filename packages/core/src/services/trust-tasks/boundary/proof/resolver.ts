@@ -19,10 +19,10 @@
  * `ResolutionUnavailable`: the verifier answers `unavailable` (retryable), never `proofInvalid`.
  * A DID of a method we do not serve, or one that is malformed, is a definite `null`.
  *
- * Time. `resolve(did, atMs)` carries the instant a key set is wanted for (`proof.created`). No
- * resolver here pins to it yet (the client resolver replays the latest log only): every result
- * says `keySetAt: 'latest'`. A time-pinned lookup is a prerequisite of the dedicated-key cutover
- * (gate G2) and lands behind this interface without changing the verifier.
+ * Time. `resolve(did, atMs)` carries the instant a key set is wanted for (`proof.created`). The
+ * resolvers in this file answer the LATEST key set (`keySetAt: 'latest'`); `time-pinned.ts`
+ * (`TimePinnedKeyResolver`) answers the key set in force at `atMs` from the validated rotation log,
+ * which the dedicated-key cutover (gate G2) needs. Neither ever uses a cache-sourced result.
  */
 import { base58btc } from 'multiformats/bases/base58';
 import { DidResolver } from '../../../../did/did-resolver.js';
@@ -44,8 +44,13 @@ export interface ResolvedKey {
 export interface ResolvedKeySet {
   readonly did: string;
   readonly source: KeySource;
-  /** The key set is the latest known one; no resolver here pins to `atMs` yet (gate G2). */
-  readonly keySetAt: 'latest';
+  /**
+   * `latest`: the newest validated document (no time pin). `created`: the document of the log entry
+   * in force at the requested instant (`TimePinnedKeyResolver`, gate G2).
+   */
+  readonly keySetAt: 'latest' | 'created';
+  /** `created` only: the log version whose document this key set is. */
+  readonly version?: number;
   readonly keys: readonly ResolvedKey[];
 }
 
