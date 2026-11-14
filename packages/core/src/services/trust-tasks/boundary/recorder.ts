@@ -9,7 +9,8 @@
  * Retention rule: a body refused BEFORE proof verification is never stored (it is unauthenticated
  * input that anyone could use to fill the table); only counters and a hashed sender are kept. A
  * document accepted, or refused after its proof verified (or after the duplicate claim), is stored
- * verbatim. A duplicate of a stored document is not stored again; a recording failure is reported
+ * verbatim, except that a read-only evaluate query (`PipelineHandler.unrecorded`) is never stored,
+ * whatever its outcome. A duplicate of a stored document is not stored again; a recording failure is reported
  * and never changes the answer (the duplicate record, not this log, is the replay defence).
  */
 import { createHash } from 'node:crypto';
@@ -58,6 +59,8 @@ export class TrustTaskRecorder {
   /** Record one pipeline result. Never throws. */
   async record(result: PipelineResult): Promise<void> {
     try {
+      // A read-only evaluate document is never retained, whatever its outcome (decision 36).
+      if (result.unrecorded === true) return;
       if (result.refusedBeforeProof) {
         this.count(result);
         return;
