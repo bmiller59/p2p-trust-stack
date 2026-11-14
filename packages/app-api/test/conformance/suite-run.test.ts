@@ -39,7 +39,7 @@ function runSuite(serverArgs: string): { code: number | null; runs: Run[]; out: 
 /** No documented divergence is left (see the header). */
 const EXPECTED_FAIL: string[] = [];
 /** What a SKIP may say: only things the adapter does not declare, or the other server mode. */
-const ALLOWED_SKIP = /ecdsa-jcs-2019|only runs at tier 1|type not declared|implementation declares optional attested/;
+const ALLOWED_SKIP = /ecdsa-jcs-2019|only runs at tier 1|type not declared|implementation declares optional attested|implementation declares optional ceremony.status/;
 const count = (run: Run, status: string): number => run.results.filter((r) => r.status === status).length;
 const ids = (run: Run, status: string): string[] => run.results.filter((r) => r.status === status).map((r) => r.id);
 
