@@ -67,6 +67,13 @@ export interface StartListenerOptions {
   process(input: PipelineInput): Promise<PipelineResult>;
   maxBodyBytes?: number;
   onError?: (err: unknown) => void;
+  /**
+   * Maps a request to the transport-authenticated sender (the VID a bearer token stands for, bindings/https section 3), or
+   * `undefined` for no sender (no Authorization header, or a token it does not recognise). Absent by default: the agent's
+   * own listener authenticates by the proof alone and passes the pipeline no sender. A deployment that issues bearer tokens
+   * (and the conformance adapter) supplies it.
+   */
+  authenticate?: (req: IncomingMessage) => string | undefined;
 }
 
 function respond(res: ServerResponse, status: number, body?: unknown, type = 'application/json'): void {
@@ -106,17 +113,20 @@ export async function startBoundaryListener(options: StartListenerOptions): Prom
 
   async function handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
     const url = (req.url ?? '').split('?')[0];
-    if (url !== LISTENER_PATH) return respond(res, 404, minimal('endpointNotFound', 'Not found.'));
+    // Other paths and methods are plain HTTP refusals with no body and no Content-Type: bindings/https section 2 says these
+    // answers are not framework error documents.
+    if (url !== LISTENER_PATH) return respond(res, 404);
     if (req.method !== 'POST') {
       res.setHeader('allow', 'POST');
-      return respond(res, 405, minimal('methodNotAllowed', 'Use POST.'));
+      return respond(res, 405);
     }
     const ctype = String(req.headers['content-type'] ?? '').split(';')[0]!.trim().toLowerCase();
     if (ctype !== 'application/json') return respond(res, 415, minimal('unsupportedMediaType', 'Content-Type must be application/json.'));
     const body = await readBody(req, max);
     if (body === 'tooLarge') return respond(res, 413, minimal('malformedRequest', 'The document is too large.'));
-    // No cookie, bearer token or other credential is consulted: the pipeline authenticates by proof alone.
-    const result = await options.process({ raw: body, sender: undefined });
+    // Unless the deployment supplies `authenticate`, no cookie, bearer token or other credential is consulted: the pipeline
+    // authenticates by proof alone.
+    const result = await options.process({ raw: body, sender: options.authenticate?.(req) });
     if (result.minimal !== undefined) return respond(res, result.status, result.minimal);
     if (result.document !== undefined) return respond(res, result.status, result.document);
     return respond(res, result.status);

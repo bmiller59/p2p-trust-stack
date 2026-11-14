@@ -77,13 +77,46 @@ describe('the HTTP carrier', () => {
     assert.equal(withCreds.status, 403);
     assert.equal(((await withCreds.json()) as { payload: { code: string } }).payload.code, 'permissionDenied');
 
-    assert.equal((await fetch(`http://127.0.0.1:${listener.port}${LISTENER_PATH}`)).status, 405);
-    assert.equal((await post(listener.port, '{}', { 'content-type': 'application/json' }, '/api/anything')).status, 404);
+    // Another method or path is a plain refusal: no body and no Content-Type (bindings/https section 2: not framework error documents).
+    const wrongMethod = await fetch(`http://127.0.0.1:${listener.port}${LISTENER_PATH}`);
+    assert.equal(wrongMethod.status, 405);
+    assert.equal(wrongMethod.headers.get('allow'), 'POST');
+    assert.equal(await wrongMethod.text(), '');
+    assert.equal(wrongMethod.headers.get('content-type'), null);
+    const wrongPath = await post(listener.port, '{}', { 'content-type': 'application/json' }, '/api/anything');
+    assert.equal(wrongPath.status, 404);
+    assert.equal(await wrongPath.text(), '');
+    assert.equal(wrongPath.headers.get('content-type'), null);
     assert.equal((await post(listener.port, '{}', { 'content-type': 'text/plain' })).status, 415);
     assert.equal((await post(listener.port, 'x'.repeat(5000))).status, 413);
     const garbage = await post(listener.port, '{not json');
     assert.equal(garbage.status, 400);
     assert.deepEqual(Object.keys(await garbage.json()).sort(), ['code', 'message', 'retryable']);
+  });
+});
+
+describe('the HTTP carrier with a bearer-token mapping (deployment supplied)', () => {
+  it('hands the pipeline the VID the token maps to, and no sender for no header or an unknown token', async () => {
+    const seen: Array<string | undefined> = [];
+    const tokens = new Map([['tok-a', 'did:example:a']]);
+    const listener = await startBoundaryListener({
+      host: '127.0.0.1',
+      port: 0,
+      process: async (input) => {
+        seen.push(input.sender);
+        return { kind: 'absorbed', status: 204, raw: input.raw, received: true, refusedBeforeProof: false } as never;
+      },
+      authenticate: (req) => {
+        const m = /^Bearer (.+)$/.exec(String(req.headers.authorization ?? ''));
+        return m === null ? undefined : tokens.get(m[1]!);
+      },
+    });
+    cleanup.push(() => listener.close());
+    const h = (authorization?: string) => ({ 'content-type': 'application/json', ...(authorization === undefined ? {} : { authorization }) });
+    await post(listener.port, '{}', h('Bearer tok-a'));
+    await post(listener.port, '{}', h());
+    await post(listener.port, '{}', h('Bearer nobody'));
+    assert.deepEqual(seen, ['did:example:a', undefined, undefined]);
   });
 });
 
