@@ -2,6 +2,8 @@
   "format": "tt-conformance-matrix/0.1",
   "families": [
     "ceremony-doc",
+    "dtg-credential-exchange",
+    "dtg-task-consent",
     "framework",
     "https-binding",
     "trust-task-discovery",
@@ -46,6 +48,38 @@
             "pass": 6,
             "ran": 6,
             "total": 7
+          },
+          "green": true
+        },
+        "dtg-credential-exchange": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 11,
+            "FAIL": 1,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          },
+          "anchors": {
+            "pass": 0,
+            "ran": 1,
+            "total": 1
+          },
+          "green": false
+        },
+        "dtg-task-consent": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 14,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 4
+          },
+          "anchors": {
+            "pass": 3,
+            "ran": 3,
+            "total": 3
           },
           "green": true
         },
@@ -199,6 +233,38 @@
             "pass": 6,
             "ran": 6,
             "total": 7
+          },
+          "green": true
+        },
+        "dtg-credential-exchange": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 11,
+            "FAIL": 1,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          },
+          "anchors": {
+            "pass": 0,
+            "ran": 1,
+            "total": 1
+          },
+          "green": false
+        },
+        "dtg-task-consent": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 14,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 4
+          },
+          "anchors": {
+            "pass": 3,
+            "ran": 3,
+            "total": 3
           },
           "green": true
         },

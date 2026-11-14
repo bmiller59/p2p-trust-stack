@@ -1997,6 +1997,308 @@
         "status": "CLARIFY",
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
+      },
+      {
+        "id": "TC-001",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-002",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-003",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-004",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-005",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-006",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-007",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-008",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-009",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-010",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-011",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification asks for idempotent recording but also says a request that was already decided is noPending; which answer a repeat after the commit gets is not stated. The vector asserts the repeated answer and no second effect. Not gating. (observed: fail)",
+        "failures": [
+          "step 5: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 5: pointer /payload/status: got undefined",
+          "step 5: pointer /payload/payloadDigest: got undefined"
+        ]
+      },
+      {
+        "id": "TC-012",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A device refuses to prompt when it is not a member of the named approverSet (consumer 6); the harness cannot know a set the device belongs to, so whether this request is prompted depends on the implementation's own enrolment. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TC-013",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-014",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-015",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the device refuses to prompt and names `expired`, and also allows a response with status refused; which of the two is the refusal is not stated. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: expected code expired, got taskFailed"
+        ]
+      },
+      {
+        "id": "TC-016",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-017",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-018",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 3: pointer /payload/status: got undefined",
+          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 4: pointer /payload/status: got undefined"
+        ]
+      },
+      {
+        "id": "CEX-001",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "anchor": true,
+        "status": "FAIL",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: handled count 0, expected 1",
+          "step 1: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-002",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-003",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-004",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-005",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-006",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-007",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-008",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: stored credentials 0, expected 1",
+          "step 2: expected silence, got 1 replies",
+          "step 2: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-009",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The task specification does not name the proof purpose of the carried credential; assertionMethod is the Data Integrity reading and VRC-ISS asserts it for relationship credentials. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-010",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "CEX-011",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the proof carries the verifier's nonce and domain; Data Integrity names the first member `challenge`, and where the verifier's nonce comes from (the query task) is outside this suite. The vector sends `challenge` and takes the nonce from the helper `presentationNonce`. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-012",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the nonce member name and the nonce's source are not fixed by the specification. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-013",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the audience is the proof's `domain` in the Data Integrity reading; the specification names it only as the audience. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-014",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a nonce is single use is the verifier's policy; the specification says only that a nonce it no longer considers fresh is stale. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected one error, got 0 replies"
+        ]
+      },
+      {
+        "id": "CEX-015",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-016",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-017",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "CEX-018",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
       }
     ],
     "window": {
@@ -2006,7 +2308,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "2679ae15a43a"
+    "salt": "2630113b9458"
   },
   {
     "impl": "truststackers-agent-didkey-attested",
@@ -3990,6 +4292,305 @@
         "status": "CLARIFY",
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
+      },
+      {
+        "id": "TC-001",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-002",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-003",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-004",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-005",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-006",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-007",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-008",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-009",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-010",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-011",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification asks for idempotent recording but also says a request that was already decided is noPending; which answer a repeat after the commit gets is not stated. The vector asserts the repeated answer and no second effect. Not gating. (observed: fail)",
+        "failures": [
+          "step 5: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 5: pointer /payload/status: got undefined",
+          "step 5: pointer /payload/payloadDigest: got undefined"
+        ]
+      },
+      {
+        "id": "TC-012",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A device refuses to prompt when it is not a member of the named approverSet (consumer 6); the harness cannot know a set the device belongs to, so whether this request is prompted depends on the implementation's own enrolment. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TC-013",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-014",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-015",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the device refuses to prompt and names `expired`, and also allows a response with status refused; which of the two is the refusal is not stated. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: expected code expired, got taskFailed"
+        ]
+      },
+      {
+        "id": "TC-016",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-017",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-018",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 3: pointer /payload/status: got undefined",
+          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 4: pointer /payload/status: got undefined"
+        ]
+      },
+      {
+        "id": "CEX-001",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "anchor": true,
+        "status": "FAIL",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: handled count 0, expected 1",
+          "step 1: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-002",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-003",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-004",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-005",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-006",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-007",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-008",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: stored credentials 0, expected 1",
+          "step 2: expected silence, got 1 replies",
+          "step 2: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-009",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The task specification does not name the proof purpose of the carried credential; assertionMethod is the Data Integrity reading and VRC-ISS asserts it for relationship credentials. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-010",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-011",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the proof carries the verifier's nonce and domain; Data Integrity names the first member `challenge`, and where the verifier's nonce comes from (the query task) is outside this suite. The vector sends `challenge` and takes the nonce from the helper `presentationNonce`. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-012",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the nonce member name and the nonce's source are not fixed by the specification. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-013",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the audience is the proof's `domain` in the Data Integrity reading; the specification names it only as the audience. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-014",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a nonce is single use is the verifier's policy; the specification says only that a nonce it no longer considers fresh is stale. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected one error, got 0 replies"
+        ]
+      },
+      {
+        "id": "CEX-015",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-016",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-017",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-018",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "PASS"
       }
     ],
     "window": {
@@ -3999,7 +4600,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "f323794b5bc4"
+    "salt": "154d03aba8fa"
   },
   {
     "impl": "truststackers-agent-didkey-tier1",
@@ -5985,6 +6586,308 @@
         "status": "CLARIFY",
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
+      },
+      {
+        "id": "TC-001",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-002",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-003",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-004",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-005",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-006",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-007",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-008",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-009",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-010",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-011",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification asks for idempotent recording but also says a request that was already decided is noPending; which answer a repeat after the commit gets is not stated. The vector asserts the repeated answer and no second effect. Not gating. (observed: fail)",
+        "failures": [
+          "step 5: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 5: pointer /payload/status: got undefined",
+          "step 5: pointer /payload/payloadDigest: got undefined"
+        ]
+      },
+      {
+        "id": "TC-012",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A device refuses to prompt when it is not a member of the named approverSet (consumer 6); the harness cannot know a set the device belongs to, so whether this request is prompted depends on the implementation's own enrolment. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TC-013",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-014",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-015",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the device refuses to prompt and names `expired`, and also allows a response with status refused; which of the two is the refusal is not stated. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: expected code expired, got taskFailed"
+        ]
+      },
+      {
+        "id": "TC-016",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-017",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-018",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 3: pointer /payload/status: got undefined",
+          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 4: pointer /payload/status: got undefined"
+        ]
+      },
+      {
+        "id": "CEX-001",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "anchor": true,
+        "status": "FAIL",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: handled count 0, expected 1",
+          "step 1: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-002",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-003",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-004",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-005",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-006",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-007",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-008",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: stored credentials 0, expected 1",
+          "step 2: expected silence, got 1 replies",
+          "step 2: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-009",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The task specification does not name the proof purpose of the carried credential; assertionMethod is the Data Integrity reading and VRC-ISS asserts it for relationship credentials. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-010",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "CEX-011",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the proof carries the verifier's nonce and domain; Data Integrity names the first member `challenge`, and where the verifier's nonce comes from (the query task) is outside this suite. The vector sends `challenge` and takes the nonce from the helper `presentationNonce`. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-012",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the nonce member name and the nonce's source are not fixed by the specification. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-013",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the audience is the proof's `domain` in the Data Integrity reading; the specification names it only as the audience. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-014",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a nonce is single use is the verifier's policy; the specification says only that a nonce it no longer considers fresh is stale. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected one error, got 0 replies"
+        ]
+      },
+      {
+        "id": "CEX-015",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-016",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-017",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "CEX-018",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
       }
     ],
     "window": {
@@ -5994,7 +6897,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "6e000db16934"
+    "salt": "a0cd7d0a0358"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -7994,6 +8897,308 @@
         "status": "CLARIFY",
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
+      },
+      {
+        "id": "TC-001",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-002",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-003",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-004",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-005",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-006",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-007",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-008",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-009",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-010",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-011",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification asks for idempotent recording but also says a request that was already decided is noPending; which answer a repeat after the commit gets is not stated. The vector asserts the repeated answer and no second effect. Not gating. (observed: fail)",
+        "failures": [
+          "step 5: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 5: pointer /payload/status: got undefined",
+          "step 5: pointer /payload/payloadDigest: got undefined"
+        ]
+      },
+      {
+        "id": "TC-012",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A device refuses to prompt when it is not a member of the named approverSet (consumer 6); the harness cannot know a set the device belongs to, so whether this request is prompted depends on the implementation's own enrolment. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TC-013",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-014",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-015",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the device refuses to prompt and names `expired`, and also allows a response with status refused; which of the two is the refusal is not stated. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: expected code expired, got taskFailed"
+        ]
+      },
+      {
+        "id": "TC-016",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-017",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-018",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 3: pointer /payload/status: got undefined",
+          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 4: pointer /payload/status: got undefined"
+        ]
+      },
+      {
+        "id": "CEX-001",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "anchor": true,
+        "status": "FAIL",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: handled count 0, expected 1",
+          "step 1: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-002",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-003",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-004",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-005",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-006",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-007",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-008",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: stored credentials 0, expected 1",
+          "step 2: expected silence, got 1 replies",
+          "step 2: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-009",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The task specification does not name the proof purpose of the carried credential; assertionMethod is the Data Integrity reading and VRC-ISS asserts it for relationship credentials. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-010",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "CEX-011",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the proof carries the verifier's nonce and domain; Data Integrity names the first member `challenge`, and where the verifier's nonce comes from (the query task) is outside this suite. The vector sends `challenge` and takes the nonce from the helper `presentationNonce`. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-012",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the nonce member name and the nonce's source are not fixed by the specification. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-013",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the audience is the proof's `domain` in the Data Integrity reading; the specification names it only as the audience. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-014",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a nonce is single use is the verifier's policy; the specification says only that a nonce it no longer considers fresh is stale. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected one error, got 0 replies"
+        ]
+      },
+      {
+        "id": "CEX-015",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-016",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-017",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "CEX-018",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
       }
     ],
     "window": {
@@ -8003,7 +9208,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "36a26bbecd39"
+    "salt": "6c3f26130bec"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -9987,6 +11192,305 @@
         "status": "CLARIFY",
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
+      },
+      {
+        "id": "TC-001",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-002",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-003",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-004",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-005",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-006",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-007",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-008",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-009",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-010",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-011",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification asks for idempotent recording but also says a request that was already decided is noPending; which answer a repeat after the commit gets is not stated. The vector asserts the repeated answer and no second effect. Not gating. (observed: fail)",
+        "failures": [
+          "step 5: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 5: pointer /payload/status: got undefined",
+          "step 5: pointer /payload/payloadDigest: got undefined"
+        ]
+      },
+      {
+        "id": "TC-012",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A device refuses to prompt when it is not a member of the named approverSet (consumer 6); the harness cannot know a set the device belongs to, so whether this request is prompted depends on the implementation's own enrolment. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TC-013",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-014",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-015",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the device refuses to prompt and names `expired`, and also allows a response with status refused; which of the two is the refusal is not stated. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: expected code expired, got taskFailed"
+        ]
+      },
+      {
+        "id": "TC-016",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-017",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-018",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 3: pointer /payload/status: got undefined",
+          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 4: pointer /payload/status: got undefined"
+        ]
+      },
+      {
+        "id": "CEX-001",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "anchor": true,
+        "status": "FAIL",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: handled count 0, expected 1",
+          "step 1: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-002",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-003",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-004",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-005",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-006",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-007",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-008",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: stored credentials 0, expected 1",
+          "step 2: expected silence, got 1 replies",
+          "step 2: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-009",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The task specification does not name the proof purpose of the carried credential; assertionMethod is the Data Integrity reading and VRC-ISS asserts it for relationship credentials. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-010",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-011",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the proof carries the verifier's nonce and domain; Data Integrity names the first member `challenge`, and where the verifier's nonce comes from (the query task) is outside this suite. The vector sends `challenge` and takes the nonce from the helper `presentationNonce`. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-012",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the nonce member name and the nonce's source are not fixed by the specification. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-013",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the audience is the proof's `domain` in the Data Integrity reading; the specification names it only as the audience. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-014",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a nonce is single use is the verifier's policy; the specification says only that a nonce it no longer considers fresh is stale. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected one error, got 0 replies"
+        ]
+      },
+      {
+        "id": "CEX-015",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-016",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-017",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-018",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "PASS"
       }
     ],
     "window": {
@@ -9996,7 +11500,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "007089b74185"
+    "salt": "44eb73e88c5f"
   },
   {
     "impl": "truststackers-agent-scidvh-tier1",
@@ -11982,6 +13486,308 @@
         "status": "CLARIFY",
         "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
         "failures": []
+      },
+      {
+        "id": "TC-001",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-002",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-003",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-004",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-005",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-006",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-007",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-008",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-009",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "anchor": true,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-010",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-011",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification asks for idempotent recording but also says a request that was already decided is noPending; which answer a repeat after the commit gets is not stated. The vector asserts the repeated answer and no second effect. Not gating. (observed: fail)",
+        "failures": [
+          "step 5: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 5: pointer /payload/status: got undefined",
+          "step 5: pointer /payload/payloadDigest: got undefined"
+        ]
+      },
+      {
+        "id": "TC-012",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A device refuses to prompt when it is not a member of the named approverSet (consumer 6); the harness cannot know a set the device belongs to, so whether this request is prompted depends on the implementation's own enrolment. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TC-013",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-014",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-015",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the device refuses to prompt and names `expired`, and also allows a response with status refused; which of the two is the refusal is not stated. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: expected code expired, got taskFailed"
+        ]
+      },
+      {
+        "id": "TC-016",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-017",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TC-018",
+        "group": "TC",
+        "family": "dtg-task-consent",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 3: pointer /payload/status: got undefined",
+          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
+          "step 4: pointer /payload/status: got undefined"
+        ]
+      },
+      {
+        "id": "CEX-001",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "anchor": true,
+        "status": "FAIL",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: handled count 0, expected 1",
+          "step 1: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-002",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-003",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-004",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-005",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-006",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-007",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-008",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
+        "failures": [
+          "step 1: expected silence, got 1 replies",
+          "step 1: stored credentials 0, expected 1",
+          "step 2: expected silence, got 1 replies",
+          "step 2: stored credentials 0, expected 1"
+        ]
+      },
+      {
+        "id": "CEX-009",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The task specification does not name the proof purpose of the carried credential; assertionMethod is the Data Integrity reading and VRC-ISS asserts it for relationship credentials. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-010",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "CEX-011",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the proof carries the verifier's nonce and domain; Data Integrity names the first member `challenge`, and where the verifier's nonce comes from (the query task) is outside this suite. The vector sends `challenge` and takes the nonce from the helper `presentationNonce`. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-012",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the nonce member name and the nonce's source are not fixed by the specification. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-013",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "As CEX-011: the audience is the proof's `domain` in the Data Integrity reading; the specification names it only as the audience. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "CEX-014",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a nonce is single use is the verifier's policy; the specification says only that a nonce it no longer considers fresh is stale. Not gating. (observed: fail)",
+        "failures": [
+          "step 3: expected one error, got 0 replies"
+        ]
+      },
+      {
+        "id": "CEX-015",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-016",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CEX-017",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "CEX-018",
+        "group": "CEX",
+        "family": "dtg-credential-exchange",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
       }
     ],
     "window": {
@@ -11991,6 +13797,6 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "8a583ae120f7"
+    "salt": "16b38b57752d"
   }
 ]
