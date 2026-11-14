@@ -62,7 +62,7 @@ export async function dispatch(adapter: Adapter, req: RpcRequest): Promise<RpcRe
       case 'trigger': result = await adapter.trigger(str(p.action, 'action'), obj(p.args)); break;
       case 'observe': {
         const q = p.query;
-        if (q !== 'handled' && q !== 'documentState' && q !== 'stored') throw new Error('query must be handled, documentState or stored');
+        if (q !== 'handled' && q !== 'documentState' && q !== 'stored' && q !== 'retained') throw new Error('query must be handled, documentState, stored or retained');
         result = await adapter.observe(p as unknown as ObserveQuery);
         break;
       }
