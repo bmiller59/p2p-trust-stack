@@ -125,6 +125,26 @@ function deriveScid(entry: Pick<RotationLogEntry, 'version' | 'parameters' | 'di
   return base58btc.encode(digest);
 }
 
+/**
+ * True when `did` is `did:scid:vh:1:<SCID>`, the genesis entry (version 0) names that DID as its
+ * document id, and SCID = base58btc(JCS digest of the genesis with the `{SCID}` placeholder as id):
+ * the identifier must BE the hash of its genesis entry (self-certification). `validateChain` checks
+ * a log's internal consistency only; this is what ties a log to the identifier it is served under.
+ */
+export function scidMatchesGenesis(did: string, genesis: RotationLogEntry): boolean {
+  const prefix = 'did:scid:vh:1:';
+  if (!did.startsWith(prefix) || genesis.version !== 0 || genesis.didDocument.id !== did) return false;
+  const digest = computeRotationEntryDigest({
+    version: genesis.version,
+    parameters: genesis.parameters,
+    didDocument: { ...genesis.didDocument, id: `${prefix}{SCID}` },
+    prevHash: genesis.prevHash,
+    nextKeyCommitments: genesis.nextKeyCommitments,
+    createdAt: genesis.createdAt,
+  });
+  return base58btc.encode(digest) === did.slice(prefix.length);
+}
+
 // ---------------------------------------------------------------------------
 // ScidVhMethodConfig
 // ---------------------------------------------------------------------------
@@ -351,7 +371,11 @@ export class ScidVhMethod implements DidMethod {
    * @param src  Optional resolution hint (spec-defined `src` DID URL param).
    */
   resolveFromLog(did: string, log: RotationLogEntry[], src?: string): DidDocument {
-    const { validEntries } = this.validateChain(log);
+    // The identifier must be the hash of the genesis entry; the chain check alone does not tie a log to a DID.
+    if (log.length > 0 && !scidMatchesGenesis(did, log[0])) {
+      throw new Error(`ScidVhMethod.resolve: the rotation log does not belong to ${did} (SCID mismatch)`);
+    }
+    const { validEntries } = this.validateChain(log, did);
     if (validEntries.length === 0) {
       throw new Error(`ScidVhMethod.resolve: rotation log for ${did} has no valid entries`);
     }
@@ -611,7 +635,7 @@ export class ScidVhMethod implements DidMethod {
     };
 
     const extended = [...currentLog, entry];
-    if (this.validateEntries(extended).length !== extended.length) {
+    if (this.validateEntries(extended, prev.didDocument.id).length !== extended.length) {
       throw new Error('ScidVhMethod.updateDocument: the new entry does not validate under validateChain');
     }
     this.config.store?.appendEntry(prev.didDocument.id!, entry);
@@ -641,8 +665,8 @@ export class ScidVhMethod implements DidMethod {
    * commitment and signatures (Ed25519, and ML-DSA-65 when present). Read-only; used by time-pinned
    * resolution, which selects an entry from the VALIDATED chain only.
    */
-  validateEntries(log: RotationLogEntry[]): RotationLogEntry[] {
-    return this.validateChain(log).validEntries;
+  validateEntries(log: RotationLogEntry[], did?: string): RotationLogEntry[] {
+    return this.validateChain(log, did).validEntries;
   }
 
   // ---------------------------------------------------------------------------
@@ -713,7 +737,8 @@ export class ScidVhMethod implements DidMethod {
   // Internal: chain validation
   // ---------------------------------------------------------------------------
 
-  private validateChain(log: RotationLogEntry[]): { validEntries: RotationLogEntry[] } {
+  /** With `did`, the genesis must also hash to that identifier (`scidMatchesGenesis`); otherwise nothing is valid. */
+  private validateChain(log: RotationLogEntry[], did?: string): { validEntries: RotationLogEntry[] } {
     const validEntries: RotationLogEntry[] = [];
 
     for (let i = 0; i < log.length; i++) {
@@ -740,6 +765,9 @@ export class ScidVhMethod implements DidMethod {
           break;
         }
         if (entry.prevHash !== null) {
+          break;
+        }
+        if (did !== undefined && !scidMatchesGenesis(did, entry)) {
           break;
         }
         validEntries.push(entry);

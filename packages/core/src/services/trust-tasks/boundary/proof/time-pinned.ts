@@ -26,9 +26,7 @@
  * freshness bound on `proof.created` (`verify.ts`, `BoundaryKeyPolicy.maxProofAgeMs`) is what stops a
  * backdated `created` from extending an old key's life; the residual risk is documented there.
  */
-import { base58btc } from 'multiformats/bases/base58';
-import { computeRotationEntryDigest } from '../../../../did/rotation-codec.js';
-import { ScidVhMethod } from '../../../../did/scid-vh-method.js';
+import { ScidVhMethod, scidMatchesGenesis } from '../../../../did/scid-vh-method.js';
 import type { RotationLogEntry } from '../../../../did/rotation-types.js';
 import type { RotationLogSource } from '../../../../did/rotation-log-source.js';
 import { keysOfDocument, ResolutionUnavailable } from './resolver.js';
@@ -52,20 +50,7 @@ export function entryInForceAt(validated: readonly RotationLogEntry[], atMs: num
   return inForce;
 }
 
-/** True when `did` is `did:scid:vh:1:<SCID>` with SCID = base58btc(JCS digest of the genesis with the `{SCID}` placeholder id). */
-export function scidMatchesGenesis(did: string, genesis: RotationLogEntry): boolean {
-  const prefix = 'did:scid:vh:1:';
-  if (!did.startsWith(prefix) || genesis.version !== 0 || genesis.didDocument.id !== did) return false;
-  const digest = computeRotationEntryDigest({
-    version: genesis.version,
-    parameters: genesis.parameters,
-    didDocument: { ...genesis.didDocument, id: `${prefix}{SCID}` },
-    prevHash: genesis.prevHash,
-    nextKeyCommitments: genesis.nextKeyCommitments,
-    createdAt: genesis.createdAt,
-  });
-  return base58btc.encode(digest) === did.slice(prefix.length);
-}
+export { scidMatchesGenesis };
 
 export interface TimePinnedKeyResolverOptions {
   /** Where did:scid:vh logs come from (local store, bounded HTTP source, the server's tables). */
