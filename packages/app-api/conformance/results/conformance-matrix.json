@@ -32,22 +32,23 @@
       "runs": [
         "truststackers-agent-didkey-attested@1",
         "truststackers-agent-didkey-attested@2",
-        "truststackers-agent-didkey-tier1@1"
+        "truststackers-agent-didkey-tier1@1",
+        "truststackers-agent-didkey-tier1@2"
       ],
       "families": {
         "ceremony-doc": {
           "status": "PASS",
           "counts": {
-            "PASS": 9,
+            "PASS": 8,
             "FAIL": 0,
             "SKIP": 1,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 6
+            "CLARIFY": 7
           },
           "anchors": {
-            "pass": 6,
-            "ran": 6,
-            "total": 7
+            "pass": 5,
+            "ran": 5,
+            "total": 6
           },
           "green": true
         },
@@ -86,32 +87,32 @@
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 119,
+            "PASS": 113,
             "FAIL": 0,
-            "SKIP": 4,
+            "SKIP": 5,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 4
+            "CLARIFY": 11
           },
           "anchors": {
-            "pass": 45,
-            "ran": 45,
-            "total": 45
+            "pass": 40,
+            "ran": 40,
+            "total": 41
           },
           "green": true
         },
         "https-binding": {
           "status": "PASS",
           "counts": {
-            "PASS": 6,
+            "PASS": 7,
             "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 0
           },
           "anchors": {
-            "pass": 6,
-            "ran": 6,
-            "total": 6
+            "pass": 7,
+            "ran": 7,
+            "total": 7
           },
           "green": true
         },
@@ -166,16 +167,16 @@
         "vrc-propose": {
           "status": "PASS",
           "counts": {
-            "PASS": 23,
+            "PASS": 20,
             "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 3
+            "CLARIFY": 6
           },
           "anchors": {
-            "pass": 7,
-            "ran": 7,
-            "total": 7
+            "pass": 5,
+            "ran": 5,
+            "total": 5
           },
           "green": true
         },
@@ -196,7 +197,47 @@
           "green": true
         }
       },
-      "needsNonAttestedRun": []
+      "subgroups": {
+        "profile-witness-share": {
+          "PASS": 8,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "attested": {
+          "PASS": 23,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-p384": {
+          "PASS": 0,
+          "FAIL": 0,
+          "SKIP": 2,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-window": {
+          "PASS": 20,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-ceremony": {
+          "PASS": 8,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        }
+      },
+      "advisories": [],
+      "needsNonAttestedRun": [
+        "DUP-103"
+      ]
     },
     {
       "window": {
@@ -217,22 +258,23 @@
       "runs": [
         "truststackers-agent-scidvh-attested@1",
         "truststackers-agent-scidvh-attested@2",
-        "truststackers-agent-scidvh-tier1@1"
+        "truststackers-agent-scidvh-tier1@1",
+        "truststackers-agent-scidvh-tier1@2"
       ],
       "families": {
         "ceremony-doc": {
           "status": "PASS",
           "counts": {
-            "PASS": 9,
+            "PASS": 8,
             "FAIL": 0,
             "SKIP": 1,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 6
+            "CLARIFY": 7
           },
           "anchors": {
-            "pass": 6,
-            "ran": 6,
-            "total": 7
+            "pass": 5,
+            "ran": 5,
+            "total": 6
           },
           "green": true
         },
@@ -271,32 +313,32 @@
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 119,
+            "PASS": 113,
             "FAIL": 0,
-            "SKIP": 4,
+            "SKIP": 5,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 4
+            "CLARIFY": 11
           },
           "anchors": {
-            "pass": 45,
-            "ran": 45,
-            "total": 45
+            "pass": 40,
+            "ran": 40,
+            "total": 41
           },
           "green": true
         },
         "https-binding": {
           "status": "PASS",
           "counts": {
-            "PASS": 6,
+            "PASS": 7,
             "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 0
           },
           "anchors": {
-            "pass": 6,
-            "ran": 6,
-            "total": 6
+            "pass": 7,
+            "ran": 7,
+            "total": 7
           },
           "green": true
         },
@@ -351,16 +393,16 @@
         "vrc-propose": {
           "status": "PASS",
           "counts": {
-            "PASS": 23,
+            "PASS": 20,
             "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 3
+            "CLARIFY": 6
           },
           "anchors": {
-            "pass": 7,
-            "ran": 7,
-            "total": 7
+            "pass": 5,
+            "ran": 5,
+            "total": 5
           },
           "green": true
         },
@@ -381,7 +423,47 @@
           "green": true
         }
       },
-      "needsNonAttestedRun": []
+      "subgroups": {
+        "profile-witness-share": {
+          "PASS": 8,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "attested": {
+          "PASS": 23,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-p384": {
+          "PASS": 0,
+          "FAIL": 0,
+          "SKIP": 2,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-window": {
+          "PASS": 20,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-ceremony": {
+          "PASS": 8,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        }
+      },
+      "advisories": [],
+      "needsNonAttestedRun": [
+        "DUP-103"
+      ]
     }
   ]
 }
