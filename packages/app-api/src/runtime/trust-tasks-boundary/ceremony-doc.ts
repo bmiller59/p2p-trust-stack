@@ -127,8 +127,10 @@ export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandle
         return buildNextStep(
           { id: doc.id, type: doc.type, threadId: ceremonyId, issuer: doc.issuer, recipient: doc.recipient },
           {
+            // The request's own type is never named: a held co-sign is not re-issued by its sender (the other admins co-sign), so
+            // naming it would imply `resubmit` (SPEC.md 8.6). A held begin names the co-sign; a held co-sign names only the status task.
             expects: [
-              { typeUri: CEREMONY_CO_SIGN_WIRE_TYPE, reason: 'the named admins still need to co-sign' },
+              ...(doc.type === CEREMONY_CO_SIGN_WIRE_TYPE ? [] : [{ typeUri: CEREMONY_CO_SIGN_WIRE_TYPE, reason: 'the named admins still need to co-sign' }]),
               { typeUri: CEREMONY_STATUS_WIRE_TYPE, reason: 'read the ceremony state' },
             ],
             continuation: 'proceed',
