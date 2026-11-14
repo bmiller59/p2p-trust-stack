@@ -132,7 +132,7 @@ describe('capabilities and provision', () => {
     const caps = await t1.call('capabilities');
     assert.equal(caps.tierMax, 1);
     assert.ok(!caps.optional.includes('attested'));
-    const none = start(['--carrier', 'none', '--no-witness-share', '--no-issue']);
+    const none = start(['--carrier', 'none', '--no-witness-share', '--no-issue', '--no-ceremony']);
     const c2 = await none.call('capabilities');
     assert.deepEqual(c2.carriers, []);
     assert.deepEqual(c2.supportedTypes, ['https://trusttasks.org/spec/vrc/relationships/propose/0.1']);

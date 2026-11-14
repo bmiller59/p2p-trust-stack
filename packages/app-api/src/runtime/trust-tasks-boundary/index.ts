@@ -13,3 +13,7 @@ export { startAgentBoundary } from './agent-boundary.js';
 export type { AgentBoundary, AgentBoundaryDeps } from './agent-boundary.js';
 export { createWitnessShareHandler } from './witness-share.js';
 export type { WitnessShareDeps, WitnessShareTransactions } from './witness-share.js';
+export { createCeremonyDocHandlers, effectiveOutcome, refusal } from './ceremony-doc.js';
+export type { CeremonyDocDeps, CeremonyTransactions } from './ceremony-doc.js';
+export { RetainedDocuments } from './retained.js';
+export type { RetainedDocument } from './retained.js';

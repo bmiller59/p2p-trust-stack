@@ -50,6 +50,12 @@ import { createVrcIssueHandler } from '../src/runtime/trust-tasks-boundary/vrc-i
 import { VrcReceiveParticipant } from '../src/runtime/tx/vrc-receive-participant.ts';
 import { WitnessShareParticipant } from '../src/runtime/tx/witness-share-participant.ts';
 import { createWitnessShareHandler } from '../src/runtime/trust-tasks-boundary/witness-share.ts';
+import { createCeremonyDocHandlers } from '../src/runtime/trust-tasks-boundary/ceremony-doc.ts';
+import { RetainedDocuments } from '../src/runtime/trust-tasks-boundary/retained.ts';
+import { CeremonyDocParticipant } from '../src/runtime/tx/ceremony-doc-participant.ts';
+import type { CeremonyEffect, CeremonyEstablishment } from '../src/runtime/tx/ceremony-doc-participant.ts';
+import { TaskError } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
+import { CEREMONY_WIRE_TYPES } from '@p2p-trust-stack/core/services/trust-tasks/boundary/ceremony-spec.js';
 import { VtcStore } from '@p2p-trust-stack/core/vtc/store.js';
 import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-resolver.js';
 import { CompensationExecutor, DataSourceLogSink, TransactionCoordinator, TransactionLog, TransactionManager, TX_SCHEMA_SQL, applyTxSchemaAdditions } from '@p2p-trust-stack/core/tx/index.js';
@@ -68,6 +74,14 @@ export interface TruststackersAdapterOptions {
   /** Also serve the suite-local `vrc/relationships/witness-share` task (conformance P7). */
   witness?: boolean;
   /**
+   * Serve the ceremony documents (begin, co-sign, status, reset) over the ceremony participant (default true).
+   * The establishing effect is a FIXTURE (a unique community name recorded in an adapter-only table): the real
+   * establishment (`createVtc`, fan-out) belongs to the hosting server, not to this agent.
+   */
+  ceremony?: boolean;
+  /** Ceremony deadline in milliseconds from the begin document (default 7 days). */
+  ceremonyTtlMs?: number;
+  /**
    * The carrier the generic (framework) vectors use. `widget` (default): the suite's conformance widget
    * task, served by a fixture handler behind the same pipeline. `issue`: the issue type itself (P6 style).
    * `none`: no carrier declared, so every vector that needs one is SKIP.
@@ -78,6 +92,22 @@ export interface TruststackersAdapterOptions {
   name?: string;
   tmpRoot?: string;
   seed?: number;
+}
+
+/** The ceremony effect the adapter uses: a community name may be established once; the same ceremony again is a no-op. */
+class FixtureCommunityEffect implements CeremonyEffect {
+  private readonly db: SqliteDataSource;
+  constructor(db: SqliteDataSource) {
+    this.db = db;
+  }
+  async establish(input: CeremonyEstablishment): Promise<void> {
+    const row = await this.db.get<{ ceremony_id: string }>('SELECT ceremony_id FROM conformance_communities WHERE name = ?', input.name);
+    if (row !== null && row !== undefined) {
+      if (row.ceremony_id === input.ceremonyId) return;
+      throw new TaskError({ reason: 'nameTaken', internalMessage: 'the community name is taken' });
+    }
+    await this.db.run('INSERT INTO conformance_communities (name, ceremony_id, kind, admins) VALUES (?, ?, ?, ?)', input.name, input.ceremonyId, input.kind, JSON.stringify(input.adminDids));
+  }
 }
 
 export const PASSPHRASE = 'test-passphrase-not-a-default';
@@ -120,6 +150,8 @@ export class TruststackersAdapter implements Adapter {
   txDb!: SqliteDataSource;
   receive!: VrcReceiveParticipant;
   witnessShare!: WitnessShareParticipant;
+  ceremony!: CeremonyDocParticipant;
+  retained!: RetainedDocuments;
   verifier!: DidProofVerifier;
   recorder!: TrustTaskRecorder;
   private dbPath!: string;
@@ -171,6 +203,8 @@ export class TruststackersAdapter implements Adapter {
     this.db.getRawDb().exec('CREATE TABLE IF NOT EXISTS conformance_widget_runs (id TEXT PRIMARY KEY, at INTEGER NOT NULL)');
     this.db.getRawDb().exec('CREATE TABLE IF NOT EXISTS conformance_trusted (vid TEXT PRIMARY KEY, document TEXT NOT NULL)');
 
+    this.db.getRawDb().exec('CREATE TABLE IF NOT EXISTS conformance_communities (name TEXT PRIMARY KEY, ceremony_id TEXT NOT NULL, kind TEXT NOT NULL, admins TEXT NOT NULL)');
+
     const did = this.did;
     let identity = await identitiesRepo.findByRealDid(this.db, did);
     if (identity === null) {
@@ -212,6 +246,13 @@ export class TruststackersAdapter implements Adapter {
       verifier: this.verifier,
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     })] : [];
+    this.ceremony = new CeremonyDocParticipant(`ceremony:${did}`, this.txDb, new FixtureCommunityEffect(this.db), this.options.ceremonyTtlMs === undefined ? {} : { ttlMs: this.options.ceremonyTtlMs });
+    this.retained = new RetainedDocuments(this.db);
+    const ceremony = this.options.ceremony === false ? [] : createCeremonyDocHandlers({
+      txManager: this.txManager,
+      participant: this.ceremony,
+      attachTx: (id, txId) => this.guard.attachTx(id, txId),
+    });
     const issue = this.options.issue === false ? [] : [createVrcIssueHandler({
       db: this.db,
       txManager: this.txManager,
@@ -219,7 +260,7 @@ export class TruststackersAdapter implements Adapter {
       verifier: this.verifier,
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     })];
-    const registry = new HandlerRegistry([this.propose.handler(), ...issue, ...witness, ...(this.carrierMode() === 'widget' ? [this.widgetHandler()] : [])]);
+    const registry = new HandlerRegistry([this.propose.handler(), ...issue, ...witness, ...ceremony, ...(this.carrierMode() === 'widget' ? [this.widgetHandler()] : [])]);
     registry.register(createDiscoveryHandler(registry));
     this.recorder = new TrustTaskRecorder(this.db, { node: 'agent' });
     this.pipeline = new Pipeline({
@@ -309,6 +350,7 @@ export class TruststackersAdapter implements Adapter {
         PROPOSE_TYPE,
         ...(this.options.issue === false ? [] : [ISSUE_TYPE]),
         ...(this.options.witness === true ? [WITNESS_SHARE_TYPE] : []),
+        ...(this.options.ceremony === false ? [] : CEREMONY_WIRE_TYPES),
         ...(mode === 'widget' ? [WIDGET_TYPE] : []),
       ],
       carriers: mode === 'widget'
@@ -414,9 +456,13 @@ export class TruststackersAdapter implements Adapter {
   async widgetCount(): Promise<number> {
     return this.count('SELECT COUNT(*) AS n FROM conformance_widget_runs');
   }
+  /** Communities established by a met ceremony quorum. */
+  async communityCount(): Promise<number> {
+    return this.count('SELECT COUNT(*) AS n FROM conformance_communities');
+  }
   private async handledCount(): Promise<number> {
     const accepted = await this.count("SELECT COUNT(*) AS n FROM vrc_exchange_relationship_dids WHERE role = 'acceptor' AND state IN ('accepted','received','issued-by-me')");
-    return accepted + (await this.storedCount()) + (await this.widgetCount());
+    return accepted + (await this.storedCount()) + (await this.widgetCount()) + (await this.communityCount());
   }
 
   async observe(q: ObserveQuery): Promise<ObserveResult> {
@@ -432,6 +478,8 @@ export class TruststackersAdapter implements Adapter {
       if (row.state === 'declined') return { value: 'errored' };
       return { value: 'responded' };
     }
+    const ceremony = await this.ceremony.store.getProposal(String(q.id));
+    if (ceremony !== null) return { value: ceremony.status === 'pending' ? 'accepted' : ceremony.status === 'crystallized' ? 'responded' : 'errored' };
     const claim = await this.guard.find(String(q.id));
     if (claim !== null) return { value: claim.state === 'completed' ? 'responded' : 'accepted' };
     return { value: 'unknown' };
@@ -454,6 +502,9 @@ export class TruststackersAdapter implements Adapter {
       exchanges: await this.db.all('SELECT exchange_id, state FROM vrc_exchange_relationship_dids ORDER BY exchange_id'),
       credentials: await this.storedCount(),
       witnessed: await this.witnessCount(),
+      ceremonies: await this.txDb.all('SELECT proposal_id, status FROM ceremony_proposals ORDER BY proposal_id'),
+      approvals: await this.txDb.all('SELECT proposal_id, approver_did FROM ceremony_approvals ORDER BY proposal_id, approver_did'),
+      communities: await this.communityCount(),
     });
   }
 

@@ -6,12 +6,11 @@
  * truststackers JSON-RPC adapter, whole vector set, Tier 1 and Tier 2. Skipped, with a message, where
  * the suite folder is absent (TRUST_CONFORMANCE_SUITE overrides its location).
  *
- * The assertions are the standing result: the only FAIL is TD-005 (the suite expects a second, different
- * witnessed credential on one exchange to be stored; this agent refuses it by design, the profile choice
- * recorded in the P7 report and open in docs/10 section 8), no KNOWN-FAIL, and nothing silently skipped
- * that the adapter claims. The did:scid:vh agent passes Tier 2 now that the suite verifies replies from
- * the DID document `provision` returns. When the TD-005 question is settled (vector changed, or the
- * agent's rule), EXPECTED_FAIL goes empty and the exit code assertions follow.
+ * The assertions are the standing result: no FAIL and no KNOWN-FAIL (TD-005, the one divergence of the
+ * P8b run, passes since the suite changed that vector), and nothing silently skipped that the adapter
+ * claims: a SKIP is allowed only for a capability or type the adapter does not declare (ES256, https
+ * binding, trigger.twoPhase, discovery 0.4) or a vector that needs the other server mode. The did:scid:vh
+ * agent passes Tier 2 now that the suite verifies replies from the DID document `provision` returns.
  */
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -38,15 +37,17 @@ function runSuite(serverArgs: string): { code: number | null; runs: Run[]; out: 
   ], { cwd: APP_API, encoding: 'utf8', timeout: 240_000 });
   return { code: p.status, runs: JSON.parse(readFileSync(join(dir, 'results.json'), 'utf8')) as Run[], out: p.stdout + p.stderr };
 }
-/** The documented divergence (see the header). */
-const EXPECTED_FAIL = ['TD-005'];
+/** No documented divergence is left (see the header). */
+const EXPECTED_FAIL: string[] = [];
+/** What a SKIP may say: only things the adapter does not declare, or the other server mode. */
+const ALLOWED_SKIP = /ecdsa-jcs-2019|only runs at tier 1|type not declared|missing capability (binding:https|optional:trigger\.twoPhase)|implementation declares optional attested/;
 const count = (run: Run, status: string): number => run.results.filter((r) => r.status === status).length;
 const ids = (run: Run, status: string): string[] => run.results.filter((r) => r.status === status).map((r) => r.id);
 
 describe('the suite against the truststackers adapter (did:key agent: the harness can verify Tier 2 replies)', { skip: SKIP }, () => {
-  it('Tier 1 and Tier 2: only TD-005 fails, no KNOWN-FAIL', () => {
+  it('Tier 1 and Tier 2: no FAIL and no KNOWN-FAIL', () => {
     const { code, runs, out } = runSuite('--attested --identity key');
-    assert.equal(code, 1, out);
+    assert.equal(code, 0, out);
     assert.deepEqual(runs.map((r) => r.tier), [1, 2]);
     for (const run of runs) {
       assert.deepEqual(ids(run, 'FAIL'), EXPECTED_FAIL);
@@ -57,15 +58,15 @@ describe('the suite against the truststackers adapter (did:key agent: the harnes
     for (const id of ['VRC-PRO-012', 'VRC-PRO-013', 'VRC-PRO-019', 'VRC-ISS-017', 'VRC-ISS-018', 'VRC-ISS-019', 'RSP-004', 'ERR-003']) {
       assert.ok(ids(tier2, 'PASS').includes(id), `${id} passes at tier 2`);
     }
-    // The only skips are things the adapter does not claim: ES256 (PRF-002..005) and tier-gated vectors.
+    // The only skips are things the adapter does not claim (see ALLOWED_SKIP).
     for (const r of tier2.results.filter((x) => x.status === 'SKIP')) {
-      assert.match(r.reason ?? '', /ecdsa-jcs-2019|only runs at tier 1/, `${r.id}: ${r.reason}`);
+      assert.match(r.reason ?? '', ALLOWED_SKIP, `${r.id}: ${r.reason}`);
     }
   });
 
   it('Tier 1 server (not attested): the Tier 1 only vectors run and pass', () => {
     const { code, runs, out } = runSuite('--identity key');
-    assert.equal(code, 1, out);
+    assert.equal(code, 0, out);
     assert.equal(runs.length, 1);
     const run = runs[0]!;
     assert.deepEqual(ids(run, 'FAIL'), EXPECTED_FAIL);
@@ -74,9 +75,9 @@ describe('the suite against the truststackers adapter (did:key agent: the harnes
 });
 
 describe('the suite against the truststackers adapter (did:scid:vh agent, as the agent is built)', { skip: SKIP }, () => {
-  it('Tier 1: only TD-005 fails', () => {
+  it('Tier 1: no FAIL', () => {
     const { code, runs, out } = runSuite('');
-    assert.equal(code, 1, out);
+    assert.equal(code, 0, out);
     assert.deepEqual(ids(runs[0]!, 'FAIL'), EXPECTED_FAIL);
     assert.ok(count(runs[0]!, 'PASS') >= 120);
   });
@@ -85,8 +86,8 @@ describe('the suite against the truststackers adapter (did:scid:vh agent, as the
     const { runs, out } = runSuite('--attested');
     const tier2 = runs.find((r) => r.tier === 2)!;
     assert.deepEqual(ids(tier2, 'FAIL'), EXPECTED_FAIL, out);
-    assert.ok(count(tier2, 'PASS') >= 165, `${count(tier2, 'PASS')} pass`);
-    for (const r of tier2.results.filter((x) => x.status === 'SKIP')) assert.match(r.reason ?? '', /ecdsa-jcs-2019|only runs at tier 1/, `${r.id}: ${r.reason}`);
+    assert.ok(count(tier2, 'PASS') >= 170, `${count(tier2, 'PASS')} pass`);
+    for (const r of tier2.results.filter((x) => x.status === 'SKIP')) assert.match(r.reason ?? '', ALLOWED_SKIP, `${r.id}: ${r.reason}`);
   });
 
   it('the duplicate-record fault vectors run (fault.claimStore is claimed) and agree with the design rule', () => {

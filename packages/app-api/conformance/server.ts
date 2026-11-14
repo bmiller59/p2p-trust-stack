@@ -12,7 +12,7 @@
  *   --identity <k>    scid-vh (default) | key
  *   --carrier <c>     widget (default) | issue | none
  *   --name <n>        the implementation name in capabilities (reports and the matrix key on it)
- *   --no-issue / --no-witness-share   do not serve that task
+ *   --no-issue / --no-witness-share / --no-ceremony   do not serve that task (ceremony documents: begin, co-sign, status, reset)
  *
  * Databases live in a temporary directory removed on exit (set TMPDIR to choose where). The real HOME,
  * config and state are never read or written.
@@ -46,6 +46,7 @@ function parse(argv: string[]): { options: TruststackersAdapterOptions; http: nu
       options.carrier = v;
     } else if (a === '--no-issue') options.issue = false;
     else if (a === '--no-witness-share') options.witness = false;
+    else if (a === '--no-ceremony') options.ceremony = false;
     else if (a === '--name') options.name = next();
     else if (a === '--seed') options.seed = Number(next());
     else throw new Error(`unknown option ${a}`);
