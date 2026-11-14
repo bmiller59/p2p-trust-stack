@@ -13,7 +13,7 @@
  *   --carrier <c>     widget (default) | issue | none
  *   --name <n>        the name in capabilities (reports key on it)
  *   --implementation <n>   the implementation the name is a mode of: runs sharing it merge into one matrix row
- *   --no-issue / --no-witness-share / --no-ceremony   do not serve that task (ceremony documents: begin, co-sign, status, reset)
+ *   --no-issue / --no-witness-share / --no-ceremony / --no-dtg   do not serve that task (ceremony documents: begin, co-sign, status, reset; dtg: the task-consent and credential-exchange types)
  *   --proposer-approves   count a begin as the proposer's approval and declare it (default: every named admin co-signs)
  *   --no-https        declare the in-process binding only (the HTTPS listener is not used; the https vectors are SKIP)
  *
@@ -49,6 +49,7 @@ function parse(argv: string[]): { options: TruststackersAdapterOptions; http: nu
       options.carrier = v;
     } else if (a === '--no-issue') options.issue = false;
     else if (a === '--no-witness-share') options.witness = false;
+    else if (a === '--no-dtg') options.dtg = false;
     else if (a === '--proposer-approves') options.ceremonyProposerApproves = true;
     else if (a === '--no-ceremony') options.ceremony = false;
     else if (a === '--no-https') options.https = false;

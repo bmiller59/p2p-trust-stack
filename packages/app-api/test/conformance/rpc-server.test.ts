@@ -132,10 +132,12 @@ describe('capabilities and provision', () => {
     const caps = await t1.call('capabilities');
     assert.equal(caps.tierMax, 1);
     assert.ok(!caps.optional.includes('attested'));
-    const none = start(['--carrier', 'none', '--no-witness-share', '--no-issue', '--no-ceremony']);
+    const none = start(['--carrier', 'none', '--no-witness-share', '--no-issue', '--no-ceremony', '--no-dtg']);
     const c2 = await none.call('capabilities');
     assert.deepEqual(c2.carriers, []);
     assert.deepEqual(c2.supportedTypes, ['https://trusttasks.org/spec/trust-task-discovery/0.4', 'https://trusttasks.org/spec/vrc/relationships/propose/0.1']);
+    const dtg = await start(['--carrier', 'none', '--no-witness-share', '--no-issue']).call('capabilities');
+    for (const t of ['task-consent/request/0.1', 'task-consent/decision/0.2', 'credential-exchange/issue/0.1', 'credential-exchange/present/0.1']) assert.ok(dtg.supportedTypes.includes(`https://trusttasks.org/spec/${t}`), t);
   });
 
   it('declares discovery 0.4 and lists every served task, discovery included, in registry and URN form, as the discovery answer does', async () => {
