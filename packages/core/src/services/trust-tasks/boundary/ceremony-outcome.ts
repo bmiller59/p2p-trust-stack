@@ -11,6 +11,7 @@
  *   aborted outcome / failed / aborted proposal   -> error: taskFailed with the recorded closed reason
  *   expired, or pending past the deadline         -> error: taskFailed, details.reason deadlineLapsed
  *   outcome unknown on an open proposal           -> indeterminate (retryable), never guessed
+ *   aborted with an `indeterminate` reason (the effect's outcome could not be read) on a pending proposal -> indeterminate
  *
  * A "yes" vote is not an input: only the coordinator's outcome and the stored proposal are, so a
  * response can never precede the effect. An unrecorded or out-of-vocabulary abort reason is
@@ -67,7 +68,7 @@ export function ceremonyVerdict(facts: CeremonyFacts): CeremonyVerdict {
     return failure(recorded);
   }
   // pending
-  if (outcome === 'aborted') return failure(facts.abortReason);
+  if (outcome === 'aborted') return facts.abortReason?.code === 'indeterminate' ? { kind: 'indeterminate', retryable: true } : failure(facts.abortReason);
   if (outcome === 'committed') return { kind: 'indeterminate', retryable: true }; // committed but the proposal is not crystallized yet: never guess
   if (now >= proposal.expiresAt) return LAPSED;
   if (outcome === 'unknown') return { kind: 'indeterminate', retryable: true };

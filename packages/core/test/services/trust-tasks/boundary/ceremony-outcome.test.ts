@@ -23,6 +23,13 @@ const facts = (over: Partial<CeremonyFacts> & { proposal?: Partial<CeremonyFacts
   proposal: { ...open, ...over.proposal },
 });
 
+describe("an effect whose outcome could not be read", () => {
+  it("a pending proposal whose transaction aborted with an indeterminate reason is indeterminate (retryable), not a failure", () => {
+    assert.deepEqual(ceremonyVerdict(facts({ outcome: "aborted", abortReason: { code: "indeterminate", retryable: true } })), { kind: "indeterminate", retryable: true });
+    assert.equal(ceremonyVerdict(facts({ outcome: "aborted", abortReason: { code: "taskFailed", retryable: false } })).kind, "error");
+  });
+});
+
 describe("2PC-001/003 outcome to reply", () => {
   it("committed outcome with a crystallized proposal is a response; no transaction recorded still is", () => {
     assert.deepEqual(ceremonyVerdict(facts({ outcome: "committed", proposal: { status: "crystallized" } })), { kind: "respond" });
