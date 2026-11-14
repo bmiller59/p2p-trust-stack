@@ -27,11 +27,11 @@
         "ceremony-doc": {
           "status": "PASS",
           "counts": {
-            "PASS": 7,
+            "PASS": 9,
             "FAIL": 0,
             "SKIP": 1,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 5
+            "CLARIFY": 6
           }
         },
         "framework": {
@@ -123,11 +123,11 @@
         "ceremony-doc": {
           "status": "PASS",
           "counts": {
-            "PASS": 7,
+            "PASS": 9,
             "FAIL": 0,
             "SKIP": 1,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 5
+            "CLARIFY": 6
           }
         },
         "framework": {

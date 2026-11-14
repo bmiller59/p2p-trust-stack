@@ -1429,10 +1429,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
-        "failures": [
-          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
-        ]
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-005",
@@ -1506,6 +1504,29 @@
         "failures": [
           "step 1: adapter or harness error: query must be handled, documentState or stored"
         ]
+      },
+      {
+        "id": "CER-014",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-015",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-016",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The status task's own behaviour is the implementation's design. SPEC.md 8.6 says only that expects names a task by which the producer can learn the outcome; that a query of a held ceremony is answered with a response of the task's own type, without recording an approval or running the effect, is the minimal reading of that and not stated text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
@@ -3260,10 +3281,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
-        "failures": [
-          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
-        ]
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-005",
@@ -3337,6 +3356,29 @@
         "failures": [
           "step 1: adapter or harness error: query must be handled, documentState or stored"
         ]
+      },
+      {
+        "id": "CER-014",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-015",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-016",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The status task's own behaviour is the implementation's design. SPEC.md 8.6 says only that expects names a task by which the producer can learn the outcome; that a query of a held ceremony is answered with a response of the task's own type, without recording an approval or running the effect, is the minimal reading of that and not stated text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
@@ -5080,10 +5122,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
-        "failures": [
-          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
-        ]
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-005",
@@ -5157,6 +5197,29 @@
         "failures": [
           "step 1: adapter or harness error: query must be handled, documentState or stored"
         ]
+      },
+      {
+        "id": "CER-014",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-015",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-016",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The status task's own behaviour is the implementation's design. SPEC.md 8.6 says only that expects names a task by which the producer can learn the outcome; that a query of a held ceremony is answered with a response of the task's own type, without recording an approval or running the effect, is the minimal reading of that and not stated text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
@@ -6920,10 +6983,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
-        "failures": [
-          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
-        ]
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-005",
@@ -6997,6 +7058,29 @@
         "failures": [
           "step 1: adapter or harness error: query must be handled, documentState or stored"
         ]
+      },
+      {
+        "id": "CER-014",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-015",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-016",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The status task's own behaviour is the implementation's design. SPEC.md 8.6 says only that expects names a task by which the producer can learn the outcome; that a query of a held ceremony is answered with a response of the task's own type, without recording an approval or running the effect, is the minimal reading of that and not stated text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
@@ -8751,10 +8835,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
-        "failures": [
-          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
-        ]
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-005",
@@ -8828,6 +8910,29 @@
         "failures": [
           "step 1: adapter or harness error: query must be handled, documentState or stored"
         ]
+      },
+      {
+        "id": "CER-014",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-015",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-016",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The status task's own behaviour is the implementation's design. SPEC.md 8.6 says only that expects names a task by which the producer can learn the outcome; that a query of a held ceremony is answered with a response of the task's own type, without recording an approval or running the effect, is the minimal reading of that and not stated text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
@@ -10571,10 +10676,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
-        "failures": [
-          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
-        ]
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-005",
@@ -10648,6 +10751,29 @@
         "failures": [
           "step 1: adapter or harness error: query must be handled, documentState or stored"
         ]
+      },
+      {
+        "id": "CER-014",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-015",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CER-016",
+        "group": "CER",
+        "family": "ceremony-doc",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The status task's own behaviour is the implementation's design. SPEC.md 8.6 says only that expects names a task by which the producer can learn the outcome; that a query of a held ceremony is answered with a response of the task's own type, without recording an approval or running the effect, is the minimal reading of that and not stated text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
