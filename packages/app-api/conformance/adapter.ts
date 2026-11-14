@@ -96,6 +96,8 @@ export interface TruststackersAdapterOptions {
    */
   https?: boolean;
   name?: string;
+  /** The implementation the capabilities belong to when `name` also names a mode: runs that share it become one matrix row. */
+  implementation?: string;
   tmpRoot?: string;
   seed?: number;
 }
@@ -358,6 +360,7 @@ export class TruststackersAdapter implements Adapter {
     const mode = this.carrierMode();
     return {
       name: this.name,
+      ...(this.options.implementation === undefined ? {} : { implementation: this.options.implementation }),
       version: '0.0.0-p8',
       tierMax: (this.attested ? 2 : 1) as 1 | 2,
       bindings: this.options.https === false ? ['in-process'] : ['in-process', 'https'],

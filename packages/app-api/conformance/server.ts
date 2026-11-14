@@ -11,7 +11,8 @@
  *   --attested        claim Tier 2 (proof on every request, signed replies)
  *   --identity <k>    scid-vh (default) | key
  *   --carrier <c>     widget (default) | issue | none
- *   --name <n>        the implementation name in capabilities (reports and the matrix key on it)
+ *   --name <n>        the name in capabilities (reports key on it)
+ *   --implementation <n>   the implementation the name is a mode of: runs sharing it merge into one matrix row
  *   --no-issue / --no-witness-share / --no-ceremony   do not serve that task (ceremony documents: begin, co-sign, status, reset)
  *   --no-https        declare the in-process binding only (the HTTPS listener is not used; the https vectors are SKIP)
  *
@@ -50,6 +51,7 @@ function parse(argv: string[]): { options: TruststackersAdapterOptions; http: nu
     else if (a === '--no-ceremony') options.ceremony = false;
     else if (a === '--no-https') options.https = false;
     else if (a === '--name') options.name = next();
+    else if (a === '--implementation') options.implementation = next();
     else if (a === '--seed') options.seed = Number(next());
     else throw new Error(`unknown option ${a}`);
   }
