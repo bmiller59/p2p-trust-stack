@@ -211,3 +211,19 @@ test('K1: createdAt is whole seconds from `now` and never earlier than the previ
   const e2 = await method.updateDocument({ currentLog: [...created.log, e], identityKeyPair: created.signingKeyPair, mutate: () => {}, now: 1_000_000_000_000 });
   assert.equal(e2.createdAt, e.createdAt, 'monotone');
 });
+
+test('K8: a did:peer:4 identifier cannot gain #key-boundary in place: the document change is a NEW identifier', async () => {
+  const { createDidPeer4 } = await import('../../src/did/create.js');
+  const { encodePeer4 } = await import('../../src/did/numalgo4.js');
+  const { addBoundaryVerificationMethod } = await import('../../src/did/document-carry-forward.js');
+  const peer = await createDidPeer4();
+  const withBoundary = structuredClone(peer.document);
+  addBoundaryVerificationMethod(withBoundary, generateEd25519KeyPair().publicKey);
+  const next = await encodePeer4(withBoundary);
+  assert.notEqual(next.did, peer.did, 'a different document is a different identifier');
+  assert.notEqual(next.shortFormDid, peer.shortFormDid);
+  // The original identifier still decodes to its original document, without the dedicated method.
+  const { resolveDidPeer4 } = await import('../../src/did/resolve.js');
+  assert.equal(vm(resolveDidPeer4(peer.did), BOUNDARY_VM_ID), undefined);
+  assert.ok(vm(resolveDidPeer4(next.did), BOUNDARY_VM_ID));
+});
