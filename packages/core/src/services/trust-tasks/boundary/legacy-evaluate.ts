@@ -62,6 +62,7 @@ export function createLegacyEvaluateHandler(db: DataSource): PipelineHandler {
       payloadSchema: LEGACY_EVALUATE_SCHEMA,
     },
     consequential: false,
+    unrecorded: true,
     async handle(doc: TrustTaskDocument<unknown>, ctx) {
       // The verified sender is the actor; no verified sender is not an actor at all. Checked first, so an
       // unauthenticated caller cannot tell a hosted community from an unknown one.

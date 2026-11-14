@@ -134,6 +134,8 @@ export interface PipelineResult {
   received?: Record<string, unknown>;
   /** True when the document was refused before the duplicate claim: such bodies are never stored. */
   refusedBeforeProof: boolean;
+  /** True when the routed handler is read-only and unrecorded (`PipelineHandler.unrecorded`): the recorder skips it. */
+  unrecorded?: boolean;
   /** The identifier the pipeline answered as. */
   issuer?: string;
   /** What the proof verifier established, when the document's proof verified (persisted with the document). */
@@ -188,7 +190,8 @@ export class Pipeline {
   }
 
   async process(input: PipelineInput): Promise<PipelineResult> {
-    const result = this.finalize(await this.run(input));
+    const finalized = this.finalize(await this.run(input));
+    const result = this.isUnrecorded(finalized) ? { ...finalized, unrecorded: true } : finalized;
     if (this.options.record !== undefined) {
       try {
         await this.options.record(result);
@@ -197,6 +200,14 @@ export class Pipeline {
       }
     }
     return result;
+  }
+
+  /** Whether the document was routed to a handler that is never recorded (the read-only evaluate query). */
+  private isUnrecorded(result: PipelineResult): boolean {
+    const type = result.received?.type;
+    if (typeof type !== 'string') return false;
+    const handler = this.registry.find(type) ?? this.registry.sameSpecification(type)?.handler;
+    return handler?.unrecorded === true;
   }
 
   private async run(input: PipelineInput): Promise<PipelineResult> {

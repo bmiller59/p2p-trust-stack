@@ -38,6 +38,12 @@ export interface PipelineHandler {
   /** Consequential tasks get the duplicate record and the strict windows; others are repeat-safe. */
   readonly consequential: boolean;
   /**
+   * True for a read-only task whose documents are never retained (decision 36: the legacy evaluate
+   * query is not recorded in `trust_tasks` or the thread index). Absent means retained, as for every
+   * other handler.
+   */
+  readonly unrecorded?: boolean;
+  /**
    * Business logic. Throw a `TaskError` for a typed refusal; anything else reaches the wire as an
    * opaque `internalError`. Return the response document, or nothing for a fire-and-forget task.
    */
