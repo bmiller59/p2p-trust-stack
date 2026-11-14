@@ -62,6 +62,11 @@ import { TaskError } from '@p2p-trust-stack/core/services/trust-tasks/boundary/e
 import { VtcStore } from '@p2p-trust-stack/core/vtc/store.js';
 import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-resolver.js';
 import { CompensationExecutor, DataSourceLogSink, TransactionCoordinator, TransactionLog, TransactionManager, TX_SCHEMA_SQL, applyTxSchemaAdditions } from '@p2p-trust-stack/core/tx/index.js';
+import { CredentialReceiveParticipant } from '../src/runtime/tx/credential-receive-participant.ts';
+import { CredentialPresentationParticipant } from '../src/runtime/tx/credential-presentation-participant.ts';
+import { createCredentialIssueHandler, createCredentialPresentHandler } from '../src/runtime/trust-tasks-boundary/credential-exchange.ts';
+import { createTaskConsentDecisionHandler, createTaskConsentRequestHandler } from '../src/runtime/trust-tasks-boundary/task-consent.ts';
+import type { ConsentPrompt } from '../src/runtime/trust-tasks-boundary/task-consent.ts';
 import type { ProposeConsentPolicy, ProposeDecision } from '../src/runtime/trust-tasks-boundary/vrc-propose.ts';
 import { ISSUE_TYPE } from '../src/runtime/trust-tasks-boundary/shared.ts';
 import type { Adapter, Capabilities, ObserveQuery, ObserveResult, ProofVerifyResult, ProvisionedRole, SendParams, SendResult } from './contract.ts';
@@ -76,6 +81,12 @@ export interface TruststackersAdapterOptions {
   issue?: boolean;
   /** Also serve the suite-local `vrc/relationships/witness-share` task (conformance P7). */
   witness?: boolean;
+  /**
+   * Serve the layer 3b-DTG adapters (conformance P5b; default true): `task-consent/{request,decision}` (the decision only with
+   * the ceremony documents, whose hold it approves) and `credential-exchange/{issue,present}`. Declared as capabilities only;
+   * the suite has no vector for these groups yet.
+   */
+  dtg?: boolean;
   /**
    * Serve the ceremony documents (begin, co-sign, status, reset) over the ceremony participant (default true).
    * The establishing effect is a FIXTURE (a unique community name recorded in an adapter-only table): the real
@@ -217,6 +228,9 @@ export class TruststackersAdapter implements Adapter {
   txDb!: SqliteDataSource;
   receive!: VrcReceiveParticipant;
   witnessShare!: WitnessShareParticipant;
+  presentation!: CredentialPresentationParticipant;
+  /** Consent prompts raised for the (simulated) human by `task-consent/request`. */
+  readonly consentPrompts: ConsentPrompt[] = [];
   ceremony!: CeremonyDocParticipant;
   retained!: RetainedDocuments;
   verifier!: DidProofVerifier;
@@ -321,6 +335,14 @@ export class TruststackersAdapter implements Adapter {
       participant: this.ceremony,
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     });
+    this.presentation = new CredentialPresentationParticipant(`peer:${did}`, this.db, this.txDb);
+    this.presentation.setVerifier(this.verifier, () => this.now());
+    const dtg = this.options.dtg === false ? [] : [
+      createCredentialIssueHandler({ db: this.db, txManager: this.txManager, participant: new CredentialReceiveParticipant(`peer:${did}`, this.db, this.txDb), verifier: this.verifier, attachTx: (id, txId) => this.guard.attachTx(id, txId) }),
+      createCredentialPresentHandler({ txManager: this.txManager, participant: this.presentation, verifier: this.verifier, attachTx: (id, txId) => this.guard.attachTx(id, txId) }),
+      createTaskConsentRequestHandler({ isEnrolledExecutor: () => true, prompt: (p) => { this.consentPrompts.push(p); } }),
+      ...(this.options.ceremony === false ? [] : [createTaskConsentDecisionHandler({ txManager: this.txManager, participant: this.ceremony, attachTx: (id, txId) => this.guard.attachTx(id, txId) })]),
+    ];
     const issue = this.options.issue === false ? [] : [createVrcIssueHandler({
       db: this.db,
       txManager: this.txManager,
@@ -328,7 +350,7 @@ export class TruststackersAdapter implements Adapter {
       verifier: this.verifier,
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     })];
-    const registry = this.registry = new HandlerRegistry([this.propose.handler(), ...issue, ...witness, ...ceremony, ...(this.carrierMode() === 'widget' ? [this.widgetHandler()] : [])]);
+    const registry = this.registry = new HandlerRegistry([this.propose.handler(), ...issue, ...witness, ...ceremony, ...dtg, ...(this.carrierMode() === 'widget' ? [this.widgetHandler()] : [])]);
     registry.register(createDiscoveryHandler(registry));
     this.recorder = new TrustTaskRecorder(this.db, { node: 'agent' });
     this.pipeline = new Pipeline({
