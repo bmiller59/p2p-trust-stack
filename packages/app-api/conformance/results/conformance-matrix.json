@@ -25,21 +25,21 @@
       ],
       "families": {
         "ceremony-doc": {
-          "status": "SKIP",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
+            "PASS": 7,
             "FAIL": 0,
-            "SKIP": 13,
+            "SKIP": 1,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 5
           }
         },
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 116,
+            "PASS": 117,
             "FAIL": 0,
-            "SKIP": 5,
+            "SKIP": 4,
             "KNOWN-FAIL": 0,
             "CLARIFY": 4
           }
@@ -67,9 +67,9 @@
         "two-phase-commit": {
           "status": "PASS",
           "counts": {
-            "PASS": 3,
+            "PASS": 6,
             "FAIL": 0,
-            "SKIP": 3,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 2
           }
@@ -121,21 +121,21 @@
       ],
       "families": {
         "ceremony-doc": {
-          "status": "SKIP",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
+            "PASS": 7,
             "FAIL": 0,
-            "SKIP": 13,
+            "SKIP": 1,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 5
           }
         },
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 116,
+            "PASS": 117,
             "FAIL": 0,
-            "SKIP": 5,
+            "SKIP": 4,
             "KNOWN-FAIL": 0,
             "CLARIFY": 4
           }
@@ -163,9 +163,9 @@
         "two-phase-commit": {
           "status": "PASS",
           "counts": {
-            "PASS": 3,
+            "PASS": 6,
             "FAIL": 0,
-            "SKIP": 3,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 2
           }

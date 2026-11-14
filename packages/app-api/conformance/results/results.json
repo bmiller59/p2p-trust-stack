@@ -1010,8 +1010,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "DUP-001",
@@ -1386,32 +1385,28 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-004",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-005",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-001",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-002",
@@ -1419,95 +1414,98 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "reason": "implementation declares optional ceremony.status"
       },
       {
         "id": "CER-003",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-004",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
+        ]
       },
       {
         "id": "CER-005",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-006",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-007",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The framework permits (MAY) one code for 'missing' and 'not allowed to see'; it does not require the two answers to be identical. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-008",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-009",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-010",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The closed vocabulary of details.reason and the use of taskFailed for a refused effect are the design of docs/04 section 12, not specification text (as for 2PC-002). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-011",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-012",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The reason token alreadyCommitted is truststackers' closed vocabulary (docs/08 section 4.2), not framework text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-013",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
+        "failures": [
+          "step 1: adapter or harness error: query must be handled, documentState or stored"
+        ]
       },
       {
         "id": "VRC-PRO-001",
@@ -2844,8 +2842,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "DUP-001",
@@ -3219,32 +3216,28 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-004",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-005",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-001",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-002",
@@ -3252,95 +3245,98 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "reason": "implementation declares optional ceremony.status"
       },
       {
         "id": "CER-003",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-004",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
+        ]
       },
       {
         "id": "CER-005",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-006",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-007",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The framework permits (MAY) one code for 'missing' and 'not allowed to see'; it does not require the two answers to be identical. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-008",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-009",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-010",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The closed vocabulary of details.reason and the use of taskFailed for a refused effect are the design of docs/04 section 12, not specification text (as for 2PC-002). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-011",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-012",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The reason token alreadyCommitted is truststackers' closed vocabulary (docs/08 section 4.2), not framework text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-013",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
+        "failures": [
+          "step 1: adapter or harness error: query must be handled, documentState or stored"
+        ]
       },
       {
         "id": "VRC-PRO-001",
@@ -4679,8 +4675,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "DUP-001",
@@ -5041,32 +5036,28 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-004",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-005",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-001",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-002",
@@ -5074,95 +5065,98 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "reason": "implementation declares optional ceremony.status"
       },
       {
         "id": "CER-003",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-004",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
+        ]
       },
       {
         "id": "CER-005",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-006",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-007",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The framework permits (MAY) one code for 'missing' and 'not allowed to see'; it does not require the two answers to be identical. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-008",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-009",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-010",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The closed vocabulary of details.reason and the use of taskFailed for a refused effect are the design of docs/04 section 12, not specification text (as for 2PC-002). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-011",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-012",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The reason token alreadyCommitted is truststackers' closed vocabulary (docs/08 section 4.2), not framework text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-013",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
+        "failures": [
+          "step 1: adapter or harness error: query must be handled, documentState or stored"
+        ]
       },
       {
         "id": "VRC-PRO-001",
@@ -6507,8 +6501,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "DUP-001",
@@ -6883,32 +6876,28 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-004",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-005",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-001",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-002",
@@ -6916,95 +6905,98 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "reason": "implementation declares optional ceremony.status"
       },
       {
         "id": "CER-003",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-004",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
+        ]
       },
       {
         "id": "CER-005",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-006",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-007",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The framework permits (MAY) one code for 'missing' and 'not allowed to see'; it does not require the two answers to be identical. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-008",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-009",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-010",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The closed vocabulary of details.reason and the use of taskFailed for a refused effect are the design of docs/04 section 12, not specification text (as for 2PC-002). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-011",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-012",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The reason token alreadyCommitted is truststackers' closed vocabulary (docs/08 section 4.2), not framework text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-013",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
+        "failures": [
+          "step 1: adapter or harness error: query must be handled, documentState or stored"
+        ]
       },
       {
         "id": "VRC-PRO-001",
@@ -8341,8 +8333,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "DUP-001",
@@ -8716,32 +8707,28 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-004",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-005",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-001",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-002",
@@ -8749,95 +8736,98 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "reason": "implementation declares optional ceremony.status"
       },
       {
         "id": "CER-003",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-004",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
+        ]
       },
       {
         "id": "CER-005",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-006",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-007",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The framework permits (MAY) one code for 'missing' and 'not allowed to see'; it does not require the two answers to be identical. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-008",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-009",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-010",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The closed vocabulary of details.reason and the use of taskFailed for a refused effect are the design of docs/04 section 12, not specification text (as for 2PC-002). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-011",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-012",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The reason token alreadyCommitted is truststackers' closed vocabulary (docs/08 section 4.2), not framework text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-013",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
+        "failures": [
+          "step 1: adapter or harness error: query must be handled, documentState or stored"
+        ]
       },
       {
         "id": "VRC-PRO-001",
@@ -10176,8 +10166,7 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "DUP-001",
@@ -10538,32 +10527,28 @@
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-004",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "2PC-005",
         "group": "2PC",
         "family": "two-phase-commit",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-001",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-002",
@@ -10571,95 +10556,98 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "reason": "implementation declares optional ceremony.status"
       },
       {
         "id": "CER-003",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-004",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Idempotent approval rests on a SHOULD about setting a state (SPEC.md 1061) and a profile rule; the framework does not say what a repeated approval yields. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: hold: expects names the request's own type, so the continuation must be resubmit (SPEC.md 8.6)"
+        ]
       },
       {
         "id": "CER-005",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-006",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-007",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The framework permits (MAY) one code for 'missing' and 'not allowed to see'; it does not require the two answers to be identical. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-008",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-009",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-010",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The closed vocabulary of details.reason and the use of taskFailed for a refused effect are the design of docs/04 section 12, not specification text (as for 2PC-002). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-011",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "PASS"
       },
       {
         "id": "CER-012",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "The reason token alreadyCommitted is truststackers' closed vocabulary (docs/08 section 4.2), not framework text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-013",
         "group": "CER",
         "family": "ceremony-doc",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:ceremony"
+        "status": "CLARIFY",
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
+        "failures": [
+          "step 1: adapter or harness error: query must be handled, documentState or stored"
+        ]
       },
       {
         "id": "VRC-PRO-001",
