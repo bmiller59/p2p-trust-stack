@@ -4,6 +4,290 @@
     "tier": 1,
     "results": [
       {
+        "id": "CTRL-001",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-002",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-003",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-004",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-001",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-002",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-003",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-004",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-005",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-001",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-002",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which code a contested thread yields is a design rule (permissionDenied), not specification text; the specification only forbids treating validation as authorization (item 10). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TD-001",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-002",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-003",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-004",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-005",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
+      },
+      {
+        "id": "TD-006",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-001",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-002",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-003",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-004",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-005",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-006",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-007",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-008",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-009",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-010",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-011",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-012",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-013",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-014",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-015",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-016",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-017",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-018",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-019",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a share must follow the session and precede the issue, follow the issue, or be unordered is open (docs/07 O7); the vector asserts the unordered reading for the issue-then-share order. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "WSH-020",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "WSH-021",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "WSH-025",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "ENV-001",
         "group": "ENV",
         "family": "framework",
@@ -125,6 +409,14 @@
         "reason": "tier 2 not selected"
       },
       {
+        "id": "RSP-005",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
         "id": "ERR-001",
         "group": "ERR",
         "family": "framework",
@@ -147,6 +439,45 @@
         "reason": "tier 2 not selected"
       },
       {
+        "id": "ERR-004",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-005",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The default retryable column is a SHOULD that yields to task-specific knowledge; the carrier has none, so the vector asserts the default (docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "ERR-006",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-007",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-008",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not state in a sentence that an error is never answered; the vector asserts the design rule (docs/04 section 13). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
         "id": "ID-001",
         "group": "ID",
         "family": "framework",
@@ -159,6 +490,14 @@
         "family": "framework",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
       },
       {
         "id": "LIF-001",
@@ -795,6 +1134,31 @@
         "tier": 1,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-006",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-007",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail-closed with unavailable is the design rule (docs/04 section 12). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DUP-008",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
@@ -1134,6 +1498,288 @@
     "tier": 2,
     "results": [
       {
+        "id": "CTRL-001",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-002",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-003",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-004",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-001",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-002",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-003",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-004",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-005",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-001",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-002",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which code a contested thread yields is a design rule (permissionDenied), not specification text; the specification only forbids treating validation as authorization (item 10). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TD-001",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-002",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-003",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-004",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-005",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
+      },
+      {
+        "id": "TD-006",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-001",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-002",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-003",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-004",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-005",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-006",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-007",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-008",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-009",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-010",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-011",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-012",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-013",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-014",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-015",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-016",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-017",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-018",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-019",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a share must follow the session and precede the issue, follow the issue, or be unordered is open (docs/07 O7); the vector asserts the unordered reading for the issue-then-share order. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "WSH-020",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-021",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-025",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "ENV-001",
         "group": "ENV",
         "family": "framework",
@@ -1253,6 +1899,13 @@
         "status": "PASS"
       },
       {
+        "id": "RSP-005",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
         "id": "ERR-001",
         "group": "ERR",
         "family": "framework",
@@ -1274,6 +1927,45 @@
         "status": "PASS"
       },
       {
+        "id": "ERR-004",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-005",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The default retryable column is a SHOULD that yields to task-specific knowledge; the carrier has none, so the vector asserts the default (docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "ERR-006",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-007",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-008",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not state in a sentence that an error is never answered; the vector asserts the design rule (docs/04 section 13). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
         "id": "ID-001",
         "group": "ID",
         "family": "framework",
@@ -1285,6 +1977,13 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
         "status": "PASS"
       },
       {
@@ -1920,6 +2619,31 @@
         "tier": 1,
         "status": "SKIP",
         "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-006",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-007",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail-closed with unavailable is the design rule (docs/04 section 12). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DUP-008",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
@@ -2253,6 +2977,290 @@
     "tier": 1,
     "results": [
       {
+        "id": "CTRL-001",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-002",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-003",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-004",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-001",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-002",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-003",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-004",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-005",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-001",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-002",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which code a contested thread yields is a design rule (permissionDenied), not specification text; the specification only forbids treating validation as authorization (item 10). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TD-001",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-002",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-003",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-004",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-005",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
+      },
+      {
+        "id": "TD-006",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-001",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-002",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-003",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-004",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-005",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-006",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-007",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-008",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-009",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-010",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-011",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-012",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-013",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-014",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-015",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-016",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-017",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-018",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-019",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a share must follow the session and precede the issue, follow the issue, or be unordered is open (docs/07 O7); the vector asserts the unordered reading for the issue-then-share order. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "WSH-020",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "WSH-021",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "WSH-025",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "ENV-001",
         "group": "ENV",
         "family": "framework",
@@ -2374,6 +3382,14 @@
         "reason": "tier 2 not selected"
       },
       {
+        "id": "RSP-005",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
         "id": "ERR-001",
         "group": "ERR",
         "family": "framework",
@@ -2396,6 +3412,45 @@
         "reason": "tier 2 not selected"
       },
       {
+        "id": "ERR-004",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-005",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The default retryable column is a SHOULD that yields to task-specific knowledge; the carrier has none, so the vector asserts the default (docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "ERR-006",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-007",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-008",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not state in a sentence that an error is never answered; the vector asserts the design rule (docs/04 section 13). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
         "id": "ID-001",
         "group": "ID",
         "family": "framework",
@@ -2408,6 +3463,14 @@
         "family": "framework",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
       },
       {
         "id": "LIF-001",
@@ -3044,6 +4107,31 @@
         "tier": 1,
         "status": "SKIP",
         "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-006",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-007",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail-closed with unavailable is the design rule (docs/04 section 12). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DUP-008",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",
@@ -3383,14 +4471,293 @@
     "tier": 2,
     "results": [
       {
+        "id": "CTRL-001",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-002",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-003",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-004",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-001",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-002",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-003",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-004",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-005",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-001",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-002",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which code a contested thread yields is a design rule (permissionDenied), not specification text; the specification only forbids treating validation as authorization (item 10). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TD-001",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-002",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-003",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-004",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-005",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
+      },
+      {
+        "id": "TD-006",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-001",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-002",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-003",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-004",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-005",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-006",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-007",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-008",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-009",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-010",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-011",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-012",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-013",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-014",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-015",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-016",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-017",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-018",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-019",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a share must follow the session and precede the issue, follow the issue, or be unordered is open (docs/07 O7); the vector asserts the unordered reading for the issue-then-share order. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "WSH-020",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-021",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-025",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
         "id": "ENV-001",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-002",
@@ -3404,160 +4771,119 @@
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-004",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-005",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-006",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-007",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-008",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-009",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-010",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-011",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-012",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-013",
         "group": "ENV",
         "family": "framework",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ENV-014",
         "group": "ENV",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "RSP-001",
         "group": "RSP",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "RSP-002",
         "group": "RSP",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "RSP-004",
         "group": "RSP",
         "family": "framework",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-005",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "PASS"
       },
       {
         "id": "ERR-001",
         "group": "ERR",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ERR-002",
@@ -3571,61 +4897,88 @@
         "group": "ERR",
         "family": "framework",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-004",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-005",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The default retryable column is a SHOULD that yields to task-specific knowledge; the carrier has none, so the vector asserts the default (docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "ERR-006",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-007",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-008",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not state in a sentence that an error is never answered; the vector asserts the design rule (docs/04 section 13). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "ID-001",
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "ID-002",
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
+      },
+      {
+        "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "status": "PASS"
       },
       {
         "id": "LIF-001",
         "group": "LIF",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "LIF-002",
         "group": "LIF",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)",
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "LIF-003",
         "group": "LIF",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "PRF-001",
@@ -3867,70 +5220,49 @@
         "group": "PRF",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "PRF-102",
         "group": "PRF",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "PRF-103",
         "group": "PRF",
         "family": "framework",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "PRF-104",
         "group": "PRF",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "PRF-105",
         "group": "PRF",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "PRF-106",
         "group": "PRF",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "PRF-107",
         "group": "PRF",
         "family": "framework",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "PRF-108",
@@ -3945,315 +5277,217 @@
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-002",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-003",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-004",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-005",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-006",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-007",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-008",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-009",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-010",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-011",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-012",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-013",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-014",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-015",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-016",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-017",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-018",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-019",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-020",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-021",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-022",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-023",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-024",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-101",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "TIME-102",
         "group": "TIME",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "DUP-001",
         "group": "DUP",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)",
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "DUP-002",
         "group": "DUP",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)",
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "DUP-003",
         "group": "DUP",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)",
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "DUP-004",
         "group": "DUP",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)",
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "DUP-005",
         "group": "DUP",
         "family": "framework",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)",
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "DUP-101",
@@ -4360,106 +5594,99 @@
         "reason": "only runs at tier 1"
       },
       {
+        "id": "DUP-006",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-007",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail-closed with unavailable is the design rule (docs/04 section 12). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DUP-008",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
         "id": "VRC-PRO-001",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-002",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-003",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-004",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-005",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-006",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-007",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-008",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-009",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-010",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-011",
@@ -4474,40 +5701,28 @@
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-013",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-014",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-015",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-016",
@@ -4515,10 +5730,8 @@
         "family": "vrc-propose",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating. (observed: fail)",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "reason": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-017",
@@ -4526,11 +5739,8 @@
         "family": "vrc-propose",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating. (observed: fail)",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "reason": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-018",
@@ -4538,66 +5748,43 @@
         "family": "vrc-propose",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating. (observed: fail)",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "reason": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-019",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-020",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-PRO-021",
         "group": "VRC-PRO",
         "family": "vrc-propose",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)",
-          "step 4: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-001",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-002",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-003",
@@ -4605,189 +5792,120 @@
         "family": "vrc-issue",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating. (observed: fail)",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "reason": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-ISS-004",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 1: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-005",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-006",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-007",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-008",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-009",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-010",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-011",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-012",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-013",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-014",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)",
-          "step 4: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-015",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)",
-          "step 4: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-016",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 1,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)",
-          "step 4: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-017",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-018",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-019",
         "group": "VRC-ISS",
         "family": "vrc-issue",
         "tier": 2,
-        "status": "FAIL",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "status": "PASS"
       },
       {
         "id": "VRC-ISS-020",
@@ -4795,12 +5913,8 @@
         "family": "vrc-issue",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating. (observed: fail)",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)",
-          "step 4: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "reason": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-ISS-021",
@@ -4808,12 +5922,8 @@
         "family": "vrc-issue",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating. (observed: fail)",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)",
-          "step 4: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "reason": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-ISS-022",
@@ -4821,13 +5931,8 @@
         "family": "vrc-issue",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating. (observed: fail)",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)",
-          "step 4: tier 2: reply proof invalid (unsupported verification method)",
-          "step 5: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "reason": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-ISS-023",
@@ -4835,11 +5940,8 @@
         "family": "vrc-issue",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: fail)",
-        "failures": [
-          "step 2: tier 2: reply proof invalid (unsupported verification method)",
-          "step 3: tier 2: reply proof invalid (unsupported verification method)"
-        ]
+        "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
+        "failures": []
       }
     ]
   },
@@ -4847,6 +5949,290 @@
     "impl": "truststackers-agent-didkey-tier1",
     "tier": 1,
     "results": [
+      {
+        "id": "CTRL-001",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-002",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-003",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-004",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-001",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-002",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-003",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-004",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-005",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-001",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-002",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which code a contested thread yields is a design rule (permissionDenied), not specification text; the specification only forbids treating validation as authorization (item 10). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TD-001",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-002",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-003",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-004",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-005",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
+      },
+      {
+        "id": "TD-006",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-001",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-002",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-003",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-004",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-005",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-006",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-007",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-008",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-009",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-010",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-011",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-012",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-013",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-014",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-015",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-016",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-017",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-018",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-019",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a share must follow the session and precede the issue, follow the issue, or be unordered is open (docs/07 O7); the vector asserts the unordered reading for the issue-then-share order. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "WSH-020",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "WSH-021",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "WSH-025",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
       {
         "id": "ENV-001",
         "group": "ENV",
@@ -4969,6 +6355,14 @@
         "reason": "tier 2 not selected"
       },
       {
+        "id": "RSP-005",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
         "id": "ERR-001",
         "group": "ERR",
         "family": "framework",
@@ -4991,6 +6385,45 @@
         "reason": "tier 2 not selected"
       },
       {
+        "id": "ERR-004",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-005",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The default retryable column is a SHOULD that yields to task-specific knowledge; the carrier has none, so the vector asserts the default (docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "ERR-006",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-007",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-008",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not state in a sentence that an error is never answered; the vector asserts the design rule (docs/04 section 13). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
         "id": "ID-001",
         "group": "ID",
         "family": "framework",
@@ -5003,6 +6436,14 @@
         "family": "framework",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
       },
       {
         "id": "LIF-001",
@@ -5625,6 +7066,1510 @@
         "family": "framework",
         "tier": 1,
         "status": "PASS"
+      },
+      {
+        "id": "DUP-006",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-007",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail-closed with unavailable is the design rule (docs/04 section 12). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DUP-008",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-001",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-002",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-003",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-004",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-005",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-006",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-007",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-008",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-009",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-010",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-011",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-012",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-013",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-014",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-015",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-016",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-017",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-018",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-019",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-020",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-021",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-001",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-002",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-003",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-004",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-005",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-006",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-007",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-008",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-009",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-010",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-011",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-012",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-013",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-014",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-015",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-016",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-017",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-018",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-019",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-020",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-021",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-022",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-023",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
+        "failures": []
+      }
+    ]
+  },
+  {
+    "impl": "truststackers-agent-scidvh-tier1",
+    "tier": 1,
+    "results": [
+      {
+        "id": "CTRL-001",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-002",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-003",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "CTRL-004",
+        "group": "CTRL",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-001",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-002",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-003",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-004",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "NS-005",
+        "group": "NS",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-001",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "AUTHZ-002",
+        "group": "AUTHZ",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which code a contested thread yields is a design rule (permissionDenied), not specification text; the specification only forbids treating validation as authorization (item 10). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "TD-001",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-002",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-003",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-004",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TD-005",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 4: expected type https://trusttasks.org/spec/vrc/relationships/witness-share/0.1#response, got https://trusttasks.org/spec/trust-task-error/0.6",
+          "step 4: stored witnessed credentials 1, expected 2",
+          "step 4: pointer /payload/vwcDigestMultibase: got undefined"
+        ]
+      },
+      {
+        "id": "TD-006",
+        "group": "TD",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-001",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-002",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-003",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-004",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-005",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-006",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-007",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-008",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-009",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-010",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-011",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-012",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-013",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-014",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-015",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-016",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-017",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-018",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "WSH-019",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a share must follow the session and precede the issue, follow the issue, or be unordered is open (docs/07 O7); the vector asserts the unordered reading for the issue-then-share order. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "WSH-020",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "WSH-021",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "WSH-025",
+        "group": "WSH",
+        "family": "vrc-witness-share",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-001",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-002",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-003",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-004",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-005",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-006",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-007",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-008",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-009",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-010",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-011",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-012",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-013",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ENV-014",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-001",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-002",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-004",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "RSP-005",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ERR-001",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-002",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-003",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ERR-004",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-005",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The default retryable column is a SHOULD that yields to task-specific knowledge; the carrier has none, so the vector asserts the default (docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "ERR-006",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-007",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-008",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification does not state in a sentence that an error is never answered; the vector asserts the design rule (docs/04 section 13). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "ID-001",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ID-002",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "LIF-001",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-002",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-003",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-001",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-002",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-003",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-004",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-005",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-006",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-007",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-008",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-009",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-010",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-011",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-012",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-013",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-014",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-015",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-016",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-017",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-018",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-019",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-020",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-021",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-022",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-023",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-024",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-025",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-026",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-027",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-028",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-029",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-030",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-031",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-032",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-033",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-101",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-102",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-103",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "PRF-104",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-105",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-106",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-107",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "PRF-108",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-001",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-002",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-003",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-004",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-005",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-006",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-007",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-008",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-009",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-010",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-011",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-012",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-013",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-014",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-015",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-016",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-017",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-018",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-019",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-020",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-021",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-022",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-023",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-024",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-101",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-102",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-001",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-002",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-003",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-004",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-005",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-101",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-102",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-103",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-104",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-105",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-106",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-107",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-108",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-109",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-110",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-111",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-112",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-113",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-006",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-007",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The framework does not say what an unreadable duplicate record yields; fail-closed with unavailable is the design rule (docs/04 section 12). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "DUP-008",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Design rule (docs/04 section 12), not specification text. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "VRC-PRO-001",

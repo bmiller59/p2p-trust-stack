@@ -3,7 +3,8 @@
   "families": [
     "framework",
     "vrc-issue",
-    "vrc-propose"
+    "vrc-propose",
+    "vrc-witness-share"
   ],
   "rows": [
     {
@@ -13,34 +14,61 @@
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 87,
+            "PASS": 95,
             "FAIL": 0,
-            "SKIP": 23,
+            "SKIP": 25,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 4
           }
         },
         "vrc-issue": {
           "status": "PASS",
           "counts": {
-            "PASS": 15,
+            "PASS": 16,
             "FAIL": 0,
             "SKIP": 3,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 5
+            "CLARIFY": 6
           }
         },
         "vrc-propose": {
           "status": "PASS",
           "counts": {
-            "PASS": 14,
+            "PASS": 19,
             "FAIL": 0,
             "SKIP": 4,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
           }
+        },
+        "vrc-witness-share": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 24,
+            "FAIL": 1,
+            "SKIP": 2,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 1
+          }
         }
-      }
+      },
+      "needsNonAttestedRun": [
+        "PRF-108",
+        "DUP-101",
+        "DUP-102",
+        "DUP-103",
+        "DUP-104",
+        "DUP-105",
+        "DUP-106",
+        "DUP-107",
+        "DUP-108",
+        "DUP-109",
+        "DUP-110",
+        "DUP-111",
+        "DUP-112",
+        "DUP-113",
+        "VRC-PRO-011"
+      ]
     },
     {
       "impl": "truststackers-agent-didkey-attested",
@@ -49,34 +77,61 @@
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 92,
+            "PASS": 102,
             "FAIL": 0,
             "SKIP": 18,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 4
           }
         },
         "vrc-issue": {
           "status": "PASS",
           "counts": {
-            "PASS": 18,
+            "PASS": 19,
             "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 5
+            "CLARIFY": 6
           }
         },
         "vrc-propose": {
           "status": "PASS",
           "counts": {
-            "PASS": 17,
+            "PASS": 22,
             "FAIL": 0,
             "SKIP": 1,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
           }
+        },
+        "vrc-witness-share": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 26,
+            "FAIL": 1,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 1
+          }
         }
-      }
+      },
+      "needsNonAttestedRun": [
+        "PRF-108",
+        "DUP-101",
+        "DUP-102",
+        "DUP-103",
+        "DUP-104",
+        "DUP-105",
+        "DUP-106",
+        "DUP-107",
+        "DUP-108",
+        "DUP-109",
+        "DUP-110",
+        "DUP-111",
+        "DUP-112",
+        "DUP-113",
+        "VRC-PRO-011"
+      ]
     },
     {
       "impl": "truststackers-agent-scidvh-attested",
@@ -85,70 +140,124 @@
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 87,
+            "PASS": 95,
             "FAIL": 0,
-            "SKIP": 23,
+            "SKIP": 25,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 4
           }
         },
         "vrc-issue": {
           "status": "PASS",
           "counts": {
-            "PASS": 15,
+            "PASS": 16,
             "FAIL": 0,
             "SKIP": 3,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 5
+            "CLARIFY": 6
           }
         },
         "vrc-propose": {
           "status": "PASS",
           "counts": {
-            "PASS": 14,
+            "PASS": 19,
             "FAIL": 0,
             "SKIP": 4,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
           }
+        },
+        "vrc-witness-share": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 24,
+            "FAIL": 1,
+            "SKIP": 2,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 1
+          }
         }
-      }
+      },
+      "needsNonAttestedRun": [
+        "PRF-108",
+        "DUP-101",
+        "DUP-102",
+        "DUP-103",
+        "DUP-104",
+        "DUP-105",
+        "DUP-106",
+        "DUP-107",
+        "DUP-108",
+        "DUP-109",
+        "DUP-110",
+        "DUP-111",
+        "DUP-112",
+        "DUP-113",
+        "VRC-PRO-011"
+      ]
     },
     {
       "impl": "truststackers-agent-scidvh-attested",
       "tier": 2,
       "families": {
         "framework": {
-          "status": "FAIL",
+          "status": "PASS",
           "counts": {
-            "PASS": 31,
-            "FAIL": 61,
+            "PASS": 102,
+            "FAIL": 0,
             "SKIP": 18,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 4
           }
         },
         "vrc-issue": {
-          "status": "FAIL",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
-            "FAIL": 18,
+            "PASS": 19,
+            "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 5
+            "CLARIFY": 6
           }
         },
         "vrc-propose": {
-          "status": "FAIL",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
-            "FAIL": 17,
+            "PASS": 22,
+            "FAIL": 0,
             "SKIP": 1,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
           }
+        },
+        "vrc-witness-share": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 26,
+            "FAIL": 1,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 1
+          }
         }
-      }
+      },
+      "needsNonAttestedRun": [
+        "PRF-108",
+        "DUP-101",
+        "DUP-102",
+        "DUP-103",
+        "DUP-104",
+        "DUP-105",
+        "DUP-106",
+        "DUP-107",
+        "DUP-108",
+        "DUP-109",
+        "DUP-110",
+        "DUP-111",
+        "DUP-112",
+        "DUP-113",
+        "VRC-PRO-011"
+      ]
     },
     {
       "impl": "truststackers-agent-didkey-tier1",
@@ -157,34 +266,92 @@
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 101,
+            "PASS": 109,
             "FAIL": 0,
-            "SKIP": 9,
+            "SKIP": 11,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 4
           }
         },
         "vrc-issue": {
           "status": "PASS",
           "counts": {
-            "PASS": 15,
+            "PASS": 16,
             "FAIL": 0,
             "SKIP": 3,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 5
+            "CLARIFY": 6
           }
         },
         "vrc-propose": {
           "status": "PASS",
           "counts": {
-            "PASS": 15,
+            "PASS": 20,
             "FAIL": 0,
             "SKIP": 3,
             "KNOWN-FAIL": 0,
             "CLARIFY": 3
           }
+        },
+        "vrc-witness-share": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 24,
+            "FAIL": 1,
+            "SKIP": 2,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 1
+          }
         }
-      }
+      },
+      "needsNonAttestedRun": []
+    },
+    {
+      "impl": "truststackers-agent-scidvh-tier1",
+      "tier": 1,
+      "families": {
+        "framework": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 109,
+            "FAIL": 0,
+            "SKIP": 11,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 4
+          }
+        },
+        "vrc-issue": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 16,
+            "FAIL": 0,
+            "SKIP": 3,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          }
+        },
+        "vrc-propose": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 20,
+            "FAIL": 0,
+            "SKIP": 3,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 3
+          }
+        },
+        "vrc-witness-share": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 24,
+            "FAIL": 1,
+            "SKIP": 2,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 1
+          }
+        }
+      },
+      "needsNonAttestedRun": []
     }
   ]
 }
