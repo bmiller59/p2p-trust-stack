@@ -188,6 +188,8 @@ describe("trust-task-discovery 0.4", () => {
     assert.equal(tooMany.code, "malformedRequest");
     const notStrings = await pipeline.process({ raw: request(DISCOVERY_TYPE_URI, { patterns: [1] }, { id: "urn:uuid:other" }) });
     assert.equal(notStrings.code, "malformedRequest");
+    const empty = await pipeline.process({ raw: request(DISCOVERY_TYPE_URI, { patterns: [""] }, { id: "urn:uuid:empty" }) });
+    assert.equal(empty.code, "malformedRequest");
   });
 
   it("design discovery payload with an unknown member is refused by the payload check", async () => {

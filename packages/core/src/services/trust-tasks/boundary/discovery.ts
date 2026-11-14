@@ -96,8 +96,8 @@ export function createDiscoveryHandler(registry: HandlerRegistry): PipelineHandl
       const p = (doc.payload ?? {}) as { patterns?: unknown };
       let patterns: string[] | undefined;
       if (p.patterns !== undefined) {
-        if (!Array.isArray(p.patterns) || p.patterns.length > MAX_PATTERNS || p.patterns.some((x) => typeof x !== 'string')) {
-          throw new TaskError({ code: 'malformedRequest', internalMessage: 'patterns must be at most 16 strings' });
+        if (!Array.isArray(p.patterns) || p.patterns.length > MAX_PATTERNS || p.patterns.some((x) => typeof x !== 'string' || x === '')) {
+          throw new TaskError({ code: 'malformedRequest', internalMessage: 'patterns must be at most 16 non-empty strings' });
         }
         patterns = p.patterns as string[];
       }
