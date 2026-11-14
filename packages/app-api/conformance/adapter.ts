@@ -622,9 +622,17 @@ export class TruststackersAdapter implements Adapter {
   async communityCount(): Promise<number> {
     return this.count('SELECT COUNT(*) AS n FROM conformance_communities');
   }
+  /** Credentials kept from credential-exchange/issue: every stored credential that is not a VRC. */
+  private async credentialCount(): Promise<number> {
+    return this.count("SELECT COUNT(*) AS n FROM credentials WHERE vc_type <> 'vrc'");
+  }
+  /** Presentations kept from credential-exchange/present. */
+  private async presentationCount(): Promise<number> {
+    return this.count('SELECT COUNT(*) AS n FROM credential_presentations');
+  }
   private async handledCount(): Promise<number> {
     const accepted = await this.count("SELECT COUNT(*) AS n FROM vrc_exchange_relationship_dids WHERE role = 'acceptor' AND state IN ('accepted','received','issued-by-me')");
-    return accepted + (await this.storedCount()) + (await this.widgetCount()) + (await this.communityCount()) + this.consentPrompts.length;
+    return accepted + (await this.storedCount()) + (await this.widgetCount()) + (await this.communityCount()) + this.consentPrompts.length + (await this.credentialCount()) + (await this.presentationCount());
   }
 
   async observe(q: ObserveQuery): Promise<ObserveResult> {
@@ -638,10 +646,9 @@ export class TruststackersAdapter implements Adapter {
       if (q.kind === 'vrc') return { value: await this.storedCount() };
       if (q.kind === 'vwc') return { value: await this.witnessCount() };
       if (q.kind === 'credential') {
-        // Credentials kept from credential-exchange/issue: every stored credential that is not a VRC (digest selects one).
-        return { value: q.digest === undefined ? await this.count("SELECT COUNT(*) AS n FROM credentials WHERE vc_type <> 'vrc'") : Number((await this.db.get<{ n: number | string }>("SELECT COUNT(*) AS n FROM credentials WHERE vc_type <> 'vrc' AND credential_digest = ?", q.digest))!.n) };
+        return { value: q.digest === undefined ? await this.credentialCount() : Number((await this.db.get<{ n: number | string }>("SELECT COUNT(*) AS n FROM credentials WHERE vc_type <> 'vrc' AND credential_digest = ?", q.digest))!.n) };
       }
-      if (q.kind === 'presentation') return { value: await this.count('SELECT COUNT(*) AS n FROM credential_presentations') };
+      if (q.kind === 'presentation') return { value: await this.presentationCount() };
       if (q.kind === 'ceremony-effect') return { value: await this.communityCount() };
       return { value: await this.handledCount() };
     }

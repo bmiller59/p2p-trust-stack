@@ -410,8 +410,10 @@ describe('helper trigger actions of the 3b-DTG groups (suite docs/04 section 4.4
     assert.notEqual(one.nonce, two.nonce);
     assert.equal((await a.observe({ query: 'stored', kind: 'presentation' })).value, 0);
     assert.equal((await a.observe({ query: 'stored', kind: 'credential' })).value, 0);
+    const before = Number((await a.observe({ query: 'handled' })).value);
     await sendRaw(a, issue(a, A, { credential_response: { credential: credential(A, a.signer.did) } }));
     assert.equal((await a.observe({ query: 'stored', kind: 'credential' })).value, 1);
+    assert.equal(Number((await a.observe({ query: 'handled' })).value), before + 1, 'an accepted issue counts as handled');
     assert.equal((await a.observe({ query: 'stored', kind: 'vrc' })).value, 0);
   });
 });
