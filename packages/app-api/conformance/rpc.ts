@@ -50,7 +50,13 @@ export async function dispatch(adapter: Adapter, req: RpcRequest): Promise<RpcRe
         const from = obj(p.from);
         if (from.kind !== 'actor' && from.kind !== 'none' && from.kind !== 'spoof') throw new Error('from.kind must be actor, none or spoof');
         if (from.kind !== 'none') str(from.vid, 'from.vid');
-        result = await adapter.send({ from: from as unknown as SendParams['from'], bytes: str(p.bytes, 'bytes'), ...(typeof p.channel === 'string' ? { channel: p.channel } : {}) });
+        let http: SendParams['http'];
+        if (p.http !== undefined) {
+          const h = obj(p.http);
+          for (const k of ['method', 'path', 'contentType']) if (h[k] !== undefined && typeof h[k] !== 'string') throw new Error(`http.${k} must be a string`);
+          http = { ...(h.method === undefined ? {} : { method: h.method as string }), ...(h.path === undefined ? {} : { path: h.path as string }), ...(h.contentType === undefined ? {} : { contentType: h.contentType as string }) };
+        }
+        result = await adapter.send({ from: from as unknown as SendParams['from'], bytes: str(p.bytes, 'bytes'), ...(typeof p.channel === 'string' ? { channel: p.channel } : {}), ...(http === undefined ? {} : { http }) });
         break;
       }
       case 'trigger': result = await adapter.trigger(str(p.action, 'action'), obj(p.args)); break;

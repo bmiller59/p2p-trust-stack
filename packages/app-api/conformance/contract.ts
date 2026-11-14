@@ -16,6 +16,8 @@ export interface CarrierDecl {
 
 export interface Capabilities {
   name: string;
+  /** The implementation these capabilities belong to when `name` also names a mode (for example `x-attested`); runs that share it are merged into one matrix row. Default: `name`. */
+  implementation?: string;
   version: string;
   /** Highest tier the implementation claims. */
   tierMax: 1 | 2;
@@ -23,7 +25,7 @@ export interface Capabilities {
   supportedTypes: string[];
   carriers: CarrierDecl[];
   cryptosuites: string[];
-  /** control, idempotencyKey, restart, trigger.consent, clock, proofVerify */
+  /** control, idempotencyKey, restart, trigger.consent, trigger.twoPhase, fault.claimStore, discovery.acceptanceWindow, discovery.expiryHorizon, binding.requireBearer, clock, proofVerify, attested */
   optional: string[];
   pins: { framework: string; error: string; binding: string };
 }
@@ -38,17 +40,30 @@ export interface ProvisionedRole {
 /** The authenticated transport identity of the sender: a harness actor, nobody, or a spoofed identity. */
 export type SendFrom = { kind: "actor"; vid: string } | { kind: "none" } | { kind: "spoof"; vid: string };
 
+/**
+ * HTTPS binding request line (bindings/https/0.3 section 2). Present only when the vector exercises the binding and the adapter
+ * declares `https`; absent means the default `POST /trust-tasks` with `Content-Type: application/json`. The sender identity is
+ * `from` (the adapter presents the bearer token it holds for that identity; `none` sends no Authorization header).
+ */
+export interface HttpRequestLine {
+  method?: string;
+  path?: string;
+  contentType?: string;
+}
+
 export interface SendParams {
   from: SendFrom;
   /** Document text exactly as it goes on the wire. */
   bytes: string;
   channel?: string;
+  http?: HttpRequestLine;
 }
 
 export interface SendResult {
   /** Reply documents emitted, as text, in order. */
   replies: string[];
-  transport: { status?: number; kind: TransportKind };
+  /** `status` and `contentType` are reported by adapters that declare the `https` binding and were given `http`. */
+  transport: { status?: number; kind: TransportKind; contentType?: string };
   quiescentAfterMs: number;
 }
 

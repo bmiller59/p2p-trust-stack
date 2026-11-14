@@ -222,6 +222,64 @@ describe('send through the real pipeline', () => {
   });
 });
 
+describe('the HTTPS binding (the agent listener behind sends that carry an http request line)', () => {
+  const X = { kind: 'spoof', vid: 'did:web:someone.else.example' };
+  it('is declared, answers wrong methods and paths with no body, maps the bearer to the sender, and reports status and content type', async () => {
+    const s = start(['--attested', '--identity', 'key']);
+    const caps = await s.call('capabilities');
+    assert.deepEqual(caps.bindings, ['in-process', 'https']);
+    const iut = (await s.call('provision', { roles: ['iut'] })).iut;
+    await s.call('setClock', { iso: START });
+    const bytes = widget(iut.vid, 20);
+
+    const get = await s.call('send', { from: actor, bytes, http: { method: 'GET' } });
+    assert.deepEqual([get.transport.status, get.transport.kind, get.transport.contentType, get.replies.length], [405, 'none', undefined, 0]);
+    const path = await s.call('send', { from: actor, bytes, http: { path: '/trust-task' } });
+    assert.deepEqual([path.transport.status, path.transport.contentType, path.replies.length], [404, undefined, 0]);
+    assert.deepEqual(await s.call('observe', { query: 'handled' }), { value: 0 });
+
+    const ok = await s.call('send', { from: actor, bytes, http: {} });
+    assert.equal(ok.transport.status, 200);
+    assert.match(ok.transport.contentType, /^application\/json/);
+    assert.equal(JSON.parse(ok.replies[0]).type, `${WIDGET_TYPE}#response`);
+    // The same document again: the retained response, 200.
+    const again = await s.call('send', { from: actor, bytes, http: {} });
+    assert.equal(again.transport.status, 200);
+
+    // The bearer says X, the document says A: identityMismatch, 422, a JSON error document, and nothing ran.
+    const mismatch = await s.call('send', { from: X, bytes: widget(iut.vid, 21), http: {} });
+    assert.equal(mismatch.transport.status, 422);
+    assert.equal(JSON.parse(mismatch.replies[0]).payload.code, 'identityMismatch');
+    assert.deepEqual(await s.call('observe', { query: 'handled' }), { value: 1 });
+    // No Authorization header: judged on the proof alone.
+    const none = await s.call('send', { from: { kind: 'none' }, bytes: widget(iut.vid, 22), http: {} });
+    assert.equal(none.transport.status, 200);
+    // idConflict is 409.
+    const changed = widget(iut.vid, 20, { payload: { subject: 'did:web:changed.example' } });
+    assert.equal((await s.call('send', { from: actor, bytes: changed, http: {} })).transport.status, 409);
+  });
+
+  it('the injected clock reaches the listener: after advance the same request over HTTP is expired (422)', async () => {
+    const s = start(['--attested', '--identity', 'key']);
+    const iut = (await s.call('provision', { roles: ['iut'] })).iut;
+    await s.call('setClock', { iso: START });
+    const bytes = widget(iut.vid, 30);
+    await s.call('advance', { ms: 6 * 60_000 });
+    const r = await s.call('send', { from: actor, bytes, http: {} });
+    assert.equal(r.transport.status, 422);
+    assert.equal(JSON.parse(r.replies[0]).payload.code, 'expired');
+  });
+
+  it('--no-https declares in-process only and a send carrying http is answered in process', async () => {
+    const s = start(['--attested', '--identity', 'key', '--no-https']);
+    assert.deepEqual((await s.call('capabilities')).bindings, ['in-process']);
+    const iut = (await s.call('provision', { roles: ['iut'] })).iut;
+    await s.call('setClock', { iso: START });
+    const r = await s.call('send', { from: actor, bytes: widget(iut.vid, 31), http: { method: 'GET' } });
+    assert.equal(JSON.parse(r.replies[0]).type, `${WIDGET_TYPE}#response`);
+  });
+});
+
 describe('durable state: restart, reset, snapshot', () => {
   it('restart reopens the databases: the duplicate record and the stored effect survive; reset clears both', async () => {
     const s = start(['--attested', '--identity', 'key']);

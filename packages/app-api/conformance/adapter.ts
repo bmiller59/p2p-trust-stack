@@ -51,6 +51,7 @@ import { VrcReceiveParticipant } from '../src/runtime/tx/vrc-receive-participant
 import { WitnessShareParticipant } from '../src/runtime/tx/witness-share-participant.ts';
 import { createWitnessShareHandler } from '../src/runtime/trust-tasks-boundary/witness-share.ts';
 import { createCeremonyDocHandlers } from '../src/runtime/trust-tasks-boundary/ceremony-doc.ts';
+import { HttpBinding } from './http-binding.ts';
 import { FaultableParticipant, TwoPhaseFaults, parseReason, parseTwoPhase } from './two-phase.ts';
 import { RetainedDocuments } from '../src/runtime/trust-tasks-boundary/retained.ts';
 import { CeremonyDocParticipant } from '../src/runtime/tx/ceremony-doc-participant.ts';
@@ -89,6 +90,11 @@ export interface TruststackersAdapterOptions {
   carrier?: 'widget' | 'issue' | 'none';
   /** The agent's connection DID: `scid-vh` (default, a real did:scid:vh) or `key`. */
   identity?: 'scid-vh' | 'key';
+  /**
+   * Declare the `https` binding and perform sends that carry an `http` request line over the agent's real listener on a loopback
+   * port (default true; false declares in-process only, and the https vectors are SKIP).
+   */
+  https?: boolean;
   name?: string;
   tmpRoot?: string;
   seed?: number;
@@ -138,6 +144,7 @@ export class TruststackersAdapter implements Adapter {
   private readonly faults = new TwoPhaseFaults();
   /** The `send` whose transaction is parked, answered by `settle`. */
   private pendingSend: Promise<SendResult> | undefined;
+  private readonly http = new HttpBinding();
   private pinned: PinnedDocuments | undefined;
   readonly attested: boolean;
   readonly name: string;
@@ -317,10 +324,13 @@ export class TruststackersAdapter implements Adapter {
   async init(): Promise<this> {
     await this.makeIdentity();
     await this.build(true);
+    // The listener hands documents to whatever pipeline the adapter has now, so reset and restart need no new listener.
+    if (this.options.https !== false) await this.http.start((input) => this.pipeline.process(input));
     return this;
   }
 
   async dispose(): Promise<void> {
+    await this.http.stop();
     await this.closeDbs();
     rmSync(this.root, { recursive: true, force: true });
   }
@@ -350,7 +360,7 @@ export class TruststackersAdapter implements Adapter {
       name: this.name,
       version: '0.0.0-p8',
       tierMax: (this.attested ? 2 : 1) as 1 | 2,
-      bindings: ['in-process'],
+      bindings: this.options.https === false ? ['in-process'] : ['in-process', 'https'],
       // Discovery 0.4 (docs/04 section 11.2): every served task's Type URI, discovery's own included, exactly as the
       // discovery answer lists them (registry form for the https types, URN form for the private ceremony types).
       supportedTypes: advertisedTypes(this.registry).map((t) => t.type),
@@ -359,7 +369,7 @@ export class TruststackersAdapter implements Adapter {
         : mode === 'issue' ? [{ typeUri: ISSUE_TYPE, class: 'consequential' as const, validPayload: {} }] : [],
       cryptosuites: ['eddsa-jcs-2022'],
       optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.attested ? ['attested'] : [])],
-      pins: { framework: FRAMEWORK_VERSION, error: ERROR_SPEC_VERSION, binding: 'none' },
+      pins: { framework: FRAMEWORK_VERSION, error: ERROR_SPEC_VERSION, binding: this.options.https === false ? 'none' : 'https/0.3' },
     };
   }
 
@@ -559,6 +569,7 @@ export class TruststackersAdapter implements Adapter {
   }
 
   private async deliver(params: SendParams): Promise<SendResult> {
+    if (params.http !== undefined && this.options.https !== false) return this.http.send(params.from, params.bytes, params.http);
     const result = await this.pipeline.process({ raw: params.bytes, sender: params.from.kind === 'none' ? undefined : params.from.vid });
     const replies = result.document === undefined ? [] : [JSON.stringify(result.document)];
     return { replies, transport: { status: result.status, kind: replies.length === 0 ? ('none' as const) : ('document' as const) }, quiescentAfterMs: 0 };

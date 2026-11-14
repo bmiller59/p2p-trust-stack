@@ -8,8 +8,7 @@
  *
  * The assertions are the standing result: no FAIL and no KNOWN-FAIL (TD-005, the one divergence of the
  * P8b run, passes since the suite changed that vector), and nothing silently skipped that the adapter
- * claims: a SKIP is allowed only for a capability or type the adapter does not declare (ES256, https
- * binding) or a vector that needs the other server mode. The did:scid:vh
+ * claims: a SKIP is allowed only for a capability or type the adapter does not declare (ES256, the `ceremony` capability the CER vectors need) or a vector that needs the other server mode. The did:scid:vh
  * agent passes Tier 2 now that the suite verifies replies from the DID document `provision` returns.
  */
 import assert from 'node:assert/strict';
@@ -40,7 +39,7 @@ function runSuite(serverArgs: string): { code: number | null; runs: Run[]; out: 
 /** No documented divergence is left (see the header). */
 const EXPECTED_FAIL: string[] = [];
 /** What a SKIP may say: only things the adapter does not declare, or the other server mode. */
-const ALLOWED_SKIP = /ecdsa-jcs-2019|only runs at tier 1|type not declared|missing capability binding:https|implementation declares optional attested/;
+const ALLOWED_SKIP = /ecdsa-jcs-2019|missing capability optional:ceremony|only runs at tier 1|type not declared|implementation declares optional attested/;
 const count = (run: Run, status: string): number => run.results.filter((r) => r.status === status).length;
 const ids = (run: Run, status: string): string[] => run.results.filter((r) => r.status === status).map((r) => r.id);
 
@@ -58,8 +57,8 @@ describe('the suite against the truststackers adapter (did:key agent: the harnes
     for (const id of ['VRC-PRO-012', 'VRC-PRO-013', 'VRC-PRO-019', 'VRC-ISS-017', 'VRC-ISS-018', 'VRC-ISS-019', 'RSP-004', 'ERR-003']) {
       assert.ok(ids(tier2, 'PASS').includes(id), `${id} passes at tier 2`);
     }
-    // The new groups are measured: discovery 0.4 (DIS), the two-phase triggers on the real coordinator (2PC).
-    for (const id of ['DIS-001', 'DIS-003', 'DIS-011', 'DIS-012', 'DIS-013', 'DIS-016', 'DIS-017', '2PC-001', '2PC-006', '2PC-007']) {
+    // The new groups are measured: discovery 0.4 (DIS), the two-phase triggers on the real coordinator (2PC), the HTTPS binding over the agent listener (BND).
+    for (const id of ['DIS-001', 'DIS-003', 'DIS-011', 'DIS-012', 'DIS-013', 'DIS-016', 'DIS-017', '2PC-001', '2PC-006', '2PC-007', 'BND-001', 'BND-002', 'BND-003', 'BND-004', 'BND-005', 'BND-006']) {
       assert.ok(ids(tier2, 'PASS').includes(id), `${id} passes at tier 2`);
     }
     // The only skips are things the adapter does not claim (see ALLOWED_SKIP).
