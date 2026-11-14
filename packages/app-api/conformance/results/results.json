@@ -2138,13 +2138,8 @@
         "family": "dtg-task-consent",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
-        "failures": [
-          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 3: pointer /payload/status: got undefined",
-          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 4: pointer /payload/status: got undefined"
-        ]
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status or, equally, with a trust-task-next-step hold (the framework's own vocabulary for a held task; the hold rule of 8.6 is checked); the two differ in form only. Which one an implementation uses is not asserted. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-001",
@@ -2152,12 +2147,7 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "anchor": true,
-        "status": "FAIL",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: handled count 0, expected 1",
-          "step 1: stored credentials 0, expected 1"
-        ]
+        "status": "PASS"
       },
       {
         "id": "CEX-002",
@@ -2207,13 +2197,8 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: stored credentials 0, expected 1",
-          "step 2: expected silence, got 1 replies",
-          "step 2: stored credentials 0, expected 1"
-        ]
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-009",
@@ -2308,7 +2293,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "2630113b9458"
+    "salt": "f071a5cc4c42"
   },
   {
     "impl": "truststackers-agent-didkey-attested",
@@ -4433,13 +4418,8 @@
         "family": "dtg-task-consent",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
-        "failures": [
-          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 3: pointer /payload/status: got undefined",
-          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 4: pointer /payload/status: got undefined"
-        ]
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status or, equally, with a trust-task-next-step hold (the framework's own vocabulary for a held task; the hold rule of 8.6 is checked); the two differ in form only. Which one an implementation uses is not asserted. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-001",
@@ -4447,12 +4427,7 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "anchor": true,
-        "status": "FAIL",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: handled count 0, expected 1",
-          "step 1: stored credentials 0, expected 1"
-        ]
+        "status": "PASS"
       },
       {
         "id": "CEX-002",
@@ -4502,13 +4477,8 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: stored credentials 0, expected 1",
-          "step 2: expected silence, got 1 replies",
-          "step 2: stored credentials 0, expected 1"
-        ]
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-009",
@@ -4600,7 +4570,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "154d03aba8fa"
+    "salt": "29724a7b94ca"
   },
   {
     "impl": "truststackers-agent-didkey-tier1",
@@ -6727,13 +6697,8 @@
         "family": "dtg-task-consent",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
-        "failures": [
-          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 3: pointer /payload/status: got undefined",
-          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 4: pointer /payload/status: got undefined"
-        ]
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status or, equally, with a trust-task-next-step hold (the framework's own vocabulary for a held task; the hold rule of 8.6 is checked); the two differ in form only. Which one an implementation uses is not asserted. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-001",
@@ -6741,12 +6706,7 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "anchor": true,
-        "status": "FAIL",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: handled count 0, expected 1",
-          "step 1: stored credentials 0, expected 1"
-        ]
+        "status": "PASS"
       },
       {
         "id": "CEX-002",
@@ -6796,13 +6756,8 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: stored credentials 0, expected 1",
-          "step 2: expected silence, got 1 replies",
-          "step 2: stored credentials 0, expected 1"
-        ]
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-009",
@@ -6897,7 +6852,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "a0cd7d0a0358"
+    "salt": "324f33637390"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -9038,13 +8993,8 @@
         "family": "dtg-task-consent",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
-        "failures": [
-          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 3: pointer /payload/status: got undefined",
-          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 4: pointer /payload/status: got undefined"
-        ]
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status or, equally, with a trust-task-next-step hold (the framework's own vocabulary for a held task; the hold rule of 8.6 is checked); the two differ in form only. Which one an implementation uses is not asserted. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-001",
@@ -9052,12 +9002,7 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "anchor": true,
-        "status": "FAIL",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: handled count 0, expected 1",
-          "step 1: stored credentials 0, expected 1"
-        ]
+        "status": "PASS"
       },
       {
         "id": "CEX-002",
@@ -9107,13 +9052,8 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: stored credentials 0, expected 1",
-          "step 2: expected silence, got 1 replies",
-          "step 2: stored credentials 0, expected 1"
-        ]
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-009",
@@ -9208,7 +9148,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "6c3f26130bec"
+    "salt": "0337694127c8"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -11333,13 +11273,8 @@
         "family": "dtg-task-consent",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
-        "failures": [
-          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 3: pointer /payload/status: got undefined",
-          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 4: pointer /payload/status: got undefined"
-        ]
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status or, equally, with a trust-task-next-step hold (the framework's own vocabulary for a held task; the hold rule of 8.6 is checked); the two differ in form only. Which one an implementation uses is not asserted. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-001",
@@ -11347,12 +11282,7 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "anchor": true,
-        "status": "FAIL",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: handled count 0, expected 1",
-          "step 1: stored credentials 0, expected 1"
-        ]
+        "status": "PASS"
       },
       {
         "id": "CEX-002",
@@ -11402,13 +11332,8 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: stored credentials 0, expected 1",
-          "step 2: expected silence, got 1 replies",
-          "step 2: stored credentials 0, expected 1"
-        ]
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-009",
@@ -11500,7 +11425,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "44eb73e88c5f"
+    "salt": "ae075ffb311e"
   },
   {
     "impl": "truststackers-agent-scidvh-tier1",
@@ -13627,13 +13552,8 @@
         "family": "dtg-task-consent",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status here; an implementation that answers a hold with trust-task-next-step instead (the framework's own vocabulary for a held task) differs in form only. Not gating. (observed: fail)",
-        "failures": [
-          "step 3: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 3: pointer /payload/status: got undefined",
-          "step 4: expected type https://trusttasks.org/spec/task-consent/decision/0.2#response, got https://trusttasks.org/spec/trust-task-next-step/0.1",
-          "step 4: pointer /payload/status: got undefined"
-        ]
+        "reason": "A decision that leaves the threshold unmet is answered with the specification's `pending` status or, equally, with a trust-task-next-step hold (the framework's own vocabulary for a held task; the hold rule of 8.6 is checked); the two differ in form only. Which one an implementation uses is not asserted. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-001",
@@ -13641,12 +13561,7 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "anchor": true,
-        "status": "FAIL",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: handled count 0, expected 1",
-          "step 1: stored credentials 0, expected 1"
-        ]
+        "status": "PASS"
       },
       {
         "id": "CEX-002",
@@ -13696,13 +13611,8 @@
         "family": "dtg-credential-exchange",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: fail)",
-        "failures": [
-          "step 1: expected silence, got 1 replies",
-          "step 1: stored credentials 0, expected 1",
-          "step 2: expected silence, got 1 replies",
-          "step 2: stored credentials 0, expected 1"
-        ]
+        "reason": "The specification does not say whether a second delivery of a credential already held is stored again. The vector asserts one copy. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CEX-009",
@@ -13797,6 +13707,6 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "16b38b57752d"
+    "salt": "836a38aa5ab6"
   }
 ]

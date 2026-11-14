@@ -52,20 +52,20 @@
           "green": true
         },
         "dtg-credential-exchange": {
-          "status": "FAIL",
+          "status": "PASS",
           "counts": {
-            "PASS": 11,
-            "FAIL": 1,
+            "PASS": 12,
+            "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 6
           },
           "anchors": {
-            "pass": 0,
+            "pass": 1,
             "ran": 1,
             "total": 1
           },
-          "green": false
+          "green": true
         },
         "dtg-task-consent": {
           "status": "PASS",
@@ -237,20 +237,20 @@
           "green": true
         },
         "dtg-credential-exchange": {
-          "status": "FAIL",
+          "status": "PASS",
           "counts": {
-            "PASS": 11,
-            "FAIL": 1,
+            "PASS": 12,
+            "FAIL": 0,
             "SKIP": 0,
             "KNOWN-FAIL": 0,
             "CLARIFY": 6
           },
           "anchors": {
-            "pass": 0,
+            "pass": 1,
             "ran": 1,
             "total": 1
           },
-          "green": false
+          "green": true
         },
         "dtg-task-consent": {
           "status": "PASS",

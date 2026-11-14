@@ -4,6 +4,6 @@ Cell = roll-up of the family's vectors at the selected tier (FAIL > KNOWN-FAIL >
 
 | Implementation | Tier | ceremony-doc | dtg-credential-exchange | dtg-task-consent | framework | https-binding | trust-task-discovery | two-phase-commit | vrc-issue | vrc-propose | vrc-witness-share |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| truststackers-agent-didkey | 1+2 | PASS (9/0/1/0/6) | FAIL (11/1/0/0/6) | PASS (14/0/0/0/4) | PASS (119/0/4/0/4) | PASS (6/0/0/0/0) | PASS (15/0/0/0/2) | PASS (6/0/0/0/2) | PASS (19/0/0/0/6) | PASS (23/0/0/0/3) | PASS (27/0/0/0/2) |
-| truststackers-agent-scidvh | 1+2 | PASS (9/0/1/0/6) | FAIL (11/1/0/0/6) | PASS (14/0/0/0/4) | PASS (119/0/4/0/4) | PASS (6/0/0/0/0) | PASS (15/0/0/0/2) | PASS (6/0/0/0/2) | PASS (19/0/0/0/6) | PASS (23/0/0/0/3) | PASS (27/0/0/0/2) |
+| truststackers-agent-didkey | 1+2 | PASS (9/0/1/0/6) | PASS (12/0/0/0/6) | PASS (14/0/0/0/4) | PASS (119/0/4/0/4) | PASS (6/0/0/0/0) | PASS (15/0/0/0/2) | PASS (6/0/0/0/2) | PASS (19/0/0/0/6) | PASS (23/0/0/0/3) | PASS (27/0/0/0/2) |
+| truststackers-agent-scidvh | 1+2 | PASS (9/0/1/0/6) | PASS (12/0/0/0/6) | PASS (14/0/0/0/4) | PASS (119/0/4/0/4) | PASS (6/0/0/0/0) | PASS (15/0/0/0/2) | PASS (6/0/0/0/2) | PASS (19/0/0/0/6) | PASS (23/0/0/0/3) | PASS (27/0/0/0/2) |
 
