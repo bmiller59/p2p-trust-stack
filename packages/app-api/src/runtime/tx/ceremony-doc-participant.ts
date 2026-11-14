@@ -47,6 +47,8 @@ export interface CeremonyBeginParams {
   threshold: number;
   adminDids: string[];
   parentCommunityDid?: string | null;
+  /** The proposer's proof value from the verified begin document; recorded as their approval when the participant counts the begin. */
+  signature?: string;
   nowMs: number;
 }
 export interface CeremonyApproveParams {
@@ -82,6 +84,11 @@ export interface CeremonyEffect {
 
 export interface CeremonyDocParticipantOptions {
   ttlMs?: number;
+  /**
+   * Count the begin document as the proposer's own approval (default false: every named admin, the proposer included, co-signs).
+   * The proposer signed the proposal and is one of the named admins, so the begin can be read as their approval.
+   */
+  proposerApproves?: boolean;
 }
 
 /** Everyone who may act on a ceremony: the named admins and the proposer. */
@@ -96,7 +103,8 @@ export class CeremonyDocParticipant implements Participant {
   readonly store: CeremonyStore;
   private readonly txDb: DataSource;
   private readonly effect: CeremonyEffect;
-  private readonly ttlMs: number;
+  private ttlMs: number;
+  private readonly proposerApproves: boolean;
 
   constructor(pid: string, txDb: DataSource, effect: CeremonyEffect, options: CeremonyDocParticipantOptions = {}) {
     this.pid = pid;
@@ -104,6 +112,13 @@ export class CeremonyDocParticipant implements Participant {
     this.store = new CeremonyStore(txDb);
     this.effect = effect;
     this.ttlMs = options.ttlMs ?? DEFAULT_CEREMONY_TTL_MS;
+    this.proposerApproves = options.proposerApproves === true;
+  }
+
+  /** The approval window of ceremonies begun from now on (milliseconds); a running ceremony keeps the deadline it was begun with. */
+  setTtlMs(ms: number): void {
+    if (!Number.isFinite(ms) || ms < 1) throw new RangeError('ttlMs must be a positive number of milliseconds');
+    this.ttlMs = ms;
   }
 
   handlesOperation(op: Operation): boolean {
@@ -188,6 +203,11 @@ export class CeremonyDocParticipant implements Participant {
       proposalHash: createHash('sha256').update(canonical).digest('base64'),
       parentCommunityDid: parent,
     });
+    if (this.proposerApproves) {
+      await this.store.recordApproval(p.ceremonyId, p.proposerDid, p.signature ?? '');
+      const created = (await this.store.getProposal(p.ceremonyId))!;
+      if (new Set(declaredAdmins(created)).size <= 1) await this.crystallize(created, [{ approverDid: p.proposerDid, signature: p.signature ?? '' }], p.nowMs);
+    }
   }
 
   private async approve(p: CeremonyApproveParams): Promise<void> {
@@ -199,7 +219,13 @@ export class CeremonyDocParticipant implements Participant {
     }
     const prior = await this.store.getApprovals(p.ceremonyId);
     // Repeating an approval is a no-op while the ceremony is open or committed.
-    if (prior.some((a) => a.approverDid === p.approverDid) && (stored.status === 'crystallized' || (stored.status === 'pending' && !isLapsed(stored, p.nowMs)))) return;
+    if (prior.some((a) => a.approverDid === p.approverDid) && (stored.status === 'crystallized' || (stored.status === 'pending' && !isLapsed(stored, p.nowMs)))) {
+      // A met quorum whose effect outcome was unknown (left pending) is retried by the repeat; anything else is a no-op.
+      if (stored.status === 'pending' && new Set(prior.map((a) => a.approverDid)).size >= Math.max(declaredAdmins(stored).size, 1)) {
+        await this.crystallize(stored, prior.map((a) => ({ approverDid: a.approverDid, signature: a.signature })), p.nowMs);
+      }
+      return;
+    }
 
     const proposal = await closeIfLapsed(this.store, stored, p.nowMs);
     assertOpen(proposal, p.nowMs);
@@ -225,6 +251,9 @@ export class CeremonyDocParticipant implements Participant {
         approvals,
       });
     } catch (err) {
+      // An effect whose outcome cannot be read is neither a success nor a refusal: the ceremony stays pending (nothing is
+      // recorded as failed), the transaction aborts with `indeterminate` and a repeated approval retries the effect.
+      if (err instanceof TaskError && err.code === 'indeterminate') throw err;
       const why = describeFailure(err);
       // The stored reason is the closed vocabulary key when there is one (never free text), so a later read says the same.
       await this.store.markFailed(proposal.proposalId, why.reason ?? 'effectFailed', why.code, why.retryable);

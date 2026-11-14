@@ -50,8 +50,10 @@ import { createVrcIssueHandler } from '../src/runtime/trust-tasks-boundary/vrc-i
 import { VrcReceiveParticipant } from '../src/runtime/tx/vrc-receive-participant.ts';
 import { WitnessShareParticipant } from '../src/runtime/tx/witness-share-participant.ts';
 import { createWitnessShareHandler } from '../src/runtime/trust-tasks-boundary/witness-share.ts';
+import { CEREMONY_CO_SIGN_WIRE_TYPE, CEREMONY_PROPOSE_WIRE_TYPE, CEREMONY_RESET_WIRE_TYPE, CEREMONY_STATUS_WIRE_TYPE } from '@p2p-trust-stack/core/services/trust-tasks/boundary/ceremony-spec.js';
 import { createCeremonyDocHandlers } from '../src/runtime/trust-tasks-boundary/ceremony-doc.ts';
 import { HttpBinding } from './http-binding.ts';
+import type { Reason } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
 import { FaultableParticipant, TwoPhaseFaults, parseReason, parseTwoPhase } from './two-phase.ts';
 import { RetainedDocuments } from '../src/runtime/trust-tasks-boundary/retained.ts';
 import { CeremonyDocParticipant } from '../src/runtime/tx/ceremony-doc-participant.ts';
@@ -80,6 +82,8 @@ export interface TruststackersAdapterOptions {
    * establishment (`createVtc`, fan-out) belongs to the hosting server, not to this agent.
    */
   ceremony?: boolean;
+  /** Count the begin as the proposer's approval (the suite's ceremony model, docs/04 section 11.4). Default false: every named admin co-signs. */
+  ceremonyProposerApproves?: boolean;
   /** Ceremony deadline in milliseconds from the begin document (default 7 days). */
   ceremonyTtlMs?: number;
   /**
@@ -102,19 +106,66 @@ export interface TruststackersAdapterOptions {
   seed?: number;
 }
 
+export type CeremonyPlan = { outcome: 'commit' } | { outcome: 'fail'; reason: Reason } | { outcome: 'unknown' };
+
+/** `trigger ceremonyEffect`: the one-shot plan of the next establishing effect, and whether an `unknown` plan has just been used. */
+export class CeremonyPlanSlot {
+  private armed: CeremonyPlan = { outcome: 'commit' };
+  unknownHit = false;
+  arm(plan: CeremonyPlan): void {
+    this.armed = plan;
+  }
+  take(): CeremonyPlan {
+    const plan = this.armed;
+    this.armed = { outcome: 'commit' };
+    return plan;
+  }
+}
+
+export function parseCeremonyEffect(args: Record<string, unknown>): CeremonyPlan {
+  switch (args.outcome) {
+    case 'commit':
+      return { outcome: 'commit' };
+    case 'fail':
+      return { outcome: 'fail', reason: parseReason(args) ?? 'storeFailed' };
+    case 'unknown':
+      return { outcome: 'unknown' };
+    default:
+      throw new Error('ceremonyEffect outcome must be commit, fail or unknown');
+  }
+}
+
 /** The ceremony effect the adapter uses: a community name may be established once; the same ceremony again is a no-op. */
 class FixtureCommunityEffect implements CeremonyEffect {
   private readonly db: SqliteDataSource;
-  constructor(db: SqliteDataSource) {
+  private readonly plan: CeremonyPlanSlot;
+  constructor(db: SqliteDataSource, plan: CeremonyPlanSlot) {
     this.db = db;
+    this.plan = plan;
   }
   async establish(input: CeremonyEstablishment): Promise<void> {
+    // `trigger ceremonyEffect` (one-shot): what the effect does when the next ceremony reaches its quorum.
+    const plan = this.plan.take();
+    if (plan.outcome === 'fail') throw new TaskError({ reason: plan.reason, internalMessage: 'conformance fault: the establishing effect is refused' });
+    if (plan.outcome === 'unknown') {
+      this.plan.unknownHit = true;
+      throw new TaskError({ code: 'indeterminate', retryable: true, internalMessage: 'conformance fault: the effect outcome cannot be read' });
+    }
     const row = await this.db.get<{ ceremony_id: string }>('SELECT ceremony_id FROM conformance_communities WHERE name = ?', input.name);
     if (row !== null && row !== undefined) {
       if (row.ceremony_id === input.ceremonyId) return;
       throw new TaskError({ reason: 'nameTaken', internalMessage: 'the community name is taken' });
     }
     await this.db.run('INSERT INTO conformance_communities (name, ceremony_id, kind, admins) VALUES (?, ?, ?, ?)', input.name, input.ceremonyId, input.kind, JSON.stringify(input.adminDids));
+  }
+}
+
+function documentId(bytes: string): string | undefined {
+  try {
+    const id = (JSON.parse(bytes) as { id?: unknown }).id;
+    return typeof id === 'string' ? id : undefined;
+  } catch {
+    return undefined;
   }
 }
 
@@ -144,6 +195,9 @@ export class TruststackersAdapter implements Adapter {
   private snapshots = new Map<string, string>();
   /** `trigger twoPhase`: the one-shot fault of the next issue transaction, and the transaction `inflight`/`unknown` left waiting. */
   private readonly faults = new TwoPhaseFaults();
+  /** `trigger ceremonyEffect`, and the request whose effect outcome was unknown, answered again by `settle`. */
+  private readonly ceremonyPlan = new CeremonyPlanSlot();
+  private pendingCeremony: SendParams | undefined;
   /** The `send` whose transaction is parked, answered by `settle`. */
   private pendingSend: Promise<SendResult> | undefined;
   private readonly http = new HttpBinding();
@@ -260,7 +314,7 @@ export class TruststackersAdapter implements Adapter {
       verifier: this.verifier,
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     })] : [];
-    this.ceremony = new CeremonyDocParticipant(`ceremony:${did}`, this.txDb, new FixtureCommunityEffect(this.db), this.options.ceremonyTtlMs === undefined ? {} : { ttlMs: this.options.ceremonyTtlMs });
+    this.ceremony = new CeremonyDocParticipant(`ceremony:${did}`, this.txDb, new FixtureCommunityEffect(this.db, this.ceremonyPlan), { proposerApproves: this.options.ceremonyProposerApproves === true, ...(this.options.ceremonyTtlMs === undefined ? {} : { ttlMs: this.options.ceremonyTtlMs }) });
     this.retained = new RetainedDocuments(this.db);
     const ceremony = this.options.ceremony === false ? [] : createCeremonyDocHandlers({
       txManager: this.txManager,
@@ -371,7 +425,13 @@ export class TruststackersAdapter implements Adapter {
         ? [{ typeUri: WIDGET_TYPE, class: 'consequential' as const, validPayload: { subject: 'did:web:alice.example' } }]
         : mode === 'issue' ? [{ typeUri: ISSUE_TYPE, class: 'consequential' as const, validPayload: {} }] : [],
       cryptosuites: ['eddsa-jcs-2022'],
-      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.attested ? ['attested'] : [])],
+      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', ...(this.options.ceremony === false ? [] : ['ceremony', 'ceremony.status', 'trigger.ceremonyDeadline', 'trigger.ceremonyEffect', 'observe.retained']), 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.attested ? ['attested'] : [])],
+      ...(this.options.ceremony === false ? {} : {
+        ceremony: {
+          beginType: CEREMONY_PROPOSE_WIRE_TYPE, approveType: CEREMONY_CO_SIGN_WIRE_TYPE, resetType: CEREMONY_RESET_WIRE_TYPE, statusType: CEREMONY_STATUS_WIRE_TYPE,
+          beginPayload: { name: 'fixture-community', kind: 'vtc', threshold: 2, adminDids: ['$A', '$X'] }, approvePayload: {}, resetPayload: {},
+        },
+      }),
       pins: { framework: FRAMEWORK_VERSION, error: ERROR_SPEC_VERSION, binding: this.options.https === false ? 'none' : 'https/0.3' },
     };
   }
@@ -431,6 +491,25 @@ export class TruststackersAdapter implements Adapter {
       this.faults.arm(parseTwoPhase(args));
       return { documents: [] };
     }
+    if (action === 'ceremonyDeadline') {
+      const sec = args.seconds;
+      if (typeof sec !== 'number' || !Number.isInteger(sec) || sec < 1) throw new Error('ceremonyDeadline seconds must be a positive whole number');
+      this.ceremony.setTtlMs(sec * 1000);
+      return { documents: [] };
+    }
+    if (action === 'ceremonyEffect') {
+      this.ceremonyPlan.arm(parseCeremonyEffect(args));
+      return { documents: [] };
+    }
+    if (action === 'settle' && this.pendingCeremony !== undefined) {
+      // The effect's outcome was unknown (the ceremony stayed pending): the outcome is now known, and the approval that reached the
+      // quorum is processed again (a repeated approval retries the effect), so the reply is the stack's own answer to it.
+      if (args.outcome !== 'commit' && args.outcome !== 'abort') throw new Error('settle outcome must be commit or abort');
+      const again = this.pendingCeremony;
+      this.pendingCeremony = undefined;
+      this.ceremonyPlan.arm(args.outcome === 'commit' ? { outcome: 'commit' } : { outcome: 'fail', reason: parseReason(args) ?? 'storeFailed' });
+      return { documents: (await this.deliver(again)).replies };
+    }
     if (action === 'settle') {
       if (args.outcome !== 'commit' && args.outcome !== 'abort') throw new Error('settle outcome must be commit or abort');
       const pending = this.pendingSend;
@@ -462,6 +541,7 @@ export class TruststackersAdapter implements Adapter {
     const waiting = this.pendingSend;
     this.pendingSend = undefined;
     this.faults.clear();
+    this.pendingCeremony = undefined;
     await waiting?.catch(() => undefined);
     const old = [this.dbPath, this.txPath];
     await this.closeDbs();
@@ -497,11 +577,20 @@ export class TruststackersAdapter implements Adapter {
 
   async observe(q: ObserveQuery): Promise<ObserveResult> {
     if (q.query === 'handled') return { value: await this.handledCount() };
+    if (q.query === 'retained') {
+      // The boundary's append-only record: the request exactly as delivered, the reply exactly as sent ('' when there is none).
+      const doc = q.side === 'request' ? await this.retained.byId(q.id) : await this.retained.replyTo(q.id);
+      return { value: doc?.verbatim ?? '' };
+    }
     if (q.query === 'stored') {
       if (q.kind === 'vrc') return { value: await this.storedCount() };
       if (q.kind === 'vwc') return { value: await this.witnessCount() };
+      if (q.kind === 'ceremony-effect') return { value: await this.communityCount() };
       return { value: await this.handledCount() };
     }
+    // A document whose effect outcome is unknown was answered with a retryable indeterminate and its claim released, but it is not
+    // finished: it is accepted until `settle` resolves it (lifecycle: unknown is never reported as responded or errored).
+    if (this.pendingCeremony !== undefined && documentId(this.pendingCeremony.bytes) === String(q.id)) return { value: 'accepted' };
     const row = await exchangeDids.findByExchangeId(this.db, String(q.id));
     if (row !== null) {
       if (row.state === 'held') return { value: 'accepted' };
@@ -574,6 +663,11 @@ export class TruststackersAdapter implements Adapter {
   private async deliver(params: SendParams): Promise<SendResult> {
     if (params.http !== undefined && this.options.https !== false) return this.http.send(params.from, params.bytes, params.http);
     const result = await this.pipeline.process({ raw: params.bytes, sender: params.from.kind === 'none' ? undefined : params.from.vid });
+    if (this.ceremonyPlan.unknownHit) {
+      // The effect's outcome was unknown: the answer was a retryable indeterminate; `settle` processes this document again.
+      this.ceremonyPlan.unknownHit = false;
+      this.pendingCeremony = params;
+    }
     const replies = result.document === undefined ? [] : [JSON.stringify(result.document)];
     return { replies, transport: { status: result.status, kind: replies.length === 0 ? ('none' as const) : ('document' as const) }, quiescentAfterMs: 0 };
   }

@@ -27,7 +27,7 @@ import { serveHttp, serveStdio } from './rpc.ts';
 for (const m of ['log', 'info', 'debug', 'warn'] as const) console[m] = console.error.bind(console);
 
 function parse(argv: string[]): { options: TruststackersAdapterOptions; http: number | undefined } {
-  const options: TruststackersAdapterOptions = { witness: true };
+  const options: TruststackersAdapterOptions = { witness: true, ceremonyProposerApproves: true };
   let http: number | undefined;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;

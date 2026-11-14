@@ -353,3 +353,93 @@ describe('ceremony-doc: retained documents and registration', () => {
     assert.equal(unserved.payload.code, 'unsupportedType');
   });
 });
+
+describe('ceremony-doc: proposer approval, effect outcome unknown, approval window', () => {
+  it('by default the begin is not an approval: every named admin, the proposer included, co-signs', async () => {
+    const a = await make();
+    const t = fresh();
+    await send(a, begin(a, A, t));
+    assert.equal(await approvalsOf(a, t), 0);
+  });
+
+  it('a participant that counts the begin records the proposer approval, so one co-sign by the other admin completes the quorum', async () => {
+    useClock(START);
+    const a = await new VrcBoundaryAdapter({ attested: true, ceremonyProposerApproves: true }).init();
+    adapters.push(a);
+    await a.setClock(START);
+    const t = fresh();
+    assert.equal((await send(a, begin(a, A, t))).type, NEXT_STEP_TYPE_URI);
+    assert.equal(await approvalsOf(a, t), 1);
+    assert.equal((await send(a, cosign(a, X, t))).payload.status, 'crystallized');
+  });
+
+  it('an effect whose outcome is unknown leaves the ceremony pending and is answered indeterminate; a repeated approval retries and commits', async () => {
+    useClock(START);
+    const a = await new VrcBoundaryAdapter({ attested: true, ceremonyProposerApproves: true }).init();
+    adapters.push(a);
+    await a.setClock(START);
+    const t = fresh();
+    await send(a, begin(a, A, t));
+    await a.trigger('ceremonyEffect', { outcome: 'unknown' });
+    const co = cosign(a, X, t);
+    const first = await send(a, co);
+    assert.equal(first.payload.code, 'indeterminate');
+    assert.equal(first.payload.retryable, true);
+    assert.equal((await a.ceremony.store.getProposal(t))!.status, 'pending');
+    assert.equal(await a.communityCount(), 0);
+    assert.equal((await a.observe({ query: 'documentState', id: (co as { id: string }).id })).value, 'accepted');
+    const settled = await a.trigger('settle', { outcome: 'commit' });
+    assert.equal(JSON.parse(settled.documents[0]!).payload.status, 'crystallized');
+    assert.equal(await a.communityCount(), 1);
+    await assert.rejects(a.trigger('settle', { outcome: 'commit' }), /no transaction is waiting/);
+  });
+
+  it('a refused effect (ceremonyEffect fail) ends the ceremony failed with the closed reason; the plan is one-shot', async () => {
+    useClock(START);
+    const a = await new VrcBoundaryAdapter({ attested: true, ceremonyProposerApproves: true }).init();
+    adapters.push(a);
+    await a.setClock(START);
+    await a.trigger('ceremonyEffect', { outcome: 'fail', reason: 'nameTaken' });
+    const t = fresh();
+    await send(a, begin(a, A, t));
+    const r = await send(a, cosign(a, X, t));
+    assert.equal(r.payload.code, 'taskFailed');
+    assert.equal(reasonOf(r), 'nameTaken');
+    assert.equal(await a.communityCount(), 0);
+    const t2 = fresh();
+    await send(a, begin(a, A, t2, { name: 'Second' }));
+    assert.equal((await send(a, cosign(a, X, t2))).payload.status, 'crystallized');
+    await assert.rejects(a.trigger('ceremonyEffect', { outcome: 'explode' }), /outcome must be/);
+    await assert.rejects(a.trigger('ceremonyEffect', { outcome: 'fail', reason: 'free text' }), /closed/);
+  });
+
+  it('ceremonyDeadline sets the approval window of ceremonies begun afterwards (half-open), and capabilities declare the family', async () => {
+    useClock(START);
+    const a = await new VrcBoundaryAdapter({ attested: true, ceremonyProposerApproves: true }).init();
+    adapters.push(a);
+    await a.setClock(START);
+    const caps = await a.capabilities();
+    assert.ok(['ceremony', 'ceremony.status', 'trigger.ceremonyDeadline', 'trigger.ceremonyEffect', 'observe.retained'].every((c) => caps.optional.includes(c)));
+    assert.equal(caps.ceremony!.beginType, CEREMONY_PROPOSE_WIRE_TYPE);
+    assert.deepEqual(caps.ceremony!.beginPayload.adminDids, ['$A', '$X']);
+    await assert.rejects(a.trigger('ceremonyDeadline', { seconds: 0 }), /positive/);
+    await a.trigger('ceremonyDeadline', { seconds: 60 });
+    const t = fresh();
+    await send(a, begin(a, A, t));
+    await moveTo(a, clock.ms + 60_000);
+    assert.equal(reasonOf(await send(a, cosign(a, X, t))), 'deadlineLapsed');
+  });
+
+  it('observe retained: the request as delivered and the reply as sent, empty when there is none', async () => {
+    useClock(START);
+    const a = await new VrcBoundaryAdapter({ attested: true }).init();
+    adapters.push(a);
+    await a.setClock(START);
+    const doc = begin(a, A, fresh()) as { id: string };
+    const bytes = JSON.stringify(doc, null, 2);
+    const reply = await a.send({ from: { kind: 'actor', vid: A.did }, bytes });
+    assert.equal((await a.observe({ query: 'retained', id: doc.id, side: 'request' })).value, bytes);
+    assert.equal((await a.observe({ query: 'retained', id: doc.id, side: 'reply' })).value, reply.replies[0]);
+    assert.equal((await a.observe({ query: 'retained', id: 'urn:uuid:none', side: 'reply' })).value, '');
+  });
+});

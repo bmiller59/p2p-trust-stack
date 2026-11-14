@@ -14,6 +14,17 @@ export interface CarrierDecl {
   validPayload: Record<string, unknown>;
 }
 
+/** The ceremony-document family (suite docs/04 section 11.4): payload templates may use `$A` and `$X`, the two administrators. */
+export interface CeremonyDecl {
+  beginType: string;
+  approveType: string;
+  resetType: string;
+  statusType?: string;
+  beginPayload: Record<string, unknown>;
+  approvePayload: Record<string, unknown>;
+  resetPayload: Record<string, unknown>;
+}
+
 export interface Capabilities {
   name: string;
   /** The implementation these capabilities belong to when `name` also names a mode (for example `x-attested`); runs that share it are merged into one matrix row. Default: `name`. */
@@ -25,8 +36,10 @@ export interface Capabilities {
   supportedTypes: string[];
   carriers: CarrierDecl[];
   cryptosuites: string[];
-  /** control, idempotencyKey, restart, trigger.consent, trigger.twoPhase, fault.claimStore, discovery.acceptanceWindow, discovery.expiryHorizon, binding.requireBearer, clock, proofVerify, attested */
+  /** control, idempotencyKey, restart, trigger.consent, trigger.twoPhase, ceremony, ceremony.status, trigger.ceremonyDeadline, trigger.ceremonyEffect, observe.retained, fault.claimStore, discovery.acceptanceWindow, discovery.expiryHorizon, binding.requireBearer, clock, proofVerify, attested */
   optional: string[];
+  /** Present with the optional capability `ceremony`. */
+  ceremony?: CeremonyDecl;
   pins: { framework: string; error: string; binding: string };
 }
 
@@ -70,7 +83,8 @@ export interface SendResult {
 export type ObserveQuery =
   | { query: "handled" }
   | { query: "documentState"; id: string }
-  | { query: "stored"; kind: string; digest?: string };
+  | { query: "stored"; kind: string; digest?: string }
+  | { query: "retained"; id: string; side: "request" | "reply" };
 
 export interface ObserveResult {
   /** `handled`/`stored`: a count. `documentState`: unknown | accepted | responded | errored. */

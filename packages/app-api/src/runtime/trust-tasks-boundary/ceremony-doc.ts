@@ -151,9 +151,11 @@ export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandle
       const actor = actorOf(doc, ctx);
       const ceremonyId = ceremonyIdOf(doc, true);
       const p = doc.payload as { name: string; kind: 'vtc' | 'vtn'; threshold: number; adminDids: string[]; parentCommunityDid?: string };
+      const proof = (doc as { proof?: unknown }).proof;
+      const signature = isObj(proof) && typeof proof.proofValue === 'string' ? proof.proofValue : '';
       return drive(doc, ctx, actor, ceremonyId, {
         op: CEREMONY_BEGIN,
-        params: { ceremonyId, proposerDid: actor, name: p.name, kind: p.kind, threshold: p.threshold, adminDids: p.adminDids, parentCommunityDid: p.parentCommunityDid ?? null, nowMs: ctx.now },
+        params: { ceremonyId, proposerDid: actor, name: p.name, kind: p.kind, threshold: p.threshold, adminDids: p.adminDids, parentCommunityDid: p.parentCommunityDid ?? null, signature, nowMs: ctx.now },
       });
     },
   };
