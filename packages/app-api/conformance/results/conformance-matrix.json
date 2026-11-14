@@ -1,0 +1,190 @@
+{
+  "format": "tt-conformance-matrix/0.1",
+  "families": [
+    "framework",
+    "vrc-issue",
+    "vrc-propose"
+  ],
+  "rows": [
+    {
+      "impl": "truststackers-agent-didkey-attested",
+      "tier": 1,
+      "families": {
+        "framework": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 87,
+            "FAIL": 0,
+            "SKIP": 23,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          }
+        },
+        "vrc-issue": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 15,
+            "FAIL": 0,
+            "SKIP": 3,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 5
+          }
+        },
+        "vrc-propose": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 14,
+            "FAIL": 0,
+            "SKIP": 4,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 3
+          }
+        }
+      }
+    },
+    {
+      "impl": "truststackers-agent-didkey-attested",
+      "tier": 2,
+      "families": {
+        "framework": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 92,
+            "FAIL": 0,
+            "SKIP": 18,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          }
+        },
+        "vrc-issue": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 18,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 5
+          }
+        },
+        "vrc-propose": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 17,
+            "FAIL": 0,
+            "SKIP": 1,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 3
+          }
+        }
+      }
+    },
+    {
+      "impl": "truststackers-agent-scidvh-attested",
+      "tier": 1,
+      "families": {
+        "framework": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 87,
+            "FAIL": 0,
+            "SKIP": 23,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          }
+        },
+        "vrc-issue": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 15,
+            "FAIL": 0,
+            "SKIP": 3,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 5
+          }
+        },
+        "vrc-propose": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 14,
+            "FAIL": 0,
+            "SKIP": 4,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 3
+          }
+        }
+      }
+    },
+    {
+      "impl": "truststackers-agent-scidvh-attested",
+      "tier": 2,
+      "families": {
+        "framework": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 31,
+            "FAIL": 61,
+            "SKIP": 18,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          }
+        },
+        "vrc-issue": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 0,
+            "FAIL": 18,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 5
+          }
+        },
+        "vrc-propose": {
+          "status": "FAIL",
+          "counts": {
+            "PASS": 0,
+            "FAIL": 17,
+            "SKIP": 1,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 3
+          }
+        }
+      }
+    },
+    {
+      "impl": "truststackers-agent-didkey-tier1",
+      "tier": 1,
+      "families": {
+        "framework": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 101,
+            "FAIL": 0,
+            "SKIP": 9,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          }
+        },
+        "vrc-issue": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 15,
+            "FAIL": 0,
+            "SKIP": 3,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 5
+          }
+        },
+        "vrc-propose": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 15,
+            "FAIL": 0,
+            "SKIP": 3,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 3
+          }
+        }
+      }
+    }
+  ]
+}

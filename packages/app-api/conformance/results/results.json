@@ -1,0 +1,5961 @@
+[
+  {
+    "impl": "truststackers-agent-didkey-attested",
+    "tier": 1,
+    "results": [
+      {
+        "id": "ENV-001",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-002",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-003",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-004",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-005",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-006",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-007",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-008",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-009",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-010",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-011",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-012",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-013",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ENV-014",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-001",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-002",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-004",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ERR-001",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-002",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-003",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ID-001",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ID-002",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-001",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-002",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-003",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-001",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-002",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-003",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-004",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-005",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-006",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-007",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-008",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-009",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-010",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-011",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-012",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-013",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-014",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-015",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-016",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-017",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-018",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-019",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-020",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-021",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-022",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-023",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-024",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-025",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-026",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-027",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-028",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-029",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-030",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-031",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-032",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-033",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-101",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-102",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-103",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "PRF-104",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-105",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-106",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-107",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "PRF-108",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "TIME-001",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-002",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-003",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-004",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-005",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-006",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-007",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-008",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-009",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-010",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-011",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-012",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-013",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-014",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-015",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-016",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-017",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-018",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-019",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-020",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-021",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-022",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-023",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-024",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-101",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-102",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-001",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-002",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-003",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-004",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-005",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-101",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-102",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-103",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-104",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-105",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-106",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-107",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-108",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-109",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-110",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-111",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-112",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-113",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "VRC-PRO-001",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-002",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-003",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-004",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-005",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-006",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-007",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-008",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-009",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-010",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-011",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "VRC-PRO-012",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-013",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-014",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-015",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-016",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-017",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-018",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-019",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-020",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-021",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-001",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-002",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-003",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-004",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-005",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-006",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-007",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-008",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-009",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-010",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-011",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-012",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-013",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-014",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-015",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-016",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-017",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-018",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-019",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-020",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-021",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-022",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-023",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
+        "failures": []
+      }
+    ]
+  },
+  {
+    "impl": "truststackers-agent-didkey-attested",
+    "tier": 2,
+    "results": [
+      {
+        "id": "ENV-001",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-002",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-003",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-004",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-005",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-006",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-007",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-008",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-009",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-010",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-011",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-012",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-013",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-014",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-001",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-002",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-004",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-001",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-002",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-003",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "ID-001",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ID-002",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-001",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-002",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-003",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-001",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-002",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-003",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-004",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-005",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-006",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-007",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-008",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-009",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-010",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-011",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-012",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-013",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-014",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-015",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-016",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-017",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-018",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-019",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-020",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-021",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-022",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-023",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-024",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-025",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-026",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-027",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-028",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-029",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-030",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-031",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-032",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-033",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-101",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-102",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-103",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-104",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-105",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-106",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-107",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-108",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "TIME-001",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-002",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-003",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-004",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-005",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-006",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-007",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-008",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-009",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-010",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-011",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-012",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-013",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-014",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-015",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-016",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-017",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-018",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-019",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-020",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-021",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-022",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-023",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-024",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-101",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-102",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-001",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-002",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-003",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-004",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-005",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-101",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-102",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-103",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-104",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-105",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-106",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-107",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-108",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-109",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-110",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-111",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-112",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-113",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "VRC-PRO-001",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-002",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-003",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-004",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-005",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-006",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-007",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-008",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-009",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-010",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-011",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "VRC-PRO-012",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-013",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-014",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-015",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-016",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-017",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-018",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-019",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-020",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-021",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-001",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-002",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-003",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-004",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-005",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-006",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-007",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-008",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-009",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-010",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-011",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-012",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-013",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-014",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-015",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-016",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-017",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-018",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-019",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-020",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-021",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-022",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-023",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
+        "failures": []
+      }
+    ]
+  },
+  {
+    "impl": "truststackers-agent-scidvh-attested",
+    "tier": 1,
+    "results": [
+      {
+        "id": "ENV-001",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-002",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-003",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-004",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-005",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-006",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-007",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-008",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-009",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-010",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-011",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-012",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-013",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ENV-014",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-001",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-002",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-004",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ERR-001",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-002",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-003",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ID-001",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ID-002",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-001",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-002",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-003",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-001",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-002",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-003",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-004",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-005",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-006",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-007",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-008",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-009",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-010",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-011",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-012",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-013",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-014",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-015",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-016",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-017",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-018",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-019",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-020",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-021",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-022",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-023",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-024",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-025",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-026",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-027",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-028",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-029",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-030",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-031",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-032",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-033",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-101",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-102",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-103",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "PRF-104",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-105",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-106",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-107",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "PRF-108",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "TIME-001",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-002",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-003",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-004",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-005",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-006",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-007",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-008",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-009",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-010",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-011",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-012",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-013",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-014",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-015",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-016",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-017",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-018",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-019",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-020",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-021",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-022",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-023",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-024",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-101",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-102",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-001",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-002",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-003",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-004",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-005",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-101",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-102",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-103",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-104",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-105",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-106",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-107",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-108",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-109",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-110",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-111",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-112",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "DUP-113",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "VRC-PRO-001",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-002",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-003",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-004",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-005",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-006",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-007",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-008",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-009",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-010",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-011",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "implementation declares optional attested"
+      },
+      {
+        "id": "VRC-PRO-012",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-013",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-014",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-015",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-016",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-017",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-018",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-019",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-020",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-021",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-001",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-002",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-003",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-004",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-005",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-006",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-007",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-008",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-009",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-010",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-011",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-012",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-013",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-014",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-015",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-016",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-017",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-018",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-019",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-020",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-021",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-022",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-023",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
+        "failures": []
+      }
+    ]
+  },
+  {
+    "impl": "truststackers-agent-scidvh-attested",
+    "tier": 2,
+    "results": [
+      {
+        "id": "ENV-001",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-002",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-003",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-004",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-005",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-006",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-007",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-008",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-009",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-010",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-011",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-012",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-013",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ENV-014",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "RSP-001",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "RSP-002",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "RSP-004",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ERR-001",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ERR-002",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-003",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ID-001",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "ID-002",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "LIF-001",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "LIF-002",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)",
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "LIF-003",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "PRF-001",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-002",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-003",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-004",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-005",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-006",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-007",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-008",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-009",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-010",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-011",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-012",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-013",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-014",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-015",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-016",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-017",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-018",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-019",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-020",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-021",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-022",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-023",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-024",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-025",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-026",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-027",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-028",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-029",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-030",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-031",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-032",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-033",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-101",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "PRF-102",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "PRF-103",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "PRF-104",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "PRF-105",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "PRF-106",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "PRF-107",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "PRF-108",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "TIME-001",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-002",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-003",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-004",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-005",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-006",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-007",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-008",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-009",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-010",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-011",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-012",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-013",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-014",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-015",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-016",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-017",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-018",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-019",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-020",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-021",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-022",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-023",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-024",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-101",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "TIME-102",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "DUP-001",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)",
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "DUP-002",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)",
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "DUP-003",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)",
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "DUP-004",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)",
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "DUP-005",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)",
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "DUP-101",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-102",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-103",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-104",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-105",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-106",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-107",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-108",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-109",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-110",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-111",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-112",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "DUP-113",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "VRC-PRO-001",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-002",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-003",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-004",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-005",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-006",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-007",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-008",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-009",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-010",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-011",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "only runs at tier 1"
+      },
+      {
+        "id": "VRC-PRO-012",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-013",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-014",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-015",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-016",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating. (observed: fail)",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-017",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-018",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating. (observed: fail)",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-019",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-020",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-PRO-021",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)",
+          "step 4: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-001",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-002",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-003",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating. (observed: fail)",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-004",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 1: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-005",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-006",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-007",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-008",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-009",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-010",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-011",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-012",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-013",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-014",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)",
+          "step 4: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-015",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)",
+          "step 4: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-016",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)",
+          "step 4: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-017",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-018",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-019",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "FAIL",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-020",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating. (observed: fail)",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)",
+          "step 4: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-021",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating. (observed: fail)",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)",
+          "step 4: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-022",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating. (observed: fail)",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)",
+          "step 4: tier 2: reply proof invalid (unsupported verification method)",
+          "step 5: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      },
+      {
+        "id": "VRC-ISS-023",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: fail)",
+        "failures": [
+          "step 2: tier 2: reply proof invalid (unsupported verification method)",
+          "step 3: tier 2: reply proof invalid (unsupported verification method)"
+        ]
+      }
+    ]
+  },
+  {
+    "impl": "truststackers-agent-didkey-tier1",
+    "tier": 1,
+    "results": [
+      {
+        "id": "ENV-001",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-002",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-003",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-004",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-005",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-006",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-007",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-008",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-009",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-010",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-011",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-012",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ENV-013",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ENV-014",
+        "group": "ENV",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-001",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-002",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "RSP-004",
+        "group": "RSP",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ERR-001",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-002",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ERR-003",
+        "group": "ERR",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ID-001",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "ID-002",
+        "group": "ID",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-001",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-002",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "LIF-003",
+        "group": "LIF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-001",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-002",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-003",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-004",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-005",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability cryptosuite:ecdsa-jcs-2019"
+      },
+      {
+        "id": "PRF-006",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-007",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-008",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-009",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-010",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-011",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-012",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-013",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-014",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-015",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-016",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-017",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-018",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-019",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-020",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-021",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-022",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-023",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-024",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-025",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-026",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-027",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-028",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-029",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-030",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-031",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-032",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-033",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-101",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-102",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-103",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "PRF-104",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-105",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-106",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "PRF-107",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "PRF-108",
+        "group": "PRF",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-001",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-002",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-003",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-004",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-005",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-006",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-007",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-008",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-009",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-010",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-011",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-012",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-013",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-014",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-015",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-016",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-017",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-018",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-019",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-020",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-021",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-022",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-023",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-024",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-101",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "TIME-102",
+        "group": "TIME",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-001",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-002",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-003",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-004",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-005",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-101",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-102",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-103",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-104",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-105",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-106",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-107",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-108",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-109",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-110",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-111",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-112",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "DUP-113",
+        "group": "DUP",
+        "family": "framework",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-001",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-002",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-003",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-004",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-005",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-006",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-007",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-008",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-009",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-010",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-011",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-012",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-013",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-014",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-015",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-016",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Profile rule, not specification text: nothing normative says the relationship DID must differ from the connection DID (docs/07 O26; relationship DIDs unique per VRC is the user's decision, stricter than the specifications). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-017",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Per-VRC uniqueness is stricter than the specifications' per-relationship wording (docs/07 O26, O21); the specifications do not forbid reuse with the same counterparty. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-018",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The credential specification forbids using a pairwise identifier with a second counterparty; what the propose receiver must do on seeing one is not stated (docs/07 O26). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-PRO-019",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-PRO-020",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-PRO-021",
+        "group": "VRC-PRO",
+        "family": "vrc-propose",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-001",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-002",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-003",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "The specification says the receipt carries the computed digest but not whether a request digest that disagrees is refused or ignored; the vector accepts only the ignore reading (design docs/04 section 11). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-004",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-005",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-006",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-007",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-008",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-009",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-010",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-011",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-012",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-013",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-014",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-015",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-016",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "VRC-ISS-017",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-018",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-019",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 2,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "VRC-ISS-020",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a redelivery of an existing credential under a new envelope is a refusal (framework 'creating something') or an idempotent receipt (design) is unsettled (docs/07 O21); the vector asserts the design reading (one stored credential, same digest). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-021",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Second VRC for one exchange: the specifications say nothing; the plan refuses with issue:alreadyIssued (docs/07 O21). Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-022",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Whether a second VRC for the same connection pair is allowed at all is open (docs/07 O21); docs/07 section 1 (unique per VRC) makes it a new exchange with a new relationship DID. Not gating. (observed: pass)",
+        "failures": []
+      },
+      {
+        "id": "VRC-ISS-023",
+        "group": "VRC-ISS",
+        "family": "vrc-issue",
+        "tier": 1,
+        "status": "CLARIFY",
+        "reason": "Which key and verification relationship sign a VRC's inner proof is not stated normatively (the credential specification's examples use assertionMethod; docs/07 O17). Not gating. (observed: pass)",
+        "failures": []
+      }
+    ]
+  }
+]
