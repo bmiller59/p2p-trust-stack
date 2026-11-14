@@ -42,8 +42,9 @@ import {
   mlDsa65Sign,
   mlDsa65Verify,
 } from '../crypto/pqc.js';
-import { extractMlDsa65PublicKey, extractHybridKemPublicKey } from '../relationship/key-extract.js';
+import { extractMlDsa65PublicKey } from '../relationship/key-extract.js';
 import { buildDidPeer4Document } from './create.js';
+import { carryForwardDocument } from './document-carry-forward.js';
 import { computeRotationEntryDigest, computeNextKeyCommitments, computeNextKeyCommitment } from './rotation-codec.js';
 import { verifyWitnessAttestation } from './witness-attestation.js';
 import type { DidDocument, DidParameters, ServiceEndpoint, VerificationMethod } from './types.js';
@@ -442,41 +443,32 @@ export class ScidVhMethod implements DidMethod {
       );
     }
 
-    // Build new DID document preserving alsoKnownAs and updating parameters.
+    // Build the new DID document by CARRYING FORWARD the previous one: a deep clone
+    // with only the identity slot(s) replaced. It is never rebuilt from the fixed-slot builder, so
+    // a Slot-A document keeps its permanent #key-1/#key-2 (TSP VID) and #key-scid slot, the PQ keys
+    // and any added verification method survive, and services are kept.
     const prevAlsoKnownAs = overrideAlsoKnownAs !== undefined
       ? overrideAlsoKnownAs
       : (prevEntry.didDocument.alsoKnownAs ?? []);
     const prevParameters = prevEntry.parameters ?? {};
-    const agreementKeyPair = ed25519ToX25519(newSigningKeyPair.secretKey);
-    // Carry the POST-QUANTUM roots of trust across the rotation. They are
-    // long-lived roots, not per-version keys, so a rotation must RE-PUBLISH them —
-    // otherwise the first rotation would strip #key-mldsa/#key-kem from the
-    // document and every subsequent ML-DSA rotation signature would become
-    // unverifiable (the key to check it against would be gone).
-    const carriedMlDsa = params.mlDsa65KeyPair?.publicKey
-      ?? extractMlDsa65PublicKey(prevEntry.didDocument);
-    const carriedKem = extractHybridKemPublicKey(prevEntry.didDocument);
-    const newDocument = buildDidPeer4Document(
-      newSigningKeyPair.publicKey,
-      agreementKeyPair.publicKey,
-      params.transport,
-      undefined,
-      { mlDsa65PublicKey: carriedMlDsa, hybridKemPublicKey: carriedKem },
-    );
 
+    // The new entry commits BOTH its live identity key (so a later metadata-only entry, such as
+    // updateDocument or a name claim, can self-commit without rotating) AND a fresh next key (so a
+    // genuine rotation stays possible). Mirrors SpeculativeRotationService and genesis.
     const nextKeyCommitment = computeNextKeyCommitment(nextSigningPublicKey);
+    const nextKeyCommitments = [computeNextKeyCommitment(newSigningKeyPair.publicKey), nextKeyCommitment];
     const newParameters: DidParameters = {
       ...prevParameters,
-      nextKeyHashes: [Buffer.from(nextKeyCommitment).toString('base64')],
+      nextKeyHashes: nextKeyCommitments.map(h => Buffer.from(h).toString('base64')),
     };
-    const documentWithId: DidDocument = {
-      ...newDocument,
+    const documentWithId: DidDocument = carryForwardDocument(prevEntry.didDocument, newSigningKeyPair, {
       id: prevEntry.didDocument.id,
       alsoKnownAs: prevAlsoKnownAs,
       parameters: newParameters,
-    };
+      transport: params.transport,
+      mlDsa65PublicKey: params.mlDsa65KeyPair?.publicKey,
+    });
 
-    const nextKeyCommitments = [nextKeyCommitment];
     const unsignedEntry = {
       version: prevEntry.version + 1,
       parameters: newParameters,
