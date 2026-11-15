@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- The packed rotation-log entry reader (`rotation-entry-codec`, now also used by the SQLite
+  `RotationLogStore`) fails closed on a damaged or unrecognised trailing block instead of
+  reading it as "no ML-DSA-65 signature"; the packer rejects a signature that is not 3309
+  bytes. The on-disk layout is unchanged, and rows without the block read as before.
+
 ### Added
 - Process wiring and key custody for the dedicated `#key-boundary` key. The agent runtime
   validates its listener settings strictly (a bad port, the UI port, a tier other than 1

@@ -21,6 +21,7 @@ import type { DatabaseSync } from 'node:sqlite';
 import type { IdentityResolver } from '../services/identity-resolver.js';
 import type { DidDocument } from './types.js';
 import type { RotationLogEntry } from './rotation-types.js';
+import { packRotationEntry, unpackRotationEntry } from './rotation-entry-codec.js';
 import { generateUuid } from '../db/uuid-helpers.js';
 
 // ---------------------------------------------------------------------------
@@ -48,36 +49,8 @@ function packSignedEntry(
   signature: Uint8Array,
   mlDsa65Signature?: Uint8Array,
 ): Uint8Array {
-  // Pack the DID document JSON + parameters + digest + signature into a single binary blob
-  // for the signed_entry column. The format is:
-  //   [4-byte doc_len BE][doc_json UTF-8][4-byte params_len BE][params_json UTF-8][32-byte digest][64-byte signature]
-  //     [OPTIONAL: 1-byte flags][4-byte mlDsa_len BE][mlDsa65 signature]
-  //
-  // The ML-DSA-65 tail is APPENDED and length-prefixed rather than given a fixed
-  // slot (it is 3309 bytes, vs Ed25519's 64), and the flags byte marks its
-  // presence. Blobs written before this change simply end after the 64-byte
-  // signature, so `unpackSignedEntry` reads them unchanged.
-  const docJson = new TextEncoder().encode(JSON.stringify(didDocument));
-  const paramsJson = new TextEncoder().encode(JSON.stringify(parameters ?? null));
-  const pqcTail = mlDsa65Signature ? 1 + 4 + mlDsa65Signature.length : 0;
-  const packed = new Uint8Array(
-    4 + docJson.length + 4 + paramsJson.length + digest.length + signature.length + pqcTail,
-  );
-  const view = new DataView(packed.buffer);
-  view.setUint32(0, docJson.length, false); // Big-endian length
-  packed.set(docJson, 4);
-  view.setUint32(4 + docJson.length, paramsJson.length, false);
-  packed.set(paramsJson, 4 + docJson.length + 4);
-  const offset = 4 + docJson.length + 4 + paramsJson.length;
-  packed.set(digest, offset);
-  packed.set(signature, offset + digest.length);
-  if (mlDsa65Signature) {
-    const tail = offset + digest.length + signature.length;
-    packed[tail] = 0x01; // flags: bit 0 = ML-DSA-65 signature present
-    view.setUint32(tail + 1, mlDsa65Signature.length, false);
-    packed.set(mlDsa65Signature, tail + 5);
-  }
-  return packed;
+  // Layout (incl. the optional ML-DSA-65 tail) lives in rotation-entry-codec.
+  return packRotationEntry({ didDocument, parameters, digest, signature, mlDsa65Signature });
 }
 
 function unpackSignedEntry(packed: Uint8Array): {
@@ -87,39 +60,9 @@ function unpackSignedEntry(packed: Uint8Array): {
   signature: Uint8Array;
   mlDsa65Signature?: Uint8Array;
 } {
-  const view = new DataView(packed.buffer, packed.byteOffset, packed.byteLength);
-  const docLen = view.getUint32(0, false);
-  const docJson = new TextDecoder().decode(packed.slice(4, 4 + docLen));
-  const paramsLenOffset = 4 + docLen;
-  const paramsLen = view.getUint32(paramsLenOffset, false);
-  const paramsJson = new TextDecoder().decode(packed.slice(paramsLenOffset + 4, paramsLenOffset + 4 + paramsLen));
-  const offset = paramsLenOffset + 4 + paramsLen;
-  const digest = packed.slice(offset, offset + 32);
-  const signature = packed.slice(offset + 32, offset + 32 + 64);
-
-  // Optional ML-DSA-65 tail (see packSignedEntry). Present only when the entry
-  // was created by an identity that has a PQ root-of-trust key.
-  let mlDsa65Signature: Uint8Array | undefined;
-  const tail = offset + 32 + 64;
-  if (packed.length >= tail + 5) {
-    const flags = packed[tail];
-    if (flags & 0x01) {
-      const sigLen = view.getUint32(tail + 1, false);
-      mlDsa65Signature = packed.slice(tail + 5, tail + 5 + sigLen);
-    }
-  }
-
-  let parameters: import('./types.js').DidParameters | undefined;
-  try {
-    parameters = JSON.parse(paramsJson) ?? undefined;
-  } catch { /* legacy format: no parameters block */ }
-  return {
-    parameters,
-    didDocument: JSON.parse(docJson) as DidDocument,
-    digest,
-    signature,
-    mlDsa65Signature,
-  };
+  // One reader for the blob layout, including the optional ML-DSA-65 tail, which
+  // fails closed on a damaged or unknown tail (see rotation-entry-codec).
+  return unpackRotationEntry(packed);
 }
 
 function parseNextKeyCommitments(raw: Uint8Array): Uint8Array[] {
