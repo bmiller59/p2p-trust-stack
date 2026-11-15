@@ -15,11 +15,11 @@
  */
 
 import type { DataSource } from '../db/data-source.js';
-import { createDidPeer4 } from '../did/create.js';
+import { createDidPeer4, createRelationshipDidPeer4 } from '../did/create.js';
 import * as identitiesRepo from '../db/repositories/identities-repo.js';
 import * as didDocumentsRepo from '../db/repositories/did-documents-repo.js';
 import * as keysRepo from '../db/repositories/keys-repo.js';
-import { decryptSecretKey } from '../keystore/sqlite-keystore.js';
+import { decryptSecretKey, encryptSecretKey } from '../keystore/sqlite-keystore.js';
 import { cesrEncode, CESR_CODES } from '../crypto/cesr.js';
 import { logger } from '../util/logger.js';
 
@@ -150,33 +150,79 @@ export class DidManager {
     return { did: peer4.did, didDocumentUuid, identityUuid, signingKeyPair: peer4.signingKeyPair };
   }
 
-  /** Create an R-DID for a pairwise relationship. */
+  /**
+   * Create an R-DID: a fresh signing-only `did:peer:4` with no service entry and no key agreement
+   * key, under the caller's root identity (is_primary=0, context_type='relationship'). The secret
+   * key is persisted encrypted (Argon2id + AES-256-GCM) under `passphrase`, the agent's own key
+   * passphrase. There is deliberately no default: a missing or empty passphrase is refused so a
+   * development constant can never end up protecting relationship keys.
+   *
+   * Rows are written in one transaction, so a DID never exists without its encrypted key.
+   */
   async createRelationshipDid(
     identityUuid: string,
     relationshipUuid: string,
+    passphrase: string,
   ): Promise<CreateContextDidResult> {
-    const peer4 = await createDidPeer4();
+    if (typeof passphrase !== 'string' || passphrase.length === 0) {
+      throw new Error('createRelationshipDid: a key passphrase is required (no default is applied)');
+    }
+    const rdid = await createRelationshipDidPeer4();
     const identity = await identitiesRepo.findByUuid(this.db, identityUuid);
     const resolvedIdentityUuid = identity?.uuid ?? identityUuid;
+    const encrypted = await encryptSecretKey(rdid.signingKeyPair.secretKey, passphrase);
 
-    const didDocumentUuid = await didDocumentsRepo.create(this.db, {
-      identityUuid: resolvedIdentityUuid,
-      did: peer4.did,
-      method: 'did:peer:4',
-      documentJson: JSON.stringify(peer4.document),
-      isPrimary: false,
-      contextType: 'relationship',
-      contextRefUuid: relationshipUuid,
+    const didDocumentUuid = await this.db.transaction(async (tx) => {
+      const docUuid = await didDocumentsRepo.create(tx, {
+        identityUuid: resolvedIdentityUuid,
+        did: rdid.did,
+        method: 'did:peer:4',
+        documentJson: JSON.stringify(rdid.document),
+        isPrimary: false,
+        contextType: 'relationship',
+        contextRefUuid: relationshipUuid,
+      });
+      await keysRepo.createWithSecret(tx, {
+        identityUuid: resolvedIdentityUuid,
+        didDocumentUuid: docUuid,
+        keyType: 'ed25519',
+        publicKey: rdid.signingKeyPair.publicKey,
+        encryptedSecretKey: encrypted.ciphertext,
+        salt: encrypted.salt,
+        nonce: encrypted.nonce,
+        authTag: encrypted.authTag,
+      });
+      return docUuid;
     });
 
-    await keysRepo.create(this.db, {
-      identityUuid: resolvedIdentityUuid,
-      didDocumentUuid,
-      keyType: 'ed25519',
-      publicKey: Buffer.from(peer4.signingKeyPair.publicKey),
-    });
+    return { did: rdid.did, didDocumentUuid, identityUuid: resolvedIdentityUuid, signingKeyPair: rdid.signingKeyPair };
+  }
 
-    return { did: peer4.did, didDocumentUuid, identityUuid: resolvedIdentityUuid, signingKeyPair: peer4.signingKeyPair };
+  /**
+   * Load the relationship DID's signing key (decrypting under `passphrase`), or null when the DID
+   * is unknown or its secret has been deleted (the relationship ended).
+   */
+  async loadRelationshipSigningKey(
+    did: string,
+    passphrase: string,
+  ): Promise<{ did: string; verificationMethod: string; secretKey: Uint8Array; publicKey: Uint8Array } | null> {
+    const doc = await didDocumentsRepo.findByRealDid(this.db, did);
+    if (!doc || doc.contextType !== 'relationship') return null;
+    const key = await keysRepo.findCurrentForDidDocument(this.db, doc.uuid, 'ed25519');
+    if (!key || !key.encryptedSecretKey || !key.salt || !key.nonce || !key.authTag) return null;
+    const secretKey = await decryptSecretKey(
+      { ciphertext: key.encryptedSecretKey, salt: key.salt, nonce: key.nonce, authTag: key.authTag },
+      passphrase,
+    );
+    return { did, verificationMethod: `${did}#key-1`, secretKey, publicKey: new Uint8Array(key.publicKey) };
+  }
+
+  /** Delete the secret key of a relationship DID; the public document and public key stay. */
+  async deleteRelationshipSecret(did: string): Promise<boolean> {
+    const doc = await didDocumentsRepo.findByRealDid(this.db, did);
+    if (!doc || doc.contextType !== 'relationship') return false;
+    await keysRepo.clearSecretsForDidDocument(this.db, doc.uuid);
+    return true;
   }
 
   /** Create a P-DID for a persona profile. */

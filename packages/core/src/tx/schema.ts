@@ -339,6 +339,13 @@ export const TX_ADDITIVE_COLUMNS: readonly TxAdditiveColumn[] = [
     column: 'retryable',
     ddl: 'ALTER TABLE governance_change_proposals ADD COLUMN retryable INTEGER',
   },
+  {
+    // Conformance P8d: a participant that applies its effect at COMMIT (not at prepare) keeps what it must apply here, as
+    // JSON, so a commit driven after a restart still has it. NULL for participants that apply at prepare.
+    table: 'tx_participant_state',
+    column: 'pending_ops',
+    ddl: 'ALTER TABLE tx_participant_state ADD COLUMN pending_ops TEXT',
+  },
 ];
 
 /**

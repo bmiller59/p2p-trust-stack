@@ -354,6 +354,7 @@ export class CredentialFactoryImpl implements CredentialFactory {
           id: `urn:uuid:${crypto.randomUUID()}`,
           issuerDid: request.issuerDid,
           subjectDid: request.subjectDid,
+          issuerScope: request.issuerScope,
           claim: request.claim,
           validFrom,
           validUntil,
