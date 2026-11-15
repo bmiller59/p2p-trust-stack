@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- The "database is newer than this application" check in both migration runners now
+  fires. The SQLite runner looked up a version row it never wrote and the datasource
+  runner could read an older row, so a database written by a newer release was opened
+  silently. Both runners now take the numeric maximum of the recorded versions, refuse
+  to start when the database is ahead of the code, and keep exactly one version row.
+- `did:scid:vh` resolution now requires the identifier to be the hash of the genesis
+  entry of the log it is served under. A self-consistent log under a different
+  identifier is refused (`SCID mismatch`); `validateChain` takes the identifier, and
+  `scidMatchesGenesis` is exported for other resolvers.
+- `rotate()` and `SpeculativeRotationService` carry the previous DID document forward and
+  replace only the identity slot, instead of rebuilding it. A rotation no longer drops
+  `#key-mldsa`, `#key-kem` or other verification methods, and no longer replaces the
+  permanent `#key-1` / `#key-2` of a server identity. `rotate()` also commits the live key
+  as well as the next key.
+- `HttpRotationLogSource` bounds what it fetches: `timeoutMs` (default 5000) and `maxBytes`
+  (default 1 MiB, checked against `Content-Length` and the body actually read).
+
+### Upgrade notes
+- No schema change and no migration. No new environment variables; nothing here is
+  opt-in or off by default, these are corrections.
+- A database that a newer release has already migrated is now refused by an older
+  release at start-up (previously it was opened). Upgrade the application rather than
+  pointing an older build at a migrated database.
+- `validateChain` has a new identifier parameter; callers outside this repository need
+  to pass it.
+
 ## [0.2.0] - 2026-10-30
 
 ### Added
