@@ -31,7 +31,10 @@
  * The ML-DSA-65 tail is APPENDED and length-prefixed (it is 3309 bytes, vs
  * Ed25519's 64), and the flags byte marks its presence. A blob written before
  * PQ provisioning simply ends after the 64-byte signature, so legacy blobs
- * read unchanged.
+ * read unchanged. The reader FAILS CLOSED on anything after the signature that
+ * is not exactly one well-formed block (flags 0x01, length 3309, no trailing
+ * bytes): a truncated or unrecognised tail throws instead of reading as "no
+ * PQ signature". New flag bits therefore need a reader upgrade first.
  *
  * ## Wire JSON shape
  *
@@ -45,6 +48,7 @@
  * Byte fields are base64 strings.
  */
 
+import { ML_DSA_65_SIG_BYTES } from '../crypto/pqc.js';
 import type { DidDocument, DidParameters } from './types.js';
 import type { RotationLogEntry } from './rotation-types.js';
 
@@ -77,6 +81,11 @@ export function toUint8Array(value: unknown): Uint8Array {
 
 /** Pack a rotation entry into the `signed_entry` BLOB layout. */
 export function packRotationEntry(entry: PackedRotationEntry): Uint8Array {
+  if (entry.mlDsa65Signature && entry.mlDsa65Signature.length !== ML_DSA_65_SIG_BYTES) {
+    throw new RangeError(
+      `packRotationEntry: ML-DSA-65 signature must be ${ML_DSA_65_SIG_BYTES} bytes, got ${entry.mlDsa65Signature.length}`,
+    );
+  }
   const docJson = new TextEncoder().encode(JSON.stringify(entry.didDocument));
   const paramsJson = new TextEncoder().encode(JSON.stringify(entry.parameters ?? null));
   const pqcTail = entry.mlDsa65Signature ? 1 + 4 + entry.mlDsa65Signature.length : 0;
@@ -114,13 +123,30 @@ export function unpackRotationEntry(bytes: Uint8Array): PackedRotationEntry {
   const digest = bytes.slice(offset, offset + 32);
   const signature = bytes.slice(offset + 32, offset + 32 + 64);
 
+  // Optional trailing block. Anything after the Ed25519 signature must be exactly
+  // one well-formed ML-DSA block: a damaged or unrecognised tail is an error, not
+  // "no signature", so a PQ-signed entry cannot be downgraded silently.
   let mlDsa65Signature: Uint8Array | undefined;
   const tail = offset + 32 + 64;
-  if (tail + 5 <= bytes.length && (bytes[tail] & FLAG_MLDSA_PRESENT) === FLAG_MLDSA_PRESENT) {
-    const len = view.getUint32(tail + 1, false);
-    if (tail + 5 + len <= bytes.length) {
-      mlDsa65Signature = bytes.slice(tail + 5, tail + 5 + len);
+  const remaining = bytes.length - tail;
+  if (remaining > 0) {
+    if (remaining < 5) {
+      throw new SyntaxError(`unpackRotationEntry: ${remaining} trailing byte(s) after the signature (partial ML-DSA block header)`);
     }
+    const flags = bytes[tail];
+    if (flags !== FLAG_MLDSA_PRESENT) {
+      throw new SyntaxError(`unpackRotationEntry: unknown trailing-block flags 0x${flags.toString(16)}`);
+    }
+    const len = view.getUint32(tail + 1, false);
+    if (len !== ML_DSA_65_SIG_BYTES) {
+      throw new SyntaxError(`unpackRotationEntry: ML-DSA-65 block length ${len}, expected ${ML_DSA_65_SIG_BYTES}`);
+    }
+    if (remaining !== 5 + len) {
+      throw new SyntaxError(
+        `unpackRotationEntry: ML-DSA-65 block is ${remaining - 5} bytes but declares ${len} (truncated or trailing data)`,
+      );
+    }
+    mlDsa65Signature = bytes.slice(tail + 5, tail + 5 + len);
   }
 
   let parameters: DidParameters | undefined;

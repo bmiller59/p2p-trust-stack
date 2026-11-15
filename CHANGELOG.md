@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- The packed rotation-log entry reader (`rotation-entry-codec`, now also used by the SQLite
+  `RotationLogStore`) fails closed on a damaged or unrecognised trailing block instead of
+  reading it as "no ML-DSA-65 signature"; the packer rejects a signature that is not 3309
+  bytes. The on-disk layout is unchanged, and rows without the block read as before.
+
 ### Added
 - A dedicated `#key-boundary` signing key for Trust Task documents, as a library behind a
   default-off gate. `updateDocument` and `addBoundaryKey` publish the key through a
