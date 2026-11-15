@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Spec-aligned Trust Task boundary pipeline in `@p2p-trust-stack/core`
+  (`services/trust-tasks/boundary`), as a library with no listener of its own: typed
+  error documents and the lifecycle states, a transport-agnostic consumer pipeline for
+  the HTTPS binding, a DID-resolving proof verifier (`eddsa-jcs-2022` for `did:key`,
+  `did:peer:4` and `did:scid:vh` issuers), signed replies and the attested tier (proof
+  on every request, every reply signed), task digests and outcome evidence,
+  `trust-task-next-step` and a `trust-task-discovery` 0.4 responder. The pinned
+  `@openvtc/trust-tasks` runtime is 0.29.0.
+- A durable accepted-id store (`AcceptedIdStore`) for duplicate suppression,
+  `TransactionManager.getOutcome()` (committed, aborted, in flight or unknown) and a
+  prune hook on `TxJanitor`.
+
+### Changed
+- Ceremony participants follow the specified failure rules: a late approval is refused
+  with `deadlineLapsed` and the proposal is marked expired, `ceremony_reset` is allowed
+  only from a failed or expired ceremony, a repeated approval is idempotent, and a
+  failed step records its `error_code` and `retryable` flag.
+- The legacy `policy/evaluate` handler takes its actor from the verified sender only and
+  answers `permissionDenied` without one. Read-only evaluate documents are no longer
+  recorded.
+
+### Upgrade notes
+- Migration `0021_trust_task_boundary.sql`, `SCHEMA_VERSION` 24 to 25: ten nullable
+  columns on `trust_tasks`, the `error_code` / `retryable` columns on the proposal
+  tables, and the `trust_task_accepted` table. Additive only; existing rows are
+  untouched. A release that records schema version 25 cannot be opened by an older one.
+- Default off: nothing in this release serves a Trust Task endpoint. The pipeline is used
+  only by a host that installs it (the utility server's `POST /trust-tasks`, and the
+  opt-in agent listener added in the next package). No new environment variables.
+
 ## [0.2.0] - 2026-10-30
 
 ### Added
