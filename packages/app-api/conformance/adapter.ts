@@ -58,7 +58,10 @@ import type { Reason } from '@p2p-trust-stack/core/services/trust-tasks/boundary
 import { FaultableParticipant, TwoPhaseFaults, parseReason, parseTwoPhase } from './two-phase.ts';
 import { RetainedDocuments } from '../src/runtime/trust-tasks-boundary/retained.ts';
 import { CeremonyDocParticipant } from '../src/runtime/tx/ceremony-doc-participant.ts';
-import type { CeremonyEffect, CeremonyEstablishment } from '../src/runtime/tx/ceremony-doc-participant.ts';
+import type { CeremonyEffect, CeremonyEstablishment, CeremonyProposalInput } from '../src/runtime/tx/ceremony-doc-participant.ts';
+import { CommunityFoundingEffect } from '@p2p-trust-stack/core/services/founding/community-effect.js';
+import * as peerEndpointsRepo from '@p2p-trust-stack/core/db/repositories/peer-endpoints-repo.js';
+import * as relationshipsRepo from '@p2p-trust-stack/core/db/repositories/relationships-repo.js';
 import { TaskError } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
 import { VtcStore } from '@p2p-trust-stack/core/vtc/store.js';
 import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-resolver.js';
@@ -98,6 +101,15 @@ export interface TruststackersAdapterOptions {
   ceremonyProposerApproves?: boolean;
   /** Ceremony deadline in milliseconds from the begin document (default 7 days). */
   ceremonyTtlMs?: number;
+  /**
+   * Which establishing effect the ceremony documents run (default `fixture`). `real`: the production host effect
+   * (`CommunityFoundingEffect`: the real `createVtc`, the crystallization policy, check at prepare and apply at commit), over
+   * this adapter's own database, with the participant requiring boundary-verified approvals (D1.1). The suite names arbitrary
+   * admin DIDs, so in this mode the adapter provisions each unknown named admin as the hosting server would already hold it
+   * (a human VTA with an endpoint and an established mutual relationship with the first named admin): the world, not the rules.
+   * `communityCount` then counts the real communities.
+   */
+  ceremonyHost?: 'fixture' | 'real';
   /**
    * The carrier the generic (framework) vectors use. `widget` (default): the suite's conformance widget
    * task, served by a fixture handler behind the same pipeline. `issue`: the issue type itself (P6 style).
@@ -176,6 +188,49 @@ class FixtureCommunityEffect implements CeremonyEffect {
       throw new TaskError({ reason: 'nameTaken', internalMessage: 'the community name is taken' });
     }
     await this.db.run('INSERT INTO conformance_communities (name, ceremony_id, kind, admins) VALUES (?, ?, ?, ?)', input.name, input.ceremonyId, input.kind, JSON.stringify(input.adminDids));
+  }
+}
+
+/**
+ * The real host effect behind the suite's fault plan: the armed `trigger ceremonyEffect` is consumed at the check (where a
+ * refusal vetoes), exactly as the fixture does, and every other decision is the real effect's. Unknown named admins are
+ * provisioned first (see the `ceremonyHost` option).
+ */
+class RealHostEffect implements CeremonyEffect {
+  private readonly db: SqliteDataSource;
+  private readonly plan: CeremonyPlanSlot;
+  private readonly inner: CommunityFoundingEffect;
+  private anchor: string | undefined;
+  constructor(db: SqliteDataSource, plan: CeremonyPlanSlot) {
+    this.db = db;
+    this.plan = plan;
+    this.inner = new CommunityFoundingEffect(db);
+  }
+  private async provision(dids: readonly string[]): Promise<void> {
+    for (const did of dids) {
+      if ((await identitiesRepo.findByRealDid(this.db, did)) !== null) continue;
+      const uuid = await identitiesRepo.create(this.db, { realDid: did, role: 'vta', subjectKind: 'human', name: did });
+      await didDocumentsRepo.create(this.db, { identityUuid: uuid, did, method: 'scid', isPrimary: true });
+      await peerEndpointsRepo.upsertForIdentity(this.db, { identityUuid: uuid, peerId: `conformance-${uuid}`, multiaddrs: ['/ip4/127.0.0.1/tcp/4001'] });
+      if (this.anchor === undefined) this.anchor = uuid;
+      else await relationshipsRepo.create(this.db, { localIdentityUuid: this.anchor, remoteIdentityUuid: uuid, direction: 'bidirectional', status: 'established' });
+    }
+  }
+  async checkProposal(input: CeremonyProposalInput): Promise<void> {
+    await this.provision(input.adminDids);
+    await this.inner.checkProposal(input);
+  }
+  async check(input: CeremonyEstablishment): Promise<void> {
+    const plan = this.plan.take();
+    if (plan.outcome === 'fail') throw new TaskError({ reason: plan.reason, internalMessage: 'conformance fault: the establishing effect is refused' });
+    if (plan.outcome === 'unknown') {
+      this.plan.unknownHit = true;
+      throw new TaskError({ code: 'indeterminate', retryable: true, internalMessage: 'conformance fault: the effect outcome cannot be read' });
+    }
+    await this.inner.check(input);
+  }
+  apply(input: CeremonyEstablishment): Promise<void> {
+    return this.inner.apply(input);
   }
 }
 
@@ -338,7 +393,7 @@ export class TruststackersAdapter implements Adapter {
       verifier: this.verifier,
       attachTx: (id, txId) => this.guard.attachTx(id, txId),
     })] : [];
-    this.ceremony = new CeremonyDocParticipant(`ceremony:${did}`, this.txDb, new FixtureCommunityEffect(this.db, this.ceremonyPlan), { proposerApproves: this.options.ceremonyProposerApproves === true, ...(this.options.ceremonyTtlMs === undefined ? {} : { ttlMs: this.options.ceremonyTtlMs }) });
+    this.ceremony = new CeremonyDocParticipant(`ceremony:${did}`, this.txDb, this.options.ceremonyHost === 'real' ? new RealHostEffect(this.db, this.ceremonyPlan) : new FixtureCommunityEffect(this.db, this.ceremonyPlan), { proposerApproves: this.options.ceremonyProposerApproves === true, ...(this.options.ceremonyHost === 'real' ? { requireVerifiedApprovals: true } : {}), ...(this.options.ceremonyTtlMs === undefined ? {} : { ttlMs: this.options.ceremonyTtlMs }) });
     this.retained = new RetainedDocuments(this.db);
     const ceremony = this.options.ceremony === false ? [] : createCeremonyDocHandlers({
       txManager: this.txManager,
@@ -593,6 +648,8 @@ export class TruststackersAdapter implements Adapter {
   async restart(): Promise<void> {
     await this.closeDbs();
     await this.build(false);
+    // What the hosting server does at boot after the coordinator's own recovery: finish the prepared ceremony transactions the log decided.
+    await this.ceremony.reconcile((id) => this.txManager.getOutcome(id));
   }
   async reset(): Promise<void> {
     const waiting = this.pendingSend;
@@ -627,10 +684,13 @@ export class TruststackersAdapter implements Adapter {
   }
   /** Communities established by a met ceremony quorum. */
   async communityCount(): Promise<number> {
+    if (this.options.ceremonyHost === 'real') return this.count("SELECT COUNT(*) AS n FROM identities WHERE role IN ('vtc','vtn')");
     return this.count('SELECT COUNT(*) AS n FROM conformance_communities');
   }
   /** Credentials kept from credential-exchange/issue: every stored credential that is not a VRC. */
   private async credentialCount(): Promise<number> {
+    // The founding VMCs the real host mints inside the establishment are part of that one effect (counted by `communityCount`), not credentials the exchange stored.
+    if (this.options.ceremonyHost === 'real') return this.count("SELECT COUNT(*) AS n FROM credentials WHERE vc_type <> 'vrc' AND issuer_identity_uuid NOT IN (SELECT uuid FROM identities WHERE role IN ('vtc','vtn'))");
     return this.count("SELECT COUNT(*) AS n FROM credentials WHERE vc_type <> 'vrc'");
   }
   /** Presentations kept from credential-exchange/present. */

@@ -91,7 +91,7 @@ export function createTaskConsentDecisionHandler(deps: CeremonyDocDeps): Pipelin
         ctx,
         actor,
         ceremonyId,
-        { op: CEREMONY_APPROVE, params: { ceremonyId, approverDid: actor, signature, nowMs: ctx.now } },
+        { op: CEREMONY_APPROVE, params: { ceremonyId, approverDid: actor, signature, verified: true, nowMs: ctx.now } },
         (_p, approvals) => ({ status: 'granted', payloadDigest: binding.payloadDigest, approvals }),
       );
     },
