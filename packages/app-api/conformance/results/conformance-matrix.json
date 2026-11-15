@@ -54,20 +54,20 @@
           "green": true
         },
         "ceremony-receipt": {
-          "status": "SKIP",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
+            "PASS": 58,
             "FAIL": 0,
-            "SKIP": 70,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 12
           },
           "anchors": {
-            "pass": 0,
-            "ran": 0,
+            "pass": 7,
+            "ran": 7,
             "total": 7
           },
-          "green": false
+          "green": true
         },
         "dtg-credential-exchange": {
           "status": "PASS",
@@ -296,20 +296,20 @@
           "green": true
         },
         "ceremony-receipt": {
-          "status": "SKIP",
+          "status": "PASS",
           "counts": {
-            "PASS": 0,
+            "PASS": 58,
             "FAIL": 0,
-            "SKIP": 70,
+            "SKIP": 0,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 0
+            "CLARIFY": 12
           },
           "anchors": {
-            "pass": 0,
-            "ran": 0,
+            "pass": 7,
+            "ran": 7,
             "total": 7
           },
-          "green": false
+          "green": true
         },
         "dtg-credential-exchange": {
           "status": "PASS",

@@ -2432,8 +2432,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-002",
@@ -2441,8 +2440,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-003",
@@ -2450,8 +2448,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-004",
@@ -2459,8 +2456,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-005",
@@ -2468,8 +2464,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-006",
@@ -2477,8 +2472,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-007",
@@ -2486,512 +2480,472 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-008",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-009",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-010",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-011",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-012",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-013",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-014",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-015",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-016",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-017",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-018",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-019",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-020",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-021",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-022",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-023",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-024",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-025",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-026",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-027",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-028",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-029",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-030",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-031",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-032",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-033",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-034",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-035",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-036",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-037",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-038",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The verifier MUST evaluate the completion rule itself and MUST NOT rely on payload.complete (spec.md:132), which says the enactment is complete; the schema description says both a mistaken and a lying recorder are visible, so a verifier may also report the disagreement as invalid. Which verdict is meant is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-039",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-040",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-041",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-042",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-043",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-044",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-045",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-046",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-047",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-048",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-049",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-050",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-051",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The hash function is not fixed by the specification (spec.md:108), so a verifier may implement the one the multihash names (complete) or report that it does not (unverifiable); the text does not require a minimum set. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-052",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The recorder's duty to populate the salt is stated (spec.md:123) but the payload schema does not require it, and the verifier rules do not say what a verifier holding documents does when the salt is absent (the digests cannot be recomputed). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-053",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-054",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-055",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-056",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-057",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-058",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-059",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-060",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-061",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-062",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The text says each step carries its own proof (spec.md:103) but rule 11 states only that a held document's proof is verified; what a verifier reports for a held document that has none is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-063",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The specification is a bearer specification, so any verifier may rely on a receipt (spec.md:150-154), but it also says a receipt addressed to one verifier is one that SPEC.md 7.2 item 5 requires every other verifier to reject (spec.md:152); whether a receipt that carries a recipient naming someone else is rejected is not settled. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-064",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt is not a step of the enactment it reports on and the specification says nothing about its threadId; a verifier should neither need nor require one. Not stated, so not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-065",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 4.11.2 describes the steps as typically separate exchanges but states no rule on their threadIds, and the verifier rules (spec.md:128-138) do not mention them; a verifier that rejected shared or distinct threads would invent a rule. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-066",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The producer rule is stated for the envelope member (SPEC.md:658) and the receipt's parentEnactment is described as the same member's counterpart; what a verifier does with a receipt that breaks it is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-067",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 item 11 keeps a consequential task from executing twice; verifying a receipt executes nothing, and the receipt's side-effect class is none, but the text does not say a verifier must treat a re-presented receipt as a retry rather than a duplicate. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-068",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt text states no rule that an enumerated step name must be one the definition declares (the Rust verifier crate rejects it); the schema only says the name is the definition's. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-069",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema description says the typeUri is checked against the definition, but no verifier rule states it. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-070",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema says enumerating rounds lets a verifier check the bound, but no verifier rule states that a round beyond maxRounds is rejected. Not gating. (observed: pass)",
+        "failures": []
       }
     ],
     "window": {
@@ -3001,7 +2955,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "9fcdac3416e9"
+    "salt": "aa8bf1a976c6"
   },
   {
     "impl": "truststackers-agent-didkey-attested",
@@ -5381,8 +5335,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-002",
@@ -5390,8 +5343,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-003",
@@ -5399,8 +5351,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-004",
@@ -5408,8 +5359,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-005",
@@ -5417,8 +5367,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-006",
@@ -5426,8 +5375,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-007",
@@ -5435,512 +5383,472 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-008",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-009",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-010",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-011",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-012",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-013",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-014",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-015",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-016",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-017",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-018",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-019",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-020",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-021",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-022",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-023",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-024",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-025",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-026",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-027",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-028",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-029",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-030",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-031",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-032",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-033",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-034",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-035",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-036",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-037",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-038",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The verifier MUST evaluate the completion rule itself and MUST NOT rely on payload.complete (spec.md:132), which says the enactment is complete; the schema description says both a mistaken and a lying recorder are visible, so a verifier may also report the disagreement as invalid. Which verdict is meant is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-039",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-040",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-041",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-042",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-043",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-044",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-045",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-046",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-047",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-048",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-049",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-050",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-051",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The hash function is not fixed by the specification (spec.md:108), so a verifier may implement the one the multihash names (complete) or report that it does not (unverifiable); the text does not require a minimum set. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-052",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The recorder's duty to populate the salt is stated (spec.md:123) but the payload schema does not require it, and the verifier rules do not say what a verifier holding documents does when the salt is absent (the digests cannot be recomputed). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-053",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-054",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-055",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-056",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-057",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-058",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-059",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-060",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-061",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-062",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The text says each step carries its own proof (spec.md:103) but rule 11 states only that a held document's proof is verified; what a verifier reports for a held document that has none is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-063",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The specification is a bearer specification, so any verifier may rely on a receipt (spec.md:150-154), but it also says a receipt addressed to one verifier is one that SPEC.md 7.2 item 5 requires every other verifier to reject (spec.md:152); whether a receipt that carries a recipient naming someone else is rejected is not settled. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-064",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt is not a step of the enactment it reports on and the specification says nothing about its threadId; a verifier should neither need nor require one. Not stated, so not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-065",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 4.11.2 describes the steps as typically separate exchanges but states no rule on their threadIds, and the verifier rules (spec.md:128-138) do not mention them; a verifier that rejected shared or distinct threads would invent a rule. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-066",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The producer rule is stated for the envelope member (SPEC.md:658) and the receipt's parentEnactment is described as the same member's counterpart; what a verifier does with a receipt that breaks it is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-067",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 item 11 keeps a consequential task from executing twice; verifying a receipt executes nothing, and the receipt's side-effect class is none, but the text does not say a verifier must treat a re-presented receipt as a retry rather than a duplicate. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-068",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt text states no rule that an enumerated step name must be one the definition declares (the Rust verifier crate rejects it); the schema only says the name is the definition's. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-069",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema description says the typeUri is checked against the definition, but no verifier rule states it. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-070",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema says enumerating rounds lets a verifier check the bound, but no verifier rule states that a round beyond maxRounds is rejected. Not gating. (observed: pass)",
+        "failures": []
       }
     ],
     "window": {
@@ -5950,7 +5858,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "2a590d2c4ff4"
+    "salt": "d13acd221afc"
   },
   {
     "impl": "truststackers-agent-didkey-tier1",
@@ -8380,8 +8288,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-002",
@@ -8389,8 +8296,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-003",
@@ -8398,8 +8304,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-004",
@@ -8407,8 +8312,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-005",
@@ -8416,8 +8320,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-006",
@@ -8425,8 +8328,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-007",
@@ -8434,512 +8336,472 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-008",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-009",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-010",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-011",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-012",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-013",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-014",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-015",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-016",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-017",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-018",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-019",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-020",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-021",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-022",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-023",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-024",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-025",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-026",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-027",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-028",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-029",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-030",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-031",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-032",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-033",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-034",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-035",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-036",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-037",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-038",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The verifier MUST evaluate the completion rule itself and MUST NOT rely on payload.complete (spec.md:132), which says the enactment is complete; the schema description says both a mistaken and a lying recorder are visible, so a verifier may also report the disagreement as invalid. Which verdict is meant is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-039",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-040",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-041",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-042",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-043",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-044",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-045",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-046",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-047",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-048",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-049",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-050",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-051",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The hash function is not fixed by the specification (spec.md:108), so a verifier may implement the one the multihash names (complete) or report that it does not (unverifiable); the text does not require a minimum set. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-052",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The recorder's duty to populate the salt is stated (spec.md:123) but the payload schema does not require it, and the verifier rules do not say what a verifier holding documents does when the salt is absent (the digests cannot be recomputed). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-053",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-054",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-055",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-056",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-057",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-058",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-059",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-060",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-061",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-062",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The text says each step carries its own proof (spec.md:103) but rule 11 states only that a held document's proof is verified; what a verifier reports for a held document that has none is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-063",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The specification is a bearer specification, so any verifier may rely on a receipt (spec.md:150-154), but it also says a receipt addressed to one verifier is one that SPEC.md 7.2 item 5 requires every other verifier to reject (spec.md:152); whether a receipt that carries a recipient naming someone else is rejected is not settled. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-064",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt is not a step of the enactment it reports on and the specification says nothing about its threadId; a verifier should neither need nor require one. Not stated, so not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-065",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 4.11.2 describes the steps as typically separate exchanges but states no rule on their threadIds, and the verifier rules (spec.md:128-138) do not mention them; a verifier that rejected shared or distinct threads would invent a rule. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-066",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The producer rule is stated for the envelope member (SPEC.md:658) and the receipt's parentEnactment is described as the same member's counterpart; what a verifier does with a receipt that breaks it is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-067",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 item 11 keeps a consequential task from executing twice; verifying a receipt executes nothing, and the receipt's side-effect class is none, but the text does not say a verifier must treat a re-presented receipt as a retry rather than a duplicate. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-068",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt text states no rule that an enumerated step name must be one the definition declares (the Rust verifier crate rejects it); the schema only says the name is the definition's. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-069",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema description says the typeUri is checked against the definition, but no verifier rule states it. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-070",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema says enumerating rounds lets a verifier check the bound, but no verifier rule states that a round beyond maxRounds is rejected. Not gating. (observed: pass)",
+        "failures": []
       }
     ],
     "window": {
@@ -8949,7 +8811,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "74c0e9addc28"
+    "salt": "5ca33178197d"
   },
   {
     "impl": "truststackers-agent-didkey-tier1",
@@ -11349,8 +11211,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-002",
@@ -11358,8 +11219,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-003",
@@ -11367,8 +11227,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-004",
@@ -11376,8 +11235,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-005",
@@ -11385,8 +11243,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-006",
@@ -11394,8 +11251,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-007",
@@ -11403,512 +11259,472 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-008",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-009",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-010",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-011",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-012",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-013",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-014",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-015",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-016",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-017",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-018",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-019",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-020",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-021",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-022",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-023",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-024",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-025",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-026",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-027",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-028",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-029",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-030",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-031",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-032",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-033",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-034",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-035",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-036",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-037",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-038",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The verifier MUST evaluate the completion rule itself and MUST NOT rely on payload.complete (spec.md:132), which says the enactment is complete; the schema description says both a mistaken and a lying recorder are visible, so a verifier may also report the disagreement as invalid. Which verdict is meant is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-039",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-040",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-041",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-042",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-043",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-044",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-045",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-046",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-047",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-048",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-049",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-050",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-051",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The hash function is not fixed by the specification (spec.md:108), so a verifier may implement the one the multihash names (complete) or report that it does not (unverifiable); the text does not require a minimum set. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-052",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The recorder's duty to populate the salt is stated (spec.md:123) but the payload schema does not require it, and the verifier rules do not say what a verifier holding documents does when the salt is absent (the digests cannot be recomputed). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-053",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-054",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-055",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-056",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-057",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-058",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-059",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-060",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-061",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-062",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The text says each step carries its own proof (spec.md:103) but rule 11 states only that a held document's proof is verified; what a verifier reports for a held document that has none is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-063",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The specification is a bearer specification, so any verifier may rely on a receipt (spec.md:150-154), but it also says a receipt addressed to one verifier is one that SPEC.md 7.2 item 5 requires every other verifier to reject (spec.md:152); whether a receipt that carries a recipient naming someone else is rejected is not settled. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-064",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt is not a step of the enactment it reports on and the specification says nothing about its threadId; a verifier should neither need nor require one. Not stated, so not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-065",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 4.11.2 describes the steps as typically separate exchanges but states no rule on their threadIds, and the verifier rules (spec.md:128-138) do not mention them; a verifier that rejected shared or distinct threads would invent a rule. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-066",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The producer rule is stated for the envelope member (SPEC.md:658) and the receipt's parentEnactment is described as the same member's counterpart; what a verifier does with a receipt that breaks it is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-067",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 item 11 keeps a consequential task from executing twice; verifying a receipt executes nothing, and the receipt's side-effect class is none, but the text does not say a verifier must treat a re-presented receipt as a retry rather than a duplicate. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-068",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt text states no rule that an enumerated step name must be one the definition declares (the Rust verifier crate rejects it); the schema only says the name is the definition's. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-069",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema description says the typeUri is checked against the definition, but no verifier rule states it. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-070",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema says enumerating rounds lets a verifier check the bound, but no verifier rule states that a round beyond maxRounds is rejected. Not gating. (observed: pass)",
+        "failures": []
       }
     ],
     "window": {
@@ -11918,7 +11734,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "b5629fff9cd1"
+    "salt": "0f366d15833b"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -14353,8 +14169,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-002",
@@ -14362,8 +14177,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-003",
@@ -14371,8 +14185,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-004",
@@ -14380,8 +14193,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-005",
@@ -14389,8 +14201,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-006",
@@ -14398,8 +14209,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-007",
@@ -14407,512 +14217,472 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-008",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-009",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-010",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-011",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-012",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-013",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-014",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-015",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-016",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-017",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-018",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-019",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-020",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-021",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-022",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-023",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-024",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-025",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-026",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-027",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-028",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-029",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-030",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-031",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-032",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-033",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-034",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-035",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-036",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-037",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-038",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The verifier MUST evaluate the completion rule itself and MUST NOT rely on payload.complete (spec.md:132), which says the enactment is complete; the schema description says both a mistaken and a lying recorder are visible, so a verifier may also report the disagreement as invalid. Which verdict is meant is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-039",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-040",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-041",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-042",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-043",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-044",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-045",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-046",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-047",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-048",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-049",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-050",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-051",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The hash function is not fixed by the specification (spec.md:108), so a verifier may implement the one the multihash names (complete) or report that it does not (unverifiable); the text does not require a minimum set. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-052",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The recorder's duty to populate the salt is stated (spec.md:123) but the payload schema does not require it, and the verifier rules do not say what a verifier holding documents does when the salt is absent (the digests cannot be recomputed). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-053",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-054",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-055",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-056",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-057",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-058",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-059",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-060",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-061",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-062",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The text says each step carries its own proof (spec.md:103) but rule 11 states only that a held document's proof is verified; what a verifier reports for a held document that has none is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-063",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The specification is a bearer specification, so any verifier may rely on a receipt (spec.md:150-154), but it also says a receipt addressed to one verifier is one that SPEC.md 7.2 item 5 requires every other verifier to reject (spec.md:152); whether a receipt that carries a recipient naming someone else is rejected is not settled. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-064",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt is not a step of the enactment it reports on and the specification says nothing about its threadId; a verifier should neither need nor require one. Not stated, so not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-065",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 4.11.2 describes the steps as typically separate exchanges but states no rule on their threadIds, and the verifier rules (spec.md:128-138) do not mention them; a verifier that rejected shared or distinct threads would invent a rule. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-066",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The producer rule is stated for the envelope member (SPEC.md:658) and the receipt's parentEnactment is described as the same member's counterpart; what a verifier does with a receipt that breaks it is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-067",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 item 11 keeps a consequential task from executing twice; verifying a receipt executes nothing, and the receipt's side-effect class is none, but the text does not say a verifier must treat a re-presented receipt as a retry rather than a duplicate. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-068",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt text states no rule that an enumerated step name must be one the definition declares (the Rust verifier crate rejects it); the schema only says the name is the definition's. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-069",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema description says the typeUri is checked against the definition, but no verifier rule states it. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-070",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema says enumerating rounds lets a verifier check the bound, but no verifier rule states that a round beyond maxRounds is rejected. Not gating. (observed: pass)",
+        "failures": []
       }
     ],
     "window": {
@@ -14922,7 +14692,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "852cdaf851e0"
+    "salt": "83f63715b975"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -17302,8 +17072,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-002",
@@ -17311,8 +17080,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-003",
@@ -17320,8 +17088,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-004",
@@ -17329,8 +17096,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-005",
@@ -17338,8 +17104,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-006",
@@ -17347,8 +17112,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-007",
@@ -17356,512 +17120,472 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-008",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-009",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-010",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-011",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-012",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-013",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-014",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-015",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-016",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-017",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-018",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-019",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-020",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-021",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-022",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-023",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-024",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-025",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-026",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-027",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-028",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-029",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-030",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-031",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-032",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-033",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-034",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-035",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-036",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-037",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-038",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The verifier MUST evaluate the completion rule itself and MUST NOT rely on payload.complete (spec.md:132), which says the enactment is complete; the schema description says both a mistaken and a lying recorder are visible, so a verifier may also report the disagreement as invalid. Which verdict is meant is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-039",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-040",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-041",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-042",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-043",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-044",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-045",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-046",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-047",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-048",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-049",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-050",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-051",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The hash function is not fixed by the specification (spec.md:108), so a verifier may implement the one the multihash names (complete) or report that it does not (unverifiable); the text does not require a minimum set. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-052",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The recorder's duty to populate the salt is stated (spec.md:123) but the payload schema does not require it, and the verifier rules do not say what a verifier holding documents does when the salt is absent (the digests cannot be recomputed). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-053",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-054",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-055",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-056",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-057",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-058",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-059",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-060",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-061",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-062",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The text says each step carries its own proof (spec.md:103) but rule 11 states only that a held document's proof is verified; what a verifier reports for a held document that has none is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-063",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The specification is a bearer specification, so any verifier may rely on a receipt (spec.md:150-154), but it also says a receipt addressed to one verifier is one that SPEC.md 7.2 item 5 requires every other verifier to reject (spec.md:152); whether a receipt that carries a recipient naming someone else is rejected is not settled. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-064",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt is not a step of the enactment it reports on and the specification says nothing about its threadId; a verifier should neither need nor require one. Not stated, so not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-065",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 4.11.2 describes the steps as typically separate exchanges but states no rule on their threadIds, and the verifier rules (spec.md:128-138) do not mention them; a verifier that rejected shared or distinct threads would invent a rule. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-066",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The producer rule is stated for the envelope member (SPEC.md:658) and the receipt's parentEnactment is described as the same member's counterpart; what a verifier does with a receipt that breaks it is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-067",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 item 11 keeps a consequential task from executing twice; verifying a receipt executes nothing, and the receipt's side-effect class is none, but the text does not say a verifier must treat a re-presented receipt as a retry rather than a duplicate. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-068",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt text states no rule that an enumerated step name must be one the definition declares (the Rust verifier crate rejects it); the schema only says the name is the definition's. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-069",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema description says the typeUri is checked against the definition, but no verifier rule states it. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-070",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema says enumerating rounds lets a verifier check the bound, but no verifier rule states that a round beyond maxRounds is rejected. Not gating. (observed: pass)",
+        "failures": []
       }
     ],
     "window": {
@@ -17871,7 +17595,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "0044b26a7b54"
+    "salt": "4f95a4e51833"
   },
   {
     "impl": "truststackers-agent-scidvh-tier1",
@@ -20301,8 +20025,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-002",
@@ -20310,8 +20033,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-003",
@@ -20319,8 +20041,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-004",
@@ -20328,8 +20049,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-005",
@@ -20337,8 +20057,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-006",
@@ -20346,8 +20065,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-007",
@@ -20355,512 +20073,472 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-008",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-009",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-010",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-011",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-012",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-013",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-014",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-015",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-016",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-017",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-018",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-019",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-020",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-021",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-022",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-023",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-024",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-025",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-026",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-027",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-028",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-029",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-030",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-031",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-032",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-033",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-034",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-035",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-036",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-037",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-038",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The verifier MUST evaluate the completion rule itself and MUST NOT rely on payload.complete (spec.md:132), which says the enactment is complete; the schema description says both a mistaken and a lying recorder are visible, so a verifier may also report the disagreement as invalid. Which verdict is meant is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-039",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-040",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-041",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-042",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-043",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-044",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-045",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-046",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-047",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-048",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-049",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-050",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-051",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The hash function is not fixed by the specification (spec.md:108), so a verifier may implement the one the multihash names (complete) or report that it does not (unverifiable); the text does not require a minimum set. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-052",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The recorder's duty to populate the salt is stated (spec.md:123) but the payload schema does not require it, and the verifier rules do not say what a verifier holding documents does when the salt is absent (the digests cannot be recomputed). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-053",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-054",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-055",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-056",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-057",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-058",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-059",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-060",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-061",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-062",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The text says each step carries its own proof (spec.md:103) but rule 11 states only that a held document's proof is verified; what a verifier reports for a held document that has none is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-063",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The specification is a bearer specification, so any verifier may rely on a receipt (spec.md:150-154), but it also says a receipt addressed to one verifier is one that SPEC.md 7.2 item 5 requires every other verifier to reject (spec.md:152); whether a receipt that carries a recipient naming someone else is rejected is not settled. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-064",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt is not a step of the enactment it reports on and the specification says nothing about its threadId; a verifier should neither need nor require one. Not stated, so not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-065",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 4.11.2 describes the steps as typically separate exchanges but states no rule on their threadIds, and the verifier rules (spec.md:128-138) do not mention them; a verifier that rejected shared or distinct threads would invent a rule. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-066",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The producer rule is stated for the envelope member (SPEC.md:658) and the receipt's parentEnactment is described as the same member's counterpart; what a verifier does with a receipt that breaks it is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-067",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 item 11 keeps a consequential task from executing twice; verifying a receipt executes nothing, and the receipt's side-effect class is none, but the text does not say a verifier must treat a re-presented receipt as a retry rather than a duplicate. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-068",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt text states no rule that an enumerated step name must be one the definition declares (the Rust verifier crate rejects it); the schema only says the name is the definition's. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-069",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema description says the typeUri is checked against the definition, but no verifier rule states it. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-070",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema says enumerating rounds lets a verifier check the bound, but no verifier rule states that a round beyond maxRounds is rejected. Not gating. (observed: pass)",
+        "failures": []
       }
     ],
     "window": {
@@ -20870,7 +20548,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "22e5cc6231a2"
+    "salt": "c7c4c77f0f46"
   },
   {
     "impl": "truststackers-agent-scidvh-tier1",
@@ -23270,8 +22948,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-002",
@@ -23279,8 +22956,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-003",
@@ -23288,8 +22964,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-004",
@@ -23297,8 +22972,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-005",
@@ -23306,8 +22980,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-006",
@@ -23315,8 +22988,7 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-007",
@@ -23324,512 +22996,472 @@
         "family": "ceremony-receipt",
         "tier": 1,
         "anchor": true,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-008",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-009",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-010",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-011",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-012",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-013",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-014",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-015",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-016",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-017",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-018",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-019",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-020",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-021",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-022",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-023",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-024",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-025",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-026",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-027",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-028",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-029",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-030",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-031",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-032",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-033",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-034",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-035",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-036",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-037",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-038",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The verifier MUST evaluate the completion rule itself and MUST NOT rely on payload.complete (spec.md:132), which says the enactment is complete; the schema description says both a mistaken and a lying recorder are visible, so a verifier may also report the disagreement as invalid. Which verdict is meant is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-039",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-040",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-041",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-042",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-043",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-044",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-045",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-046",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-047",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-048",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-049",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-050",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-051",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The hash function is not fixed by the specification (spec.md:108), so a verifier may implement the one the multihash names (complete) or report that it does not (unverifiable); the text does not require a minimum set. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-052",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The recorder's duty to populate the salt is stated (spec.md:123) but the payload schema does not require it, and the verifier rules do not say what a verifier holding documents does when the salt is absent (the digests cannot be recomputed). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-053",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-054",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-055",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-056",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-057",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-058",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-059",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-060",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-061",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "PASS"
       },
       {
         "id": "RCPT-062",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The text says each step carries its own proof (spec.md:103) but rule 11 states only that a held document's proof is verified; what a verifier reports for a held document that has none is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-063",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The specification is a bearer specification, so any verifier may rely on a receipt (spec.md:150-154), but it also says a receipt addressed to one verifier is one that SPEC.md 7.2 item 5 requires every other verifier to reject (spec.md:152); whether a receipt that carries a recipient naming someone else is rejected is not settled. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-064",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt is not a step of the enactment it reports on and the specification says nothing about its threadId; a verifier should neither need nor require one. Not stated, so not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-065",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 4.11.2 describes the steps as typically separate exchanges but states no rule on their threadIds, and the verifier rules (spec.md:128-138) do not mention them; a verifier that rejected shared or distinct threads would invent a rule. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-066",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The producer rule is stated for the envelope member (SPEC.md:658) and the receipt's parentEnactment is described as the same member's counterpart; what a verifier does with a receipt that breaks it is not stated. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-067",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 item 11 keeps a consequential task from executing twice; verifying a receipt executes nothing, and the receipt's side-effect class is none, but the text does not say a verifier must treat a re-presented receipt as a retry rather than a duplicate. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-068",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The receipt text states no rule that an enumerated step name must be one the definition declares (the Rust verifier crate rejects it); the schema only says the name is the definition's. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-069",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema description says the typeUri is checked against the definition, but no verifier rule states it. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "RCPT-070",
         "group": "RCPT",
         "family": "ceremony-receipt",
         "tier": 1,
-        "status": "SKIP",
-        "reason": "missing capability optional:receiptVerify"
+        "status": "CLARIFY",
+        "reason": "The schema says enumerating rounds lets a verifier check the bound, but no verifier rule states that a round beyond maxRounds is rejected. Not gating. (observed: pass)",
+        "failures": []
       }
     ],
     "window": {
@@ -23839,6 +23471,6 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "cfa9f24c4275"
+    "salt": "ebb0388e24f2"
   }
 ]
