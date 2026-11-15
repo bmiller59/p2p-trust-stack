@@ -25,6 +25,8 @@ The process refuses instead of signing with `#key-1`: the agent starts no listen
 
 ## Provision and cut over (did:scid:vh)
 
+The provisioning, publishing, rotation and retirement calls exist on `ScidVhAgent` only. The utility server loads, verifies and signs with a provisioned key but has no provisioning or publishing tool yet; its dedicated mode cannot be turned on until that exists.
+
 1. Agent: with the agent started and unlocked, call `provisionBoundaryKey(1)` on the `ScidVhAgent`. It returns the key fingerprint (hash prefix of the public key).
 2. Publish: `publishBoundaryKey(1)`. This appends a metadata-only log entry that adds `#key-boundary` under `authentication` and changes nothing else, then pushes the log to the utility server.
 3. Check: resolve the DID through the public resolver; confirm `source` is `log`, the chain is valid, and `#key-boundary` carries the fingerprinted key.
