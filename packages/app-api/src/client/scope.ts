@@ -142,7 +142,11 @@ export const DENIED_METHODS: Readonly<Record<ScopedDomain, readonly string[]>> =
     // something a scoped app context may do to the shared node.
     'connectVtn',
   ],
-  relationships: [],
+  relationships: [
+    // Held relationship proposals are the owner's: who asked to connect, with which DID, and that a decision is
+    // pending, are not for a third-party app. Denied (not a capability) so nothing about their existence leaks.
+    'heldProposals', 'decideProposal',
+  ],
   messaging: [],
   profiles: [],
   names: [],
@@ -150,6 +154,9 @@ export const DENIED_METHODS: Readonly<Record<ScopedDomain, readonly string[]>> =
   communities: [],
   delegations: [],
 };
+
+/** Events a scoped context may not subscribe to: they announce the owner's held proposals. */
+const OWNER_ONLY_EVENTS: ReadonlySet<string> = new Set(['proposal.held', 'proposal.changed']);
 
 /** Exposed for the guard that asserts every domain method is classified. */
 export const METHOD_CLASSIFICATION = {
@@ -302,10 +309,19 @@ export function asContext(
     }) as unknown as H;
   };
 
-  scoped.on = (event: string, handler: unknown, o?: unknown) =>
-    stack.on(event as never, guardHandler(handler) as never, o as never);
-  scoped.once = (event: string, handler: unknown, o?: unknown) =>
-    stack.once(event as never, guardHandler(handler) as never, o as never);
+  const refuseOwnerOnly = (event: string): void => {
+    if (OWNER_ONLY_EVENTS.has(event)) {
+      throw new CapabilityError(`'${event}' is not part of the context surface — it is owner-only.`);
+    }
+  };
+  scoped.on = (event: string, handler: unknown, o?: unknown) => {
+    refuseOwnerOnly(event);
+    return stack.on(event as never, guardHandler(handler) as never, o as never);
+  };
+  scoped.once = (event: string, handler: unknown, o?: unknown) => {
+    refuseOwnerOnly(event);
+    return stack.once(event as never, guardHandler(handler) as never, o as never);
+  };
   scoped.off = (sub: unknown) => stack.off(sub as never);
 
   return scoped as unknown as ScopedTrustStack;

@@ -503,6 +503,11 @@ function wireAgentToBus(
   // `agent-app/src/sse-bridge.ts` to hold the handle and subscribe directly — a documented hole in the boundary.
   // Declaring the event here is what lets that bridge become a pure bus consumer, and what gives a second client
   // (the TUI) any way to receive it at all.
+  // A relationship proposal started waiting for the human (item 2A): the id only, the UI re-reads the list.
+  agent.onVrcProposalHeld?.((exchangeId) => {
+    bus.emit('proposal.held', { exchangeId, at: Date.now() });
+  });
+
   agent.onDuplicateConnectNotice?.((remoteDid, remoteName) => {
     bus.emit('duplicate.connect.notice', { peerDid: remoteDid, remoteName, at: Date.now() });
   });

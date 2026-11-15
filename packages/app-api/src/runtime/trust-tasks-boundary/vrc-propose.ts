@@ -226,11 +226,20 @@ export class VrcProposeService {
     return expireLapsedHeldExchanges(this.deps.db, this.ttlMs, this.now());
   }
 
-  /** Held proposals, oldest first (the agent's UI lists these); lapsed ones are expired first and not listed. */
+  /** How long a proposal may stay held before it lapses; a screen shows `createdAt + lapsePeriodMs` as the deadline (decision 37). */
+  get lapsePeriodMs(): number {
+    return this.ttlMs;
+  }
+
+  /**
+   * Held proposals, oldest first (the agent's UI lists these); lapsed ones are expired first and not listed. Only
+   * proposals addressed to THIS service's local identity are listed (the participant they are for).
+   */
   async listHeld(): Promise<ExchangeDidRow[]> {
     await this.expireLapsed();
     const rows = await this.deps.db.all<{ exchange_id: string }>(
-      "SELECT exchange_id FROM vrc_exchange_relationship_dids WHERE state = 'held' AND role = 'acceptor' ORDER BY created_at, exchange_id",
+      "SELECT exchange_id FROM vrc_exchange_relationship_dids WHERE state = 'held' AND role = 'acceptor' AND local_identity_uuid = ? ORDER BY created_at, exchange_id",
+      this.deps.localIdentityUuid,
     );
     const out: ExchangeDidRow[] = [];
     for (const r of rows) out.push((await exchangeDids.findByExchangeId(this.deps.db, r.exchange_id))!);
@@ -245,7 +254,8 @@ export class VrcProposeService {
    */
   async decide(exchangeId: string, decision: 'accept' | 'decline'): Promise<TrustTaskDocument<unknown>> {
     const row = await exchangeDids.findByExchangeId(this.deps.db, exchangeId);
-    if (row === null || row.role !== 'acceptor' || row.state !== 'held') throw new TaskError({ reason: 'notFound', internalMessage: 'no held proposal for that exchange' });
+    // A proposal that is not addressed to this local identity answers exactly as an unknown id: nothing leaks its existence.
+    if (row === null || row.role !== 'acceptor' || row.state !== 'held' || row.localIdentityUuid !== this.deps.localIdentityUuid) throw new TaskError({ reason: 'notFound', internalMessage: 'no held proposal for that exchange' });
     if (isHeldLapsed(row.createdAt, this.now(), this.ttlMs)) {
       await expireExchange(this.deps.db, exchangeId, this.now());
       throw lapsed();

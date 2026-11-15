@@ -1162,6 +1162,7 @@ export abstract class BaseAgent implements AgentHandle {
         ...(this._presentationParticipant === undefined ? {} : { presentation: this._presentationParticipant }),
         verifier: this.getBoundaryProofVerifier(),
         config,
+        onHeld: (exchangeId) => this.notifyVrcProposalHeld(exchangeId),
       });
     } catch (err) {
       logger.error(`[Agent] Trust Task listener not started: ${(err as Error)?.message}`);
@@ -1193,10 +1194,27 @@ export abstract class BaseAgent implements AgentHandle {
     }
   }
 
-  /** Relationship proposals the Trust Task listener is holding for the human (empty while the listener is off). */
-  async listHeldVrcProposals(): Promise<Array<{ exchangeId: string; peer: string; relationshipDid: string | null; receivedAt: number }>> {
-    const held = (await this._trustTasksBoundary?.propose.listHeld()) ?? [];
-    return held.map((r) => ({ exchangeId: r.exchangeId, peer: r.remoteConnectionDid, relationshipDid: r.remoteRelationshipDid, receivedAt: r.createdAt }));
+  /**
+   * Relationship proposals the Trust Task listener is holding for the human (empty while the listener is off). Each
+   * carries the deadline at which it lapses with no decision (decision 37).
+   */
+  async listHeldVrcProposals(): Promise<Array<{ exchangeId: string; peer: string; relationshipDid: string | null; receivedAt: number; deadlineAt: number }>> {
+    const propose = this._trustTasksBoundary?.propose;
+    const held = (await propose?.listHeld()) ?? [];
+    return held.map((r) => ({ exchangeId: r.exchangeId, peer: r.remoteConnectionDid, relationshipDid: r.remoteRelationshipDid, receivedAt: r.createdAt, deadlineAt: r.createdAt + propose!.lapsePeriodMs }));
+  }
+
+  private readonly vrcProposalHeldHandlers: Array<(exchangeId: string) => void> = [];
+
+  /** Register a handler for a relationship proposal that starts waiting for the human (the exchange id only). */
+  onVrcProposalHeld(handler: (exchangeId: string) => void): void {
+    this.vrcProposalHeldHandlers.push(handler);
+  }
+
+  private notifyVrcProposalHeld(exchangeId: string): void {
+    for (const h of this.vrcProposalHeldHandlers) {
+      try { h(exchangeId); } catch (err) { logger.error('[Agent] a held-proposal handler failed:', (err as Error)?.message); }
+    }
   }
 
   /**

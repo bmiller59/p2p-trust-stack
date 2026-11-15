@@ -387,6 +387,15 @@ export interface AgentHandle {
   onCeremonyAckChange?(handler: (remoteDid: string) => void): void;
   /** Register a handler for when an already-connected peer attempts a duplicate OOBI connect. */
   onDuplicateConnectNotice?(handler: (remoteDid: string, remoteName: string | null) => void): void;
+  /**
+   * Relationship proposals the Trust Task listener holds for the human, with the lapse deadline (decision 37).
+   * Absent on an implementation without the listener; empty while it is off. Only the addressed participant's.
+   */
+  listHeldVrcProposals?(): Promise<Array<{ exchangeId: string; peer: string; relationshipDid: string | null; receivedAt: number; deadlineAt: number }>>;
+  /** The human's decision on a held proposal; rejects with a `notFound` task error for any id that is not held for this agent. */
+  decideVrcProposal?(exchangeId: string, decision: 'accept' | 'decline'): Promise<void>;
+  /** Register a handler for a proposal that starts waiting for the human (the exchange id only). */
+  onVrcProposalHeld?(handler: (exchangeId: string) => void): void;
   /** Read one pending duplicate-connect notice for a peer (consumes it). */
   getDuplicateConnectNotice?(remoteDid: string): { remoteName: string | null; at: number } | undefined;
   /**

@@ -45,6 +45,10 @@ export const STACK_EVENTS = [
   // Relationships
   'relationship.changed',
   'relationship.ceremony',
+  // A relationship proposal started waiting for the human (the poll route lists it), and one was decided. Owner-only:
+  // a scoped context cannot subscribe (`client/scope.ts`), and the payloads carry the exchange id and nothing else.
+  'proposal.held',
+  'proposal.changed',
   // A peer tried to connect with an OOBI that is already bound to a DIFFERENT identity. Announced so a UI can
   // warn without polling: the notice is one-shot and time-boxed, which made it exactly the kind of thing the
   // nine retired polls existed for. Before this event, `sse-bridge.ts` reached past the layer to
@@ -131,6 +135,8 @@ export interface StackEventPayloads {
     error?: string;
     at: number;
   };
+  'proposal.held': { exchangeId: string; at: number };
+  'proposal.changed': { exchangeId: string; status: 'accepted' | 'declined'; at: number };
   'duplicate.connect.notice': {
     /** The peer whose OOBI collided. */
     peerDid: string;

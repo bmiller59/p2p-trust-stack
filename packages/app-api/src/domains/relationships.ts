@@ -130,6 +130,27 @@ export interface DtgVrcStatusDto {
   dtgVrcs: unknown[];
 }
 
+/**
+ * A relationship proposal the agent is holding for the human (item 2A, decisions 68 and 37).
+ *
+ * `deadlineAt` is when it lapses with no decision (seven days after the first hold); after that it is expired
+ * and no longer listed. `peerDid` is the proposer's connection DID, `relationshipDid` the one they named.
+ */
+export interface HeldProposalDto {
+  exchangeId: string;
+  peerDid: string;
+  relationshipDid: string | null;
+  /** Unix milliseconds of the first hold. */
+  receivedAt: number;
+  /** Unix milliseconds at which the proposal lapses. */
+  deadlineAt: number;
+}
+
+export interface ProposalDecisionDto {
+  exchangeId: string;
+  status: 'accepted' | 'declined';
+}
+
 export interface RelationshipsApi {
   /** This agent's OOBI, for a peer to connect to. */
   oobi(): Promise<OobiDto>;
@@ -164,6 +185,19 @@ export interface RelationshipsApi {
    * event is the push path and this is the catch-up path.
    */
   duplicateNotice(peerDid: string): Promise<DuplicateNoticeDto | null>;
+  /**
+   * Relationship proposals held for the human, oldest first, each with its lapse deadline. Only the addressed
+   * participant's own proposals (the agent's); empty while the Trust Task listener is off. Owner-only: denied to a
+   * scoped context (`client/scope.ts`). The poll path; `proposal.held` announces a new one.
+   */
+  heldProposals(): Promise<HeldProposalDto[]>;
+  /**
+   * The human's decision on a held proposal. Emits `proposal.changed`. The proposer learns it by resubmitting
+   * (the carrier has no push channel). Throws `not_found` for an unknown, foreign or already-decided id (one
+   * answer for all three, so nothing leaks existence), `proposal_lapsed` after the deadline, `invalid_input` for
+   * a bad argument.
+   */
+  decideProposal(exchangeId: string, decision: 'accept' | 'decline'): Promise<ProposalDecisionDto>;
   /** Chat-eligible relationships (organization and self-referencing rows filtered out). */
   list(): Promise<RelationshipDto[]>;
   /** One relationship, or null. */
@@ -471,6 +505,31 @@ export function createRelationshipsApi(ctx: DomainContext): RelationshipsApi {
       } finally {
         await ds.close();
       }
+    },
+
+    async heldProposals(): Promise<HeldProposalDto[]> {
+      const agent = requireAgent(ctx, 'list held proposals');
+      const rows = (await agent.listHeldVrcProposals?.()) ?? [];
+      return rows.map((r) => ({ exchangeId: r.exchangeId, peerDid: r.peer, relationshipDid: r.relationshipDid, receivedAt: r.receivedAt, deadlineAt: r.deadlineAt }));
+    },
+
+    async decideProposal(exchangeId: string, decision: 'accept' | 'decline'): Promise<ProposalDecisionDto> {
+      const agent = requireAgent(ctx, 'decide a held proposal');
+      if (typeof exchangeId !== 'string' || exchangeId === '') throw new StackError('invalid_input', 'exchangeId is required');
+      if (decision !== 'accept' && decision !== 'decline') throw new StackError('invalid_input', "decision must be 'accept' or 'decline'");
+      if (!agent.decideVrcProposal) throw new StackError('not_found', 'no held proposal for that exchange');
+      try {
+        await agent.decideVrcProposal(exchangeId, decision);
+      } catch (err) {
+        const reason = (err as { reason?: string })?.reason;
+        if (reason === 'deadlineLapsed') throw new StackError('proposal_lapsed', 'the proposal lapsed with no decision');
+        // Unknown, someone else's and already-decided all land here: one answer.
+        if (reason === 'notFound') throw new StackError('not_found', 'no held proposal for that exchange');
+        throw err;
+      }
+      const status = decision === 'accept' ? 'accepted' : 'declined';
+      ctx.bus.emit('proposal.changed', { exchangeId, status, at: Date.now() });
+      return { exchangeId, status };
     },
 
     async debug(peerDid: string): Promise<PeerDebugDto | null> {

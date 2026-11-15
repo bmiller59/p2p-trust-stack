@@ -106,6 +106,8 @@ export type {
   RelationshipDto,
   ConnectResultDto,
   DuplicateNoticeDto,
+  HeldProposalDto,
+  ProposalDecisionDto,
   CeremonyStatusDto,
   ResetCeremonyDto,
   VerifyResultDto,
