@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Opt-in Trust Task boundary module for the agent (`@p2p-trust-stack/app-api`): a listener
+  that serves `vrc/relationships/propose` (a held proposal is answered by next-step and
+  lapses after seven days) and `vrc/relationships/issue`, the witness-share task,
+  ceremony documents, task consent and credential exchange, on the spec-aligned pipeline.
+- Each VRC exchange uses its own relationship `did:peer:4`, recorded in
+  `vrc_exchange_relationship_dids`. Its secret is encrypted under the agent passphrase and
+  deleted when the relationship ends.
+- Storage for shared witness credentials and credential presentations.
+- A JSON-RPC adapter (stdio and HTTP) for the DTGWG Trust Task conformance suite, with
+  generated results under `packages/app-api/conformance/results`.
+- Proof options for signer challenge and domain; the verifier reports `challengeMismatch`
+  and `domainMismatch`.
+
+### Changed
+- The VRC receive participant applies a conformant credential at commit rather than at
+  prepare.
+
+### Upgrade notes
+- Migrations `0022_vrc_exchange_relationship_dids.sql`, `0023_witness_shares.sql` and
+  `0024_credential_presentations.sql`, `SCHEMA_VERSION` 25 to 28. All three are
+  `CREATE TABLE IF NOT EXISTS` (plus one nullable `pending_ops` column on the transaction
+  table); no existing data is rewritten. A database at 28 cannot be opened by an older
+  release.
+- Default off. The listener binds nothing unless `TRUST_TASKS_LISTENER=1` and
+  `TRUST_TASKS_LISTENER_PORT` are both set (or the `trustTasksListener` option is passed),
+  and it never shares the UI port. Further opt-in settings: `TRUST_TASKS_LISTENER_HOST`
+  (default `127.0.0.1`), `TRUST_TASKS_TIER` (`1`, or `2` by default), `TRUST_TASKS_PROPOSE_POLICY`
+  (`hold` by default, or `decline`) and `TRUST_TASKS_ROTATION_LOG_ENDPOINT` (a utility
+  server base URL, consulted after the local store when resolving a peer's `did:scid:vh`).
+- Licensing: the module is part of core and is available under GPL-3.0-only or the
+  commercial licence; contributions fall under the repository's CLA.
+
 ## [0.2.0] - 2026-10-30
 
 ### Added
