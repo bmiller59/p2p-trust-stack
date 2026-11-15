@@ -129,13 +129,17 @@ export function createCeremonyDriver(deps: CeremonyDocDeps) {
       throw new TaskError({ code: 'indeterminate', retryable: true, internalMessage: 'no ceremony and no outcome' });
     }
     const proposal = await closeIfLapsed(store, stored, ctx.now);
+    const approvalList = await store.getApprovals(ceremonyId);
+    // A pending ceremony whose quorum is complete and whose transaction committed is NOT waiting for more co-signatures: the
+    // effect did not finish at commit (D1.3), so the answer is `indeterminate` (a repeated approval or a restart retries), never a hold.
+    const quorumComplete = new Set(approvalList.map((a) => a.approverDid)).size >= Math.max(declaredAdmins(proposal).size, 1);
     const verdict = ceremonyVerdict({
       proposal: { ...proposal, ...(isReason(proposal.errorReason) ? { reason: proposal.errorReason } : {}) },
-      outcome: effectiveOutcome(proposal.status, outcome),
+      outcome: proposal.status === 'pending' && outcome === 'committed' && quorumComplete ? outcome : effectiveOutcome(proposal.status, outcome),
       now: ctx.now,
       ...(abortReason === undefined ? {} : { abortReason }),
     });
-    const approvals = (await store.getApprovals(ceremonyId)).length;
+    const approvals = approvalList.length;
     switch (verdict.kind) {
       case 'respond':
         return reply(doc, ctx, actor, ceremonyId, (onResponded ?? statusPayload)(proposal, approvals));
@@ -196,7 +200,7 @@ export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandle
       const signature = isObj(proof) && typeof proof.proofValue === 'string' ? proof.proofValue : '';
       return drive(doc, ctx, actor, ceremonyId, {
         op: CEREMONY_BEGIN,
-        params: { ceremonyId, proposerDid: actor, name: p.name, kind: p.kind, threshold: p.threshold, adminDids: p.adminDids, parentCommunityDid: p.parentCommunityDid ?? null, signature, nowMs: ctx.now },
+        params: { ceremonyId, proposerDid: actor, name: p.name, kind: p.kind, threshold: p.threshold, adminDids: p.adminDids, parentCommunityDid: p.parentCommunityDid ?? null, signature, verified: true, nowMs: ctx.now },
       });
     },
   };
@@ -213,7 +217,7 @@ export function createCeremonyDocHandlers(deps: CeremonyDocDeps): PipelineHandle
       const signature = isObj(proof) && typeof proof.proofValue === 'string' ? proof.proofValue : '';
       return drive(doc, ctx, actor, ceremonyId, {
         op: CEREMONY_APPROVE,
-        params: { ceremonyId, approverDid: actor, signature, ...(p.proposalHash === undefined ? {} : { proposalHash: p.proposalHash }), nowMs: ctx.now },
+        params: { ceremonyId, approverDid: actor, signature, verified: true, ...(p.proposalHash === undefined ? {} : { proposalHash: p.proposalHash }), nowMs: ctx.now },
       });
     },
   };

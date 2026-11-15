@@ -155,7 +155,8 @@ class FixtureCommunityEffect implements CeremonyEffect {
     this.db = db;
     this.plan = plan;
   }
-  async establish(input: CeremonyEstablishment): Promise<void> {
+  /** D1.3 gate (prepare): the armed fault, then the name. Writes nothing. */
+  async check(input: CeremonyEstablishment): Promise<void> {
     // `trigger ceremonyEffect` (one-shot): what the effect does when the next ceremony reaches its quorum.
     const plan = this.plan.take();
     if (plan.outcome === 'fail') throw new TaskError({ reason: plan.reason, internalMessage: 'conformance fault: the establishing effect is refused' });
@@ -163,6 +164,12 @@ class FixtureCommunityEffect implements CeremonyEffect {
       this.plan.unknownHit = true;
       throw new TaskError({ code: 'indeterminate', retryable: true, internalMessage: 'conformance fault: the effect outcome cannot be read' });
     }
+    const row = await this.db.get<{ ceremony_id: string }>('SELECT ceremony_id FROM conformance_communities WHERE name = ?', input.name);
+    if (row !== null && row !== undefined && row.ceremony_id !== input.ceremonyId) throw new TaskError({ reason: 'nameTaken', internalMessage: 'the community name is taken' });
+  }
+
+  /** D1.3 effect (commit): idempotent per ceremony id. */
+  async apply(input: CeremonyEstablishment): Promise<void> {
     const row = await this.db.get<{ ceremony_id: string }>('SELECT ceremony_id FROM conformance_communities WHERE name = ?', input.name);
     if (row !== null && row !== undefined) {
       if (row.ceremony_id === input.ceremonyId) return;
