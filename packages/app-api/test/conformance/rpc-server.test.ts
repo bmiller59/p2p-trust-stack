@@ -19,6 +19,8 @@ import { keysOfDocument, didKeyFromEd25519 } from '@p2p-trust-stack/core/service
 import { DidProofVerifier } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/verify.js';
 import { createEd25519BoundarySigner, signDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/signer.js';
 import type { DidDocument } from '@p2p-trust-stack/core/did/types.js';
+import { digestMultibaseOf } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/digest.js';
+import { ceremonyStepDigest } from '@p2p-trust-stack/core/services/trust-tasks/boundary/ceremony-receipt.js';
 import { WIDGET_TYPE } from '../../conformance/adapter.ts';
 
 const APP_API = new URL('../..', import.meta.url).pathname;
@@ -118,7 +120,7 @@ describe('capabilities and provision', () => {
     for (const t of ['vrc/relationships/propose/0.1', 'vrc/relationships/issue/0.1', 'vrc/relationships/witness-share/0.1']) {
       assert.ok(caps.supportedTypes.includes(`https://trusttasks.org/spec/${t}`), t);
     }
-    for (const o of ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', 'proofVerify', 'attested']) assert.ok(caps.optional.includes(o), o);
+    for (const o of ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', 'proofVerify', 'receiptVerify', 'attested']) assert.ok(caps.optional.includes(o), o);
     for (const o of ['control', 'idempotencyKey']) assert.ok(!caps.optional.includes(o), `${o} is not claimed`);
     assert.equal(caps.carriers[0].typeUri, WIDGET_TYPE);
     const p = await s.call('provision', { roles: ['iut'] });
@@ -356,5 +358,63 @@ describe('trigger, observe and verifyProof', () => {
     assert.deepEqual(await s.call('verifyProof', { bytes }), { valid: true });
     assert.deepEqual(await s.call('verifyProof', { bytes: bytes.replace('alice', 'mallory') }), { valid: false });
     assert.deepEqual(await s.call('verifyProof', { bytes: 'not json' }), { valid: false });
+  });
+});
+
+describe('verifyReceipt (optional capability receiptVerify, vector group RCPT)', () => {
+  const W_SEED = new Uint8Array(32).fill(9);
+  const W_DID = didKeyFromEd25519(ed25519.getPublicKey(W_SEED));
+  const W = createEd25519BoundarySigner({ did: W_DID, secretKey: W_SEED, fragment: W_DID.slice('did:key:'.length) });
+  const SALT = 'z' + '2'.repeat(22);
+  const STEP = 'https://example.test/step/only';
+  const definition = {
+    slug: 'wire', version: '0.1', roles: { starter: { cardinality: 'one' }, finisher: { cardinality: 'one' }, rec: { cardinality: 'one' } },
+    steps: { only: { kind: 'task', type: STEP, issuer: 'starter', recipient: 'finisher', prev: [], terminal: true } },
+    completion: 'only', evidence: { level: 'receipt', recorders: ['rec'] },
+  };
+  function scenario(): { receipt: string; step: string } {
+    const defDigest = digestMultibaseOf(definition);
+    const step = signDocument({
+      id: uid(40), type: STEP, issuer: A_DID, recipient: W_DID, issuedAt: '2026-11-12T09:59:00Z',
+      ceremony: { enactment: 'urn:uuid:eeeeeeee-0000-4000-8000-000000000001', step: 'only', definition: 'https://example.test/c/wire', definitionDigest: defDigest, terminal: true },
+      payload: {},
+    }, A, { created: Date.parse('2026-11-12T09:59:00Z') });
+    const receipt = signDocument({
+      id: uid(41), type: 'https://trusttasks.org/spec/trust-ceremony-receipt/0.1', issuer: W_DID, issuedAt: '2026-11-12T10:00:00Z',
+      payload: {
+        enactment: 'urn:uuid:eeeeeeee-0000-4000-8000-000000000001', definition: 'https://example.test/c/wire', definitionDigest: defDigest, complete: true, salt: SALT,
+        steps: [{ step: 'only', typeUri: STEP, issuer: A_DID, id: step.id, digestMultibase: ceremonyStepDigest(step, SALT), terminal: true }],
+      },
+    }, W, { created: Date.parse(START), purpose: 'assertionMethod' });
+    return { receipt: JSON.stringify(receipt), step: JSON.stringify(step) };
+  }
+  const bindings = { starter: [A_DID], finisher: [W_DID], rec: [W_DID] };
+
+  it('answers the four verdicts over the wire, on the adapter clock', async () => {
+    const s = start(['--identity', 'key']);
+    await s.call('provision', { roles: ['iut'] });
+    await s.call('setClock', { iso: START });
+    const { receipt, step } = scenario();
+    assert.equal((await s.call('verifyReceipt', { receipt, definition, roleBindings: bindings, steps: [step] })).outcome, 'complete');
+    assert.equal((await s.call('verifyReceipt', { receipt, definition, roleBindings: bindings, steps: [] })).outcome, 'unverifiable');
+    assert.equal((await s.call('verifyReceipt', { receipt, definition: null, roleBindings: bindings })).outcome, 'unverifiable');
+    assert.equal((await s.call('verifyReceipt', { receipt: receipt.replace('"complete":true', '"complete":false'), definition, roleBindings: bindings, steps: [step] })).outcome, 'invalid');
+    const altered = await s.call('verifyReceipt', { receipt, definition: { ...definition, completion: { allOf: ['only', 'only'] } }, roleBindings: bindings, steps: [step] });
+    assert.equal(altered.outcome, 'unverifiable', 'another definition than the pinned one cannot be verified against');
+  });
+
+  it('judges proofs at the adapter clock: a receipt created after the clock is invalid', async () => {
+    const s = start(['--identity', 'key']);
+    await s.call('provision', { roles: ['iut'] });
+    await s.call('setClock', { iso: '2026-11-12T08:00:00.000Z' });
+    const { receipt, step } = scenario();
+    assert.equal((await s.call('verifyReceipt', { receipt, definition, roleBindings: bindings, steps: [step] })).outcome, 'invalid');
+  });
+
+  it('refuses malformed params with a method failure, not a verdict', async () => {
+    const s = start(['--identity', 'key']);
+    assert.equal((await s.rpc('verifyReceipt', {})).error?.code, -32000);
+    assert.equal((await s.rpc('verifyReceipt', { receipt: '{}', steps: 'no' })).error?.code, -32000);
+    assert.equal((await s.rpc('verifyReceipt', { receipt: '{}', roleBindings: { r: 'not a list' } })).error?.code, -32000);
   });
 });

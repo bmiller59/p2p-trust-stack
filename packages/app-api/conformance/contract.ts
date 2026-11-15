@@ -40,7 +40,7 @@ export interface Capabilities {
   supportedTypes: string[];
   carriers: CarrierDecl[];
   cryptosuites: string[];
-  /** control, idempotencyKey, restart, trigger.consent, trigger.twoPhase, ceremony, ceremony.status, trigger.ceremonyDeadline, trigger.ceremonyEffect, observe.retained, fault.claimStore, discovery.acceptanceWindow, discovery.expiryHorizon, binding.requireBearer, clock (or clockFree; exactly one), proofVerify, attested */
+  /** control, idempotencyKey, restart, trigger.consent, trigger.twoPhase, ceremony, ceremony.status, trigger.ceremonyDeadline, trigger.ceremonyEffect, observe.retained, fault.claimStore, discovery.acceptanceWindow, discovery.expiryHorizon, binding.requireBearer, clock (or clockFree; exactly one), proofVerify, receiptVerify, attested */
   optional: string[];
   /** Present with the optional capability `ceremony`. */
   ceremony?: CeremonyDecl;
@@ -101,6 +101,28 @@ export interface ProofVerifyResult {
   valid: boolean;
 }
 
+/**
+ * Helper layer (optional capability `receiptVerify`, vector group RCPT): the verifier rules of `trust-ceremony-receipt` 0.1 have no wire
+ * output, so the receipt vectors hand a verifier the receipt and what it holds and ask for its verdict. Pure: it changes no state.
+ */
+export interface VerifyReceiptParams {
+  /** The receipt document text, exactly as received. */
+  receipt: string;
+  /** The ceremony definition the verifier resolved for `payload.definition`. Absent or null: it could not be resolved. */
+  definition?: Record<string, unknown> | null;
+  /** The enactment's role bindings, role name to the VIDs bound to it. Absent or null: not available to the verifier. */
+  roleBindings?: Record<string, string[]> | null;
+  /** The step documents the verifier holds, each exactly as received. Absent or empty: it holds none. */
+  steps?: string[];
+}
+
+/** `complete`, `incomplete` (verified but the steps do not satisfy the rule, or are a prefix), `unverifiable` (could not check), `invalid` (rejected). */
+export type ReceiptOutcome = 'complete' | 'incomplete' | 'unverifiable' | 'invalid';
+export interface VerifyReceiptResult {
+  outcome: ReceiptOutcome;
+  reason?: string;
+}
+
 export interface Adapter {
   capabilities(): Promise<Capabilities>;
   provision(roles: string[]): Promise<Record<string, ProvisionedRole>>;
@@ -116,11 +138,13 @@ export interface Adapter {
   diff(snapshotId: string): Promise<{ changed: boolean; detail?: string }>;
   /** Helper layer (optional capability `proofVerify`): verify a proof on bytes as received. */
   verifyProof(params: { bytes: string }): Promise<ProofVerifyResult>;
+  /** Helper layer (optional capability `receiptVerify`): verify a `trust-ceremony-receipt` against what the verifier holds. */
+  verifyReceipt?(params: VerifyReceiptParams): Promise<VerifyReceiptResult>;
 }
 
 export const RPC_METHODS = [
   "capabilities", "provision", "trust", "setClock", "advance", "send", "trigger",
-  "observe", "restart", "reset", "snapshot", "diff", "verifyProof",
+  "observe", "restart", "reset", "snapshot", "diff", "verifyProof", "verifyReceipt",
 ] as const;
 
 export interface RpcRequest {

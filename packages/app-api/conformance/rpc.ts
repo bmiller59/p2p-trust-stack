@@ -12,7 +12,7 @@ import type { Server } from 'node:http';
 import { createInterface } from 'node:readline';
 import type { Readable, Writable } from 'node:stream';
 import { RPC_METHODS } from './contract.ts';
-import type { Adapter, ObserveQuery, RpcRequest, RpcResponse, SendParams } from './contract.ts';
+import type { Adapter, ObserveQuery, RpcRequest, RpcResponse, SendParams, VerifyReceiptParams } from './contract.ts';
 
 const obj = (v: unknown): Record<string, unknown> => (typeof v === 'object' && v !== null && !Array.isArray(v) ? (v as Record<string, unknown>) : {});
 const str = (v: unknown, name: string): string => {
@@ -70,6 +70,25 @@ export async function dispatch(adapter: Adapter, req: RpcRequest): Promise<RpcRe
       case 'reset': result = await adapter.reset() ?? null; break;
       case 'snapshot': result = await adapter.snapshot(); break;
       case 'diff': result = await adapter.diff(str(p.snapshotId, 'snapshotId')); break;
+      case 'verifyReceipt': {
+        if (adapter.verifyReceipt === undefined) throw new Error('verifyReceipt is not supported');
+        const params: VerifyReceiptParams = { receipt: str(p.receipt, 'receipt') };
+        if (p.definition !== undefined && p.definition !== null) {
+          if (typeof p.definition !== 'object' || Array.isArray(p.definition)) throw new Error('definition must be an object or null');
+          params.definition = p.definition as Record<string, unknown>;
+        } else if (p.definition === null) params.definition = null;
+        if (p.roleBindings !== undefined && p.roleBindings !== null) {
+          const b = obj(p.roleBindings);
+          if (Object.values(b).some((v) => !Array.isArray(v) || v.some((x) => typeof x !== 'string'))) throw new Error('roleBindings must map role names to lists of strings');
+          params.roleBindings = b as Record<string, string[]>;
+        } else if (p.roleBindings === null) params.roleBindings = null;
+        if (p.steps !== undefined) {
+          if (!Array.isArray(p.steps) || p.steps.some((x) => typeof x !== 'string')) throw new Error('steps must be a list of strings');
+          params.steps = p.steps as string[];
+        }
+        result = await adapter.verifyReceipt(params);
+        break;
+      }
       case 'verifyProof': result = await adapter.verifyProof({ bytes: str(p.bytes, 'bytes') }); break;
     }
     return { jsonrpc: '2.0', id, result: result === undefined ? null : result };

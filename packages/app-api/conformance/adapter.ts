@@ -34,6 +34,7 @@ import type { DidDocument } from '@p2p-trust-stack/core/did/types.js';
 import { AcceptedIdStore } from '@p2p-trust-stack/core/services/trust-tasks/boundary/accepted-store.js';
 import { Pipeline } from '@p2p-trust-stack/core/services/trust-tasks/boundary/pipeline.js';
 import type { PipelineHandler } from '@p2p-trust-stack/core/services/trust-tasks/boundary/handlers.js';
+import { verifyCeremonyReceipt } from '@p2p-trust-stack/core/services/trust-tasks/boundary/ceremony-receipt.js';
 import { DidProofVerifier } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/verify.js';
 import { createLocalKeyResolver } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/install.js';
 import { didKeyFromEd25519, keysOfDocument } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/resolver.js';
@@ -70,7 +71,7 @@ import { createTaskConsentDecisionHandler, createTaskConsentRequestHandler } fro
 import type { ConsentPrompt } from '../src/runtime/trust-tasks-boundary/task-consent.ts';
 import type { ProposeConsentPolicy, ProposeDecision } from '../src/runtime/trust-tasks-boundary/vrc-propose.ts';
 import { ISSUE_TYPE } from '../src/runtime/trust-tasks-boundary/shared.ts';
-import type { Adapter, Capabilities, ObserveQuery, ObserveResult, ProofVerifyResult, ProvisionedRole, SendParams, SendResult } from './contract.ts';
+import type { Adapter, Capabilities, ObserveQuery, ObserveResult, ProofVerifyResult, ProvisionedRole, SendParams, SendResult, VerifyReceiptParams, VerifyReceiptResult } from './contract.ts';
 
 /** The suite's generic carrier task (its reference adapter serves the same type). A conformance fixture, not an agent feature. */
 export const WIDGET_TYPE = 'https://trusttasks.org/spec/conformance/widget/0.1';
@@ -450,7 +451,7 @@ export class TruststackersAdapter implements Adapter {
         ? [{ typeUri: WIDGET_TYPE, class: 'consequential' as const, validPayload: { subject: 'did:web:alice.example' } }]
         : mode === 'issue' ? [{ typeUri: ISSUE_TYPE, class: 'consequential' as const, validPayload: {} }] : [],
       cryptosuites: ['eddsa-jcs-2022'],
-      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', ...(this.options.ceremony === false ? [] : ['ceremony', 'ceremony.status', 'trigger.ceremonyDeadline', 'trigger.ceremonyEffect', 'observe.retained']), 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', ...(this.options.dtg === false ? [] : ['trigger.consentEnrol', 'trigger.presentationNonce', ...(this.options.ceremony === false ? [] : ['trigger.consentBinding'])]), ...(this.attested ? ['attested'] : [])],
+      optional: ['trigger.consent', 'clock', 'restart', 'fault.claimStore', 'trigger.twoPhase', ...(this.options.ceremony === false ? [] : ['ceremony', 'ceremony.status', 'trigger.ceremonyDeadline', 'trigger.ceremonyEffect', 'observe.retained']), 'discovery.acceptanceWindow', 'discovery.expiryHorizon', 'proofVerify', 'receiptVerify', ...(this.options.dtg === false ? [] : ['trigger.consentEnrol', 'trigger.presentationNonce', ...(this.options.ceremony === false ? [] : ['trigger.consentBinding'])]), ...(this.attested ? ['attested'] : [])],
       ...(this.options.ceremony === false ? {} : {
         ceremony: {
           beginType: CEREMONY_PROPOSE_WIRE_TYPE, approveType: CEREMONY_CO_SIGN_WIRE_TYPE, resetType: CEREMONY_RESET_WIRE_TYPE, statusType: CEREMONY_STATUS_WIRE_TYPE, statusPayload: {}, proposerApproves: this.options.ceremonyProposerApproves === true,
@@ -707,6 +708,11 @@ export class TruststackersAdapter implements Adapter {
     } catch {
       return { valid: false };
     }
+  }
+
+  /** Helper layer (optional capability `receiptVerify`): the verifier rules of trust-ceremony-receipt 0.1, judged at the adapter clock. Stores nothing. */
+  async verifyReceipt(params: VerifyReceiptParams): Promise<VerifyReceiptResult> {
+    return verifyCeremonyReceipt(params, { verifier: this.verifier, nowMs: this.now() });
   }
 
   async send(params: SendParams): Promise<SendResult> {
