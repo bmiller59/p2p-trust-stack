@@ -216,6 +216,12 @@ export class SqliteKeyStore implements KeyStore {
     return { secretKey, publicKey: row.public_key };
   }
 
+  /** Delete the entry for (vid, keyType); returns whether one existed. Used to retire a dedicated boundary key. */
+  deleteKeyPair(vid: string, keyType: KeyType): boolean {
+    const r = this.db.prepare('DELETE FROM keystore_keys WHERE vid = ? AND key_type = ?').run(vid, keyType);
+    return Number(r.changes) > 0;
+  }
+
   close(): void {
     if (this.ownsDb) {
       this.db.close();
