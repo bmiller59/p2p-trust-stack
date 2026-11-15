@@ -3,7 +3,7 @@
 
 /**
  * Conformance P3 persistence: migration 0021 on a populated database and its version bump, the
- * `trust_tasks` repository fields, the additive
+ * `trust_tasks` repository fields, the per-VRC relationship-DID mapping repository, the additive
  * transaction columns and `TransactionManager.getOutcome`. Temp directories only.
  */
 import assert from 'node:assert/strict';
@@ -15,6 +15,8 @@ import { SqliteDataSource } from '../../src/db/sqlite-data-source.js';
 import { runMigrations } from '../../src/db/migrate.js';
 import { getMigrationsDir } from '../../src/db/migrations-dir.js';
 import * as trustTasksRepo from '../../src/db/repositories/trust-tasks-repo.js';
+import * as exchangeDids from '../../src/db/repositories/vrc-exchange-dids-repo.js';
+import { RelationshipDidReuseError } from '../../src/db/repositories/vrc-exchange-dids-repo.js';
 import { applyTxSchemaAdditions, TX_SCHEMA_SQL } from '../../src/tx/schema.js';
 import { CeremonyStore } from '../../src/tx/ceremony-store.js';
 import { GovernanceChangeStore } from '../../src/tx/governance-change-store.js';
@@ -34,14 +36,17 @@ const columns = async (ds: SqliteDataSource, table: string): Promise<string[]> =
   (await ds.all<{ name: string }>(`PRAGMA table_info(${table})`)).map((c) => c.name);
 
 describe('migration 0021 and the schema version', () => {
-  it('is the next free number, named per the plan, and the version file moved 24 -> 25', () => {
+  it('is the next free number after 0020, named per the plan; the version file is 28 with the module\'s 0022 to 0024 (0021 took it 24 -> 25)', () => {
     const files = readdirSync(MIGRATIONS).filter((f) => f.endsWith('.sql')).sort();
-    assert.equal(files.at(-1), '0021_trust_task_boundary.sql');
-    assert.equal(files.at(-2), '0020_community_policy_bindings.sql');
-    assert.equal(readFileSync(join(MIGRATIONS, '..', 'SCHEMA_VERSION'), 'utf8').trim(), '25');
+    assert.equal(files.at(-1), '0024_credential_presentations.sql');
+    assert.equal(files.at(-2), '0023_witness_shares.sql');
+    assert.equal(files.at(-3), '0022_vrc_exchange_relationship_dids.sql');
+    assert.equal(files.at(-4), '0021_trust_task_boundary.sql');
+    assert.equal(files.at(-5), '0020_community_policy_bindings.sql');
+    assert.equal(readFileSync(join(MIGRATIONS, '..', 'SCHEMA_VERSION'), 'utf8').trim(), '28');
   });
 
-  it('applies to a populated 0020-era database: old rows survive with null new columns, the new table is empty', async () => {
+  it('applies to a populated 0020-era database: old rows survive with null new columns, new tables are empty', async () => {
     const dir = join(root, 'populated');
     const migrations = join(dir, 'migrations');
     mkdirSync(migrations, { recursive: true });
@@ -56,13 +61,13 @@ describe('migration 0021 and the schema version', () => {
     assert.ok(!(await columns(ds, 'trust_tasks')).includes('raw_document'));
 
     const applied = runMigrations(ds.getRawDb(), MIGRATIONS);
-    assert.deepEqual(applied, ['0021_trust_task_boundary.sql']);
+    assert.deepEqual(applied, ['0021_trust_task_boundary.sql', '0022_vrc_exchange_relationship_dids.sql', '0023_witness_shares.sql', '0024_credential_presentations.sql']);
     const old = await trustTasksRepo.findByUuid(ds, 'old-1');
     assert.equal(old?.payload, '{"a":1}');
     for (const k of ['rawDocument', 'digest', 'taskDigest', 'issuedAt', 'expiresAt', 'inReplyTo', 'errorCode', 'disposition', 'verifiedSigner', 'lifecycle'] as const) {
       assert.equal(old?.[k], null, k);
     }
-    assert.equal((await ds.all('SELECT * FROM trust_task_accepted')).length, 0);
+    for (const t of ['trust_task_accepted', 'vrc_exchange_relationship_dids']) assert.equal((await ds.all(`SELECT * FROM ${t}`)).length, 0);
     assert.deepEqual(runMigrations(ds.getRawDb(), MIGRATIONS), [], 'idempotent');
     await ds.close();
   });
@@ -71,7 +76,7 @@ describe('migration 0021 and the schema version', () => {
     const ds = new SqliteDataSource(':memory:');
     runMigrations(ds.getRawDb(), MIGRATIONS);
     const rows = await ds.all<{ filename: string }>("SELECT filename FROM schema_migrations WHERE filename LIKE '__schema_version__%'");
-    assert.deepEqual(rows.map((r) => r.filename), ['__schema_version__:25']);
+    assert.deepEqual(rows.map((r) => r.filename), ['__schema_version__:28']);
     await ds.close();
   });
 
@@ -101,6 +106,84 @@ describe('trust_tasks repository carries the new fields', () => {
     const plain = await trustTasksRepo.record(ds, { uuid: 'doc-2', threadId: 't', type: 'x', direction: 'response' });
     assert.equal(plain.rawDocument, null);
     await ds.close();
+  });
+});
+
+describe('per-VRC relationship-DID mapping (decision 35): schema and repository only', () => {
+  const base = (id: string, mine: string, theirs?: string) => ({
+    exchangeId: id, localConnectionDid: 'did:peer:conn-me', remoteConnectionDid: 'did:peer:conn-you',
+    localRelationshipDid: mine, ...(theirs === undefined ? {} : { remoteRelationshipDid: theirs }),
+    localIdentityUuid: 'ident-me', role: 'proposer' as const,
+  });
+  const open = () => {
+    const ds = new SqliteDataSource(':memory:');
+    runMigrations(ds.getRawDb(), MIGRATIONS);
+    return ds;
+  };
+
+  it('is keyed by the propose id and stores both connection DIDs, both relationship DIDs, role, state and root identity', async () => {
+    const ds = open();
+    const row = await exchangeDids.create(ds, { ...base('urn:uuid:propose-1', 'did:peer:4zMine1', 'did:peer:4zTheirs1'), remoteIdentityUuid: 'ident-you', state: 'accepted', now: 1000 });
+    assert.deepEqual(row, {
+      exchangeId: 'urn:uuid:propose-1', localConnectionDid: 'did:peer:conn-me', remoteConnectionDid: 'did:peer:conn-you',
+      localRelationshipDid: 'did:peer:4zMine1', remoteRelationshipDid: 'did:peer:4zTheirs1', localIdentityUuid: 'ident-me',
+      remoteIdentityUuid: 'ident-you', role: 'proposer', state: 'accepted', recordedByNode: null, createdAt: 1000, updatedAt: 1000,
+    });
+    assert.equal((await exchangeDids.findByRelationshipDid(ds, 'did:peer:4zTheirs1'))?.exchangeId, 'urn:uuid:propose-1');
+    await assert.rejects(() => exchangeDids.create(ds, base('urn:uuid:propose-1', 'did:peer:4zOther')), /UNIQUE|constraint/i, 'one row per exchange id');
+    await ds.close();
+  });
+
+  it('a second exchange between the same parties is a new row with new DIDs', async () => {
+    const ds = open();
+    await exchangeDids.create(ds, { ...base('p-1', 'did:peer:4zA1', 'did:peer:4zB1'), now: 1 });
+    await exchangeDids.create(ds, { ...base('p-2', 'did:peer:4zA2', 'did:peer:4zB2'), now: 2 });
+    assert.deepEqual((await exchangeDids.listByConnections(ds, 'did:peer:conn-me', 'did:peer:conn-you')).map((r) => r.exchangeId), ['p-1', 'p-2']);
+    await ds.close();
+  });
+
+  it('refuses a relationship DID reused in either direction, or equal to a connection DID', async () => {
+    const ds = open();
+    await exchangeDids.create(ds, base('p-1', 'did:peer:4zA1', 'did:peer:4zB1'));
+    await assert.rejects(() => exchangeDids.create(ds, base('p-2', 'did:peer:4zA1')), RelationshipDidReuseError, 'our DID reused as ours');
+    await assert.rejects(() => exchangeDids.create(ds, base('p-3', 'did:peer:4zC', 'did:peer:4zB1')), RelationshipDidReuseError, 'their DID reused as theirs');
+    await assert.rejects(() => exchangeDids.create(ds, base('p-4', 'did:peer:4zB1')), RelationshipDidReuseError, 'their DID offered as ours');
+    await assert.rejects(() => exchangeDids.create(ds, base('p-5', 'did:peer:4zD', 'did:peer:4zA1')), RelationshipDidReuseError, 'our DID offered as theirs');
+    await assert.rejects(() => exchangeDids.create(ds, base('p-6', 'did:peer:conn-me')), RelationshipDidReuseError, 'a connection DID');
+    await assert.rejects(() => exchangeDids.create(ds, base('p-7', 'did:peer:4zE', 'did:peer:4zE')), RelationshipDidReuseError, 'both sides the same');
+    assert.equal(await exchangeDids.findByExchangeId(ds, 'p-2'), null, 'a refused row is not left behind');
+    await ds.close();
+  });
+
+  it('the schema itself holds the same-column uniqueness (belt and braces beside the repository check)', async () => {
+    const ds = open();
+    await exchangeDids.create(ds, base('p-1', 'did:peer:4zA1', 'did:peer:4zB1'));
+    const insert = (id: string, mine: string, theirs: string) =>
+      ds.run(`INSERT INTO vrc_exchange_relationship_dids (exchange_id, local_connection_did, remote_connection_did, local_relationship_did, remote_relationship_did, role, state, created_at, updated_at) VALUES (?, 'a', 'b', ?, ?, 'proposer', 'proposed', 1, 1)`, id, mine, theirs);
+    await assert.rejects(() => insert('x1', 'did:peer:4zA1', 'did:peer:4zZ'), /UNIQUE/);
+    await assert.rejects(() => insert('x2', 'did:peer:4zY', 'did:peer:4zB1'), /UNIQUE/);
+    await ds.close();
+  });
+
+  it('records the counterparty DID once known, durably (second connection sees it), refusing reuse and a changed value', async () => {
+    const path = join(root, 'mapping.sqlite');
+    const ds = new SqliteDataSource(path);
+    runMigrations(ds.getRawDb(), MIGRATIONS);
+    await exchangeDids.create(ds, base('p-1', 'did:peer:4zA1'));
+    await exchangeDids.create(ds, base('p-2', 'did:peer:4zA2', 'did:peer:4zB2'));
+    await assert.rejects(() => exchangeDids.setRemoteRelationshipDid(ds, 'p-1', 'did:peer:4zB2'), RelationshipDidReuseError);
+    await assert.rejects(() => exchangeDids.setRemoteRelationshipDid(ds, 'p-1', 'did:peer:4zA1'), RelationshipDidReuseError);
+    const updated = await exchangeDids.setRemoteRelationshipDid(ds, 'p-1', 'did:peer:4zB1', 5);
+    assert.equal(updated.remoteRelationshipDid, 'did:peer:4zB1');
+    await assert.rejects(() => exchangeDids.setRemoteRelationshipDid(ds, 'p-1', 'did:peer:4zOther'), RelationshipDidReuseError);
+    await exchangeDids.setState(ds, 'p-1', 'ended', 9);
+    await ds.close();
+    const again = new SqliteDataSource(path);
+    const row = await exchangeDids.findByExchangeId(again, 'p-1');
+    assert.equal(row?.remoteRelationshipDid, 'did:peer:4zB1');
+    assert.equal(row?.state, 'ended');
+    assert.equal(row?.updatedAt, 9);
+    await again.close();
   });
 });
 
