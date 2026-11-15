@@ -383,7 +383,7 @@ export class ScidVhAgent extends BaseAgent {
    * document update: an in-place add when `#key-boundary` is absent, a replacement of its key when
    * present (rotation). Nothing else in the document can change. Then pushes the log to the server.
    */
-  async publishBoundaryKey(generation = 1): Promise<RotationLogEntry> {
+  async publishBoundaryKey(generation = 1, options: { dryRun?: boolean } = {}): Promise<RotationLogEntry> {
     const store = this.db?.rotationLogStore;
     if (!store) throw new Error('ScidVhAgent.publishBoundaryKey: agent not started. Call start() first.');
     const keystore = new SqliteKeyStore(this.registry.getKeystorePath(this.name));
@@ -396,8 +396,13 @@ export class ScidVhAgent extends BaseAgent {
     const currentLog = store.getLog(this.identity.did);
     if (currentLog.length === 0) throw new Error('ScidVhAgent.publishBoundaryKey: no rotation log entries found');
     const present = currentLog[currentLog.length - 1]!.didDocument.verificationMethod.some((v) => v.id === BOUNDARY_VM_ID);
-    this.scidVhMethod.setStore(store);
     const params = { currentLog, identityKeyPair: this.identity.signingKeyPair, boundaryPublicKey: pair.publicKey };
+    if (options.dryRun === true) {
+      // Build and chain-validate the entry on a store-less method: nothing is appended, pushed or logged.
+      const method = new ScidVhMethod({});
+      return present ? method.rotateBoundaryKey(params) : method.addBoundaryKey(params);
+    }
+    this.scidVhMethod.setStore(store);
     const entry = present ? await this.scidVhMethod.rotateBoundaryKey(params) : await this.scidVhMethod.addBoundaryKey(params);
     this.identity = { ...this.identity, didDocument: this.didMethod.resolve(this.identity.did) };
     logger.info(formatBoundaryEvent(present ? 'boundaryKey.rotated' : 'boundaryKey.published', { generation, fingerprint: boundaryKeyFingerprint(pair.publicKey), version: entry.version }));
@@ -406,10 +411,11 @@ export class ScidVhAgent extends BaseAgent {
   }
 
   /** Remove `#key-boundary` from the document (retirement, or cutover rollback). The secret is deleted separately. */
-  async retireBoundaryKey(): Promise<RotationLogEntry> {
+  async retireBoundaryKey(options: { dryRun?: boolean } = {}): Promise<RotationLogEntry> {
     const store = this.db?.rotationLogStore;
     if (!store) throw new Error('ScidVhAgent.retireBoundaryKey: agent not started. Call start() first.');
     const currentLog = store.getLog(this.identity.did);
+    if (options.dryRun === true) return new ScidVhMethod({}).retireBoundaryKey({ currentLog, identityKeyPair: this.identity.signingKeyPair });
     this.scidVhMethod.setStore(store);
     const entry = await this.scidVhMethod.retireBoundaryKey({ currentLog, identityKeyPair: this.identity.signingKeyPair });
     this.identity = { ...this.identity, didDocument: this.didMethod.resolve(this.identity.did) };
