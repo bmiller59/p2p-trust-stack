@@ -16,6 +16,7 @@
 import { createServer } from 'node:http';
 import type { IncomingMessage, Server, ServerResponse } from 'node:http';
 import type { AddressInfo } from 'node:net';
+import { resolveBoundaryListenerSettings } from '@p2p-trust-stack/core/services/trust-tasks/boundary/process-config.js';
 import type { PipelineInput, PipelineResult } from '@p2p-trust-stack/core/services/trust-tasks/boundary/pipeline.js';
 
 export const LISTENER_PATH = '/trust-tasks';
@@ -36,23 +37,15 @@ export interface ListenerEnv {
 /**
  * Opt-in resolution. Nothing listens unless it is switched on explicitly (`TRUST_TASKS_LISTENER=1` or
  * `override.enabled === true`) AND a port is given: there is no default port, so it can never collide
- * with, or be mistaken for, the UI. A port equal to a forbidden one (the UI port) is refused.
+ * with, or be mistaken for, the UI. A port equal to a forbidden one (the UI port) is refused, and so
+ * is any invalid tier, policy or host (the shared, strict reading in core).
  */
 export function resolveListenerConfig(
   env: ListenerEnv,
   override: Partial<BoundaryListenerConfig> & { enabled?: boolean } = {},
   forbiddenPorts: readonly number[] = [],
 ): BoundaryListenerConfig | null {
-  const enabled = override.enabled ?? env.TRUST_TASKS_LISTENER === '1';
-  if (!enabled) return null;
-  const rawPort = override.port ?? (env.TRUST_TASKS_LISTENER_PORT === undefined ? undefined : Number(env.TRUST_TASKS_LISTENER_PORT));
-  if (rawPort === undefined || !Number.isInteger(rawPort) || rawPort < 1 || rawPort > 65535) {
-    throw new Error('Trust Task listener is enabled but no valid port is configured (TRUST_TASKS_LISTENER_PORT)');
-  }
-  if (forbiddenPorts.includes(rawPort)) throw new Error(`Trust Task listener must not use port ${rawPort}: it is reserved for the UI`);
-  const tier = override.tier ?? (env.TRUST_TASKS_TIER === '1' ? 1 : 2);
-  const policy = override.proposePolicy ?? (env.TRUST_TASKS_PROPOSE_POLICY === 'decline' ? 'decline' : 'hold');
-  return { host: override.host ?? env.TRUST_TASKS_LISTENER_HOST ?? '127.0.0.1', port: rawPort, tier, proposePolicy: policy };
+  return resolveBoundaryListenerSettings(env, override, forbiddenPorts);
 }
 
 export interface BoundaryListener {
@@ -66,6 +59,8 @@ export interface StartListenerOptions {
   port: number;
   process(input: PipelineInput): Promise<PipelineResult>;
   maxBodyBytes?: number;
+  /** How long `close()` waits for requests in flight before cutting them, ms. Default 5000. */
+  graceMs?: number;
   onError?: (err: unknown) => void;
   /**
    * Maps a request to the transport-authenticated sender (the VID a bearer token stands for, bindings/https section 3), or
@@ -143,10 +138,15 @@ export async function startBoundaryListener(options: StartListenerOptions): Prom
   return {
     port: addr.port,
     host: options.host,
+    // Graceful: stop accepting, let requests already being answered finish for up to `graceMs`, then cut what is left.
     close: () =>
       new Promise<void>((resolve) => {
-        server.close(() => resolve());
-        server.closeAllConnections();
+        const force = setTimeout(() => server.closeAllConnections(), options.graceMs ?? 5_000);
+        server.close(() => {
+          clearTimeout(force);
+          resolve();
+        });
+        server.closeIdleConnections();
       }),
   };
 }

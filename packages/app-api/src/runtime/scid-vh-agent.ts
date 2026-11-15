@@ -23,6 +23,9 @@ import { BaseAgent, type CryptoIdentityResult } from './base-agent.js';
 import { ContextManager, listProvisionedApps, type AppCredentialBundle } from './context-manager.js';
 import { exportSeedPhrase, importSeedPhrase } from '@p2p-trust-stack/core/crypto/seed-phrase.js';
 import { logger } from '@p2p-trust-stack/core/util/logger.js';
+import { BOUNDARY_VM_ID } from '@p2p-trust-stack/core/did/document-carry-forward.js';
+import { boundaryKeyFingerprint, destroyBoundaryKey, loadBoundaryKey, provisionBoundaryKey } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/key-custody.js';
+import { formatBoundaryEvent } from '@p2p-trust-stack/core/services/trust-tasks/boundary/process-config.js';
 
 
 // ---------------------------------------------------------------------------
@@ -357,6 +360,72 @@ export class ScidVhAgent extends BaseAgent {
 
   getNextSigningKeyPair(): Ed25519KeyPair | undefined {
     return this.nextSigningKeyPairs?.[0];
+  }
+
+  // ---------------------------------------------------------------------------
+  // Dedicated boundary key (gate G2): operator-invoked, never reachable from the network
+  // ---------------------------------------------------------------------------
+
+  /** Generate generation `generation` of the dedicated key into this agent's encrypted keystore (never overwrites). */
+  async provisionBoundaryKey(generation = 1): Promise<{ fingerprint: string }> {
+    const keystore = new SqliteKeyStore(this.registry.getKeystorePath(this.name));
+    try {
+      const out = await provisionBoundaryKey({ store: keystore, vid: this.identity.did, passphrase: this.passphrase, generation });
+      logger.info(formatBoundaryEvent('boundaryKey.provisioned', { generation, fingerprint: out.fingerprint }));
+      return { fingerprint: out.fingerprint };
+    } finally {
+      keystore.close();
+    }
+  }
+
+  /**
+   * Publish generation `generation` into this identifier's DID document through the carry-forward
+   * document update: an in-place add when `#key-boundary` is absent, a replacement of its key when
+   * present (rotation). Nothing else in the document can change. Then pushes the log to the server.
+   */
+  async publishBoundaryKey(generation = 1): Promise<RotationLogEntry> {
+    const store = this.db?.rotationLogStore;
+    if (!store) throw new Error('ScidVhAgent.publishBoundaryKey: agent not started. Call start() first.');
+    const keystore = new SqliteKeyStore(this.registry.getKeystorePath(this.name));
+    let pair;
+    try {
+      pair = await loadBoundaryKey({ store: keystore, vid: this.identity.did, passphrase: this.passphrase, generation });
+    } finally {
+      keystore.close();
+    }
+    const currentLog = store.getLog(this.identity.did);
+    if (currentLog.length === 0) throw new Error('ScidVhAgent.publishBoundaryKey: no rotation log entries found');
+    const present = currentLog[currentLog.length - 1]!.didDocument.verificationMethod.some((v) => v.id === BOUNDARY_VM_ID);
+    this.scidVhMethod.setStore(store);
+    const params = { currentLog, identityKeyPair: this.identity.signingKeyPair, boundaryPublicKey: pair.publicKey };
+    const entry = present ? await this.scidVhMethod.rotateBoundaryKey(params) : await this.scidVhMethod.addBoundaryKey(params);
+    this.identity = { ...this.identity, didDocument: this.didMethod.resolve(this.identity.did) };
+    logger.info(formatBoundaryEvent(present ? 'boundaryKey.rotated' : 'boundaryKey.published', { generation, fingerprint: boundaryKeyFingerprint(pair.publicKey), version: entry.version }));
+    this.scheduleIdentityPushAfterRoll(present ? 'boundary-key-rotation' : 'boundary-key-publication');
+    return entry;
+  }
+
+  /** Remove `#key-boundary` from the document (retirement, or cutover rollback). The secret is deleted separately. */
+  async retireBoundaryKey(): Promise<RotationLogEntry> {
+    const store = this.db?.rotationLogStore;
+    if (!store) throw new Error('ScidVhAgent.retireBoundaryKey: agent not started. Call start() first.');
+    const currentLog = store.getLog(this.identity.did);
+    this.scidVhMethod.setStore(store);
+    const entry = await this.scidVhMethod.retireBoundaryKey({ currentLog, identityKeyPair: this.identity.signingKeyPair });
+    this.identity = { ...this.identity, didDocument: this.didMethod.resolve(this.identity.did) };
+    logger.info(formatBoundaryEvent('boundaryKey.retired', { version: entry.version }));
+    this.scheduleIdentityPushAfterRoll('boundary-key-retirement');
+    return entry;
+  }
+
+  /** Delete the stored secret of a generation that the document no longer lists. */
+  destroyBoundaryKeySecret(generation: number): boolean {
+    const keystore = new SqliteKeyStore(this.registry.getKeystorePath(this.name));
+    try {
+      return destroyBoundaryKey({ store: keystore, vid: this.identity.did, generation });
+    } finally {
+      keystore.close();
+    }
   }
 
   listRotationLog(): RotationLogEntry[] {
