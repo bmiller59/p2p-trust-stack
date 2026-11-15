@@ -1,0 +1,18 @@
+{
+  "source": "dtgwg-trust-conformance (suite folder, vectors/ceremony-vrc), format tt-conformance-vectors/0.1",
+  "commit": "7cffefb",
+  "commitNote": "The suite folder is under version control since commit 691a6fb; these files are byte copies of vectors/ceremony-vrc/{propose,issue}.json at 7cffefb.",
+  "copiedFrom": "/srv/dev/code/seas/dtgwg-trust-conformance/vectors/ceremony-vrc/{propose,issue}.json",
+  "copiedOn": "2026-11-14 (conformance split, package C; first copied 2026-11-13, P6)",
+  "licence": "Apache-2.0 (the suite's code licence per its README; the vector files' licence was not separately verified)",
+  "files": [
+    {
+      "path": "ceremony-vrc/propose.json",
+      "sha256": "b647895470914f8170a9511835cfe7debdc8713b574b7fcaa2f83ba806470f19"
+    },
+    {
+      "path": "ceremony-vrc/issue.json",
+      "sha256": "3cce25358252d9e60ef3a96a8b08aa968f808d3ee6e15ee529ab691540f89444"
+    }
+  ]
+}

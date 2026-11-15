@@ -27,6 +27,13 @@ import type { IdentityResolver } from '@p2p-trust-stack/core/services/identity-r
 import type { VtcStore } from '@p2p-trust-stack/core/vtc/store.js';
 import { VrcCeremonyStore } from '@p2p-trust-stack/core/tx/vrc-ceremony-store.js';
 import { logger } from '@p2p-trust-stack/core/util/logger.js';
+import * as exchangeDids from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
+import { checkIncomingVrc, findExchangeVrc } from '@p2p-trust-stack/core/relationship/exchange-vrc.js';
+import type { InnerProofVerifier } from '@p2p-trust-stack/core/relationship/exchange-vrc.js';
+import type { ExchangeDidRow } from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
+import { recordAbortReason } from '@p2p-trust-stack/core/tx/ceremony-guard.js';
+import { TaskError } from '@p2p-trust-stack/core/services/trust-tasks/boundary/errors.js';
+import { sha256 } from '@p2p-trust-stack/core/crypto/primitives.js';
 
 export interface StoreRemoteVrcParams {
   w3cVcJson: string;
@@ -41,26 +48,45 @@ export interface StoreRemoteVrcParams {
    * and stores the record with custody='remote'.
    */
   issuerIdentity?: Record<string, unknown>;
+  /**
+   * Boundary path only (conformance P5c): the `propose` document id of the exchange this credential
+   * belongs to. When set, issuer and subject must be the exchange's relationship DIDs, the inner
+   * proof must verify, the credential is stored against the exchange's root identities, and
+   * `issuerIdentity` and the internal ceremony session are NOT used.
+   */
+  exchangeId?: string;
 }
 
 export class VrcReceiveParticipant implements Participant {
   readonly pid: string;
+  private readonly appDb: DataSource;
   private readonly txDb: DataSource;
   private readonly vtcStore: VtcStore;
   private readonly ceremonyStore: VrcCeremonyStore;
+  private innerProof: { verifier: InnerProofVerifier; now: () => number } | undefined;
 
   constructor(
     pid: string,
-    _appDb: DataSource,
+    appDb: DataSource,
     txDb: DataSource,
     vtcStore: VtcStore,
     _resolver: IdentityResolver,
   ) {
     this.pid = pid;
+    this.appDb = appDb;
     this.txDb = txDb;
     this.vtcStore = vtcStore;
     // The ceremony saga lives in the same tx-coordinator db as participant state.
     this.ceremonyStore = new VrcCeremonyStore(txDb);
+  }
+
+  /**
+   * Boundary path: verify the inner proof with the boundary's verifier (so `did:key` as well as
+   * `did:peer:4` relationship DIDs verify) on the same clock the pipeline uses. Without it the
+   * offline `did:peer:4` check applies.
+   */
+  setInnerProofVerifier(verifier: InnerProofVerifier, now: () => number = Date.now): void {
+    this.innerProof = { verifier, now };
   }
 
   handlesOperation(op: Operation): boolean {
@@ -68,11 +94,26 @@ export class VrcReceiveParticipant implements Participant {
   }
 
   async prepare(txId: string, operations: Operation[]): Promise<Vote> {
+    // The conformant path (exchange credentials) applies its effect at COMMIT: prepare only checks and records what to apply,
+    // so a credential is never visible while the transaction is undecided and an abort leaves nothing to undo.
+    const pending: StoreRemoteVrcParams[] = [];
     for (const op of operations) {
       if (op.op !== 'store_remote_vrc') continue;
 
       const params = op.params as unknown as StoreRemoteVrcParams;
       if (!params?.w3cVcJson) return 'no';
+
+      if (params.exchangeId !== undefined) {
+        try {
+          await this.checkExchangeVrc(params);
+          pending.push(params);
+        } catch (err) {
+          logger.error(`[vrc-receive] exchange VRC refused for tx ${txId}:`, (err as Error)?.message);
+          recordAbortReason(txId, err);
+          return 'no';
+        }
+        continue;
+      }
 
       try {
         // Store the remote peer's VRC in the local credentials table.
@@ -105,15 +146,67 @@ export class VrcReceiveParticipant implements Participant {
 
     // Durably record 'prepared' BEFORE voting yes.
     await this.txDb.run(
-      `INSERT OR REPLACE INTO tx_participant_state (tx_id, pid, outcome)
-       VALUES (?, ?, 'prepared')`,
-      txId, this.pid,
+      `INSERT OR REPLACE INTO tx_participant_state (tx_id, pid, outcome, pending_ops)
+       VALUES (?, ?, 'prepared', ?)`,
+      txId, this.pid, pending.length === 0 ? null : JSON.stringify(pending),
     );
 
     return 'yes';
   }
 
+  /**
+   * Conformant path, phase 1. Checks come from the exchange record, never from the sender's say-so, and run
+   * before anything is stored. A different credential from the same counterparty relationship DID in
+   * the same exchange is `alreadyIssued`; the same bytes again are an idempotent success.
+   */
+  private async checkExchangeVrc(params: StoreRemoteVrcParams): Promise<ExchangeDidRow> {
+    const exchange = await exchangeDids.findByExchangeId(this.appDb, params.exchangeId as string);
+    if (exchange === null || exchange.state === 'ended' || exchange.remoteRelationshipDid === null) {
+      throw new TaskError({ reason: 'notAccepted', internalMessage: 'no accepted exchange for this VRC' });
+    }
+    if (exchange.localIdentityUuid === null || exchange.remoteIdentityUuid === null) {
+      throw new TaskError({ reason: 'notAccepted', internalMessage: 'exchange identities are not mapped' });
+    }
+    const check = await checkIncomingVrc(
+      params.w3cVcJson,
+      exchange,
+      this.innerProof === undefined ? undefined : { verifier: this.innerProof.verifier, nowMs: this.innerProof.now() },
+    );
+    if (!check.ok) {
+      throw new TaskError({ reason: 'vcInvalid', internalMessage: `exchange VRC refused: ${check.reason}` });
+    }
+    const held = await findExchangeVrc(this.appDb, exchange, 'received');
+    const digest = Array.from(sha256(new TextEncoder().encode(params.w3cVcJson)))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+    if (held !== null && held.digest !== digest) {
+      throw new TaskError({
+        code: 'vrc/relationships/issue:alreadyIssued',
+        retryable: false,
+        internalMessage: 'the exchange already holds a different credential',
+      });
+    }
+    return exchange;
+  }
+
+  /** Conformant path, phase 2: store the credential against the exchange's root identities. Idempotent (digest dedup, state only moves forward). */
+  private async applyExchangeVrc(params: StoreRemoteVrcParams): Promise<void> {
+    const exchange = await this.checkExchangeVrc(params);
+    this.vtcStore.storeReceivedDtgVrc(params.w3cVcJson, params.issuerDid, params.subjectDid, undefined, {
+      issuerIdentityUuid: exchange.remoteIdentityUuid as string,
+      subjectIdentityUuid: exchange.localIdentityUuid as string,
+    });
+    if (exchange.state === 'accepted') await exchangeDids.setState(this.appDb, exchange.exchangeId, 'received');
+  }
+
   async commit(txId: string): Promise<void> {
+    const row = await this.txDb.get<{ outcome: string; pending_ops: string | null }>(
+      'SELECT outcome, pending_ops FROM tx_participant_state WHERE tx_id = ? AND pid = ?',
+      txId, this.pid,
+    );
+    if (row?.outcome === 'prepared' && row.pending_ops) {
+      for (const params of JSON.parse(row.pending_ops) as StoreRemoteVrcParams[]) await this.applyExchangeVrc(params);
+    }
     await this.txDb.run(
       "UPDATE tx_participant_state SET outcome = 'committed' WHERE tx_id = ? AND pid = ?",
       txId, this.pid,
@@ -122,11 +215,11 @@ export class VrcReceiveParticipant implements Participant {
   }
 
   async abort(txId: string): Promise<void> {
-    // storeReceivedDtgVrc is idempotent (digest dedup), so a precise rollback
-    // would delete by credential digest. For now, mark aborted and rely on the
-    // next push/election to reconcile state.
+    // The conformant path has stored nothing before commit. The legacy path stores at prepare
+    // (storeReceivedDtgVrc is digest-deduplicated, so a precise rollback would delete by digest);
+    // it is marked aborted and left for the next push/election to reconcile.
     await this.txDb.run(
-      "UPDATE tx_participant_state SET outcome = 'aborted' WHERE tx_id = ? AND pid = ?",
+      "UPDATE tx_participant_state SET outcome = 'aborted', pending_ops = NULL WHERE tx_id = ? AND pid = ?",
       txId, this.pid,
     );
     logger.info(`[vrc-receive] ${txId.slice(0, 8)} aborted`);

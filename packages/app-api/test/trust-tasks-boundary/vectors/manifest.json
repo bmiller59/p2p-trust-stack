@@ -1,0 +1,7 @@
+{
+  "format": "tt-conformance-manifest/0.1",
+  "files": [
+    "ceremony-vrc/propose.json",
+    "ceremony-vrc/issue.json"
+  ]
+}
