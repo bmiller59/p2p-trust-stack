@@ -104,7 +104,7 @@ export class DidKeyResolver implements KeyResolver {
 // did:peer:4 and did:scid:vh through the core DidResolver
 // ---------------------------------------------------------------------------
 
-function keysOfDocument(did: string, doc: DidDocument, source: KeySource): ResolvedKeySet {
+export function keysOfDocument(did: string, doc: DidDocument, source: KeySource): ResolvedKeySet {
   const rel = (list: readonly string[] | undefined): Set<string> => new Set((list ?? []).map((r) => (r.startsWith('#') ? r.slice(1) : r)));
   const authentication = rel(doc.authentication);
   const assertionMethod = rel(doc.assertionMethod);

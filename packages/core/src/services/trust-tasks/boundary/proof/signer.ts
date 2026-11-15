@@ -59,6 +59,9 @@ export interface SignOptions {
   created: number;
   /** Default `authentication`: `assertionMethod` only for approver attestations. */
   purpose?: ProofPurpose | string;
+  /** Presentations: the challenge and domain the proof is bound to (written into the signed proof configuration). */
+  challenge?: string;
+  domain?: string;
   /** Tests only: sign although the document's issuer is not the signer's identifier. */
   allowIssuerMismatch?: boolean;
 }
@@ -80,6 +83,8 @@ export function signDocument<T extends Record<string, unknown>>(doc: T, signer: 
     verificationMethod: signer.verificationMethod,
     proofPurpose: options.purpose ?? 'authentication',
   };
+  if (options.challenge !== undefined) config.challenge = options.challenge;
+  if (options.domain !== undefined) config.domain = options.domain;
   if (Object.prototype.hasOwnProperty.call(body, '@context')) config['@context'] = structuredClone(body['@context']);
   const proofValue = encodeProofValue(signer.sign(hashData(config, body)));
   return { ...(body as T), proof: { ...config, proofValue } };

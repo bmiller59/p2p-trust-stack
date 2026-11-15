@@ -43,7 +43,9 @@ export type ProofFailure =
   | 'issuerMismatch'
   | 'keyNotListed'
   | 'unresolvableIssuer'
-  | 'signatureInvalid';
+  | 'signatureInvalid'
+  | 'challengeMismatch'
+  | 'domainMismatch';
 
 export interface ProofVerdict {
   readonly valid: boolean;
@@ -67,6 +69,16 @@ export interface VerifyContext {
   purposes?: readonly string[];
   /** Allowed clock skew for `created`, ms. Default 60000. */
   skewMs?: number;
+  /**
+   * Which member names the signer. Default `issuer` (a string, as on every Trust Task envelope).
+   * `holder` is for a presentation; `credential` reads the issuer of a credential, which is a
+   * string or an object with an `id`.
+   */
+  signerMember?: 'issuer' | 'holder' | 'credential';
+  /** When set, `proof.challenge` MUST equal it (presentations: the exchange the share belongs to). */
+  challenge?: string;
+  /** When set, `proof.domain` MUST equal it. */
+  domain?: string;
 }
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -124,8 +136,13 @@ export class DidProofVerifier {
       if (context.nowMs > at) return refuse('malformedProof', 'proof.expires has passed');
     }
 
-    const issuer = doc.issuer;
-    if (!nonEmpty(issuer)) return refuse('issuerMismatch', 'no in-band issuer');
+    if (context.challenge !== undefined && proof.challenge !== context.challenge) return refuse('challengeMismatch', 'proof.challenge', { purpose });
+    if (context.domain !== undefined && proof.domain !== context.domain) return refuse('domainMismatch', 'proof.domain', { purpose });
+
+    const member = context.signerMember ?? 'issuer';
+    const raw = member === 'holder' ? doc.holder : doc.issuer;
+    const issuer = member === 'credential' && isObject(raw) ? raw.id : raw;
+    if (!nonEmpty(issuer)) return refuse('issuerMismatch', member === 'holder' ? 'no in-band holder' : 'no in-band issuer');
     const written = proof.verificationMethod as string;
     const hash = written.indexOf('#');
     const controller = hash === -1 ? written : written.slice(0, hash);
