@@ -280,7 +280,22 @@ export async function joinCommunityByDid(
   return { membership, community };
 }
 
-export async function createVtc(db: DataSource, input: CreateVtcInput): Promise<CreateVtcResult> {
+/** What a passed check resolved; `createVtc` writes from exactly this. */
+export interface CheckedCreateVtc {
+  kind: VtcKind;
+  /** The threshold in force (the input's, else the kind's default). */
+  threshold: number;
+  admins: Identity[];
+}
+
+/**
+ * Every validation `createVtc` applies before it writes anything, as a function that only reads (the D1.3 split:
+ * a ceremony host runs this at prepare, where a refusal is still a veto, and `createVtc` at commit). It throws the
+ * same `CreateVtcValidationError` / `CreateVtcNotFoundError` / `CreateVtcConflictError` as before and writes nothing.
+ * `createVtc` calls it first, so the two cannot drift apart. The unique index on the community name stays the
+ * final guard against a race between check and write.
+ */
+export async function checkCreateVtc(db: DataSource, input: CreateVtcInput): Promise<CheckedCreateVtc> {
   if (!input.name || !input.name.trim()) {
     throw new CreateVtcValidationError('name is required');
   }
@@ -403,6 +418,13 @@ export async function createVtc(db: DataSource, input: CreateVtcInput): Promise<
 
   // Credential type is a governance parameter set post-creation
   // via PATCH /communities/:id/governance, not part of the founding ceremony.
+
+  return { kind, threshold: m, admins };
+}
+
+export async function createVtc(db: DataSource, input: CreateVtcInput): Promise<CreateVtcResult> {
+  const { kind, threshold: m, admins } = await checkCreateVtc(db, input);
+  const n = input.adminIdentityUuids.length;
 
   // ── 1a. Generate a proper did:peer:4 for the VTC (Decision 2.6 — VTC-as-VTA) ──
   const didMethod = new DidPeer4Method();
