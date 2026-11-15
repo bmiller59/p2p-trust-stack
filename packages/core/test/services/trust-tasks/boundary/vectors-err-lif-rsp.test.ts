@@ -45,7 +45,7 @@ const tier2 = ["ERR-003", "RSP-004"];
 describe("vector files carry provenance", () => {
   const prov = JSON.parse(readFileSync(join(VECTORS_DIR, "PROVENANCE.json"), "utf8")) as { files: { path: string; sha256: string }[] };
   it("every copied vector file matches its recorded SHA-256", () => {
-    assert.deepEqual(prov.files.map((f) => f.path).sort(), ["env.json", "err.json", "id.json", "lif.json", "rsp.json", "time.json"]);
+    assert.deepEqual(prov.files.map((f) => f.path).sort(), ["dup.json", "env.json", "err.json", "id.json", "lif.json", "rsp.json", "time.json"]);
     for (const f of prov.files) assert.equal(createHash("sha256").update(readFileSync(join(VECTORS_DIR, f.path))).digest("hex"), f.sha256, f.path);
   });
   it("the vectors under test are exactly the ones present in the files", () => {

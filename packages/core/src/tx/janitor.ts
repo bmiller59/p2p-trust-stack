@@ -30,10 +30,20 @@ export class TxJanitor {
   private readonly ds: DataSource;
   private readonly config: JanitorConfig;
   private timer: ReturnType<typeof setInterval> | null = null;
+  private readonly hooks: Array<{ name: string; run: (now: number) => Promise<number> }> = [];
 
   constructor(ds: DataSource, config?: Partial<JanitorConfig>) {
     this.ds = ds;
     this.config = { ...DEFAULT_JANITOR_CONFIG, ...config };
+  }
+
+  /**
+   * Add a pruning step that runs with every pass, for stores that live outside the transaction database
+   * (the durable duplicate record: `AcceptedIdStore.pruneExpired`). A hook that throws is logged and does
+   * not stop the pass.
+   */
+  addPruneHook(name: string, run: (now: number) => Promise<number>): void {
+    this.hooks.push({ name, run });
   }
 
   /** Start the background pruning loop. */
@@ -66,6 +76,7 @@ export class TxJanitor {
     inbox: number;
     participantState: number;
     vrcCeremonies: number;
+    hooks: Record<string, number>;
   }> {
     const now = Date.now();
     const completedCutoff = now - this.config.completedTtlMs;
@@ -81,6 +92,15 @@ export class TxJanitor {
         this.ds.run(JANITOR_PRUNE_VRC_CEREMONIES_SQL, completedCutoff),
       ]);
 
+    const hooks: Record<string, number> = {};
+    for (const hook of this.hooks) {
+      try {
+        hooks[hook.name] = await hook.run(now);
+      } catch (err) {
+        logger.error(`[tx-janitor] prune hook ${hook.name} failed:`, (err as Error)?.message ?? err);
+      }
+    }
+
     const result = {
       txLogCompleted: txLogCompleted.changes,
       txLogIncomplete: txLogIncomplete.changes,
@@ -88,11 +108,12 @@ export class TxJanitor {
       inbox: inbox.changes,
       participantState: participantState.changes,
       vrcCeremonies: vrcCeremonies.changes,
+      hooks,
     };
 
-    const total = result.txLogCompleted + result.txLogIncomplete + result.outbox + result.inbox + result.participantState + result.vrcCeremonies;
+    const total = result.txLogCompleted + result.txLogIncomplete + result.outbox + result.inbox + result.participantState + result.vrcCeremonies + Object.values(hooks).reduce((a, b) => a + b, 0);
     if (total > 0) {
-      logger.info(`[tx-janitor] pruned ${total} expired row(s): log=${result.txLogCompleted + result.txLogIncomplete} outbox=${result.outbox} inbox=${result.inbox} participant=${result.participantState} vrc=${result.vrcCeremonies}`);
+      logger.info(`[tx-janitor] pruned ${total} expired row(s): log=${result.txLogCompleted + result.txLogIncomplete} outbox=${result.outbox} inbox=${result.inbox} participant=${result.participantState} vrc=${result.vrcCeremonies} hooks=${Object.values(hooks).reduce((a, b) => a + b, 0)}`);
     }
 
     return result;

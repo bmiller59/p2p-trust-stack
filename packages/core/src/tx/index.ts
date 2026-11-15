@@ -33,6 +33,7 @@ export type {
   LayerReceipt,
   LogEntry,
   TransactionResult,
+  CoordinatorOutcome,
   Enlisted,
   StatusEvent,
   CompensationHandler,

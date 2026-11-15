@@ -45,6 +45,11 @@ export interface BoundaryAdapterOptions {
   handlers?: readonly BoundaryHandler[];
   name?: string;
   strictness?: Strictness;
+  /**
+   * Builds the duplicate record. `reset` starts from empty; `restart` must see what the previous
+   * instance wrote (a durable store over the same database). Default: in memory, which loses everything.
+   */
+  guardFactory?: (kind: "reset" | "restart") => ReplayGuard;
 }
 
 const uuid = (seed: string): string => {
@@ -60,7 +65,8 @@ export class BoundaryAdapter implements Adapter {
   private readonly strictness: Strictness;
   private pipeline: Pipeline;
   private nowMs: number | undefined;
-  private guard: ReplayGuard = new InMemoryReplayGuard();
+  private guard: ReplayGuard;
+  private readonly guardFactory: (kind: "reset" | "restart") => ReplayGuard;
   private handled = 0;
   private counter = 0;
   private readonly states = new Map<string, LifecycleState>();
@@ -72,6 +78,8 @@ export class BoundaryAdapter implements Adapter {
     this.handlers = new Map((options.handlers ?? []).map((h) => [h.spec.typeUri, h]));
     this.name = options.name ?? "truststackers-boundary";
     this.strictness = options.strictness ?? "strict";
+    this.guardFactory = options.guardFactory ?? (() => new InMemoryReplayGuard());
+    this.guard = this.guardFactory("reset");
     this.pipeline = this.buildPipeline();
   }
 
@@ -141,10 +149,13 @@ export class BoundaryAdapter implements Adapter {
     throw new Error("not implemented: no IUT-initiated ceremonies before P6");
   }
   async restart(): Promise<void> {
-    throw new Error("not implemented: the duplicate record is in memory until P3");
+    // A new process: the pipeline and the guard object are rebuilt; whatever the guard persisted stays,
+    // the handled counter (observable state of the effects) is not touched.
+    this.guard = this.guardFactory("restart");
+    this.pipeline = this.buildPipeline();
   }
   async reset(): Promise<void> {
-    this.guard = new InMemoryReplayGuard();
+    this.guard = this.guardFactory("reset");
     this.pipeline = this.buildPipeline();
     this.handled = 0;
     this.counter = 0;

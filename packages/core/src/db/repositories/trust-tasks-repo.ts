@@ -29,6 +29,18 @@ export interface TrustTaskRow {
   replicatedAt: number | null;
   createdAt: number | null;
   updatedAt: number | null;
+  /** Columns of migration 0021 (nullable; written by the attestation phase, not by the P3 store). */
+  rawDocument: string | null;
+  digest: string | null;
+  taskDigest: string | null;
+  /** Epoch milliseconds. */
+  issuedAt: number | null;
+  expiresAt: number | null;
+  inReplyTo: string | null;
+  errorCode: string | null;
+  disposition: string | null;
+  verifiedSigner: string | null;
+  lifecycle: string | null;
 }
 
 export interface RecordTrustTaskInput {
@@ -44,6 +56,17 @@ export interface RecordTrustTaskInput {
   proof?: unknown;
   status?: string;
   recordedByNode?: string;
+  /** Verbatim bytes received (never for a body refused before proof verification: plan 3.7). */
+  rawDocument?: string;
+  digest?: string;
+  taskDigest?: string;
+  issuedAt?: number;
+  expiresAt?: number;
+  inReplyTo?: string;
+  errorCode?: string;
+  disposition?: string;
+  verifiedSigner?: string;
+  lifecycle?: string;
 }
 
 interface RawRow {
@@ -61,7 +84,20 @@ interface RawRow {
   replicated_at: number | null;
   created_at: number | null;
   updated_at: number | null;
+  raw_document: string | null;
+  digest: string | null;
+  task_digest: string | null;
+  issued_at: number | string | null;
+  expires_at: number | string | null;
+  in_reply_to: string | null;
+  error_code: string | null;
+  disposition: string | null;
+  verified_signer: string | null;
+  lifecycle: string | null;
 }
+
+/** A 64-bit column may come back as a string from a Postgres-dialect driver. */
+const num = (v: number | string | null | undefined): number | null => (v === null || v === undefined ? null : Number(v));
 
 function rowToTrustTask(row: RawRow): TrustTaskRow {
   return {
@@ -79,6 +115,16 @@ function rowToTrustTask(row: RawRow): TrustTaskRow {
     replicatedAt: row.replicated_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    rawDocument: row.raw_document ?? null,
+    digest: row.digest ?? null,
+    taskDigest: row.task_digest ?? null,
+    issuedAt: num(row.issued_at),
+    expiresAt: num(row.expires_at),
+    inReplyTo: row.in_reply_to ?? null,
+    errorCode: row.error_code ?? null,
+    disposition: row.disposition ?? null,
+    verifiedSigner: row.verified_signer ?? null,
+    lifecycle: row.lifecycle ?? null,
   };
 }
 
@@ -90,8 +136,10 @@ export async function record(db: DataSource, input: RecordTrustTaskInput): Promi
   await db.run(
     `INSERT INTO trust_tasks
        (uuid, thread_id, type, direction, issuer_did, recipient_did, parent_thread_id,
-        payload, proof, status, recorded_by_node, replicated_at, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        payload, proof, status, recorded_by_node, replicated_at, created_at, updated_at,
+        raw_document, digest, task_digest, issued_at, expires_at, in_reply_to, error_code,
+        disposition, verified_signer, lifecycle)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     input.uuid,
     input.threadId,
     input.type,
@@ -106,6 +154,16 @@ export async function record(db: DataSource, input: RecordTrustTaskInput): Promi
     null,
     now,
     now,
+    input.rawDocument ?? null,
+    input.digest ?? null,
+    input.taskDigest ?? null,
+    input.issuedAt ?? null,
+    input.expiresAt ?? null,
+    input.inReplyTo ?? null,
+    input.errorCode ?? null,
+    input.disposition ?? null,
+    input.verifiedSigner ?? null,
+    input.lifecycle ?? null,
   );
   return (await findByUuid(db, input.uuid))!;
 }

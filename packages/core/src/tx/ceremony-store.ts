@@ -27,6 +27,10 @@ export interface CeremonyProposal {
   proposalHash: string;
   parentCommunityDid: string | null;
   errorReason: string | null;
+  /** Standard Trust Task error code of a failure (conformance P3 column; null until P5 records it). */
+  errorCode?: string | null;
+  /** Whether a resend may succeed after that failure; null when no failure code is recorded. */
+  retryable?: boolean | null;
   createdAt: number;
   crystallizedAt: number | null;
 }
@@ -112,6 +116,13 @@ export class CeremonyStore {
     }
   }
 
+  /** Record the standard error code and retryability of a failed proposal (additive columns). */
+  async recordFailure(proposalId: string, errorCode: string, retryable: boolean): Promise<void> {
+    await this.ds.run(
+      `UPDATE ceremony_proposals SET error_code = ?, retryable = ? WHERE proposal_id = ?`,
+      errorCode, retryable ? 1 : 0, proposalId);
+  }
+
   async addAdminDid(proposalId: string, adminDid: string): Promise<void> {
     const prop = await this.getProposal(proposalId);
     if (!prop) throw new Error(`proposal ${proposalId} not found`);
@@ -160,7 +171,7 @@ export class CeremonyStore {
 
 // ── Internal row mapping ─────────────────────────────────────────────
 
-interface RawProposal { proposal_id: string; proposer_did: string; vtc_did: string; name: string; kind: string; admin_dids: string; threshold: number; expires_at: number; status: string; proposal_hash: string; parent_community_did: string | null; created_at: number; crystallized_at: number | null; proposer_uuid: string | null; admin_uuids: string | null; error_reason: string | null; }
+interface RawProposal { proposal_id: string; proposer_did: string; vtc_did: string; name: string; kind: string; admin_dids: string; threshold: number; expires_at: number; status: string; proposal_hash: string; parent_community_did: string | null; created_at: number; crystallized_at: number | null; proposer_uuid: string | null; admin_uuids: string | null; error_reason: string | null; error_code?: string | null; retryable?: number | null; }
 function mapProposal(row: RawProposal): CeremonyProposal {
   return {
     proposalId: row.proposal_id, proposerDid: row.proposer_did, vtcDid: row.vtc_did,
@@ -171,6 +182,8 @@ function mapProposal(row: RawProposal): CeremonyProposal {
     proposalHash: row.proposal_hash, parentCommunityDid: row.parent_community_did,
     proposerUuid: row.proposer_uuid,
     errorReason: row.error_reason,
+    errorCode: row.error_code ?? null,
+    retryable: row.retryable === null || row.retryable === undefined ? null : Number(row.retryable) === 1,
     createdAt: row.created_at, crystallizedAt: row.crystallized_at,
   };
 }
