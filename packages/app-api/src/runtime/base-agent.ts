@@ -150,6 +150,9 @@ import { DidResolver } from '@p2p-trust-stack/core/did/did-resolver.js';
 import { HttpRotationLogSource, LocalRotationLogSource } from '@p2p-trust-stack/core/did/rotation-log-source.js';
 import { installBoundarySigner, createLocalKeyResolver } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/install.js';
 import { DidProofVerifier } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/verify.js';
+import { boundaryKeyModeRequested, installProcessBoundarySigner, resolveBoundaryProcessKeyConfig } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/key-custody.js';
+import { keyPolicyOf } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/key-config.js';
+import { formatBoundaryEvent } from '@p2p-trust-stack/core/services/trust-tasks/boundary/process-config.js';
 import { rotationEntryToJson, type RotationEntryJson } from '@p2p-trust-stack/core/did/rotation-entry-codec.js';
 import { registerMaterializer } from '@p2p-trust-stack/core/exchange/index.js';
 import { ExchangeEngine } from '@p2p-trust-stack/core/exchange/index.js';
@@ -1131,7 +1134,18 @@ export abstract class BaseAgent implements AgentHandle {
       return;
     }
     if (config === null) return;
-    this.ensureBoundarySigner();
+    if (boundaryKeyModeRequested(process.env)) {
+      // Dedicated boundary key (gate G2): fail closed. A missing, unreadable or unpublished key means
+      // NO listener and NO signer, never a quiet fall back to #key-1.
+      try {
+        await this.installDedicatedBoundarySigner();
+      } catch (err) {
+        logger.error(formatBoundaryEvent('listener.refused', { reason: (err as Error)?.message, keyMode: 'dedicated' }));
+        return;
+      }
+    } else {
+      this.ensureBoundarySigner();
+    }
     if (!this._txBootstrap || !this._vrcReceiveParticipant || !this._witnessShareParticipant || !this.db) {
       logger.error('[Agent] Trust Task listener not started: the transaction coordinator or the VRC participant is not ready');
       return;
@@ -1151,6 +1165,31 @@ export abstract class BaseAgent implements AgentHandle {
       });
     } catch (err) {
       logger.error(`[Agent] Trust Task listener not started: ${(err as Error)?.message}`);
+    }
+  }
+
+  /**
+   * Install the dedicated-key boundary signer: the key comes from the agent's own encrypted keystore
+   * (generation `BOUNDARY_KEY_GENERATION`), under the agent passphrase, and must be the key the
+   * identifier's own document publishes at `#key-boundary`. Throws on any failure.
+   */
+  private async installDedicatedBoundarySigner(): Promise<void> {
+    if (!this.identity?.signingKeyPair || !this.identity.did) throw new Error('the agent identity is not loaded');
+    const self = this;
+    const keystore = new SqliteKeyStore(this.registry.getKeystorePath(this.name));
+    try {
+      const out = await installProcessBoundarySigner({
+        env: process.env,
+        did: this.identity.did,
+        didDocument: this.identity.didDocument,
+        keys: () => self.identity.signingKeyPair,
+        custody: { store: keystore, passphrase: this.passphrase },
+      });
+      if (out.mode === 'dedicated') {
+        logger.info(formatBoundaryEvent('signer.installed', { keyMode: 'dedicated', generation: out.generation, fingerprint: out.fingerprint, cutoverAt: new Date(out.cutoverAtMs).toISOString() }));
+      }
+    } finally {
+      keystore.close();
     }
   }
 
@@ -4178,11 +4217,17 @@ export abstract class BaseAgent implements AgentHandle {
     if (!this.db) throw new Error('Agent.getBoundaryProofVerifier: agent not started. Call start() first.');
     if (this._boundaryVerifier === undefined) {
       const endpoint = process.env.TRUST_TASKS_ROTATION_LOG_ENDPOINT;
+      // Dedicated key mode (gate G2): resolve did:scid:vh key sets at `proof.created` and apply the
+      // freshness and #key-1 retirement policy. Unset (the default): constructed exactly as before.
+      const dedicated = boundaryKeyModeRequested(process.env) ? resolveBoundaryProcessKeyConfig(process.env).config : undefined;
+      const keyPolicy = dedicated === undefined ? undefined : keyPolicyOf(dedicated);
       this._boundaryVerifier = new DidProofVerifier({
         resolver: createLocalKeyResolver({
           localSource: new LocalRotationLogSource(this.db.rotationLogStore),
           ...(endpoint ? { remoteSource: new HttpRotationLogSource({ endpoint }) } : {}),
+          ...(keyPolicy === undefined ? {} : { timePinned: true }),
         }),
+        ...(keyPolicy === undefined ? {} : { keyPolicy }),
       });
     }
     return this._boundaryVerifier;
@@ -4493,6 +4538,8 @@ export abstract class BaseAgent implements AgentHandle {
    * Task listener starts, because the peer transport that used to install it is built lazily.
    */
   private ensureBoundarySigner(): void {
+    // In the dedicated mode the signer is installed (or refused) by the listener start, never here.
+    if (boundaryKeyModeRequested(process.env)) return;
     if (this.identity?.signingKeyPair && this.identity.did) {
       const self = this;
       const installed = installBoundarySigner({

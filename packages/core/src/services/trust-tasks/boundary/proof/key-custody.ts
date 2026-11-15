@@ -168,3 +168,13 @@ export async function installProcessBoundarySigner(options: ProcessSignerOptions
   if (getBoundarySigner() === undefined) throw new BoundaryKeyError('notPublished', 'the signer was not installed');
   return { mode: 'dedicated', installed: true, generation, fingerprint: boundaryKeyFingerprint(pair.publicKey), cutoverAtMs: config.cutoverAtMs };
 }
+
+/**
+ * True when the environment asks for anything but the default (`TRUST_TASKS_BOUNDARY_KEY` set to a
+ * value other than empty or `key-1`). A misspelling counts as asking, so it reaches the strict
+ * resolution and is refused there instead of being ignored.
+ */
+export function boundaryKeyModeRequested(env: Readonly<Record<string, string | undefined>>): boolean {
+  const v = env.TRUST_TASKS_BOUNDARY_KEY?.trim();
+  return v !== undefined && v !== '' && v !== 'key-1';
+}

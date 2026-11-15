@@ -15,6 +15,7 @@ import type { DidProofVerifier } from '@p2p-trust-stack/core/services/trust-task
 import { getBoundarySigner } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/signer.js';
 import { TrustTaskRecorder } from '@p2p-trust-stack/core/services/trust-tasks/boundary/recorder.js';
 import type { TransactionManager } from '@p2p-trust-stack/core/tx/manager.js';
+import { formatBoundaryEvent, isExposedHost } from '@p2p-trust-stack/core/services/trust-tasks/boundary/process-config.js';
 import { logger } from '@p2p-trust-stack/core/util/logger.js';
 import type { VrcReceiveParticipant } from '../tx/vrc-receive-participant.js';
 import type { WitnessShareParticipant } from '../tx/witness-share-participant.js';
@@ -132,13 +133,15 @@ export async function startAgentBoundary(deps: AgentBoundaryDeps): Promise<Agent
     process: (input) => pipeline.process(input),
     onError: (err) => logger.error('[trust-tasks] listener error:', (err as Error)?.message),
   });
-  logger.info(`[trust-tasks] listener on ${listener.host}:${listener.port} (tier ${deps.config.tier}, proposals: ${deps.config.proposePolicy})`);
+  logger.info(formatBoundaryEvent('listener.started', { host: listener.host, port: listener.port, tier: deps.config.tier, proposals: deps.config.proposePolicy, signer: getBoundarySigner()?.at === undefined ? 'key-1' : 'dedicated' }));
+  if (isExposedHost(listener.host)) logger.warn(formatBoundaryEvent('listener.exposed', { host: listener.host, note: 'bound to a non-loopback address' }));
   return {
     propose,
     listener,
     stop: async () => {
       clearInterval(timer);
       await listener.close();
+      logger.info(formatBoundaryEvent('listener.stopped', { port: listener.port }));
     },
   };
 }
