@@ -3,15 +3,17 @@
 
 /**
  * Loads the conformance suite's own runner from the suite folder (it lives beside this repository on
- * the development machine; override with TRUST_CONFORMANCE_SUITE). Where the folder is absent the
+ * the development machine; override with TRUST_CONFORMANCE_SUITE, or export the pinned revision with
+ * scripts/export-conformance-suite.ts: see suite-pin.ts). Where the folder is absent the
  * vector tests are skipped and say so. The vector files themselves are byte copies kept beside the
  * tests (vectors/PROVENANCE.json); only the runner code comes from the suite folder.
  */
 import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveSuiteDir } from './suite-pin.ts';
 
-export const SUITE = process.env.TRUST_CONFORMANCE_SUITE ?? '/srv/dev/code/seas/dtgwg-trust-conformance';
+export const SUITE = resolveSuiteDir();
 export const suitePresent = existsSync(join(SUITE, 'src', 'runner', 'suite.ts'));
 export const VECTORS_DIR = join(dirname(fileURLToPath(import.meta.url)), 'vectors');
 export const SKIP = suitePresent ? false : `conformance suite not found at ${SUITE}`;
