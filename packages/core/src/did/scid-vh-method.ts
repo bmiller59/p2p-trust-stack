@@ -44,7 +44,7 @@ import {
 } from '../crypto/pqc.js';
 import { extractMlDsa65PublicKey } from '../relationship/key-extract.js';
 import { buildDidPeer4Document } from './create.js';
-import { addBoundaryVerificationMethod, carryForwardDocument, carryForwardViolations } from './document-carry-forward.js';
+import { BOUNDARY_VM_ID, addBoundaryVerificationMethod, carryForwardDocument, carryForwardViolations, removeBoundaryVerificationMethod, replaceBoundaryVerificationMethod } from './document-carry-forward.js';
 import { computeRotationEntryDigest, computeNextKeyCommitments, computeNextKeyCommitment } from './rotation-codec.js';
 import { verifyWitnessAttestation } from './witness-attestation.js';
 import type { DidDocument, DidParameters, ServiceEndpoint, VerificationMethod } from './types.js';
@@ -569,6 +569,8 @@ export class ScidVhMethod implements DidMethod {
     mlDsa65KeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
     /** Epoch ms for `createdAt` (default `Date.now()`). */
     now?: number;
+    /** Method ids exempt from the carry-forward check; only ever the dedicated boundary key (rotation, retirement). */
+    allowChange?: readonly string[];
   }): Promise<RotationLogEntry> {
     const { currentLog, identityKeyPair } = params;
     if (currentLog.length === 0) {
@@ -591,7 +593,7 @@ export class ScidVhMethod implements DidMethod {
 
     const draft = structuredClone(prev.didDocument);
     const mutated = params.mutate(draft) ?? draft;
-    const problems = carryForwardViolations(prev.didDocument, mutated);
+    const problems = carryForwardViolations(prev.didDocument, mutated, params.allowChange ?? []);
     if (problems.length > 0) {
       throw new Error(`ScidVhMethod.updateDocument: not a carry-forward of the previous document: ${problems.join('; ')}`);
     }
@@ -658,6 +660,30 @@ export class ScidVhMethod implements DidMethod {
   }): Promise<RotationLogEntry> {
     const { boundaryPublicKey, ...rest } = params;
     return this.updateDocument({ ...rest, mutate: (doc) => { addBoundaryVerificationMethod(doc, boundaryPublicKey); } });
+  }
+
+  /** Replace the key of the published `#key-boundary` method (dedicated-key rotation). Same DID, identity key and `#key-1` untouched. */
+  async rotateBoundaryKey(params: {
+    currentLog: RotationLogEntry[];
+    identityKeyPair: Ed25519KeyPair;
+    boundaryPublicKey: Uint8Array;
+    nextSigningPublicKey?: Uint8Array;
+    mlDsa65KeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
+    now?: number;
+  }): Promise<RotationLogEntry> {
+    const { boundaryPublicKey, ...rest } = params;
+    return this.updateDocument({ ...rest, allowChange: [BOUNDARY_VM_ID], mutate: (doc) => { replaceBoundaryVerificationMethod(doc, boundaryPublicKey); } });
+  }
+
+  /** Remove `#key-boundary` (retirement or cutover rollback): the document returns to `#key-1` only. */
+  async retireBoundaryKey(params: {
+    currentLog: RotationLogEntry[];
+    identityKeyPair: Ed25519KeyPair;
+    nextSigningPublicKey?: Uint8Array;
+    mlDsa65KeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
+    now?: number;
+  }): Promise<RotationLogEntry> {
+    return this.updateDocument({ ...params, allowChange: [BOUNDARY_VM_ID], mutate: (doc) => { removeBoundaryVerificationMethod(doc); } });
   }
 
   /**

@@ -104,19 +104,38 @@ export function addBoundaryVerificationMethod(doc: DidDocument, boundaryPublicKe
 /**
  * Problems that make `next` NOT a carry-forward of `prev` for a metadata-only update: a verification
  * method of `prev` that is missing or whose key or type changed, or a relationship entry lost. An
- * empty list means every earlier method and relationship survives (added ones are fine).
+ * empty list means every earlier method and relationship survives (added ones are fine). `allow` names
+ * method ids exempt from the check (the dedicated boundary key only, for rotation and retirement).
  */
-export function carryForwardViolations(prev: DidDocument, next: DidDocument): string[] {
+export function carryForwardViolations(prev: DidDocument, next: DidDocument, allow: readonly string[] = []): string[] {
   const problems: string[] = [];
   for (const vm of prev.verificationMethod) {
+    if (allow.includes(vm.id)) continue;
     const now = next.verificationMethod.find((v) => v.id === vm.id);
     if (now === undefined) problems.push(`verification method ${vm.id} was removed`);
     else if (now.publicKeyMultibase !== vm.publicKeyMultibase || now.type !== vm.type) problems.push(`verification method ${vm.id} was changed`);
   }
   for (const rel of ['authentication', 'assertionMethod', 'keyAgreement'] as const) {
     for (const ref of prev[rel] ?? []) {
+      if (allow.includes(ref)) continue;
       if (!(next[rel] ?? []).includes(ref)) problems.push(`${ref} was dropped from ${rel}`);
     }
   }
   return problems;
+}
+
+/** Replace the key of the existing `#key-boundary` method (mutates). Throws when absent or when the key is unchanged. */
+export function replaceBoundaryVerificationMethod(doc: DidDocument, boundaryPublicKey: Uint8Array): void {
+  const vm = doc.verificationMethod.find((v) => v.id === BOUNDARY_VM_ID);
+  if (vm === undefined) throw new Error(`replaceBoundaryVerificationMethod: ${BOUNDARY_VM_ID} is not present`);
+  const encoded = encodeEd25519Multikey(boundaryPublicKey);
+  if (vm.publicKeyMultibase === encoded) throw new Error(`replaceBoundaryVerificationMethod: ${BOUNDARY_VM_ID} already holds that key`);
+  vm.publicKeyMultibase = encoded;
+}
+
+/** Remove the `#key-boundary` method and its `authentication` entry (mutates). Throws when absent. */
+export function removeBoundaryVerificationMethod(doc: DidDocument): void {
+  if (!doc.verificationMethod.some((v) => v.id === BOUNDARY_VM_ID)) throw new Error(`removeBoundaryVerificationMethod: ${BOUNDARY_VM_ID} is not present`);
+  doc.verificationMethod = doc.verificationMethod.filter((v) => v.id !== BOUNDARY_VM_ID);
+  doc.authentication = doc.authentication.filter((a) => a !== BOUNDARY_VM_ID);
 }
