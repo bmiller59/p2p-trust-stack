@@ -17,6 +17,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { canonicalJson } from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
 import type { Adapter, SendParams } from "./contract.ts";
+import { signDocument } from "../../../../../src/services/trust-tasks/boundary/proof/signer.ts";
+import type { BoundarySigner } from "../../../../../src/services/trust-tasks/boundary/proof/signer.ts";
+import type { DidProofVerifier } from "../../../../../src/services/trust-tasks/boundary/proof/verify.ts";
 
 export const VECTORS_DIR = join(import.meta.dirname, "..", "vectors");
 
@@ -39,7 +42,7 @@ export interface VectorStep {
     /** `null` means unsigned; the in-process adapter never verifies a proof, so it is ignored. */
     sign?: unknown;
     from?: string | { spoof: string };
-    mutate?: { op: string; bytes?: number; path?: string; value?: unknown }[];
+    mutate?: { op: string; bytes?: number; path?: string; value?: unknown; afterSign?: boolean }[];
     [k: string]: unknown;
   };
   expect?: {
@@ -120,6 +123,13 @@ export interface Env {
   carrier: string;
   carrierPayload: Record<string, unknown>;
   clockStart: string;
+  /**
+   * Signing identities of the suite's actors (A, X). When present, a `carrier.request` is signed as A
+   * unless the step says `sign: null` (the suite's default), and replies are checked as signed at Tier 2.
+   */
+  keys?: { A: BoundarySigner; X: BoundarySigner };
+  /** Verifier for the Tier 2 reply checks (signed by the IUT, purpose, whole seconds). */
+  replyVerifier?: DidProofVerifier;
 }
 
 function substitute(value: unknown, vectorId: string, env: Env, nowMs: number): unknown {
@@ -216,6 +226,25 @@ export function validateReply(text: string, request: Record<string, unknown> | u
   return errs;
 }
 
+const WHOLE_SECOND = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/;
+
+/** Tier 2 reply checks: signed by the IUT under authentication, verifiable under the request's recipient, whole-second times. */
+export async function validateSignedReply(text: string, request: Record<string, unknown>, env: Env, nowMs: number): Promise<string[]> {
+  const errs: string[] = [];
+  const r = parse(text);
+  if (r === undefined) return ["reply is not a JSON object"];
+  if (!isObject(r.proof)) return ["reply is not signed (proof on every response and error)"];
+  if (r.issuer !== request.recipient) errs.push("reply is issued by an identifier other than the request's recipient (RSP-005)");
+  if (r.proof.proofPurpose !== "authentication") errs.push(`reply proofPurpose is ${String(r.proof.proofPurpose)}, expected authentication`);
+  for (const [name, v] of [["issuedAt", r.issuedAt], ["proof.created", r.proof.created], ["expiresAt", r.expiresAt]] as const) {
+    if (v !== undefined && !(typeof v === "string" && WHOLE_SECOND.test(v))) errs.push(`${name} is not a whole-second UTC timestamp: ${String(v)}`);
+  }
+  const verdict = await env.replyVerifier!.verify(r, { nowMs });
+  if (!verdict.valid) errs.push(`reply proof does not verify: ${verdict.failure ?? ""} ${verdict.detail ?? ""}`);
+  else if (verdict.signer !== request.recipient) errs.push("reply proof does not verify under the request's recipient (RSP-005)");
+  return errs;
+}
+
 export interface Outcome {
   pass: boolean;
   failures: string[];
@@ -262,8 +291,23 @@ export async function runVector(adapter: Adapter, file: VectorFile, vector: Vect
           if (isObject(v) && v["$omit"] === true) delete doc[k];
           else doc[k] = substitute(v, vector.id, env, nowMs);
         }
+        const setAt = (target: Record<string, unknown>, path: string, value: unknown): void => {
+          const segs = path.split("/").slice(1);
+          let cur: Record<string, unknown> = target;
+          for (const seg of segs.slice(0, -1)) cur = cur[seg] as Record<string, unknown>;
+          cur[segs[segs.length - 1]!] = substitute(value, vector.id, env, nowMs);
+        };
+        for (const m of (send.mutate ?? []).filter((x) => x.op === "set" && x.afterSign !== true)) setAt(doc, m.path!, m.value);
+        if (env.keys !== undefined && send.sign !== null) {
+          const how = isObject(send.sign) ? send.sign : {};
+          const who = how.as === "X" ? env.keys.X : env.keys.A;
+          const created = typeof how.created === "string" ? nowMs + offsetMs(how.created) : nowMs;
+          doc = signDocument(doc, who, { created, ...(typeof how.purpose === "string" ? { purpose: how.purpose } : {}), allowIssuerMismatch: how.allowIssuerMismatch === true });
+        }
+        for (const m of (send.mutate ?? []).filter((x) => x.op === "set" && x.afterSign === true)) setAt(doc, m.path!, m.value);
         bytes = JSON.stringify(doc);
         for (const m of send.mutate ?? []) {
+          if (m.op === "set") continue;
           if (m.op !== "truncate") throw new Error(`unsupported mutation ${m.op}`);
           bytes = bytes.slice(0, Math.max(0, bytes.length - (m.bytes ?? 1)));
         }
@@ -282,6 +326,9 @@ export async function runVector(adapter: Adapter, file: VectorFile, vector: Vect
       const prevReplies = previous?.replies;
       previous = { doc, replies: result.replies };
       for (const reply of result.replies) for (const e of validateReply(reply, doc, env, from.kind === "none" ? undefined : from.vid)) failures.push(`${label}: ${e}`);
+      if (vector.tier === 2 && env.replyVerifier !== undefined) {
+        for (const reply of result.replies) for (const e of await validateSignedReply(reply, doc, env, nowMs)) failures.push(`${label}: ${e}`);
+      }
 
       const first = result.replies[0] === undefined ? undefined : parse(result.replies[0]);
       const typeOf = typeof first?.type === "string" ? first.type : "";

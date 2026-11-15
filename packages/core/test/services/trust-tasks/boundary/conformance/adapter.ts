@@ -15,6 +15,8 @@ import { createHash } from "node:crypto";
 import { Pipeline } from "../../../../../src/services/trust-tasks/boundary/pipeline.ts";
 import type { PipelineHandler } from "../../../../../src/services/trust-tasks/boundary/handlers.ts";
 import type { Strictness } from "../../../../../src/services/trust-tasks/boundary/pipeline.ts";
+import type { DidProofVerifier } from "../../../../../src/services/trust-tasks/boundary/proof/verify.ts";
+import type { BoundarySigner } from "../../../../../src/services/trust-tasks/boundary/proof/signer.ts";
 import { InMemoryReplayGuard } from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
 import type { ReplayGuard, SpecPolicy, TrustTaskDocument } from "../../../../../src/services/trust-tasks/boundary/runtime.ts";
 import { transition } from "../../../../../src/services/trust-tasks/boundary/lifecycle.ts";
@@ -50,6 +52,9 @@ export interface BoundaryAdapterOptions {
    * instance wrote (a durable store over the same database). Default: in memory, which loses everything.
    */
   guardFactory?: (kind: "reset" | "restart") => ReplayGuard;
+  /** Proof verification (P4). Tier 2 is the `attested` profile; it needs `signer` too. */
+  proof?: { verifier: DidProofVerifier; tier?: 1 | 2 };
+  signer?: BoundarySigner;
 }
 
 const uuid = (seed: string): string => {
@@ -67,6 +72,8 @@ export class BoundaryAdapter implements Adapter {
   private nowMs: number | undefined;
   private guard: ReplayGuard;
   private readonly guardFactory: (kind: "reset" | "restart") => ReplayGuard;
+  private readonly proofOptions: BoundaryAdapterOptions["proof"];
+  private readonly signer: BoundarySigner | undefined;
   private handled = 0;
   private counter = 0;
   private readonly states = new Map<string, LifecycleState>();
@@ -79,6 +86,8 @@ export class BoundaryAdapter implements Adapter {
     this.name = options.name ?? "truststackers-boundary";
     this.strictness = options.strictness ?? "strict";
     this.guardFactory = options.guardFactory ?? (() => new InMemoryReplayGuard());
+    this.proofOptions = options.proof;
+    this.signer = options.signer;
     this.guard = this.guardFactory("reset");
     this.pipeline = this.buildPipeline();
   }
@@ -104,7 +113,7 @@ export class BoundaryAdapter implements Adapter {
         }
       },
     }));
-    return new Pipeline({ handlers, servedVids: this.served, guard: this.guard, now: () => this.now(), newId: () => this.newId(), strictness: this.strictness });
+    return new Pipeline({ handlers, servedVids: this.served, guard: this.guard, now: () => this.now(), newId: () => this.newId(), strictness: this.strictness, ...(this.proofOptions === undefined ? {} : { proof: this.proofOptions }), ...(this.signer === undefined ? {} : { signer: this.signer }) });
   }
 
   private now(): number {
@@ -118,12 +127,12 @@ export class BoundaryAdapter implements Adapter {
     return {
       name: this.name,
       version: "0.0.0-p0",
-      tierMax: 1,
+      tierMax: this.proofOptions?.tier ?? 1,
       bindings: ["in-process"],
       supportedTypes: [...this.handlers.keys()],
       carriers: [...this.handlers.values()].flatMap((h) => (h.carrier ? [h.carrier] : [])),
-      cryptosuites: [],
-      optional: ["clock"],
+      cryptosuites: this.proofOptions === undefined ? [] : ["eddsa-jcs-2022"],
+      optional: this.proofOptions === undefined ? ["clock"] : ["clock", "proofVerify", ...(this.proofOptions.tier === 2 ? ["attested"] : [])],
       pins: { framework: FRAMEWORK_VERSION, error: ERROR_SPEC_VERSION, binding: "none" },
     };
   }
@@ -188,8 +197,19 @@ export class BoundaryAdapter implements Adapter {
     }
   }
 
-  async verifyProof(_params: { bytes: string }): Promise<ProofVerifyResult> {
-    throw new Error("not implemented: the DID-resolving verifier lands in P4");
+  async verifyProof(params: { bytes: string }): Promise<ProofVerifyResult> {
+    if (this.proofOptions === undefined) throw new Error("not implemented: no verifier configured");
+    let doc: unknown;
+    try {
+      doc = JSON.parse(params.bytes);
+    } catch {
+      return { valid: false };
+    }
+    try {
+      return { valid: (await this.proofOptions.verifier.verify(doc, { nowMs: this.now() })).valid };
+    } catch {
+      return { valid: false };
+    }
   }
 
   async send(params: SendParams): Promise<SendResult> {

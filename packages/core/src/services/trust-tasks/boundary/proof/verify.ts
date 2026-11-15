@@ -82,26 +82,19 @@ export interface DidProofVerifierOptions {
 
 export class DidProofVerifier {
   private readonly resolver: KeyResolver;
-  private readonly verdicts = new WeakMap<object, ProofVerdict>();
 
   constructor(options: DidProofVerifierOptions) {
     this.resolver = options.resolver;
   }
 
-  /** The verdict of the last verification of exactly this document object (for the pipeline). */
-  verdictFor(doc: object): ProofVerdict | undefined {
-    return this.verdicts.get(doc);
-  }
-
-  /** A registry-runtime `ProofVerifier` bound to a context (the pipeline builds one per document). */
-  forContext(context: VerifyContext): ProofVerifier {
-    return {
-      verify: async <P>(doc: TrustTaskDocument<P>): Promise<boolean> => {
-        const verdict = await this.verify(doc, context);
-        this.verdicts.set(doc as object, verdict);
-        return verdict.valid;
-      },
-    };
+  /**
+   * A registry-runtime `ProofVerifier` bound to one document's context (the pipeline builds one per
+   * request). It remembers what happened, because the runtime reports any verifier failure as
+   * `proofInvalid`: an `unavailable` (resolution could not be completed) is kept here so the
+   * pipeline can answer it as such.
+   */
+  forContext(context: VerifyContext): BoundProofVerifier {
+    return new BoundProofVerifier(this, context);
   }
 
   /** Verify the proof on a document. Throws `TaskError` `unavailable` when a key set could not be obtained. */
@@ -179,5 +172,32 @@ export class DidProofVerifier {
       keySource: keySet.source,
       ...(createdMs === undefined ? {} : { createdMs }),
     };
+  }
+}
+
+export class BoundProofVerifier implements ProofVerifier {
+  private readonly parent: DidProofVerifier;
+  private readonly context: VerifyContext;
+  /** The verdict, once the runtime has called `verify`. */
+  verdict: ProofVerdict | undefined;
+  /** Set when a key set could not be obtained: not a verdict on the proof. */
+  unavailable: TaskError | undefined;
+
+  constructor(parent: DidProofVerifier, context: VerifyContext) {
+    this.parent = parent;
+    this.context = context;
+  }
+
+  async verify<P>(doc: TrustTaskDocument<P>): Promise<boolean> {
+    try {
+      this.verdict = await this.parent.verify(doc, this.context);
+      return this.verdict.valid;
+    } catch (err) {
+      if (err instanceof TaskError) {
+        this.unavailable = err;
+        return false;
+      }
+      throw err;
+    }
   }
 }
