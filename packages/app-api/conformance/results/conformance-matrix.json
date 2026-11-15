@@ -1,0 +1,469 @@
+{
+  "format": "tt-conformance-matrix/0.1",
+  "families": [
+    "ceremony-doc",
+    "dtg-credential-exchange",
+    "dtg-task-consent",
+    "framework",
+    "https-binding",
+    "trust-task-discovery",
+    "two-phase-commit",
+    "vrc-issue",
+    "vrc-propose",
+    "vrc-witness-share"
+  ],
+  "rows": [
+    {
+      "window": {
+        "maxAgeSeconds": 300,
+        "clockSkewSeconds": 60,
+        "expiryHorizonSeconds": 2592000
+      },
+      "windowDifference": [],
+      "windowSkipped": [],
+      "clockMode": "set",
+      "clockSkipped": [],
+      "impl": "truststackers-agent-didkey",
+      "tier": 2,
+      "tiers": [
+        1,
+        2
+      ],
+      "runs": [
+        "truststackers-agent-didkey-attested@1",
+        "truststackers-agent-didkey-attested@2",
+        "truststackers-agent-didkey-tier1@1",
+        "truststackers-agent-didkey-tier1@2"
+      ],
+      "families": {
+        "ceremony-doc": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 8,
+            "FAIL": 0,
+            "SKIP": 1,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 7
+          },
+          "anchors": {
+            "pass": 5,
+            "ran": 5,
+            "total": 6
+          },
+          "green": true
+        },
+        "dtg-credential-exchange": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 12,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          },
+          "anchors": {
+            "pass": 1,
+            "ran": 1,
+            "total": 1
+          },
+          "green": true
+        },
+        "dtg-task-consent": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 14,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 4
+          },
+          "anchors": {
+            "pass": 3,
+            "ran": 3,
+            "total": 3
+          },
+          "green": true
+        },
+        "framework": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 111,
+            "FAIL": 0,
+            "SKIP": 7,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 12
+          },
+          "anchors": {
+            "pass": 40,
+            "ran": 40,
+            "total": 42
+          },
+          "green": true
+        },
+        "https-binding": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 7,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          },
+          "anchors": {
+            "pass": 7,
+            "ran": 7,
+            "total": 7
+          },
+          "green": true
+        },
+        "trust-task-discovery": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 15,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 2
+          },
+          "anchors": {
+            "pass": 13,
+            "ran": 13,
+            "total": 13
+          },
+          "green": true
+        },
+        "two-phase-commit": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 6,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 2
+          },
+          "anchors": {
+            "pass": 5,
+            "ran": 5,
+            "total": 5
+          },
+          "green": true
+        },
+        "vrc-issue": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 19,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          },
+          "anchors": {
+            "pass": 16,
+            "ran": 16,
+            "total": 16
+          },
+          "green": true
+        },
+        "vrc-propose": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 20,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          },
+          "anchors": {
+            "pass": 5,
+            "ran": 5,
+            "total": 5
+          },
+          "green": true
+        },
+        "vrc-witness-share": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 27,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 2
+          },
+          "anchors": {
+            "pass": 26,
+            "ran": 26,
+            "total": 26
+          },
+          "green": true
+        }
+      },
+      "subgroups": {
+        "profile-witness-share": {
+          "PASS": 8,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "attested": {
+          "PASS": 23,
+          "FAIL": 0,
+          "SKIP": 1,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-p384": {
+          "PASS": 0,
+          "FAIL": 0,
+          "SKIP": 2,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-window": {
+          "PASS": 20,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-ceremony": {
+          "PASS": 8,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        }
+      },
+      "advisories": [],
+      "needsNonAttestedRun": [
+        "DUP-103"
+      ]
+    },
+    {
+      "window": {
+        "maxAgeSeconds": 300,
+        "clockSkewSeconds": 60,
+        "expiryHorizonSeconds": 2592000
+      },
+      "windowDifference": [],
+      "windowSkipped": [],
+      "clockMode": "set",
+      "clockSkipped": [],
+      "impl": "truststackers-agent-scidvh",
+      "tier": 2,
+      "tiers": [
+        1,
+        2
+      ],
+      "runs": [
+        "truststackers-agent-scidvh-attested@1",
+        "truststackers-agent-scidvh-attested@2",
+        "truststackers-agent-scidvh-tier1@1",
+        "truststackers-agent-scidvh-tier1@2"
+      ],
+      "families": {
+        "ceremony-doc": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 8,
+            "FAIL": 0,
+            "SKIP": 1,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 7
+          },
+          "anchors": {
+            "pass": 5,
+            "ran": 5,
+            "total": 6
+          },
+          "green": true
+        },
+        "dtg-credential-exchange": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 12,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          },
+          "anchors": {
+            "pass": 1,
+            "ran": 1,
+            "total": 1
+          },
+          "green": true
+        },
+        "dtg-task-consent": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 14,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 4
+          },
+          "anchors": {
+            "pass": 3,
+            "ran": 3,
+            "total": 3
+          },
+          "green": true
+        },
+        "framework": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 111,
+            "FAIL": 0,
+            "SKIP": 7,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 12
+          },
+          "anchors": {
+            "pass": 40,
+            "ran": 40,
+            "total": 42
+          },
+          "green": true
+        },
+        "https-binding": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 7,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          },
+          "anchors": {
+            "pass": 7,
+            "ran": 7,
+            "total": 7
+          },
+          "green": true
+        },
+        "trust-task-discovery": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 15,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 2
+          },
+          "anchors": {
+            "pass": 13,
+            "ran": 13,
+            "total": 13
+          },
+          "green": true
+        },
+        "two-phase-commit": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 6,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 2
+          },
+          "anchors": {
+            "pass": 5,
+            "ran": 5,
+            "total": 5
+          },
+          "green": true
+        },
+        "vrc-issue": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 19,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          },
+          "anchors": {
+            "pass": 16,
+            "ran": 16,
+            "total": 16
+          },
+          "green": true
+        },
+        "vrc-propose": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 20,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 6
+          },
+          "anchors": {
+            "pass": 5,
+            "ran": 5,
+            "total": 5
+          },
+          "green": true
+        },
+        "vrc-witness-share": {
+          "status": "PASS",
+          "counts": {
+            "PASS": 27,
+            "FAIL": 0,
+            "SKIP": 0,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 2
+          },
+          "anchors": {
+            "pass": 26,
+            "ran": 26,
+            "total": 26
+          },
+          "green": true
+        }
+      },
+      "subgroups": {
+        "profile-witness-share": {
+          "PASS": 8,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "attested": {
+          "PASS": 23,
+          "FAIL": 0,
+          "SKIP": 1,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-p384": {
+          "PASS": 0,
+          "FAIL": 0,
+          "SKIP": 2,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-window": {
+          "PASS": 20,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        },
+        "profile-ceremony": {
+          "PASS": 8,
+          "FAIL": 0,
+          "SKIP": 0,
+          "KNOWN-FAIL": 0,
+          "CLARIFY": 0
+        }
+      },
+      "advisories": [],
+      "needsNonAttestedRun": [
+        "DUP-103"
+      ]
+    }
+  ]
+}
