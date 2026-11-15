@@ -5,6 +5,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { DataSource } from './data-source.js';
 import { getMigrationsDir } from './migrations-dir.js';
+import { maxRecordedVersion, schemaVersionFilename } from './schema-version.js';
 
 async function ensureLedger(ds: DataSource): Promise<void> {
   await ds.exec(`
@@ -33,20 +34,22 @@ function readExpectedVersion(migrationsDir: string): number {
 }
 
 async function getRecordedVersion(ds: DataSource): Promise<number | undefined> {
-  const row = await ds.get<{ filename: string }>(
-    "SELECT filename FROM schema_migrations WHERE filename LIKE '__schema_version__:%'",
+  const rows = await ds.all<{ filename: string }>(
+    "SELECT filename FROM schema_migrations WHERE filename LIKE '\\_\\_schema\\_version\\_\\_:%' ESCAPE '\\'",
   );
-  if (!row) return undefined;
-  const parts = row.filename.split(':');
-  const v = parseInt(parts[1], 10);
-  return isNaN(v) ? undefined : v;
+  return maxRecordedVersion(rows.map((r) => r.filename));
 }
 
 async function setRecordedVersion(ds: DataSource, version: number): Promise<void> {
   const now = Math.floor(Date.now() / 1000);
+  const current = schemaVersionFilename(version);
+  await ds.run(
+    "DELETE FROM schema_migrations WHERE filename LIKE '\\_\\_schema\\_version\\_\\_:%' ESCAPE '\\' AND filename <> ?",
+    current,
+  );
   await ds.run(
     "INSERT INTO schema_migrations (filename, applied_at) VALUES (?, ?) ON CONFLICT (filename) DO UPDATE SET applied_at = ?",
-    `__schema_version__:${version}`, now, now,
+    current, now, now,
   );
 }
 
