@@ -43,7 +43,8 @@ export type ProofFailure =
   | 'issuerMismatch'
   | 'keyNotListed'
   | 'unresolvableIssuer'
-  | 'signatureInvalid';
+  | 'signatureInvalid'
+  | 'createdOutOfBounds';
 
 export interface ProofVerdict {
   readonly valid: boolean;
@@ -76,15 +77,48 @@ function refuse(failure: ProofFailure, detail: string, extra: Partial<ProofVerdi
   return { valid: false, failure, detail, ...extra };
 }
 
+/**
+ * The dedicated-boundary-key policy (gate G2, K5). Absent by default: the verifier then behaves as
+ * before (no lower bound on `created`, `#key-1` always accepted where listed).
+ *
+ * When present:
+ *  - `proof.created` is REQUIRED and must be within `[now - maxProofAgeMs, now + skew]` of the
+ *    verifier's OWN clock. `created` is signer-asserted; this bound is what stops a backdated
+ *    `created` from making a retired key look current. A `#key-1` proof made after the cutover and
+ *    backdated to before it is accepted only while `now - cutover <= maxProofAgeMs`; after that no
+ *    `#key-1` proof can pass. To re-verify a STORED document later, pass the time the document was
+ *    received as `nowMs`, not the current time.
+ *  - the key set is resolved AT `created` (a time-pinned resolver is expected; see
+ *    `TimePinnedKeyResolver`), so a key added by a later log entry does not verify earlier documents.
+ *  - when `cutoverAtMs` is set and the proof is `created >= cutoverAtMs`, `#key-1` is refused for an
+ *    identifier whose key set at `created` lists the dedicated `#key-boundary` under the proof's
+ *    purpose. An identifier without a dedicated key (did:peer:4 before its next provisioning, a
+ *    server not yet updated) keeps `#key-1`: the policy never leaves an identifier with no signer.
+ */
+export interface BoundaryKeyPolicy {
+  /** Oldest `created` accepted, as an age. Default 600000 (10 minutes). */
+  maxProofAgeMs?: number;
+  /** `BOUNDARY_KEY_CUTOVER_AT`, epoch ms. Unset: `#key-1` is never retired. */
+  cutoverAtMs?: number;
+}
+
+export const DEFAULT_MAX_PROOF_AGE_MS = 600_000;
+/** The key every identifier signed with before the dedicated one (see `BOUNDARY_KEY_FRAGMENT`). */
+const LEGACY_FRAGMENT = 'key-1';
+const DEDICATED_FRAGMENT = 'key-boundary';
+
 export interface DidProofVerifierOptions {
   resolver: KeyResolver;
+  keyPolicy?: BoundaryKeyPolicy;
 }
 
 export class DidProofVerifier {
   private readonly resolver: KeyResolver;
+  private readonly keyPolicy: BoundaryKeyPolicy | undefined;
 
   constructor(options: DidProofVerifierOptions) {
     this.resolver = options.resolver;
+    this.keyPolicy = options.keyPolicy;
   }
 
   /**
@@ -117,6 +151,12 @@ export class DidProofVerifier {
       createdMs = typeof proof.created === 'string' ? parseDateTimeStamp(proof.created) : undefined;
       if (createdMs === undefined) return refuse('malformedProof', 'proof.created');
       if (createdMs > context.nowMs + skew) return refuse('malformedProof', 'proof.created is in the future');
+    }
+    const policy = this.keyPolicy;
+    if (policy !== undefined) {
+      if (createdMs === undefined) return refuse('createdOutOfBounds', 'proof.created is required', { purpose });
+      const maxAge = Math.max(0, policy.maxProofAgeMs ?? DEFAULT_MAX_PROOF_AGE_MS);
+      if (createdMs < context.nowMs - maxAge) return refuse('createdOutOfBounds', 'proof.created is older than the freshness bound', { purpose, createdMs });
     }
     if (proof.expires !== undefined) {
       const at = typeof proof.expires === 'string' ? parseDateTimeStamp(proof.expires) : undefined;
@@ -158,6 +198,12 @@ export class DidProofVerifier {
     const key = keySet.keys.find((k) => k.fragment === fragment);
     if (key === undefined) return refuse('keyNotListed', 'the key is not a verification method of the issuer', { purpose });
     if (!key.relationships.includes(purpose)) return refuse('keyNotListed', `the key is not listed under ${purpose}`, { purpose });
+    if (
+      policy?.cutoverAtMs !== undefined && createdMs !== undefined && createdMs >= policy.cutoverAtMs && fragment === LEGACY_FRAGMENT &&
+      keySet.keys.some((k) => k.fragment === DEDICATED_FRAGMENT && k.relationships.includes(purpose))
+    ) {
+      return refuse('keyNotListed', '#key-1 is retired for documents created at or after the cutover', { purpose });
+    }
 
     const { proofValue: _pv, ...config } = proof;
     const { proof: _p, ...body } = doc;
