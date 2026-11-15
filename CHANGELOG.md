@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- The production host of the founding-ceremony documents (`ceremony:propose`, `ceremony:co-sign`,
+  `ceremony:status`, `ceremony:reset`). The ceremony-doc participant (`tx/ceremony-doc-participant`)
+  and handlers (`services/trust-tasks/boundary/ceremony-doc`) now live in core, behind the
+  `CeremonyEffect` seam, so a host other than the agent serves the same rules; `app-api` keeps
+  thin re-exports. `CommunityFoundingEffect` (`services/founding/community-effect`) is the real
+  effect: it maps each named admin DID to an identity (stub identities resolve to the real VTA
+  that shares their DID or key), runs the name check, the parent VTN policy, the crystallization
+  policy and `checkCreateVtc`, then establishes the community through the atomic
+  `vtc-establish` drive and a host-supplied fan-out hook.
+- Approvals by pipeline-verified proof: a boundary co-sign counts as an approval by the proof of
+  the whole document (signer equals issuer). `GovernanceGuard.validateCrystallization` takes an
+  optional `preVerified` approver set and skips the signature-over-the-hash check for those
+  only; a participant built with `requireVerifiedApprovals` refuses any approval that did not
+  come through the boundary handler. The legacy REST and TSP paths are unchanged.
+- `checkCreateVtc`: `createVtc`'s validation as a read-only function (`createVtc` calls it).
+- `CeremonyDocParticipant.reconcile(getOutcome)` finishes prepared transactions after a restart.
+- Conformance adapter option `--ceremony-host real` runs the ceremony vectors through the real
+  effect (default stays the fixture).
+
+### Changed
+- `CeremonyEffect` is now two steps: `check` (at prepare; no writes; a refusal fails the ceremony
+  with its closed reason) and `apply` (at commit; idempotent per ceremony id), plus an optional
+  `checkProposal` for a begin. The approval that completes the quorum is recorded at commit from
+  `tx_participant_state.pending_ops`; an abort leaves nothing. An implementation of the old
+  single `establish` method must be split.
+- `validateCrystallization` treats a value that is not a 64-byte signature as an invalid
+  signature instead of throwing.
+
+### Upgrade notes
+- No schema change, no migration (`pending_ops` already exists).
+- Default behaviour is unchanged: nothing serves the ceremony documents unless a host registers
+  the handlers (the utility server does so only with `TRUST_TASKS_CEREMONY_HOST=1`).
+- A host that registers the handlers must run `reconcile` once at boot and must not register the
+  participant with the shared coordinator registry (it reuses the legacy `ceremony_*` operation names).
+
 ### Changed
 - The packed rotation-log entry reader (`rotation-entry-codec`, now also used by the SQLite
   `RotationLogStore`) fails closed on a damaged or unrecognised trailing block instead of
