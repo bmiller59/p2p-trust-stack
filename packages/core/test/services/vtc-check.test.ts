@@ -32,6 +32,14 @@ async function link(db: SqliteDataSource, a: string, b: string): Promise<void> {
   await relationshipsRepo.create(db, { localIdentityUuid: a, remoteIdentityUuid: b, direction: 'bidirectional', status: 'established' });
 }
 
+/** Row counts of every table: a check that wrote anywhere shows up here. */
+async function snapshot(db: SqliteDataSource): Promise<Record<string, number>> {
+  const tables = await db.all<{ name: string }>("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' ORDER BY name");
+  const out: Record<string, number> = {};
+  for (const { name } of tables) out[name] = (await db.get<{ n: number }>(`SELECT COUNT(*) AS n FROM "${name}"`))!.n;
+  return out;
+}
+
 const count = async (db: SqliteDataSource, table: string): Promise<number> => (await db.get<{ n: number }>(`SELECT COUNT(*) AS n FROM ${table}`))!.n;
 
 test('a passing check resolves the admins and the threshold and writes nothing', async () => {
@@ -39,13 +47,13 @@ test('a passing check resolves the admins and the threshold and writes nothing',
   const a = await admin(db, 'a');
   const b = await admin(db, 'b');
   await link(db, a, b);
-  const before = { identities: await count(db, 'identities'), memberships: await count(db, 'memberships'), governance: await count(db, 'governance') };
+  const before = await snapshot(db);
 
   const checked = await checkCreateVtc(db, { name: 'Check Club', kind: 'vtc', adminIdentityUuids: [a, b], threshold: 2 });
   assert.equal(checked.kind, 'vtc');
   assert.equal(checked.threshold, 2);
   assert.deepEqual(checked.admins.map((x) => x.uuid), [a, b]);
-  assert.deepEqual({ identities: await count(db, 'identities'), memberships: await count(db, 'memberships'), governance: await count(db, 'governance') }, before);
+  assert.deepEqual(await snapshot(db), before, 'no table changed');
 });
 
 test('the check refuses what createVtc refused, with the same error classes', async () => {
@@ -54,14 +62,18 @@ test('the check refuses what createVtc refused, with the same error classes', as
   const b = await admin(db, 'b');
   const noEndpoint = await admin(db, 'stub', { endpoint: false });
   const org = await admin(db, 'org', { kind: 'organization' });
+  const notVta = await identitiesRepo.create(db, { realDid: 'did:example:not-a-vta', role: 'vtc', subjectKind: 'human', name: 'not-a-vta' });
+  await peerEndpointsRepo.upsertForIdentity(db, { identityUuid: notVta, peerId: 'peer-not-a-vta', multiaddrs: ['/ip4/127.0.0.1/tcp/1'] });
   await link(db, a, b);
   await link(db, a, noEndpoint);
   await link(db, a, org);
+  await link(db, a, notVta);
   const cases: Array<[string, Parameters<typeof checkCreateVtc>[1], new (...args: never[]) => Error]> = [
     ['empty name', { name: ' ', adminIdentityUuids: [a] }, CreateVtcValidationError],
     ['no admins', { name: 'X', adminIdentityUuids: [] }, CreateVtcValidationError],
     ['unknown admin', { name: 'X', adminIdentityUuids: ['nope'] }, CreateVtcNotFoundError],
     ['admin without an endpoint', { name: 'X', adminIdentityUuids: [a, noEndpoint] }, CreateVtcValidationError],
+    ['admin that is not a VTA', { name: 'X', adminIdentityUuids: [a, notVta] }, CreateVtcValidationError],
     ['admin not human', { name: 'X', adminIdentityUuids: [a, org] }, CreateVtcValidationError],
     ['no mutual VRC with the creator', { name: 'X', adminIdentityUuids: [b, noEndpoint] }, CreateVtcValidationError],
     ['threshold above the admin count', { name: 'X', adminIdentityUuids: [a, b], threshold: 3 }, CreateVtcValidationError],
@@ -72,6 +84,7 @@ test('the check refuses what createVtc refused, with the same error classes', as
     await assert.rejects(() => createVtc(db, input), cls, `createVtc: ${label}`);
   }
   assert.equal(await count(db, 'memberships'), 0, 'nothing was written by any refusal');
+  assert.equal(await count(db, 'identities'), 5, 'only the five identities the test made');
 });
 
 test('a taken name is a conflict at the check, and createVtc then creates the community when the check passes', async () => {

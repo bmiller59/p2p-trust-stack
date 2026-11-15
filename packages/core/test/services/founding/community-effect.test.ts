@@ -279,3 +279,67 @@ test('the guard is the same one: a stricter guard (policy engine) is honoured by
   const strict = new CommunityFoundingEffect(w.appDb, { guard: new GovernanceGuard(w.appDb, new LocalPolicyEngine()) });
   await assert.doesNotReject(() => strict.checkProposal({ ceremonyId: 'x', proposerDid: A, name: 'X', kind: 'vtc', adminDids: [A, B], threshold: 2, parentCommunityDid: null }));
 });
+
+test('the establishment is atomic: a failure after the community row was written rolls everything back, and the retry after restart creates exactly one', async () => {
+  const w = await world();
+  await begin(w); await approve(w, A);
+  const realRun = w.appDb.run.bind(w.appDb);
+  w.appDb.run = (async (sql: string, ...params: unknown[]) => {
+    if (/INSERT\s+INTO\s+memberships/i.test(sql)) throw new Error('disk full');
+    return realRun(sql, ...params);
+  }) as typeof w.appDb.run;
+  const result = await approve(w, B);
+  assert.equal(result.outcome, 'committed', 'the coordinator decided commit');
+  assert.equal(await communities(w), 0, 'the half-written community was rolled back');
+  assert.equal(await w.participant.inquiry(result.txId), 'prepared', 'the commit stays open for a retry');
+  assert.equal((await status(w)).status, 'pending');
+  w.appDb.run = realRun as typeof w.appDb.run;
+  const again = new CeremonyDocParticipant('ceremony:host', w.txDb, w.effect, { requireVerifiedApprovals: true });
+  assert.deepEqual((await again.reconcile((id) => w.txm.getOutcome(id))).committed, [result.txId]);
+  assert.equal(await communities(w), 1);
+  assert.equal((await again.store.getProposal('c1'))!.status, 'crystallized');
+});
+
+test('a name taken between the check and the commit is recorded as the ceremony\'s failure (nameTaken) and the commit finishes', async () => {
+  const w = await world();
+  await begin(w);
+  await approve(w, A);
+  // The gate passes inside this transaction; another community takes the name before the commit runs.
+  const p = w.participant;
+  const txId = 'tx-race';
+  assert.equal(await p.prepare(txId, [{ op: CEREMONY_APPROVE, params: { ceremonyId: 'c1', approverDid: B, signature: 'proof-b', verified: true, nowMs: T0 + 1 } }]), 'yes');
+  await identitiesRepo.create(w.appDb, { realDid: 'did:example:other-club', role: 'vtc', name: 'Real Club' });
+  await p.commit(txId);
+  const stored = await status(w);
+  assert.equal(stored.status, 'failed');
+  assert.equal(stored.errorReason, 'nameTaken');
+  assert.equal(await p.inquiry(txId), 'committed');
+  assert.equal(await communities(w), 1, 'only the other community exists');
+});
+
+test('a fan-out that throws never fails the commit: the community exists and the ceremony is crystallized', async () => {
+  const w = await world();
+  const failing = new CommunityFoundingEffect(w.appDb, { afterEstablished: async () => { throw new Error('queue down'); } });
+  const participant = new CeremonyDocParticipant('ceremony:host', w.txDb, failing, { requireVerifiedApprovals: true });
+  const w2 = { ...w, participant, effect: failing };
+  await begin(w2); await approve(w2, A);
+  const done = await approve(w2, B);
+  assert.equal(done.outcome, 'committed');
+  assert.equal(await communities(w2), 1);
+  assert.equal(await w2.participant.inquiry(done.txId), 'committed');
+  assert.equal((await status(w2)).status, 'crystallized');
+});
+
+test('a repeated approval after a crash between the apply and the status update retries cleanly: the check passes for the already-established ceremony, no second community', async () => {
+  const w = await world();
+  await begin(w); await approve(w, A);
+  const realUpdate = w.participant.store.updateStatus.bind(w.participant.store);
+  w.participant.store.updateStatus = async () => { throw new Error('process died'); };
+  await approve(w, B);
+  w.participant.store.updateStatus = realUpdate;
+  assert.equal(await communities(w), 1);
+  const repeat = await approve(w, B);
+  assert.equal(repeat.outcome, 'committed', JSON.stringify(getAbortReason(repeat.txId)));
+  assert.equal(await communities(w), 1);
+  assert.equal((await status(w)).status, 'crystallized');
+});
