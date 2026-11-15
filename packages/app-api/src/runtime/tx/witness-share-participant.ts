@@ -12,7 +12,8 @@
  *
  * Idempotent by credential digest: the same credential again is a yes with no second row. A
  * DIFFERENT credential for an exchange that already holds one is refused (one share per party per
- * exchange; profile choice). `abort` removes the rows this transaction wrote.
+ * exchange; profile choice). The row is written at COMMIT from the intent recorded in `pending_ops` at prepare, so an
+ * abort (or a crash and restart) leaves nothing to undo and no in-memory state is relied on.
  */
 import type { DataSource } from '@p2p-trust-stack/core/db/data-source.js';
 import * as exchangeDids from '@p2p-trust-stack/core/db/repositories/vrc-exchange-dids-repo.js';
@@ -25,6 +26,8 @@ import { recordAbortReason } from '@p2p-trust-stack/core/tx/ceremony-guard.js';
 import type { Operation, Outcome, Participant, Vote } from '@p2p-trust-stack/core/tx/types.js';
 import { logger } from '@p2p-trust-stack/core/util/logger.js';
 import { RECEIVING_STATES } from '../trust-tasks-boundary/shared.js';
+
+type WitnessInsert = Parameters<typeof witnessShares.insert>[1];
 
 export const STORE_WITNESS_SHARE = 'store_witness_share';
 
@@ -53,8 +56,6 @@ function parseObject(text: unknown): Record<string, unknown> {
 export class WitnessShareParticipant implements Participant {
   readonly pid: string;
   private verifier: { verifier: WitnessProofVerifier; now: () => number } | undefined;
-  /** Digests written by an open transaction, removed again if it aborts. */
-  private readonly written = new Map<string, string>();
 
   private readonly appDb: DataSource;
   private readonly txDb: DataSource;
@@ -75,21 +76,27 @@ export class WitnessShareParticipant implements Participant {
   }
 
   async prepare(txId: string, operations: Operation[]): Promise<Vote> {
+    const pending: WitnessInsert[] = [];
     for (const op of operations) {
       if (op.op !== STORE_WITNESS_SHARE) continue;
       try {
-        await this.store(txId, op.params as unknown as StoreWitnessShareParams);
+        const row = await this.check(op.params as unknown as StoreWitnessShareParams);
+        if (row !== null) pending.push(row);
       } catch (err) {
         logger.error(`[witness-share] refused for tx ${txId}:`, (err as Error)?.message);
         recordAbortReason(txId, err);
         return 'no';
       }
     }
-    await this.txDb.run("INSERT OR REPLACE INTO tx_participant_state (tx_id, pid, outcome) VALUES (?, ?, 'prepared')", txId, this.pid);
+    await this.txDb.run(
+      "INSERT OR REPLACE INTO tx_participant_state (tx_id, pid, outcome, pending_ops) VALUES (?, ?, 'prepared', ?)",
+      txId, this.pid, pending.length === 0 ? null : JSON.stringify(pending),
+    );
     return 'yes';
   }
 
-  private async store(txId: string, p: StoreWitnessShareParams): Promise<void> {
+  /** Phase 1: every check, no write. Returns the row to insert at commit, or null when this exact credential is already held. */
+  private async check(p: StoreWitnessShareParams): Promise<WitnessInsert | null> {
     if (this.verifier === undefined) throw new TaskError({ code: 'unavailable', retryable: true, internalMessage: 'no proof verifier is installed' });
     const exchange = await exchangeDids.findByExchangeId(this.appDb, p.exchangeId);
     if (exchange === null || exchange.remoteConnectionDid !== p.senderConnectionDid || !RECEIVING_STATES.has(exchange.state) || exchange.remoteRelationshipDid === null) {
@@ -109,12 +116,12 @@ export class WitnessShareParticipant implements Participant {
     if (same !== null) {
       // The same credential again: nothing is stored twice. Another exchange cannot hold it (its subject is bound to this exchange's DID).
       if (same.exchangeId !== p.exchangeId) throw refuse('the credential is held for another exchange', 'notAccepted');
-      return;
+      return null;
     }
     if ((await witnessShares.findByExchange(this.appDb, p.exchangeId)) !== null) {
       throw refuse('the exchange already holds a different shared credential', 'notAccepted');
     }
-    await witnessShares.insert(this.appDb, {
+    return {
       id: check.digest,
       exchangeId: p.exchangeId,
       subjectDid: check.subjectDid,
@@ -127,23 +134,23 @@ export class WitnessShareParticipant implements Participant {
       initiatingJson: JSON.stringify(documents.initiating),
       terminalJson: JSON.stringify(documents.terminal),
       now: this.verifier.now(),
-    });
-    this.written.set(txId, check.digest);
+    };
   }
 
+  /** Phase 2: write the recorded rows. Idempotent by credential digest, so a repeated or replayed commit adds nothing. */
   async commit(txId: string): Promise<void> {
-    this.written.delete(txId);
+    const row = await this.txDb.get<{ outcome: string; pending_ops: string | null }>('SELECT outcome, pending_ops FROM tx_participant_state WHERE tx_id = ? AND pid = ?', txId, this.pid);
+    if (row?.outcome === 'prepared' && row.pending_ops) {
+      for (const insert of JSON.parse(row.pending_ops) as WitnessInsert[]) {
+        if ((await witnessShares.findByDigest(this.appDb, insert.id)) === null) await witnessShares.insert(this.appDb, insert);
+      }
+    }
     await this.txDb.run("UPDATE tx_participant_state SET outcome = 'committed' WHERE tx_id = ? AND pid = ?", txId, this.pid);
   }
 
   async abort(txId: string): Promise<void> {
-    const digest = this.written.get(txId);
-    if (digest !== undefined) {
-      this.written.delete(txId);
-      await this.appDb.run('DELETE FROM witness_share_evidence WHERE id = ?', digest);
-      await this.appDb.run('DELETE FROM witnessed_credentials WHERE id = ?', digest);
-    }
-    await this.txDb.run("UPDATE tx_participant_state SET outcome = 'aborted' WHERE tx_id = ? AND pid = ?", txId, this.pid);
+    // Nothing was written before commit: dropping the recorded intent is the whole rollback.
+    await this.txDb.run("UPDATE tx_participant_state SET outcome = 'aborted', pending_ops = NULL WHERE tx_id = ? AND pid = ?", txId, this.pid);
   }
 
   async compensate(txId: string): Promise<void> {

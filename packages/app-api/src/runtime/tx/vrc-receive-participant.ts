@@ -94,8 +94,9 @@ export class VrcReceiveParticipant implements Participant {
   }
 
   async prepare(txId: string, operations: Operation[]): Promise<Vote> {
-    // The conformant path (exchange credentials) applies its effect at COMMIT: prepare only checks and records what to apply,
-    // so a credential is never visible while the transaction is undecided and an abort leaves nothing to undo.
+    // Both paths apply their effect at COMMIT: prepare only checks and records what to apply (in `pending_ops`),
+    // so a credential is never visible while the transaction is undecided, an abort leaves nothing to undo, and a
+    // restart between prepare and commit loses nothing.
     const pending: StoreRemoteVrcParams[] = [];
     for (const op of operations) {
       if (op.op !== 'store_remote_vrc') continue;
@@ -115,33 +116,9 @@ export class VrcReceiveParticipant implements Participant {
         continue;
       }
 
-      try {
-        // Store the remote peer's VRC in the local credentials table.
-        // storeReceivedDtgVrc is idempotent: digest-based dedup.
-        this.vtcStore.storeReceivedDtgVrc(
-          params.w3cVcJson,
-          params.issuerDid,
-          params.subjectDid,
-          params.issuerIdentity,
-        );
-
-        // Advance the mirrored ceremony session: the remote agent's VRC for us
-        // has now been received. Ceremony sessions are keyed by real DIDs
-        // (local_did = subjectDid, remote_did = issuerDid), so both mirrors
-        // reference the same (local,remote) DID pair and peer_vrc_received
-        // lands on the session the driver is advancing.
-        if (params.subjectDid && params.issuerDid) {
-          const session = await this.ceremonyStore.ensureSession(params.subjectDid, params.issuerDid);
-          await this.ceremonyStore.setLeg(session.sessionId, { peerVrcReceived: true });
-        }
-
-        logger.info(
-          `[vrc-receive] stored remote VRC from ${params.issuerDid.slice(0, 12)}...`,
-        );
-      } catch (err) {
-        logger.error(`[vrc-receive] prepare failed for tx ${txId}:`, (err as Error)?.message);
-        return 'no';
-      }
+      // Legacy path: nothing to check beyond the shape above. The store and the ceremony leg are applied at commit
+      // (both idempotent: digest dedup, flag set), so an undecided or aborted transaction leaves nothing behind.
+      pending.push(params);
     }
 
     // Durably record 'prepared' BEFORE voting yes.
@@ -199,13 +176,28 @@ export class VrcReceiveParticipant implements Participant {
     if (exchange.state === 'accepted') await exchangeDids.setState(this.appDb, exchange.exchangeId, 'received');
   }
 
+  /** Legacy path, commit: store the remote peer's VRC and advance the mirrored ceremony session. Idempotent. */
+  private async applyLegacyVrc(params: StoreRemoteVrcParams): Promise<void> {
+    this.vtcStore.storeReceivedDtgVrc(params.w3cVcJson, params.issuerDid, params.subjectDid, params.issuerIdentity);
+    // Ceremony sessions are keyed by real DIDs (local_did = subjectDid, remote_did = issuerDid), so both mirrors
+    // reference the same (local,remote) DID pair and peer_vrc_received lands on the session the driver is advancing.
+    if (params.subjectDid && params.issuerDid) {
+      const session = await this.ceremonyStore.ensureSession(params.subjectDid, params.issuerDid);
+      await this.ceremonyStore.setLeg(session.sessionId, { peerVrcReceived: true });
+    }
+    logger.info(`[vrc-receive] stored remote VRC from ${params.issuerDid.slice(0, 12)}...`);
+  }
+
   async commit(txId: string): Promise<void> {
     const row = await this.txDb.get<{ outcome: string; pending_ops: string | null }>(
       'SELECT outcome, pending_ops FROM tx_participant_state WHERE tx_id = ? AND pid = ?',
       txId, this.pid,
     );
     if (row?.outcome === 'prepared' && row.pending_ops) {
-      for (const params of JSON.parse(row.pending_ops) as StoreRemoteVrcParams[]) await this.applyExchangeVrc(params);
+      for (const params of JSON.parse(row.pending_ops) as StoreRemoteVrcParams[]) {
+        if (params.exchangeId !== undefined) await this.applyExchangeVrc(params);
+        else await this.applyLegacyVrc(params);
+      }
     }
     await this.txDb.run(
       "UPDATE tx_participant_state SET outcome = 'committed' WHERE tx_id = ? AND pid = ?",
@@ -215,9 +207,7 @@ export class VrcReceiveParticipant implements Participant {
   }
 
   async abort(txId: string): Promise<void> {
-    // The conformant path has stored nothing before commit. The legacy path stores at prepare
-    // (storeReceivedDtgVrc is digest-deduplicated, so a precise rollback would delete by digest);
-    // it is marked aborted and left for the next push/election to reconcile.
+    // Neither path has stored anything before commit: dropping the recorded intent is the whole rollback.
     await this.txDb.run(
       "UPDATE tx_participant_state SET outcome = 'aborted', pending_ops = NULL WHERE tx_id = ? AND pid = ?",
       txId, this.pid,
