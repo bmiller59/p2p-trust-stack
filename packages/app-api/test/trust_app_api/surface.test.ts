@@ -78,7 +78,7 @@ const EXPECTED_MEMBERS: string[] = [
   'queryUtilityServer',
   'acknowledgeRemotePeer', 'getCeremonyStatus', 'resetPersonhoodCeremony',
   'onCeremonyPrompt', 'onCeremonyComplete', 'onCeremonyFailed', 'onCeremonyExpired', 'onCeremonyAckChange',
-  'onDuplicateConnectNotice', 'getDuplicateConnectNotice',
+  'onDuplicateConnectNotice', 'listHeldVrcProposals', 'decideVrcProposal', 'onVrcProposalHeld', 'getDuplicateConnectNotice',
   // Added 2026-10-08 (P4/P5): the arrival signal for a delivered credential. Before it, nothing observed a
   // delivery, so `nav.js` polled `/api/invitations` every 5 s and `credentials.html` polled every 3 s.
   'onCredentialReceived',
@@ -124,7 +124,7 @@ const EXPECTED_OPTIONAL: string[] = [
   'queryUtilityServer',
   'acknowledgeRemotePeer', 'getCeremonyStatus', 'resetPersonhoodCeremony',
   'onCeremonyPrompt', 'onCeremonyComplete', 'onCeremonyFailed', 'onCeremonyExpired', 'onCeremonyAckChange',
-  'onDuplicateConnectNotice', 'getDuplicateConnectNotice',
+  'onDuplicateConnectNotice', 'listHeldVrcProposals', 'decideVrcProposal', 'onVrcProposalHeld', 'getDuplicateConnectNotice',
   'onCredentialReceived',
   'onCommunityChanged', 'onGovernanceProposal',
   'onCeremonyEvent',
@@ -187,24 +187,24 @@ test('AgentHandle exists at the expected path', () => {
   assert.ok(existsSync(HANDLE_PATH), `${HANDLE_PATH} is missing`);
 });
 
-test('AgentHandle member list is unchanged (103 members, in order)', () => {
+test('AgentHandle member list is unchanged (106 members, in order)', () => {
   const { members } = parseAgentHandle(readFileSync(HANDLE_PATH, 'utf8'));
   assert.deepEqual(
     members,
     EXPECTED_MEMBERS,
     'AgentHandle changed shape — a contract change, not a test fix',
   );
-  assert.equal(members.length, 103);
+  assert.equal(members.length, 106);
 });
 
-test('AgentHandle optional-member count is unchanged (50 optional)', () => {
+test('AgentHandle optional-member count is unchanged (53 optional)', () => {
   const { optional } = parseAgentHandle(readFileSync(HANDLE_PATH, 'utf8'));
   assert.deepEqual(
     optional,
     EXPECTED_OPTIONAL,
     'the set of optional members changed — callers null-check exactly these',
   );
-  assert.equal(optional.length, 50);
+  assert.equal(optional.length, 53);
 });
 
 
