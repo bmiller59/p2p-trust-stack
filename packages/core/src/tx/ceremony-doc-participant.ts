@@ -95,6 +95,10 @@ export interface CeremonyEstablishment {
   adminDids: string[];
   threshold: number;
   parentCommunityDid: string | null;
+  proposerDid: string;
+  /** The stored hash of the proposal and the placeholder community identifier it carries (what a guard evaluates the quorum against). */
+  proposalHash: string;
+  vtcDid: string;
   /** `verified`: the approval was verified by the boundary (D1.1), so a guard must not re-verify it as a signature over the hash. */
   approvals: Array<{ approverDid: string; signature: string; verified: boolean }>;
 }
@@ -388,6 +392,9 @@ export class CeremonyDocParticipant implements Participant {
       adminDids: proposal.adminDids,
       threshold: proposal.threshold,
       parentCommunityDid: proposal.parentCommunityDid,
+      proposerDid: proposal.proposerDid,
+      proposalHash: proposal.proposalHash,
+      vtcDid: proposal.vtcDid,
       approvals: approvals.map((a) => ({ ...a, verified: this.requireVerified })),
     };
   }
