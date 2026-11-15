@@ -31,7 +31,9 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 lists the checks (type at item 3, proof at item 7) but no sentence makes the order of the list normative. An implementation that refuses an unsigned document of a type it does not serve with proofRequired, before it routes the type, tells an unauthenticated caller nothing about what it serves (VTI does). The document is refused either way and never executed. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "NS-001",
@@ -558,10 +560,21 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "subgroup": "attested",
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ID-004",
         "group": "ID",
         "family": "framework",
         "tier": 2,
@@ -1733,10 +1746,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
-        "failures": [
-          "step 1: adapter or harness error: query must be handled, documentState or stored"
-        ]
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-014",
@@ -2414,6 +2425,573 @@
         "subgroup": "attested",
         "status": "SKIP",
         "reason": "tier 2 not selected"
+      },
+      {
+        "id": "RCPT-001",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-002",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-003",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-004",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-005",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-006",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-007",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-008",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-009",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-010",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-011",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-012",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-013",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-014",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-015",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-016",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-017",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-018",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-019",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-020",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-021",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-022",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-023",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-024",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-025",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-026",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-027",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-028",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-029",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-030",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-031",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-032",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-033",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-034",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-035",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-036",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-037",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-038",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-039",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-040",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-041",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-042",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-043",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-044",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-045",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-046",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-047",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-048",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-049",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-050",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-051",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-052",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-053",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-054",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-055",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-056",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-057",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-058",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-059",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-060",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-061",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-062",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-063",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-064",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-065",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-066",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-067",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-068",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-069",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-070",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
       }
     ],
     "window": {
@@ -2423,7 +3001,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "24f6e318b85c"
+    "salt": "9fcdac3416e9"
   },
   {
     "impl": "truststackers-agent-didkey-attested",
@@ -2457,7 +3035,9 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 lists the checks (type at item 3, proof at item 7) but no sentence makes the order of the list normative. An implementation that refuses an unsigned document of a type it does not serve with proofRequired, before it routes the type, tells an unauthenticated caller nothing about what it serves (VTI does). The document is refused either way and never executed. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "NS-001",
@@ -2970,7 +3550,8 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "ID-003",
@@ -2980,6 +3561,16 @@
         "subgroup": "attested",
         "anchor": true,
         "status": "PASS"
+      },
+      {
+        "id": "ID-004",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "subgroup": "attested",
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "LIF-001",
@@ -4114,10 +4705,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
-        "failures": [
-          "step 1: adapter or harness error: query must be handled, documentState or stored"
-        ]
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-014",
@@ -4785,6 +5374,573 @@
         "tier": 2,
         "subgroup": "attested",
         "status": "PASS"
+      },
+      {
+        "id": "RCPT-001",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-002",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-003",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-004",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-005",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-006",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-007",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-008",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-009",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-010",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-011",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-012",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-013",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-014",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-015",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-016",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-017",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-018",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-019",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-020",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-021",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-022",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-023",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-024",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-025",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-026",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-027",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-028",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-029",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-030",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-031",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-032",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-033",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-034",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-035",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-036",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-037",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-038",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-039",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-040",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-041",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-042",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-043",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-044",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-045",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-046",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-047",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-048",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-049",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-050",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-051",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-052",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-053",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-054",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-055",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-056",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-057",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-058",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-059",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-060",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-061",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-062",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-063",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-064",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-065",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-066",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-067",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-068",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-069",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-070",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
       }
     ],
     "window": {
@@ -4794,7 +5950,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "18f02cd7690e"
+    "salt": "2a590d2c4ff4"
   },
   {
     "impl": "truststackers-agent-didkey-tier1",
@@ -4828,7 +5984,9 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 lists the checks (type at item 3, proof at item 7) but no sentence makes the order of the list normative. An implementation that refuses an unsigned document of a type it does not serve with proofRequired, before it routes the type, tells an unauthenticated caller nothing about what it serves (VTI does). The document is refused either way and never executed. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "NS-001",
@@ -5355,10 +6513,21 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "subgroup": "attested",
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ID-004",
         "group": "ID",
         "family": "framework",
         "tier": 2,
@@ -6524,10 +7693,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
-        "failures": [
-          "step 1: adapter or harness error: query must be handled, documentState or stored"
-        ]
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-014",
@@ -7206,6 +8373,573 @@
         "subgroup": "attested",
         "status": "SKIP",
         "reason": "tier 2 not selected"
+      },
+      {
+        "id": "RCPT-001",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-002",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-003",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-004",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-005",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-006",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-007",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-008",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-009",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-010",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-011",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-012",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-013",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-014",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-015",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-016",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-017",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-018",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-019",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-020",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-021",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-022",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-023",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-024",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-025",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-026",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-027",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-028",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-029",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-030",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-031",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-032",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-033",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-034",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-035",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-036",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-037",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-038",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-039",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-040",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-041",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-042",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-043",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-044",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-045",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-046",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-047",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-048",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-049",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-050",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-051",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-052",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-053",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-054",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-055",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-056",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-057",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-058",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-059",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-060",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-061",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-062",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-063",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-064",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-065",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-066",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-067",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-068",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-069",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-070",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
       }
     ],
     "window": {
@@ -7215,7 +8949,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "4b5b45623c95"
+    "salt": "74c0e9addc28"
   },
   {
     "impl": "truststackers-agent-didkey-tier1",
@@ -7249,7 +8983,9 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 lists the checks (type at item 3, proof at item 7) but no sentence makes the order of the list normative. An implementation that refuses an unsigned document of a type it does not serve with proofRequired, before it routes the type, tells an unauthenticated caller nothing about what it serves (VTI does). The document is refused either way and never executed. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "NS-001",
@@ -7768,10 +9504,21 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "subgroup": "attested",
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "implementation claims tier 1"
+      },
+      {
+        "id": "ID-004",
         "group": "ID",
         "family": "framework",
         "tier": 2,
@@ -8917,10 +10664,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
-        "failures": [
-          "step 1: adapter or harness error: query must be handled, documentState or stored"
-        ]
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-014",
@@ -9597,6 +11342,573 @@
         "subgroup": "attested",
         "status": "SKIP",
         "reason": "implementation claims tier 1"
+      },
+      {
+        "id": "RCPT-001",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-002",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-003",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-004",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-005",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-006",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-007",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-008",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-009",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-010",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-011",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-012",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-013",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-014",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-015",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-016",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-017",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-018",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-019",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-020",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-021",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-022",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-023",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-024",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-025",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-026",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-027",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-028",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-029",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-030",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-031",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-032",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-033",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-034",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-035",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-036",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-037",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-038",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-039",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-040",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-041",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-042",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-043",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-044",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-045",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-046",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-047",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-048",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-049",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-050",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-051",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-052",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-053",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-054",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-055",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-056",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-057",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-058",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-059",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-060",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-061",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-062",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-063",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-064",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-065",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-066",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-067",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-068",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-069",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-070",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
       }
     ],
     "window": {
@@ -9606,7 +11918,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "5cfd2f45ae42"
+    "salt": "b5629fff9cd1"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -9640,7 +11952,9 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 lists the checks (type at item 3, proof at item 7) but no sentence makes the order of the list normative. An implementation that refuses an unsigned document of a type it does not serve with proofRequired, before it routes the type, tells an unauthenticated caller nothing about what it serves (VTI does). The document is refused either way and never executed. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "NS-001",
@@ -10167,10 +12481,21 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "subgroup": "attested",
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ID-004",
         "group": "ID",
         "family": "framework",
         "tier": 2,
@@ -11342,10 +13667,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
-        "failures": [
-          "step 1: adapter or harness error: query must be handled, documentState or stored"
-        ]
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-014",
@@ -12023,6 +14346,573 @@
         "subgroup": "attested",
         "status": "SKIP",
         "reason": "tier 2 not selected"
+      },
+      {
+        "id": "RCPT-001",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-002",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-003",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-004",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-005",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-006",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-007",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-008",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-009",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-010",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-011",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-012",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-013",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-014",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-015",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-016",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-017",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-018",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-019",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-020",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-021",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-022",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-023",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-024",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-025",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-026",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-027",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-028",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-029",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-030",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-031",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-032",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-033",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-034",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-035",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-036",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-037",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-038",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-039",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-040",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-041",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-042",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-043",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-044",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-045",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-046",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-047",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-048",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-049",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-050",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-051",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-052",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-053",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-054",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-055",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-056",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-057",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-058",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-059",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-060",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-061",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-062",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-063",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-064",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-065",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-066",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-067",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-068",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-069",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-070",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
       }
     ],
     "window": {
@@ -12032,7 +14922,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "e7c8b6459d52"
+    "salt": "852cdaf851e0"
   },
   {
     "impl": "truststackers-agent-scidvh-attested",
@@ -12066,7 +14956,9 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 lists the checks (type at item 3, proof at item 7) but no sentence makes the order of the list normative. An implementation that refuses an unsigned document of a type it does not serve with proofRequired, before it routes the type, tells an unauthenticated caller nothing about what it serves (VTI does). The document is refused either way and never executed. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "NS-001",
@@ -12579,7 +15471,8 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "ID-003",
@@ -12589,6 +15482,16 @@
         "subgroup": "attested",
         "anchor": true,
         "status": "PASS"
+      },
+      {
+        "id": "ID-004",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "subgroup": "attested",
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "LIF-001",
@@ -13723,10 +16626,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
-        "failures": [
-          "step 1: adapter or harness error: query must be handled, documentState or stored"
-        ]
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-014",
@@ -14394,6 +17295,573 @@
         "tier": 2,
         "subgroup": "attested",
         "status": "PASS"
+      },
+      {
+        "id": "RCPT-001",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-002",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-003",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-004",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-005",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-006",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-007",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-008",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-009",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-010",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-011",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-012",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-013",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-014",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-015",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-016",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-017",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-018",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-019",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-020",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-021",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-022",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-023",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-024",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-025",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-026",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-027",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-028",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-029",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-030",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-031",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-032",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-033",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-034",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-035",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-036",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-037",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-038",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-039",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-040",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-041",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-042",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-043",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-044",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-045",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-046",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-047",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-048",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-049",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-050",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-051",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-052",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-053",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-054",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-055",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-056",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-057",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-058",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-059",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-060",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-061",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-062",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-063",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-064",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-065",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-066",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-067",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-068",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-069",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-070",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
       }
     ],
     "window": {
@@ -14403,7 +17871,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "e02e3158b11e"
+    "salt": "0044b26a7b54"
   },
   {
     "impl": "truststackers-agent-scidvh-tier1",
@@ -14437,7 +17905,9 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 lists the checks (type at item 3, proof at item 7) but no sentence makes the order of the list normative. An implementation that refuses an unsigned document of a type it does not serve with proofRequired, before it routes the type, tells an unauthenticated caller nothing about what it serves (VTI does). The document is refused either way and never executed. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "NS-001",
@@ -14964,10 +18434,21 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "subgroup": "attested",
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "tier 2 not selected"
+      },
+      {
+        "id": "ID-004",
         "group": "ID",
         "family": "framework",
         "tier": 2,
@@ -16133,10 +19614,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
-        "failures": [
-          "step 1: adapter or harness error: query must be handled, documentState or stored"
-        ]
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-014",
@@ -16815,6 +20294,573 @@
         "subgroup": "attested",
         "status": "SKIP",
         "reason": "tier 2 not selected"
+      },
+      {
+        "id": "RCPT-001",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-002",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-003",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-004",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-005",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-006",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-007",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-008",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-009",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-010",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-011",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-012",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-013",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-014",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-015",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-016",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-017",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-018",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-019",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-020",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-021",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-022",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-023",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-024",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-025",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-026",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-027",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-028",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-029",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-030",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-031",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-032",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-033",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-034",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-035",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-036",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-037",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-038",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-039",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-040",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-041",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-042",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-043",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-044",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-045",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-046",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-047",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-048",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-049",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-050",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-051",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-052",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-053",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-054",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-055",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-056",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-057",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-058",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-059",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-060",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-061",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-062",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-063",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-064",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-065",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-066",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-067",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-068",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-069",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-070",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
       }
     ],
     "window": {
@@ -16824,7 +20870,7 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "ae8531b1e8a9"
+    "salt": "22e5cc6231a2"
   },
   {
     "impl": "truststackers-agent-scidvh-tier1",
@@ -16858,7 +20904,9 @@
         "group": "CTRL",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "CLARIFY",
+        "reason": "SPEC.md 7.2 lists the checks (type at item 3, proof at item 7) but no sentence makes the order of the list normative. An implementation that refuses an unsigned document of a type it does not serve with proofRequired, before it routes the type, tells an unauthenticated caller nothing about what it serves (VTI does). The document is refused either way and never executed. Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "NS-001",
@@ -17377,10 +21425,21 @@
         "group": "ID",
         "family": "framework",
         "tier": 1,
-        "status": "PASS"
+        "status": "SKIP",
+        "reason": "missing capability optional:transportIdentity"
       },
       {
         "id": "ID-003",
+        "group": "ID",
+        "family": "framework",
+        "tier": 2,
+        "subgroup": "attested",
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "implementation claims tier 1"
+      },
+      {
+        "id": "ID-004",
         "group": "ID",
         "family": "framework",
         "tier": 2,
@@ -18526,10 +22585,8 @@
         "family": "ceremony-doc",
         "tier": 1,
         "status": "CLARIFY",
-        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: fail)",
-        "failures": [
-          "step 1: adapter or harness error: query must be handled, documentState or stored"
-        ]
+        "reason": "Verbatim retention is a profile rule (docs/08 section 5.8); the framework asks only for outcome evidence of cited exchanges (SPEC.md 4.9.4). Not gating. (observed: pass)",
+        "failures": []
       },
       {
         "id": "CER-014",
@@ -19206,6 +23263,573 @@
         "subgroup": "attested",
         "status": "SKIP",
         "reason": "implementation claims tier 1"
+      },
+      {
+        "id": "RCPT-001",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-002",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-003",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-004",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-005",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-006",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-007",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "anchor": true,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-008",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-009",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-010",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-011",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-012",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-013",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-014",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-015",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-016",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-017",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-018",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-019",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-020",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-021",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-022",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-023",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-024",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-025",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-026",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-027",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-028",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-029",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-030",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-031",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-032",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-033",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-034",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-035",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-036",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-037",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-038",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-039",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-040",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-041",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-042",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-043",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-044",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-045",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-046",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-047",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-048",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-049",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-050",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-051",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-052",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-053",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-054",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-055",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-056",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-057",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-058",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-059",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-060",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-061",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-062",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-063",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-064",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-065",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-066",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-067",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-068",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-069",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
+      },
+      {
+        "id": "RCPT-070",
+        "group": "RCPT",
+        "family": "ceremony-receipt",
+        "tier": 1,
+        "status": "SKIP",
+        "reason": "missing capability optional:receiptVerify"
       }
     ],
     "window": {
@@ -19215,6 +23839,6 @@
     },
     "windowDifference": [],
     "clockMode": "set",
-    "salt": "ee470a7bd908"
+    "salt": "cfa9f24c4275"
   }
 ]

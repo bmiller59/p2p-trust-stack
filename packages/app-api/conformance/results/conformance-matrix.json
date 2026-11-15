@@ -2,6 +2,7 @@
   "format": "tt-conformance-matrix/0.1",
   "families": [
     "ceremony-doc",
+    "ceremony-receipt",
     "dtg-credential-exchange",
     "dtg-task-consent",
     "framework",
@@ -52,6 +53,22 @@
           },
           "green": true
         },
+        "ceremony-receipt": {
+          "status": "SKIP",
+          "counts": {
+            "PASS": 0,
+            "FAIL": 0,
+            "SKIP": 70,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          },
+          "anchors": {
+            "pass": 0,
+            "ran": 0,
+            "total": 7
+          },
+          "green": false
+        },
         "dtg-credential-exchange": {
           "status": "PASS",
           "counts": {
@@ -87,16 +104,16 @@
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 113,
+            "PASS": 111,
             "FAIL": 0,
-            "SKIP": 5,
+            "SKIP": 7,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 11
+            "CLARIFY": 12
           },
           "anchors": {
             "pass": 40,
             "ran": 40,
-            "total": 41
+            "total": 42
           },
           "green": true
         },
@@ -208,7 +225,7 @@
         "attested": {
           "PASS": 23,
           "FAIL": 0,
-          "SKIP": 0,
+          "SKIP": 1,
           "KNOWN-FAIL": 0,
           "CLARIFY": 0
         },
@@ -278,6 +295,22 @@
           },
           "green": true
         },
+        "ceremony-receipt": {
+          "status": "SKIP",
+          "counts": {
+            "PASS": 0,
+            "FAIL": 0,
+            "SKIP": 70,
+            "KNOWN-FAIL": 0,
+            "CLARIFY": 0
+          },
+          "anchors": {
+            "pass": 0,
+            "ran": 0,
+            "total": 7
+          },
+          "green": false
+        },
         "dtg-credential-exchange": {
           "status": "PASS",
           "counts": {
@@ -313,16 +346,16 @@
         "framework": {
           "status": "PASS",
           "counts": {
-            "PASS": 113,
+            "PASS": 111,
             "FAIL": 0,
-            "SKIP": 5,
+            "SKIP": 7,
             "KNOWN-FAIL": 0,
-            "CLARIFY": 11
+            "CLARIFY": 12
           },
           "anchors": {
             "pass": 40,
             "ran": 40,
-            "total": 41
+            "total": 42
           },
           "green": true
         },
@@ -434,7 +467,7 @@
         "attested": {
           "PASS": 23,
           "FAIL": 0,
-          "SKIP": 0,
+          "SKIP": 1,
           "KNOWN-FAIL": 0,
           "CLARIFY": 0
         },
