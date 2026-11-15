@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- A dedicated `#key-boundary` signing key for Trust Task documents, as a library behind a
+  default-off gate. `updateDocument` and `addBoundaryKey` publish the key through a
+  metadata-only log entry that must carry the previous document forward; a time-pinned
+  key resolver answers `did:scid:vh` key sets as of `proof.created` from the validated
+  log; a verifier key policy bounds `created` against the verifier's own clock and
+  retires `#key-1` after the cutover for identifiers that list `#key-boundary`; the
+  signer signs with `#key-1` before the cutover time and `#key-boundary` from it on, and
+  only when the document publishes the key it holds under `authentication`.
+- `resolveBoundaryKeyConfig` reads the gate. A mistyped value is not honoured and reports
+  why.
+
+### Upgrade notes
+- No schema change, no migration. Requires the carry-forward fix and the spec-aligned
+  pipeline from the earlier packages.
+- Default off and byte-identical when off: the gate is `TRUST_TASKS_BOUNDARY_KEY=dedicated`
+  together with `BOUNDARY_KEY_CUTOVER_AT` (RFC 3339 time with a zone); with either missing
+  the signer and verifier behave exactly as before and sign `#key-1` (a test pins this).
+  `BOUNDARY_KEY_MAX_PROOF_AGE_SECONDS` sets the verifier freshness bound (default 600).
+- No process reads these variables in this package; a host opts in by calling
+  `resolveBoundaryKeyConfig`. Process wiring and key custody follow in the next package.
+
 ## [0.2.0] - 2026-10-30
 
 ### Added
