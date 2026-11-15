@@ -96,3 +96,58 @@ describe("cross-protocol separation of signatures made with one key", () => {
     assert.equal(out.verdict, "invalid");
   });
 });
+
+// ---------------------------------------------------------------------------
+// The dedicated boundary key (gate G2, K9c): a SEPARATE key from the one the TSP and operation
+// protocols use. It must not validate as an operation proof or a TSP message, and theirs must not
+// validate as a document proof under it.
+// ---------------------------------------------------------------------------
+
+describe("the dedicated boundary key is separate from the TSP / operation-proof key", () => {
+  const boundary = generateEd25519KeyPair();
+  const boundaryVid = cesrEncode(CESR_CODES.ED25519_PUBLIC_KEY, boundary.publicKey);
+  const boundaryDid = didKeyFromEd25519(boundary.publicKey);
+  const boundarySigner = createEd25519BoundarySigner({ did: boundaryDid, secretKey: boundary.secretKey, fragment: boundaryDid.slice("did:key:".length) });
+  const bDoc = signDocument({ ...doc, issuer: boundaryDid }, boundarySigner, { created: NOW });
+  const bSig = base58btc.decode(bDoc.proof.proofValue as string);
+  const opArgs = { kind: opInput.kind, txId: opInput.txId, messageId: opInput.messageId, operations: opInput.operations };
+
+  it("sanity: the dedicated key signs a valid document proof", async () => {
+    assert.equal((await verifier.verify(bDoc, { nowMs: NOW })).valid, true);
+  });
+
+  it("the dedicated key's document signature is not a valid operation proof, for the identity's VID or its own", () => {
+    const forged = { ...opProof, signature: Buffer.from(bSig).toString("base64url") };
+    assert.equal(verifyOperationProof({ ...opArgs, proof: forged }, { senderVid: vid, now: opInput.issuedAt }).verdict, "invalid", "identity VID: a different key");
+    const own = { ...signOperationProof({ ...opInput, actorVid: boundaryVid }, signEd25519, boundary.secretKey), signature: Buffer.from(bSig).toString("base64url") };
+    assert.equal(verifyOperationProof({ ...opArgs, proof: own }, { senderVid: boundaryVid, now: opInput.issuedAt }).verdict, "invalid", "its own VID: a different framing");
+  });
+
+  it("a message sealed with the dedicated key does not open under the identity's TSP key", () => {
+    const msg = tspSeal({ vidSender: vid, vidReceiver: "did:web:peer.example", payload: { type: "TSP_GEN", body: new TextEncoder().encode("hello") }, signingSecretKey: boundary.secretKey });
+    assert.throws(() => tspOpen({ message: msg, senderPublicKey: key.publicKey }), /signature verification failed/);
+  });
+
+  it("the dedicated key's document signature spliced into a TSP message does not open, under either key", () => {
+    const spliced = new TextEncoder().encode(sealedText.slice(0, -88) + sigPrimitive(bSig));
+    assert.throws(() => tspOpen({ message: spliced, senderPublicKey: key.publicKey }), /signature verification failed/);
+    assert.throws(() => tspOpen({ message: spliced, senderPublicKey: boundary.publicKey }), /signature verification failed/);
+  });
+
+  it("an operation signature or a TSP signature made with the dedicated key is not a valid document proof under it", async () => {
+    const opB = new Uint8Array(Buffer.from(signOperationProof({ ...opInput, actorVid: boundaryVid }, signEd25519, boundary.secretKey).signature, "base64url"));
+    const msg = tspSeal({ vidSender: boundaryVid, vidReceiver: "did:web:peer.example", payload: { type: "TSP_GEN", body: new TextEncoder().encode("hello") }, signingSecretKey: boundary.secretKey });
+    const tspB = new Uint8Array(Buffer.from(new TextDecoder().decode(msg).slice(-88), "base64url").subarray(2));
+    for (const sig of [opB, tspB]) {
+      const forged = { ...bDoc, proof: { ...bDoc.proof, proofValue: base58btc.encode(sig) } };
+      assert.equal((await verifier.verify(forged, { nowMs: NOW })).failure, "signatureInvalid");
+    }
+  });
+
+  it("the identity key's operation and TSP signatures are not valid document proofs under the dedicated key", async () => {
+    for (const sig of [opSig, tspSig]) {
+      const forged = { ...bDoc, proof: { ...bDoc.proof, proofValue: base58btc.encode(sig) } };
+      assert.equal((await verifier.verify(forged, { nowMs: NOW })).valid, false);
+    }
+  });
+});
