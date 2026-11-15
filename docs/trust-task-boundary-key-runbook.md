@@ -23,32 +23,69 @@ Scope: the Ed25519 key that signs Trust Task documents as `<did>#key-boundary`, 
 
 The process refuses instead of signing with `#key-1`: the agent starts no listener and installs no signer; the utility server exits at start-up. Causes, as logged in `{"event":"listener.refused"|"startup.refused","reason":...}`: `config` (bad gate value, missing cutover, no passphrase), `missing` (no key for the generation), `corrupt` (wrong passphrase, damaged or mismatched record), `notPublished` (the identifier's own document does not publish the held key at `#key-boundary` under `authentication`). A did:peer:4 identifier cannot gain the key in place and is refused as `missing` or `notPublished`.
 
-## Provision and cut over (did:scid:vh)
+## Operator CLIs
 
-The provisioning, publishing, rotation and retirement calls exist on `ScidVhAgent` only. The utility server loads, verifies and signs with a provisioned key but has no provisioning or publishing tool yet; its dedicated mode cannot be turned on until that exists.
+Both CLIs run the same six commands and follow the same rules. There is no network or UI route to any of them.
 
-1. Agent: with the agent started and unlocked, call `provisionBoundaryKey(1)` on the `ScidVhAgent`. It returns the key fingerprint (hash prefix of the public key).
-2. Publish: `publishBoundaryKey(1)`. This appends a metadata-only log entry that adds `#key-boundary` under `authentication` and changes nothing else, then pushes the log to the utility server.
-3. Check: resolve the DID through the public resolver; confirm `source` is `log`, the chain is valid, and `#key-boundary` carries the fingerprinted key.
+| Command | Effect |
+|---|---|
+| `provision --generation N` | Generate generation N into the encrypted key store. Refuses an existing generation (never overwritten). |
+| `publish --generation N` | First publication: appends a metadata-only log entry that adds `#key-boundary` under `authentication` and changes nothing else. Refuses when `#key-boundary` is already published or when generation N is already the published key. |
+| `rotate --generation N` | Replaces the key of the published `#key-boundary` with a NEW generation N (a metadata-only entry). Refuses when nothing is published yet or N is already published. |
+| `retire` | Appends an entry that removes `#key-boundary` and its `authentication` entry. Refuses when nothing is published. |
+| `destroy --generation N` | Deletes the stored secret of generation N. Refuses the generation the document currently publishes. |
+| `status` | Read-only: what is published and which generations are held. |
+
+Rules common to both:
+
+- Mutating commands are a dry run unless `--execute` is given. A dry run loads the key and builds and chain-validates the log entry, and stores, appends, pushes and provisions nothing.
+- The key store passphrase comes only from an environment variable (never an argument), and every command refuses without it. There is no default.
+- Output is one JSON line with generation, fingerprint (hash prefix of the public key), log version and a note. It never carries a key, seed or passphrase. A refusal prints `refused: <reason>` to stderr and exits 1; nothing was written.
+- Any problem is a refusal before anything is written: missing or damaged key, wrong passphrase, key not published, generation conflicts, an entry that fails chain validation.
+
+### Utility server
+
+```
+cd utility-server
+TSP_SEED_PASSPHRASE=... npm run boundary-key -- <command> [--generation N] [--execute]
+```
+
+Reads `config.json` (`identity.didSeedHex`, decrypted with the passphrase) to locate the key that signs the server's own rotation log, and the database through the same `YB_*` variables as the server. Environment: `TSP_SEED_PASSPHRASE` (required), `BOUNDARY_KEYSTORE_PATH`, `UTILITY_DATA_DIR`, `NODE_NAME`, `YB_HOST`, `YB_PORT`, `YB_DATABASE`, `YB_USER`, `YB_PASSWORD`. The key store file is created only by an executed `provision`. The publication entry is appended to the server's own rotation log in the database; its signed `createdAt` is stored verbatim, so the entry resolves from the log. The server must have been started once (it creates its identity) and its `identity.didSeedHex` must be present.
+
+### Agent (did:scid:vh)
+
+```
+P2PTS_AGENT_PASSPHRASE=... node --conditions=development --experimental-strip-types packages/app-api/src/cli/boundary-key.ts <command> --agent NAME [--generation N] [--execute]
+```
+
+Wraps the `ScidVhAgent` operations (`provisionBoundaryKey`, `publishBoundaryKey`, `retireBoundaryKey`, `destroyBoundaryKeySecret`). Environment: `P2PTS_AGENT_PASSPHRASE` (required), `P2PTS_HOME`. The agent is started for the operation with the Trust Task listener forced off and stopped afterwards. A did:peer:4 agent is refused. Publication and retirement are stored in the agent's own log; the push to the utility server happens when the agent next runs connected, so confirm through the resolver (step 3 below) before the cutover.
+
+## Provision and cut over
+
+1. `provision --generation 1`. The output carries the key fingerprint.
+2. `publish --generation 1` (run it first without `--execute` to see the entry validate).
+3. Check: resolve the DID through the public resolver; confirm `source` is `log`, the chain is valid, and `#key-boundary` carries the fingerprinted key (`status` prints the fingerprint the process holds).
 4. Wait for propagation to every verifier's resolver cache.
 5. Set `TRUST_TASKS_BOUNDARY_KEY=dedicated` and `BOUNDARY_KEY_CUTOVER_AT=<a time after step 4>` and restart. Check the log line `signer.installed` (mode, generation, fingerprint, cutover).
 
 Documents created after the cutover verify only under `#key-boundary`; `#key-1` is refused for them once the key set at `created` lists the dedicated key.
 
+The utility server checks at start-up that its own rotation log publishes the key it holds (the boundary method is taken from the latest entry of that log; the rest of its runtime document is unchanged).
+
 ## Rotation
 
-1. `provisionBoundaryKey(N+1)`.
-2. `publishBoundaryKey(N+1)` replaces the key of `#key-boundary` in a new log entry. Documents created before that entry still verify under the old key (time-pinned resolution).
+1. `provision --generation N+1`.
+2. `rotate --generation N+1` replaces the key of `#key-boundary` in a new log entry. Documents created before that entry still verify under the old key (time-pinned resolution).
 3. Wait for propagation, set `BOUNDARY_KEY_GENERATION=N+1`, restart. Until the restart the process holds generation N and a restart on generation N is refused (`notPublished`).
-4. After documents signed with generation N are outside every retention need, `destroyBoundaryKeySecret(N)`.
+4. After documents signed with generation N are outside every retention need, `destroy --generation N`.
 
-Who may rotate: whoever can run code as the agent with its passphrase, or hold the utility server key store and passphrase. There is no network or UI route for any of these operations.
+Who may rotate: whoever can run the CLI as the agent with its passphrase, or hold the utility server key store, its configuration and passphrase. Nothing is reachable over the network.
 
 ## Cutover rollback and retirement
 
-1. `retireBoundaryKey()` appends an entry that removes `#key-boundary` and its `authentication` entry. The document is back to `#key-1` only; documents signed with the dedicated key before the entry still verify.
+1. `retire` appends an entry that removes `#key-boundary` and its `authentication` entry. The document is back to `#key-1` only; documents signed with the dedicated key before the entry still verify.
 2. Wait for propagation, unset `TRUST_TASKS_BOUNDARY_KEY` (or set it to `key-1`) and restart.
-3. Optionally `destroyBoundaryKeySecret(N)`.
+3. Optionally `destroy --generation N`.
 
 Rolling back before step 1 of provisioning needs only unsetting the variable and restarting.
 
@@ -56,7 +93,7 @@ Rolling back before step 1 of provisioning needs only unsetting the variable and
 
 - Back up the key store file together with its passphrase (separately), after each provisioning.
 - Restore: put the file at its path, set the same passphrase, start in dedicated mode. A wrong passphrase or damaged file is `corrupt`; an absent generation is `missing`; both refuse.
-- Loss of the key store with the dedicated mode on: the process refuses. Recover by provisioning the next unused generation, `publishBoundaryKey` (replaces the key of `#key-boundary`), and moving `BOUNDARY_KEY_GENERATION`; or roll back as above.
+- Loss of the key store with the dedicated mode on: the process refuses. Recover by provisioning the next unused generation, `rotate` (replaces the key of `#key-boundary`; use `publish` if `retire` was run), and moving `BOUNDARY_KEY_GENERATION`; or roll back as above.
 - The DID document and rotation log need no special backup.
 
 ## Logs
