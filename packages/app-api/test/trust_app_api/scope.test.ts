@@ -316,3 +316,17 @@ test('asContext() rejects an empty contextId', async () => {
     },
   );
 });
+
+// ---------------------------------------------------------------------------
+// Held relationship proposals (item 2A): owner-only, even with every relationships grant
+// ---------------------------------------------------------------------------
+
+test('held proposals are not reachable from a scoped context: methods denied, events not subscribable', async () => {
+  const { scoped } = await makeScoped('proposals', { allow: ['relationships.read', 'relationships.write'] });
+  await refuses(() => (scoped.relationships as unknown as { heldProposals(): Promise<unknown> }).heldProposals(), /not part of the context surface/);
+  await refuses(() => (scoped.relationships as unknown as { decideProposal(i: string, d: string): Promise<unknown> }).decideProposal('x', 'accept'), /not part of the context surface/);
+  for (const event of ['proposal.held', 'proposal.changed'] as const) {
+    assert.throws(() => scoped.on(event, () => {}), (err: unknown) => (err as { code?: string }).code === 'capability_denied');
+    assert.throws(() => scoped.once(event, () => {}), (err: unknown) => (err as { code?: string }).code === 'capability_denied');
+  }
+});
