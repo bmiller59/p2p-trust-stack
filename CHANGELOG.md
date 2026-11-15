@@ -8,6 +8,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Process wiring and key custody for the dedicated `#key-boundary` key. The agent runtime
+  validates its listener settings strictly (a bad port, the UI port, a tier other than 1
+  or 2, an unknown propose policy or an empty host now fail instead of falling back),
+  closes the listener gracefully, and writes structured one-line `[trust-tasks]` log
+  events that redact key material.
+- Key custody: the key is random, stored in the existing encrypted key store under the
+  agent passphrase (type `boundary-ed25519-g<N>` per identifier), and never derived or
+  overwritten. `ScidVhAgent` gains `provisionBoundaryKey`, `publishBoundaryKey`,
+  `retireBoundaryKey` and `destroyBoundaryKeySecret`; the rotation and retirement
+  entries may change `#key-boundary` only.
+- Operator CLI `packages/app-api/src/cli/boundary-key.ts` (`provision`, `publish`, `rotate`,
+  `retire`, `destroy`, `status`). Mutating commands are a dry run unless `--execute`; the
+  passphrase comes only from `P2PTS_AGENT_PASSPHRASE`; output never contains key material.
+- Runbook: `docs/trust-task-boundary-key-runbook.md`.
+
+### Changed
+- A new `installProcessBoundarySigner` applies the gate for a process; the agent uses it. With
+  the gate on and the key missing, damaged, unpublished
+  or of a stale generation, the agent starts no listener and leaves no signer installed. It
+  never falls back to `#key-1`.
+
+### Upgrade notes
+- No schema change, no migration.
+- Default off. New opt-in variables: `TRUST_TASKS_BOUNDARY_KEY` (`dedicated`),
+  `BOUNDARY_KEY_CUTOVER_AT`, `BOUNDARY_KEY_GENERATION` (default 1) and
+  `BOUNDARY_KEY_MAX_PROOF_AGE_SECONDS` (default 600), alongside the listener variables from
+  the earlier package. With them unset the agent signs `#key-1` and behaves as before.
+- Dedicated mode is available to `did:scid:vh` agents only; a `did:peer:4` agent is refused.
+- A mistyped gate value is fatal for the agent's listener, where it previously signed
+  `#key-1` and reported a problem string.
+- The CLI publishes to the agent's own log; the push to the utility server happens when the
+  agent next runs connected. Confirm through the resolver before setting the cutover.
+
+### Added
 - A dedicated `#key-boundary` signing key for Trust Task documents, as a library behind a
   default-off gate. `updateDocument` and `addBoundaryKey` publish the key through a
   metadata-only log entry that must carry the previous document forward; a time-pinned
