@@ -59,6 +59,7 @@
     "test:ceremony-store": "node --conditions=development --experimental-strip-types --loader ./test-loader.mjs --test test/relationship/ceremony-store.test.ts",
     "test:vtc": "node --conditions=development --experimental-strip-types --loader ./test-loader.mjs --test test/vtc/codec.test.ts test/vtc/vtc.test.ts test/vtc/store.test.ts test/vtc/encoded-vid-guard.test.ts",
     "test:rotation": "node --conditions=development --experimental-strip-types --loader ./test-loader.mjs --test test/did/rotation-codec.test.ts test/did/witness-attestation.test.ts test/did/rotation-log-store.test.ts",
+    "scid-scan": "node --conditions=development --experimental-strip-types --loader ./test-loader.mjs tools/scid-scan/cli.ts",
     "test:config": "node --conditions=development --experimental-strip-types --loader ./test-loader.mjs --test test/config/bootstrap-env.test.ts"
   },
   "keywords": [
