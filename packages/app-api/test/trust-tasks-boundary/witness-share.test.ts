@@ -375,10 +375,46 @@ describe('design: choices where the profile is silent, and the shape of what is 
     assert.equal(await bare.prepare('tx-1', [{ op: 'store_witness_share', params } as never]), 'no');
     assert.equal(await adapter.witnessCount(), 0);
     assert.equal(await adapter.witnessShare.prepare('tx-2', [{ op: 'store_witness_share', params } as never]), 'yes');
-    assert.equal(await adapter.witnessCount(), 1);
+    assert.equal(await adapter.witnessCount(), 0, 'nothing is stored while the transaction is undecided');
     await adapter.witnessShare.abort('tx-2');
     assert.equal(await adapter.witnessCount(), 0);
     assert.equal(Number((await adapter.db.get<{ n: number }>('SELECT COUNT(*) AS n FROM witness_share_evidence'))!.n), 0);
+  });
+
+  it('participant: prepare, restart, abort leaves nothing; prepare, restart, commit stores once; a second commit adds nothing', async () => {
+    const adapter = await make();
+    const mine = await accepted(adapter);
+    const b = bundle(mine);
+    const params = { exchangeId: uid(1), presentationJson: text(b.presentation), initiatingJson: text(b.initiating), terminalJson: text(b.terminal), senderConnectionDid: A.did };
+    const op = [{ op: 'store_witness_share', params } as never];
+    assert.equal(await adapter.witnessShare.prepare('tx-a', op), 'yes');
+    await adapter.restart();
+    await adapter.witnessShare.abort('tx-a');
+    assert.equal(await adapter.witnessCount(), 0, 'an abort after a restart leaves no row');
+    assert.equal(await adapter.witnessShare.inquiry('tx-a'), 'aborted');
+
+    assert.equal(await adapter.witnessShare.prepare('tx-b', op), 'yes');
+    await adapter.restart();
+    assert.equal(await adapter.witnessCount(), 0);
+    await adapter.witnessShare.commit('tx-b');
+    assert.equal(await adapter.witnessCount(), 1, 'a commit by the restarted participant applies the recorded effect');
+    await adapter.witnessShare.commit('tx-b');
+    assert.equal(await adapter.witnessCount(), 1);
+    assert.equal(Number((await adapter.db.get<{ n: number }>('SELECT COUNT(*) AS n FROM witness_share_evidence'))!.n), 1);
+    assert.equal(await adapter.witnessShare.inquiry('tx-b'), 'committed');
+  });
+
+  it('participant: a second transaction for the same share is idempotent at commit', async () => {
+    const adapter = await make();
+    const mine = await accepted(adapter);
+    const b = bundle(mine);
+    const params = { exchangeId: uid(1), presentationJson: text(b.presentation), initiatingJson: text(b.initiating), terminalJson: text(b.terminal), senderConnectionDid: A.did };
+    const op = [{ op: 'store_witness_share', params } as never];
+    for (const tx of ['tx-1', 'tx-2']) {
+      assert.equal(await adapter.witnessShare.prepare(tx, op), 'yes');
+      await adapter.witnessShare.commit(tx);
+    }
+    assert.equal(await adapter.witnessCount(), 1);
   });
 
   it('restart: the stored credential and the duplicate record survive; the redelivery after restart is still one credential', async () => {

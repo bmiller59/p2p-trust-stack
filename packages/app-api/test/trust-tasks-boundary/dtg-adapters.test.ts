@@ -325,6 +325,32 @@ const vp = (a: VrcBoundaryAdapter, holder: Party, credentials: unknown[], thread
 const present = (a: VrcBoundaryAdapter, from: Party, token: unknown, thread: string) => sign(from, base(a, from, CREDENTIAL_PRESENT_TYPE, thread, { vp_token: token }));
 
 describe('credential-exchange/present (new: the verifier keeps the presentation as evidence)', () => {
+  it('participant: stores at commit, not prepare; prepare then abort (also after a restart) leaves nothing; commit after a restart applies once', async () => {
+    const a = await make();
+    const mk = (t: string) => [{ op: 'store_presentation', params: { vpJson: JSON.stringify(vp(a, A, [credential(W, A.did)], t)), holderDid: A.did, audience: a.signer.did, threadId: t } } as never];
+    const t1 = fresh();
+    assert.equal(await a.presentation.prepare('tx-1', mk(t1)), 'yes');
+    assert.equal(await presentations.count(a.db), 0, 'nothing is stored while the transaction is undecided');
+    await a.presentation.abort('tx-1');
+    assert.equal(await presentations.count(a.db), 0);
+
+    const t2 = fresh();
+    assert.equal(await a.presentation.prepare('tx-2', mk(t2)), 'yes');
+    await a.restart();
+    await a.presentation.abort('tx-2');
+    assert.equal(await presentations.count(a.db), 0, 'an abort after a restart leaves no row');
+
+    const t3 = fresh();
+    assert.equal(await a.presentation.prepare('tx-3', mk(t3)), 'yes');
+    await a.restart();
+    assert.equal(await presentations.count(a.db), 0);
+    await a.presentation.commit('tx-3');
+    assert.equal(await presentations.count(a.db), 1, 'a commit by the restarted participant applies the recorded effect');
+    await a.presentation.commit('tx-3');
+    assert.equal(await presentations.count(a.db), 1, 'a second commit adds nothing');
+    assert.equal(await a.presentation.inquiry('tx-3'), 'committed');
+  });
+
   it('a holder-bound presentation for our nonce and audience is stored once (204); the same presentation again adds nothing', async () => {
     const a = await make();
     const t = fresh();
