@@ -15,8 +15,7 @@
  * integer that represents the expected schema version (number of migrations).
  *
  * After all migrations are applied, the version is recorded in the
- * `schema_migrations` table as a row with filename `__schema_version__`
- * and the version stored in a JSON blob.
+ * `schema_migrations` table as a row with filename `__schema_version__:<n>` (one row, replaced on each bump).
  *
  * On startup, if the database's recorded version is NEWER than the
  * `SCHEMA_VERSION` file, the runner throws an error — the application
@@ -27,6 +26,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { DatabaseSync } from 'node:sqlite';
 import { getMigrationsDir } from './migrations-dir.js';
+import { maxRecordedVersion, schemaVersionFilename } from './schema-version.js';
 
 function ensureLedger(db: InstanceType<typeof DatabaseSync>): void {
   db.exec(`
@@ -59,26 +59,27 @@ function readExpectedVersion(migrationsDir: string): number {
 }
 
 /**
- * Read the schema version recorded in the database (if any).
+ * Read the schema version recorded in the database (if any): the largest
+ * `__schema_version__:<n>` row in the ledger.
  */
 function getRecordedVersion(db: InstanceType<typeof DatabaseSync>): number | undefined {
-  const row = db.prepare(
-    "SELECT filename FROM schema_migrations WHERE filename = '__schema_version__'",
-  ).get() as { filename: string } | undefined;
-  if (!row) return undefined;
-  // The version is encoded as "__schema_version__:<number>"
-  const parts = row.filename.split(':');
-  const v = parseInt(parts[1], 10);
-  return isNaN(v) ? undefined : v;
+  const rows = db.prepare(
+    "SELECT filename FROM schema_migrations WHERE filename LIKE '\\_\\_schema\\_version\\_\\_:%' ESCAPE '\\'",
+  ).all() as { filename: string }[];
+  return maxRecordedVersion(rows.map((r) => r.filename));
 }
 
 /**
- * Record the schema version in the database.
+ * Record the schema version in the database, leaving exactly one version row.
  */
 function setRecordedVersion(db: InstanceType<typeof DatabaseSync>, version: number): void {
+  const current = schemaVersionFilename(version);
+  db.prepare(
+    "DELETE FROM schema_migrations WHERE filename LIKE '\\_\\_schema\\_version\\_\\_:%' ESCAPE '\\' AND filename <> ?",
+  ).run(current);
   db.prepare(
     "INSERT OR REPLACE INTO schema_migrations (filename, applied_at) VALUES (?, unixepoch())",
-  ).run(`__schema_version__:${version}`);
+  ).run(current);
 }
 
 /**

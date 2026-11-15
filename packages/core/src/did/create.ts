@@ -28,7 +28,7 @@ import type { DidDocument, DidPeer4Result, ServiceEndpoint, VerificationMethod }
  * Encode a raw 32-byte Ed25519 public key as a Multikey publicKeyMultibase string.
  * Prefix: 0xed 0x01 (varint for multicodec code 0xed = ed25519-pub)
  */
-function encodeEd25519Multikey(publicKey: Uint8Array): string {
+export function encodeEd25519Multikey(publicKey: Uint8Array): string {
   const prefixed = new Uint8Array(2 + publicKey.length);
   prefixed[0] = 0xed;
   prefixed[1] = 0x01;
@@ -40,7 +40,7 @@ function encodeEd25519Multikey(publicKey: Uint8Array): string {
  * Encode a raw 32-byte X25519 public key as a Multikey publicKeyMultibase string.
  * Prefix: 0xec 0x01 (varint for multicodec code 0xec = x25519-pub)
  */
-function encodeX25519Multikey(publicKey: Uint8Array): string {
+export function encodeX25519Multikey(publicKey: Uint8Array): string {
   const prefixed = new Uint8Array(2 + publicKey.length);
   prefixed[0] = 0xec;
   prefixed[1] = 0x01;
@@ -53,7 +53,7 @@ function encodeX25519Multikey(publicKey: Uint8Array): string {
  * publicKeyMultibase string, using the REGISTERED `ml-dsa-65-pub` multicodec
  * (0x1211 → varint bytes 0x91 0x24).
  */
-function encodeMlDsa65Multikey(publicKey: Uint8Array): string {
+export function encodeMlDsa65Multikey(publicKey: Uint8Array): string {
   const prefixed = new Uint8Array(2 + publicKey.length);
   prefixed[0] = 0x91;
   prefixed[1] = 0x24;

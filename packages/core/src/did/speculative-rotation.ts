@@ -21,9 +21,8 @@
  */
 
 import type { Ed25519KeyPair } from '../crypto/primitives.js';
-import { signEd25519, ed25519ToX25519 } from '../crypto/primitives.js';
-import { extractEd25519PublicKey, extractX25519PublicKey } from '../relationship/key-extract.js';
-import { buildDidPeer4Document } from './create.js';
+import { signEd25519 } from '../crypto/primitives.js';
+import { carryForwardDocument } from './document-carry-forward.js';
 import { computeRotationEntryDigest, computeNextKeyCommitment } from './rotation-codec.js';
 import type { DidDocument, DidParameters, ServiceEndpoint } from './types.js';
 import type { RotationLogEntry } from './rotation-types.js';
@@ -151,30 +150,10 @@ export class SpeculativeRotationService {
     const newAlsoKnownAs = [...currentNames, nameUri];
     const prevParameters = prevEntry.parameters ?? {};
 
-    // Slot-A: when the previous document carries a distinct #key-scid (identity)
-    // slot, the did:scid:vh chain and the TSP VID are DECOUPLED. A log roll must
-    // preserve the permanent TSP key at verificationMethod[0]/#key-1 and its
-    // agreement key (#key-2), advancing ONLY the identity key in #key-scid.
-    // For agents (no #key-scid), the new identity key becomes both (legacy).
-    const prevHasSlotA = prevEntry.didDocument.verificationMethod.some(vm => vm.id === '#key-scid');
-    let docSigningKey: Uint8Array;
-    let docAgreementKey: Uint8Array;
-    let identitySlotKey: Uint8Array | undefined;
-    if (prevHasSlotA) {
-      docSigningKey = extractEd25519PublicKey(prevEntry.didDocument);   // TSP VID key [0] — preserved
-      docAgreementKey = extractX25519PublicKey(prevEntry.didDocument);  // agreement [1] — preserved
-      identitySlotKey = newSigningKeyPair.publicKey;                    // identity key → #key-scid
-    } else {
-      docSigningKey = newSigningKeyPair.publicKey;                      // legacy: identity key is the VID
-      docAgreementKey = ed25519ToX25519(newSigningKeyPair.secretKey).publicKey;
-    }
-
-    const newDocument = buildDidPeer4Document(
-      docSigningKey,
-      docAgreementKey,
-      transport,
-      identitySlotKey,
-    );
+    // Carry the previous document forward: a deep clone with only the identity
+    // slot(s) replaced. Slot-A keeps its permanent #key-1/#key-2 (TSP VID) and advances #key-scid;
+    // Slot-B (agents) moves #key-1/#key-2 to the new identity key. The PQ keys (#key-mldsa,
+    // #key-kem) and any added verification method are NOT dropped.
 
     const nextKeyCommitment = computeNextKeyCommitment(nextSigningPublicKey);
     // The new entry's commitment set includes BOTH its live key (so a subsequent
@@ -187,12 +166,12 @@ export class SpeculativeRotationService {
       nextKeyHashes: nextKeyCommitments.map(h => Buffer.from(h).toString('base64')),
     };
 
-    const documentWithId: DidDocument = {
-      ...newDocument,
+    const documentWithId: DidDocument = carryForwardDocument(prevEntry.didDocument, newSigningKeyPair, {
       id: prevEntry.didDocument.id,
       alsoKnownAs: newAlsoKnownAs,
       parameters: newParameters,
-    };
+      transport,
+    });
 
     // ── Build unsigned entry ───────────────────────────────────────────
     const unsignedEntry = {
