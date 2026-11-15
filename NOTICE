@@ -58,7 +58,7 @@ packages; the SPDX identifiers are listed below:
   over IP dtgwg-trust-tasks-tf repository), copied for tests only under
   packages/core/test/services/trust-tasks/boundary/fixtures/ with a recorded
   provenance file; not part of the published package — Apache-2.0
-- DTGWG trust conformance suite vectors (ERR, LIF, RSP, ENV, TIME, ID and DUP groups of the
+- DTGWG trust conformance suite vectors (ERR, LIF, RSP, ENV, TIME, ID, DUP and PRF groups of the
   dtgwg-trust-conformance folder), copied for tests only under
   packages/core/test/services/trust-tasks/boundary/vectors/ with a recorded
   provenance file; not part of the published package — Apache-2.0
