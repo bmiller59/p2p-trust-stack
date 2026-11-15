@@ -43,6 +43,8 @@ export interface DidMethodCreateResult {
    * `#key-2` each peer already publishes).
    */
   hybridKemKeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
+  /** Dedicated boundary key pair (did:peer:4 K8, opt-in): published as `#key-boundary` from creation. */
+  boundaryKeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
 }
 
 // ---------------------------------------------------------------------------

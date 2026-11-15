@@ -97,4 +97,6 @@ export interface DidPeer4Result {
   mlDsa65KeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
   /** MLKEM768-X25519 hybrid KEM key pair (published as `#key-kem`). */
   hybridKemKeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
+  /** Dedicated boundary key pair (K8, opt-in), published as `#key-boundary`. Absent unless requested. */
+  boundaryKeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
 }

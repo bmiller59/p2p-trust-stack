@@ -40,6 +40,13 @@ export interface AgentConfig {
   passphrase: string;
   port?: number;
   didMethod?: DidMethod;
+  /**
+   * K8 (default false): a NEW did:peer:4 agent gets the dedicated `#key-boundary` key at creation (published in its
+   * identifier, held in the encrypted key store as boundary generation 1). Only read by `Peer4Agent.create`; an
+   * existing agent is unaffected (its identifier is the hash of its document, so it keeps `#key-1`, which the
+   * verifier policy accepts). Has no effect on a did:scid:vh agent, which gains the key through its rotation log.
+   */
+  dedicatedBoundaryKey?: boolean;
   bootstrapUrl?: string;
   /**
    * The bootstrap server this agent should dial — host + peer ID.

@@ -32,6 +32,12 @@ export interface CreateVtaInput {
   keystorePath?: string;
   /** Deterministic 32-byte seed (seed-phrase import) — makes the did:scid:vh DID reproducible. */
   identitySeed?: Uint8Array;
+  /**
+   * K8 (default false, did:peer:4 only): give the NEW identifier the dedicated `#key-boundary` key at creation.
+   * The key pair is returned in `boundaryKeyPair`; this function does not store it (custody belongs to the caller,
+   * as for the agent's key store). Ignored for did:scid:vh, which gains the key through its rotation log.
+   */
+  dedicatedBoundaryKey?: boolean;
 }
 
 export interface CreateVtaResult {
@@ -40,6 +46,8 @@ export interface CreateVtaResult {
   publicKeys: { ed25519: string; x25519: string; };
   /** The root Ed25519 signing keypair (local custody only — undefined for remote). */
   signingKeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
+  /** K8: the dedicated boundary key pair, only when `dedicatedBoundaryKey` was set for a did:peer:4 identity. */
+  boundaryKeyPair?: { secretKey: Uint8Array; publicKey: Uint8Array };
 }
 
 const MIN_PASSPHRASE_LENGTH = 8;
@@ -61,6 +69,7 @@ export async function createVta(
   let nextSigningKeyPairs: Array<{ secretKey: Uint8Array; publicKey: Uint8Array }> | undefined;
   let mlDsa65KeyPair: { secretKey: Uint8Array; publicKey: Uint8Array } | undefined;
   let hybridKemKeyPair: { secretKey: Uint8Array; publicKey: Uint8Array } | undefined;
+  let boundaryKeyPair: { secretKey: Uint8Array; publicKey: Uint8Array } | undefined;
 
   if (method === 'scid-vh' || method === 'scidvh') {
     const scidVhMethod = new ScidVhMethod({ store: undefined });
@@ -74,7 +83,8 @@ export async function createVta(
     mlDsa65KeyPair = result.mlDsa65KeyPair; hybridKemKeyPair = result.hybridKemKeyPair;
   } else {
     const transport = input.peerId ? { peerId: input.peerId, multiaddrs: [] } : undefined;
-    const result = await createDidPeer4(transport);
+    const result = await createDidPeer4(transport, { dedicatedBoundaryKey: input.dedicatedBoundaryKey === true });
+    boundaryKeyPair = result.boundaryKeyPair;
     did = result.did; document = result.document;
     signingKeyPair = result.signingKeyPair; agreementKeyPair = result.agreementKeyPair;
     mlDsa65KeyPair = result.mlDsa65KeyPair; hybridKemKeyPair = result.hybridKemKeyPair;
@@ -191,6 +201,7 @@ export async function createVta(
       x25519: Buffer.from(agreementKeyPair.publicKey).toString('base64'),
     },
     signingKeyPair,
+    ...(boundaryKeyPair === undefined ? {} : { boundaryKeyPair }),
   };
 }
 

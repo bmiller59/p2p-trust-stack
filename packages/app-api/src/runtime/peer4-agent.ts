@@ -13,6 +13,8 @@
  * construction and database persistence is owned by BaseAgent.
  */
 
+import { extractBoundaryPublicKey } from '@p2p-trust-stack/core/relationship/key-extract.js';
+import { boundaryKeyType } from '@p2p-trust-stack/core/services/trust-tasks/boundary/proof/key-custody.js';
 import { buildDidPeer4Document } from '@p2p-trust-stack/core/did/create.js';
 import { DidPeer4Method } from '@p2p-trust-stack/core/did/did-peer4-method.js';
 import type { DidMethod } from '@p2p-trust-stack/core/did/did-method.js';
@@ -29,6 +31,14 @@ import type { SqliteKeyStore } from '@p2p-trust-stack/core/keystore/sqlite-keyst
 // ---------------------------------------------------------------------------
 
 export class Peer4Agent extends BaseAgent {
+  /** K8: read at construction; only `create` ever generates the key (an existing identifier cannot gain one). */
+  private readonly dedicatedBoundaryKey: boolean;
+
+  protected constructor(config: AgentConfig, registry: AgentRegistry) {
+    super(config, registry);
+    this.dedicatedBoundaryKey = config.dedicatedBoundaryKey === true;
+  }
+
   // ---------------------------------------------------------------------------
   // Abstract hook implementations
   // ---------------------------------------------------------------------------
@@ -42,7 +52,9 @@ export class Peer4Agent extends BaseAgent {
    * All cryptographic operations only — no metadata, no database writes.
    */
   protected async generateCryptoIdentity(): Promise<CryptoIdentityResult> {
-    const result = await this.didMethod.create();
+    // K8 (opt-in): a did:peer:4 method asked to give the NEW identifier the dedicated key. Off: exactly the old path.
+    const method = this.dedicatedBoundaryKey && this.didMethod instanceof DidPeer4Method ? new DidPeer4Method({ dedicatedBoundaryKey: true }) : this.didMethod;
+    const result = await method.create();
     return {
       signingKeyPair: result.signingKeyPair,
       agreementKeyPair: result.agreementKeyPair,
@@ -53,15 +65,19 @@ export class Peer4Agent extends BaseAgent {
       // publishes #key-mldsa / #key-kem.
       mlDsa65KeyPair: result.mlDsa65KeyPair,
       hybridKemKeyPair: result.hybridKemKeyPair,
+      ...(result.boundaryKeyPair === undefined ? {} : { boundaryKeyPair: result.boundaryKeyPair }),
     };
   }
 
   /**
-   * did:peer:4 has no method-specific keys to store during create.
-   * BaseAgent already stores ed25519 + x25519 keys.
+   * did:peer:4 has no method-specific keys to store during create, except the opt-in dedicated boundary key (K8):
+   * stored encrypted under the boundary key type, generation 1, for the identifier's own DID, which is where the
+   * dedicated mode's custody (`loadBoundaryKey`) looks.
    */
-  protected async storeMethodSpecificKeys(_keystore: SqliteKeyStore, _crypto: CryptoIdentityResult): Promise<void> {
-    // No-op: did:peer:4 has no extra keys.
+  protected async storeMethodSpecificKeys(keystore: SqliteKeyStore, crypto: CryptoIdentityResult): Promise<void> {
+    if (crypto.boundaryKeyPair !== undefined) {
+      await keystore.storeKeyPairAsync(crypto.did, boundaryKeyType(1), crypto.boundaryKeyPair, this.passphrase);
+    }
   }
 
   /**
@@ -79,10 +95,15 @@ export class Peer4Agent extends BaseAgent {
     peerId: string;
     multiaddrs: string[];
   }): DidDocument {
+    // A rebuild must carry the dedicated key the identifier was created with (K8), or the copy would drop it.
+    const boundary = this.identity.didDocument === undefined ? undefined : extractBoundaryPublicKey(this.identity.didDocument);
     return buildDidPeer4Document(
       this.identity.signingKeyPair.publicKey,
       this.identity.agreementKeyPair.publicKey,
       { peerId: params.peerId, multiaddrs: params.multiaddrs },
+      undefined,
+      undefined,
+      boundary,
     );
   }
 

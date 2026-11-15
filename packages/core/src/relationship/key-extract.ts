@@ -52,6 +52,16 @@ export function extractMlDsa65PublicKey(doc: DidDocument): Uint8Array | undefine
 }
 
 /**
+ * Extract the dedicated boundary key (32 bytes) from the `#key-boundary` verification method (K8). Found by id,
+ * never by index. `undefined` when the document publishes none (every identifier created without the option).
+ */
+export function extractBoundaryPublicKey(doc: DidDocument): Uint8Array | undefined {
+  const vm = doc.verificationMethod?.find((m) => m.id === '#key-boundary');
+  if (!vm?.publicKeyMultibase) return undefined;
+  return decodeMultikeyPublicKey(vm.publicKeyMultibase, 0xed01, 32);
+}
+
+/**
  * Extract the MLKEM768-X25519 hybrid KEM public key (1216 bytes) from a DID
  * document's `#key-kem` verification method.
  *

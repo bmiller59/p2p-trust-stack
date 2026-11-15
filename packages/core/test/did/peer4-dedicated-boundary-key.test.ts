@@ -54,3 +54,21 @@ test('DidPeer4Method: the option reaches create() and the result', async () => {
   assert.ok(mk(on.document, '#key-boundary'));
   void generateEd25519KeyPair;
 });
+
+test('createVta (services/vta.ts): did:peer:4 with the option carries the key and returns it; off, no change', async () => {
+  const { runMigrations } = await import('../../src/db/migrate.ts');
+  const { getMigrationsDir } = await import('../../src/db/migrations-dir.ts');
+  const { SqliteDataSource } = await import('../../src/db/sqlite-data-source.ts');
+  const { createVta } = await import('../../src/services/vta.ts');
+  const make = async (dedicatedBoundaryKey?: boolean) => {
+    const ds = new SqliteDataSource(':memory:');
+    runMigrations(ds.getRawDb(), getMigrationsDir());
+    return createVta(ds, { name: 'k8-vta', subjectKind: 'human', method: 'peer4', passphrase: 'a-long-enough-pass', ...(dedicatedBoundaryKey === undefined ? {} : { dedicatedBoundaryKey }) });
+  };
+  const off = await make();
+  assert.equal(off.boundaryKeyPair, undefined);
+  assert.ok(!JSON.parse(off.didDocument.documentJson).verificationMethod.some((v: { id: string }) => v.id === '#key-boundary'));
+  const on = await make(true);
+  assert.ok(on.boundaryKeyPair);
+  assert.ok(JSON.parse(on.didDocument.documentJson).verificationMethod.some((v: { id: string }) => v.id === '#key-boundary'));
+});

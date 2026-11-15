@@ -187,6 +187,8 @@ export interface CryptoIdentityResult {
    */
   mlDsa65KeyPair?: Ed25519KeyPair;
   hybridKemKeyPair?: Ed25519KeyPair;
+  /** The dedicated boundary key pair (did:peer:4, K8, opt-in): published as `#key-boundary`; stored by the subclass. */
+  boundaryKeyPair?: Ed25519KeyPair;
 }
 
 /**

@@ -34,14 +34,22 @@ export class DidPeer4Method implements DidMethod {
     return 'vrc';
   }
 
+  private readonly dedicatedBoundaryKey: boolean;
+
+  /** `dedicatedBoundaryKey` (K8, default false): new identifiers carry `#key-boundary` from creation. */
+  constructor(options: { dedicatedBoundaryKey?: boolean } = {}) {
+    this.dedicatedBoundaryKey = options.dedicatedBoundaryKey === true;
+  }
+
   async create(transport?: ServiceEndpoint): Promise<DidMethodCreateResult> {
-    const result = await createDidPeer4(transport);
+    const result = await createDidPeer4(transport, { dedicatedBoundaryKey: this.dedicatedBoundaryKey });
     const document = this.resolve(result.did);
     return {
       did: result.did,
       document,
       signingKeyPair: result.signingKeyPair,
       agreementKeyPair: result.agreementKeyPair,
+      ...(result.boundaryKeyPair === undefined ? {} : { boundaryKeyPair: result.boundaryKeyPair }),
     };
   }
 

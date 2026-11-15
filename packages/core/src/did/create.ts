@@ -105,6 +105,10 @@ export interface PqcDocumentKeys {
  * @param signingPublicKey   Raw 32-byte Ed25519 public key
  * @param agreementPublicKey Raw 32-byte X25519 public key
  * @param transport          Optional libp2p transport info for the TSP service entry
+ * @param boundaryPublicKey  Optional dedicated boundary key (K8): published as `#key-boundary`, appended last,
+ *                           `authentication` only. Every path that builds a document for a NEW identifier passes
+ *                           it before `encodePeer4`; a rebuild of an existing one (a transport-bearing copy) must
+ *                           pass the same key or the copy would drop it.
  */
 export function buildDidPeer4Document(
   signingPublicKey: Uint8Array,
@@ -112,6 +116,7 @@ export function buildDidPeer4Document(
   transport?: ServiceEndpoint,
   identityKey?: Uint8Array,
   pqc?: PqcDocumentKeys,
+  boundaryPublicKey?: Uint8Array,
 ): DidDocument {
   const verificationMethod: VerificationMethod[] = [
     {
@@ -192,6 +197,15 @@ export function buildDidPeer4Document(
     doc.keyAgreement = [...(doc.keyAgreement ?? []), '#key-kem'];
   }
 
+  // K8 (opt-in): the dedicated boundary key, appended AFTER every other method (see above) and listed under
+  // `authentication` only. Absent unless asked for, so the default document is unchanged.
+  // (Same shape as `addBoundaryVerificationMethod` in document-carry-forward.ts, which imports this file: inlined to
+  // avoid an import cycle.)
+  if (boundaryPublicKey !== undefined) {
+    doc.verificationMethod.push({ id: '#key-boundary', type: 'Multikey', controller: '', publicKeyMultibase: encodeEd25519Multikey(boundaryPublicKey) });
+    doc.authentication = [...doc.authentication, '#key-boundary'];
+  }
+
   if (transport) {
     doc.service = [
       {
@@ -209,6 +223,16 @@ export function buildDidPeer4Document(
 // Public API
 // ---------------------------------------------------------------------------
 
+/** Options for {@link createDidPeer4}. */
+export interface CreateDidPeer4Options {
+  /**
+   * K8 (default false): give the new identifier the dedicated `#key-boundary` key at creation. The key pair is
+   * returned in `boundaryKeyPair`; the caller owns its custody (the agent stores it under the boundary key type).
+   * The identifier is new by construction, so this never changes an existing one.
+   */
+  dedicatedBoundaryKey?: boolean;
+}
+
 /**
  * Create a new did:peer:4 VID.
  *
@@ -219,7 +243,7 @@ export function buildDidPeer4Document(
  *                   include in the DID document's TSP service entry.
  * @returns DidPeer4Result containing the DID string, document, and key pairs.
  */
-export async function createDidPeer4(transport?: ServiceEndpoint): Promise<DidPeer4Result> {
+export async function createDidPeer4(transport?: ServiceEndpoint, options: CreateDidPeer4Options = {}): Promise<DidPeer4Result> {
   // 2.1 — Generate key pairs
   const signingKeyPair = generateEd25519KeyPair();
   const agreementKeyPair = ed25519ToX25519(signingKeyPair.secretKey);
@@ -228,6 +252,9 @@ export async function createDidPeer4(transport?: ServiceEndpoint): Promise<DidPe
   // high-value async statements, MLKEM768-X25519 for PQ key agreement.
   const mlDsa65KeyPair = generateMlDsa65KeyPair();
   const hybridKemKeyPair = generateMlKem768X25519KeyPair();
+
+  // K8: a fresh random key for the dedicated boundary method, only when asked for. Not derived from any other key.
+  const boundaryKeyPair = options.dedicatedBoundaryKey === true ? generateEd25519KeyPair() : undefined;
 
   // 2.2 — Construct the DID document
   const document = buildDidPeer4Document(
@@ -239,6 +266,7 @@ export async function createDidPeer4(transport?: ServiceEndpoint): Promise<DidPe
       mlDsa65PublicKey: mlDsa65KeyPair.publicKey,
       hybridKemPublicKey: hybridKemKeyPair.publicKey,
     },
+    boundaryKeyPair?.publicKey,
   );
 
   // 2.3 — Encode as did:peer:4
@@ -252,6 +280,7 @@ export async function createDidPeer4(transport?: ServiceEndpoint): Promise<DidPe
     agreementKeyPair,
     mlDsa65KeyPair,
     hybridKemKeyPair,
+    ...(boundaryKeyPair === undefined ? {} : { boundaryKeyPair }),
   };
 }
 
