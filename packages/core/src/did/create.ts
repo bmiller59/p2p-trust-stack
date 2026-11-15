@@ -90,6 +90,15 @@ export interface PqcDocumentKeys {
 /**
  * Build a DID document for did:peer:4 encoding.
  *
+ * Dedicated boundary key (gate G2, K8): a did:peer:4 identifier is the hash of its document, so an
+ * identifier can never gain `#key-boundary` in place. There is NO migration of existing
+ * identifiers: they keep signing with `#key-1` and stay verifiable forever (offline decode). Only an
+ * identifier provisioned LATER can carry the dedicated method, by building its document and calling
+ * `addBoundaryVerificationMethod` (document-carry-forward.ts) before `encodePeer4`, which yields a
+ * NEW identifier; counterparties then re-establish trust with it (introductions, relationship
+ * records, name bindings, memberships that reference the old DID). Until an identifier lists
+ * `#key-boundary`, the verifier's cutover policy keeps accepting its `#key-1`.
+ *
  * The document does NOT include an `id` field — the DID is derived from the
  * document, so including it would create a circular dependency.
  *

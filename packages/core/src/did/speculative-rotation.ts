@@ -150,10 +150,10 @@ export class SpeculativeRotationService {
     const newAlsoKnownAs = [...currentNames, nameUri];
     const prevParameters = prevEntry.parameters ?? {};
 
-    // Carry the previous document forward: a deep clone with only the identity
+    // Carry the previous document forward (gate G2, K2): a deep clone with only the identity
     // slot(s) replaced. Slot-A keeps its permanent #key-1/#key-2 (TSP VID) and advances #key-scid;
     // Slot-B (agents) moves #key-1/#key-2 to the new identity key. The PQ keys (#key-mldsa,
-    // #key-kem) and any added verification method are NOT dropped.
+    // #key-kem) and any added verification method (e.g. #key-boundary) are NOT dropped.
 
     const nextKeyCommitment = computeNextKeyCommitment(nextSigningPublicKey);
     // The new entry's commitment set includes BOTH its live key (so a subsequent

@@ -2,7 +2,7 @@
 // Copyright (C) 2026 Trust Stackers
 
 /**
- * The identifier must be the hash of the genesis entry, checked inside `resolveFromLog`
+ * Decision 40: the identifier must be the hash of the genesis entry, checked inside `resolveFromLog`
  * and the chain validation behind it (not only by the time-pinned resolver), so every resolver that
  * replays a log refuses a self-consistent log served under an identifier it does not belong to.
  */
@@ -19,9 +19,6 @@ import { generateEd25519KeyPair, signEd25519 } from '../../src/crypto/primitives
 import type { RotationLogEntry } from '../../src/did/rotation-types.js';
 
 const method = new ScidVhMethod({});
-// validateChain is private; the tests pin its behaviour through this view of it.
-const validEntries = (log: RotationLogEntry[], did?: string): RotationLogEntry[] =>
-  (method as unknown as { validateChain(l: RotationLogEntry[], d?: string): { validEntries: RotationLogEntry[] } }).validateChain(log, did).validEntries;
 
 /** A self-consistent log (valid digest and signature) that is labelled with the victim's DID but is not that DID's preimage. */
 async function forgedFor(victimDid: string): Promise<RotationLogEntry[]> {
@@ -34,12 +31,9 @@ async function forgedFor(victimDid: string): Promise<RotationLogEntry[]> {
 
 async function rotated() {
   const created = await method.create();
-  const e1 = await method.rotate({
-    currentLog: created.log,
-    outgoingSigningKeyPair: created.signingKeyPair,
-    newSigningKeyPair: created.nextSigningKeyPairs[0]!,
-    nextSigningPublicKey: generateEd25519KeyPair().publicKey,
-    witnessAttestations: [],
+  const e1 = await method.addBoundaryKey({
+    currentLog: created.log, identityKeyPair: created.signingKeyPair, boundaryPublicKey: generateEd25519KeyPair().publicKey,
+    mlDsa65KeyPair: created.mlDsa65KeyPair, now: (created.log[0]!.createdAt + 100) * 1000,
   });
   return { did: created.did, log: [...created.log, e1] };
 }
@@ -56,7 +50,7 @@ describe('resolveFromLog: the identifier is the hash of the genesis entry', () =
   it('a self-consistent log relabelled with another identifier is refused as an SCID mismatch', async () => {
     const victim = await method.create();
     const forged = await forgedFor(victim.did);
-    assert.equal(validEntries(forged).length, 1, 'precondition: chain-valid on its own');
+    assert.equal(method.validateEntries(forged).length, 1, 'precondition: chain-valid on its own');
     assert.throws(() => method.resolveFromLog(victim.did, forged), /SCID mismatch/);
   });
 
@@ -89,14 +83,14 @@ describe('resolveFromLog: the identifier is the hash of the genesis entry', () =
 });
 
 describe('chain validation with an identifier', () => {
-  it('validateChain(log, did) accepts only a chain whose genesis hashes to the identifier; without one it checks consistency only', async () => {
+  it('validateEntries(log, did) accepts only a chain whose genesis hashes to the identifier; without one it checks consistency only', async () => {
     const r = await rotated();
-    assert.equal(validEntries(r.log, r.did).length, 2);
+    assert.equal(method.validateEntries(r.log, r.did).length, 2);
     const victim = await method.create();
     const forged = await forgedFor(victim.did);
-    assert.equal(validEntries(forged).length, 1);
-    assert.equal(validEntries(forged, victim.did).length, 0);
-    assert.equal(validEntries(r.log, victim.did).length, 0);
+    assert.equal(method.validateEntries(forged).length, 1);
+    assert.equal(method.validateEntries(forged, victim.did).length, 0);
+    assert.equal(method.validateEntries(r.log, victim.did).length, 0);
   });
 
   it('scidMatchesGenesis is the shared check', async () => {

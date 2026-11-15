@@ -2,11 +2,11 @@
 // Copyright (C) 2026 Trust Stackers
 
 /**
- * Carry-forward of a did:scid:vh DID document into the next log entry.
+ * Carry-forward of a did:scid:vh DID document into the next log entry (conformance gate G2, K1/K2).
  *
  * Every writer of a new log entry used to REBUILD the document from `buildDidPeer4Document`, which
  * knows only the fixed slots (`#key-1`, `#key-2`, optional `#key-scid`, `#key-mldsa`, `#key-kem`).
- * Anything else in the previous document (an added verification method, extra services,
+ * Anything else in the previous document (a dedicated `#key-boundary` method, extra services,
  * relationships) vanished at the next rotation or name claim. These helpers instead CLONE the
  * previous document and change only what the entry is meant to change.
  *
@@ -20,6 +20,11 @@ import { ed25519ToX25519 } from '../crypto/primitives.js';
 import type { Ed25519KeyPair } from '../crypto/primitives.js';
 import { encodeEd25519Multikey, encodeMlDsa65Multikey, encodeX25519Multikey } from './create.js';
 import type { DidDocument, DidParameters, ServiceEndpoint, VerificationMethod } from './types.js';
+
+/** The fragment of the dedicated boundary-signing verification method (gate G2). */
+export const BOUNDARY_VM_FRAGMENT = 'key-boundary';
+/** Its identifier inside a document (relative, like every other method in these documents). */
+export const BOUNDARY_VM_ID = `#${BOUNDARY_VM_FRAGMENT}`;
 
 /** True when the document uses the Slot-A layout (a distinct `#key-scid` identity slot). */
 export function hasSlotA(doc: DidDocument): boolean {
@@ -75,4 +80,43 @@ export function carryForwardDocument(prev: DidDocument, newIdentityKeyPair: Ed25
   if (options.alsoKnownAs !== undefined) doc.alsoKnownAs = options.alsoKnownAs;
   if (options.parameters !== undefined) doc.parameters = options.parameters;
   return doc;
+}
+
+/**
+ * Append the dedicated boundary verification method to `doc` (mutates): a Multikey `#key-boundary`
+ * appended AFTER every existing method (extractors read `[0]`/`[1]` by index) and listed under
+ * `authentication` only. It is not an assertion, key-agreement or identity key. Throws if the
+ * document already has a method of that id.
+ */
+export function addBoundaryVerificationMethod(doc: DidDocument, boundaryPublicKey: Uint8Array): void {
+  if (doc.verificationMethod.some((vm) => vm.id === BOUNDARY_VM_ID)) {
+    throw new Error(`addBoundaryVerificationMethod: ${BOUNDARY_VM_ID} is already present`);
+  }
+  doc.verificationMethod.push({
+    id: BOUNDARY_VM_ID,
+    type: 'Multikey',
+    controller: '',
+    publicKeyMultibase: encodeEd25519Multikey(boundaryPublicKey),
+  });
+  doc.authentication = [...doc.authentication, BOUNDARY_VM_ID];
+}
+
+/**
+ * Problems that make `next` NOT a carry-forward of `prev` for a metadata-only update: a verification
+ * method of `prev` that is missing or whose key or type changed, or a relationship entry lost. An
+ * empty list means every earlier method and relationship survives (added ones are fine).
+ */
+export function carryForwardViolations(prev: DidDocument, next: DidDocument): string[] {
+  const problems: string[] = [];
+  for (const vm of prev.verificationMethod) {
+    const now = next.verificationMethod.find((v) => v.id === vm.id);
+    if (now === undefined) problems.push(`verification method ${vm.id} was removed`);
+    else if (now.publicKeyMultibase !== vm.publicKeyMultibase || now.type !== vm.type) problems.push(`verification method ${vm.id} was changed`);
+  }
+  for (const rel of ['authentication', 'assertionMethod', 'keyAgreement'] as const) {
+    for (const ref of prev[rel] ?? []) {
+      if (!(next[rel] ?? []).includes(ref)) problems.push(`${ref} was dropped from ${rel}`);
+    }
+  }
+  return problems;
 }
