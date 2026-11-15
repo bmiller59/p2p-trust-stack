@@ -490,6 +490,67 @@ test('P3: an invalid signature is refused by the GUARD, and is NOT reported as r
     'a crypto failure must not masquerade as a request for more approvals',
   );
 });
+// ── 4b. D1.1: boundary approvals are verified by the pipeline, not by a signature over the hash ─────
+
+test('D1.1: an approval the boundary pipeline verified counts without a signature over the proposal hash', async () => {
+  const db = await makeAppDb();
+  const guard = new GovernanceGuard(db, new LocalPolicyEngine());
+  // No keys are seeded at all: the document proof (not a key lookup here) is what proved the approver.
+  const admins = ['did:scid:vh:admin1', 'did:scid:vh:admin2'];
+  const proofValues = (did: string): CeremonyApproval => ({ approvalId: `a-${did}`, proposalId: 'prop-1', approverDid: did, signature: 'zProofValueOfTheCoSignDocument', receivedAt: 0 });
+
+  const result = await guard.validateCrystallization(
+    proposal({ adminDids: admins, threshold: 2 }),
+    admins.map(proofValues),
+    { preVerified: new Set(admins) },
+  );
+  assert.equal(result.allowed, true, result.reason);
+});
+
+test('D1.1: without the pre-verified mark the same approvals are refused (the legacy signature check is unchanged)', async () => {
+  const db = await makeAppDb();
+  const guard = new GovernanceGuard(db, new LocalPolicyEngine());
+  const a1 = await seedAdmin(db, 'did:scid:vh:admin1');
+  const admins = ['did:scid:vh:admin1', 'did:scid:vh:admin2'];
+  const proofValue = (did: string): CeremonyApproval => ({ approvalId: `a-${did}`, proposalId: 'prop-1', approverDid: did, signature: 'zProofValueOfTheCoSignDocument', receivedAt: 0 });
+
+  const unmarked = await guard.validateCrystallization(proposal({ adminDids: admins, threshold: 2 }), admins.map(proofValue));
+  assert.equal(unmarked.allowed, false);
+  assert.match(String(unmarked.reason), /cannot resolve key|invalid signature/);
+
+  // Marking only one approver skips the check for that one only: the other is still verified the legacy way.
+  const partial = await guard.validateCrystallization(
+    proposal({ adminDids: admins, threshold: 2 }),
+    [approval('did:scid:vh:admin1', a1.keyPair), proofValue('did:scid:vh:admin2')],
+    { preVerified: new Set(['did:scid:vh:admin1']) },
+  );
+  assert.equal(partial.allowed, false);
+  assert.match(String(partial.reason), /admin2/);
+});
+
+test('D1.1: pre-verification never lets a non-admin or a duplicate count', async () => {
+  const db = await makeAppDb();
+  const guard = new GovernanceGuard(db, new LocalPolicyEngine());
+  const admins = ['did:scid:vh:admin1', 'did:scid:vh:admin2'];
+  const row = (did: string, n: number): CeremonyApproval => ({ approvalId: `a-${n}`, proposalId: 'prop-1', approverDid: did, signature: 'p', receivedAt: 0 });
+
+  const intruder = await guard.validateCrystallization(
+    proposal({ adminDids: admins, threshold: 2 }),
+    [row('did:scid:vh:admin1', 1), row('did:scid:vh:intruder', 2)],
+    { preVerified: new Set(['did:scid:vh:admin1', 'did:scid:vh:intruder']) },
+  );
+  assert.equal(intruder.allowed, false);
+  assert.match(String(intruder.reason), /unknown approver/);
+
+  const twice = await guard.validateCrystallization(
+    proposal({ adminDids: admins, threshold: 2 }),
+    [row('did:scid:vh:admin1', 1), row('did:scid:vh:admin1', 2)],
+    { preVerified: new Set(['did:scid:vh:admin1']) },
+  );
+  assert.equal(twice.allowed, false, 'one admin twice is not a quorum of two');
+  assert.ok(twice.requireConsent, 'it asks for the missing approver');
+});
+
 // ── 5. P3: the parent-VTN child-kind check is now POLICY ────────────────────
 
 /** A VTN with a governance row and bindings carrying an optional child-kind restriction. */

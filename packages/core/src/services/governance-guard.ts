@@ -132,6 +132,18 @@ export interface GovernanceGuardOptions {
   defaultPolicyKind?: 'vtc' | 'vtn';
 }
 
+/** Options of one `validateCrystallization` call. */
+export interface CrystallizationOptions {
+  /**
+   * Approvers whose approval was already verified, by the caller, as the act of the named admin (D1.1: the Trust Task
+   * boundary verifies the proof of the whole co-sign document, signer = issuer, before the approval is ever recorded).
+   * For these the guard skips the Ed25519 check over the proposal-hash text (the stored value is that proof, not a
+   * signature over the hash). Everything else is unchanged: the approver must still be a declared admin, approvers are
+   * counted once, and the policy decides the quorum. Approvers not named here are verified exactly as before.
+   */
+  preVerified?: ReadonlySet<string>;
+}
+
 export class GovernanceGuard {
   private readonly appDb: DataSource;
   private readonly policyEngine: PolicyEngine;
@@ -171,6 +183,7 @@ export class GovernanceGuard {
   async validateCrystallization(
     proposal: CeremonyProposal,
     approvals: CeremonyApproval[],
+    options: CrystallizationOptions = {},
   ): Promise<GovernanceResult> {
     // ── 1. Cryptographic checks ────────────────────────────────────────────
     const proposalHashBytes = new TextEncoder().encode(proposal.proposalHash);
@@ -180,6 +193,11 @@ export class GovernanceGuard {
       if (!proposal.adminDids.includes(a.approverDid)) {
         return { allowed: false, reason: `unknown approver: ${a.approverDid}` };
       }
+      if (options.preVerified?.has(a.approverDid)) {
+        // Verified by the caller (D1.1); still counted once, and only because they are a declared admin (checked above).
+        validApprovers.add(a.approverDid);
+        continue;
+      }
       const publicKeys = await this.resolvePublicKeys(a.approverDid);
       if (publicKeys.length === 0) {
         return { allowed: false, reason: `cannot resolve key for ${a.approverDid}` };
@@ -187,7 +205,9 @@ export class GovernanceGuard {
       const sigBytes = Buffer.from(a.signature, 'base64');
       // Try EVERY registered Ed25519 key (see `resolvePublicKeys`): one identity may hold
       // several, so checking only the first rejects valid signatures.
-      if (!publicKeys.some((k) => verifyEd25519(sigBytes, proposalHashBytes, k))) {
+      // A value that is not even a 64-byte signature (for example a document proof value) is an invalid signature, not a crash.
+      const verifies = (k: Uint8Array): boolean => { try { return verifyEd25519(sigBytes, proposalHashBytes, k); } catch { return false; } };
+      if (!publicKeys.some(verifies)) {
         return { allowed: false, reason: `invalid signature from ${a.approverDid}` };
       }
       // Distinct approvers only — a repeated signature must not count twice.
